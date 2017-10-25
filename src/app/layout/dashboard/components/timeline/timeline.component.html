@@ -1,16 +1,16 @@
-<div class="card-block">
+<div class="card-block" *ngFor="let item of feeds">
     <ul class="timeline">
         <li>
             <div class="timeline-badge"><i class="fa fa-check"></i>
             </div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
-                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                    <h4 class="timeline-title">{{item.title}}</h4>
+                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{item.date}}</small>
                     </p>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                    <p>{{item.desc}}</p>
                 </div>
             </div>
         </li>
@@ -19,14 +19,14 @@
             </div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
-                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                    <h4 class="timeline-title">{{item.title}}</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>
+                    <p>{{item.desc}}</p>
                 </div>
             </div>
         </li>
+
         <li>
             <div class="timeline-badge danger"><i class="fa fa-bomb"></i>
             </div>
@@ -101,4 +101,23 @@
             </div>
         </li>
     </ul>
+
+  <template [ngIf]= "item.type ==='image'">
+    <ul class="timeline">
+        <li>
+            <div class="timeline-badge"><i class="fa fa-check"></i>
+            </div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">{{item.title}}</h4>
+                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{item.date}}</small>
+                    </p>
+                </div>
+                <div class="timeline-body">
+                    <p><img src="{{item.desc}}"></p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    </template>
 </div>

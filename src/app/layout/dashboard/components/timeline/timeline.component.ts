@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timeline.component.scss']
 })
 export class TimelineComponent implements OnInit {
-
+  
+  feeds:any=[]; 
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

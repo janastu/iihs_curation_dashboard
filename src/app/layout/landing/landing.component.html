@@ -1,0 +1,133 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">IIHS-MM</h2>
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12">
+            
+                <div class="card-header" >
+                   Categories
+                </div>
+          <div class="card-block table-responsive">
+             <table class="table">
+           	
+           <tr>	
+             <td [routerLink]="['/feeds']">
+            <div class="card mb-3">
+                <div class="card-header card-default" >
+                  Card title
+                </div>
+                <!--<div class="card-block">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <td [routerLink]="['/feeds']">
+            <div class="card card-primary card-inverse mb-3">
+                <div class="card-header card-primary">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+       <td [routerLink]="['/feeds']">
+            <div class="card card-success card-inverse mb-3">
+                <div class="card-header card-success">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+
+        </tr>
+       <tr>
+       	<td [routerLink]="['/feeds']">
+            <div class="card card-info card-inverse">
+                <div class="card-header card-info">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-warning card-inverse mb-3">
+                <div class="card-header card-warning">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>    
+        <td [routerLink]="['/feeds']">    
+            <div class="card card-danger card-inverse">
+                <div class="card-header card-danger">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+          </tr>	
+         <tr>
+         <td [routerLink]="['/feeds']">	
+            <div class="card card-success card-inverse mb-3">
+                <div class="card-header card-success">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-warning card-inverse mb-3">
+                <div class="card-header card-warning">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-danger card-inverse mb-3">
+                <div class="card-header card-danger">
+                    Card title
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        </tr>
+          </table>
+        </div>  
+     </div>
+     <div class="col col-xl-6 col-lg-12">
+            <div class="card mb-3">
+    	<div class="card-header">Recent Feeds</div>
+    	<div class="card-block table-responsive">
+                    <table class="table table-inverse">
+            <div class="list-group" *ngFor="let item of feeds| slice:0:3;">
+                <a href="javascript:;" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{item.title}}</h4>
+                
+                </a>
+            </div>
+        </table>
+    </div>
+
+      </div> 
+    </div>    
+</div>
+</div>

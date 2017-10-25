@@ -2,7 +2,7 @@
 
 @mixin bg-variant($parent, $color) {
   #{$parent} {
-    background-color: $color !important;
+    background-color:  rgba(41, 43, 44, 0) !important;
   }
   a#{$parent} {
     @include hover-focus {
