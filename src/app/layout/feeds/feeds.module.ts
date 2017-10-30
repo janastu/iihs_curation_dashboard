@@ -8,7 +8,7 @@ import {
 
 
 import { FeedsRoutingModule } from './feeds-routing.module';
-import { FeedsComponent,NgbdModalContent,BoardFeeds } from './feeds.component';
+import { FeedsComponent,NgbdModalContent } from './feeds.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
 import { Global } from '../../shared/global';
@@ -33,8 +33,7 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     declarations: [
         FeedsComponent,
         AlertComponent,
-        NgbdModalContent,
-        BoardFeeds
+        NgbdModalContent
        
     ],
     entryComponents: [

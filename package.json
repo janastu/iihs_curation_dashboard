@@ -23,6 +23,8 @@
         "@angular/platform-browser-dynamic": "^4.3.6",
         "@angular/router": "^4.3.6",
         "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.4",
+        "@ngrx/core": "^1.2.0",
+        "@ngrx/store": "^4.1.0",
         "@ngx-translate/core": "^7.2.0",
         "@ngx-translate/http-loader": "^0.1.0",
         "@types/underscore": "^1.8.3",

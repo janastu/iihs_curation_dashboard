@@ -9,6 +9,7 @@ import { NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { Global } from '../../shared/global';
 import { Router } from "@angular/router";
 
+
 @Component({
   selector: 'app-feeds',
   templateUrl: './feeds.component.html',
@@ -28,6 +29,7 @@ todate = this.formBuilder.control('', [Validators.required]);
   constructor(public service:Service,public alertservice:AlertService,public formBuilder: FormBuilder,public datepipe: DatePipe,private modalService: NgbModal,public variab : Global,public router:Router) { }
 
   ngOnInit() {
+
     this.loginForm = this.formBuilder.group({
       fromdate: this.fromdate,
       todate: this.todate
@@ -40,6 +42,7 @@ todate = this.formBuilder.control('', [Validators.required]);
 });
   	
   }
+
   readlater(item){
   	console.log("called",item);
   	this.readlaterfeeds.push(item);
@@ -100,18 +103,6 @@ board = this.formBuilder.control('', [Validators.required]);
     
 
   }
-}
-
-
-@Component({
-  selector: 'app-feeds',
-  templateUrl: './boardfeeds.html',
-  styleUrls: ['./feeds.component.scss'],
-  animations: [routerTransition()]
-})
-
-export class BoardFeeds {
-
 }
 
 

@@ -1,9 +1,6 @@
 .margin{
 	margin-right: 50px;
 	}
-.feed-time{
-	margin-bottom: 0rem;
-}
 .desc-image{
 	border-radius: 0.2rem;
     height: 91px;
@@ -74,6 +71,33 @@
     margin-left: -3px;
     font-size: 1.1rem;
 }
-
+.article.image{
+    max-width: 580px;
+     width: 578px;
+      margin-top: 3rem;
+       margin-bottom: 3rem; 
+       display: block; 
+       border-radius: 3px; 
+       border: 1px solid rgb(239, 239, 239);
+}
+.feed-heading{
+   font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+}
+.article-tool-bar{
+     margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
 
 
