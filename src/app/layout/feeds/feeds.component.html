@@ -4,51 +4,9 @@
         <h2 class="feed-page-header">
            Feeds
         </h2>
-    <div class="col-md-12 col-offset-8 feed-filters">
-        
-      <nav class="navbar navbar-toggleable-md navbar-light">
-       
-            <div class="navbar-nav margin">
-         <form [formGroup]="loginForm" class="form-inline margin form-group">
-                    <label>From</label>
-            <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-                    <label>To</label>
-            <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
-             <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
-        </form>
-    
-        
-        
-               <div class="form-group">
-                    <label>Categories</label>
-                    <select class="form-control">
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                        <option>Category 3</option>
-                        <option>Category 4</option>
-                        <option>Category 5</option>
-                    </select>
-                </div>
-            </div>
-        
-        <button type="button" class="btn btn-sm btn-success" 
-        (click)="displayreadfilter()" >Read Later</button>
-       <!--<div class="form-group">
-                    <label>Categories</label>
-                    <select class="form-control">
-                        <option>  </option>
-                        <option ></option>
-                    </select>
-                </div>-->
-        <a class="btn rounded-btn" [routerLink]="['/articleview']"> Article </a> 
-        <a class="btn rounded-btn" [routerLink]="['/feeds']"> Magazine </a>       
-      
-        
-    </nav>
-    
-    </div>
+        <app-page-header></app-page-header>
 </div>
-<alert></alert>
+
     <div class="row">
     	<div class="col">
             <div class="feed-card mb-3">
@@ -58,6 +16,7 @@
             <div class="feeds-entries" *ngFor="let item of feeds">
                <div class="feed-entry"> 
                 <div class="desc-image" style="background-image: url(&quot;http://lh3.googleusercontent.com/5t-_i_foAyiPgquCd2eFbNcZZmHnWQ4w86st-7oX1s9VFids5t2EkT3P0sCoibajvn1TUcSN721GGLMeCi2OvRh1c7Q=s130&quot;);">
+                
                 </div>
                 <div class="content">
 

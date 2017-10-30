@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { Global } from './shared/global';
+import { JsonConvert } from './services/utilities';
 import { StoreModule } from '@ngrx/store';
 
 
@@ -38,7 +39,7 @@ export function HttpLoaderFactory(http: Http) {
         })
         
     ],
-    providers: [AuthGuard,Global],
+    providers: [AuthGuard,Global,JsonConvert],
     bootstrap: [AppComponent]
 })
 export class AppModule {

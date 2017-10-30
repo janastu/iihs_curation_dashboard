@@ -1,43 +1,11 @@
 <div [@routerTransition]>
-    <div class="row">
+      <div class="row">
         <h2 class="feed-page-header">
            Feeds
         </h2>
-    <div class="col-md-12 col-offset-8 feed-filters">
-        
-      <nav class="navbar navbar-toggleable-md navbar-light">
-       
-         <form  class="form-inline margin">
-            
-            <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-            <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
-             <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
-        </form>
-    
-        
-        
-            <div class="navbar-nav margin">
-               <div class="form-group">
-                    <label>Categories</label>
-                    <select class="form-control">
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                        <option>Category 3</option>
-                        <option>Category 4</option>
-                        <option>Category 5</option>
-                    </select>
-                </div>
-            </div>
-        
-        <button type="button" class="btn btn-sm btn-success" 
-        (click)="displayreadfilter()" >Read Later</button>
-        <a class="btn rounded-btn" [routerLink]="['/articleview']" (click)="onLoggedin()"> Article </a>
-        <a class="btn rounded-btn" [routerLink]="['/feeds']" (click)="onLoggedin()"> Magazine View </a>
-        
-    </nav>
-
-    </div>
+        <app-page-header></app-page-header>
 </div>
+
 
     <div class="row">
     	<div class="col">

@@ -3,17 +3,21 @@
         <h2 class="page-header">
             {{heading}}
         </h2>
-      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+     <div class="col-md-12 col-offset-8 feed-filters">
         
-        <form class="form-inline margin">
-            <input class="form-control mr-sm-2" type="text" placeholder="From">
-            <input class="form-control mr-sm-2" type="text" placeholder="To">
-             <button type="button" class="btn btn-sm btn-success">Filter</button>
-        </form>
-
-        
-        
+      <nav class="navbar navbar-toggleable-md navbar-light">
+       
             <div class="navbar-nav margin">
+         <form class="form-inline margin form-group">
+                    <label>From</label>
+            <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
+                    <label>To</label>
+            <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
+             <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
+        </form>
+    
+        
+        
                <div class="form-group">
                     <label>Categories</label>
                     <select class="form-control">
@@ -26,7 +30,19 @@
                 </div>
             </div>
         
-        <button type="button" class="btn btn-sm btn-success" [routerLink]="['/feeds']" >Read Later</button>
+        <button type="button" class="btn btn-sm btn-success" 
+        (click)="displayreadfilter()" >Read Later</button>
+       <div class="form-group">
+                    <label>Change view</label>
+                    <select class="form-control" (change)="onChange($event.target.value)">
+                        <option> Magazine </option>
+                        <option> Article </option>
+                        
+                    </select>
+                </div>
+                
     </nav>
+    
+    </div>
     </div>
 </div>

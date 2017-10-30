@@ -1,51 +1,38 @@
-import { Injectable } from '@angular/core';
+import { Injectable,ViewChild } from '@angular/core';
 import { Http }       from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import * as _ from 'underscore';
-
+import { JsonConvert } from './utilities';
  declare var require: any;
 @Injectable()
 export class Service {
 
-  constructor(private http: Http) { 
-
-
-     this.convertTojson();
-
+constructor(private http: Http, private jsonconvert:JsonConvert) { 
   }
 
 public getAll(){ 
     var msgurl = 'assets/example.json';
-    var newsrack = 'http://newsrack.in/stories/servelots/iihs_feeds/16.json';
-    this.http.get(newsrack).subscribe((response)=> {
-     var foundarray,parsedarray=[];
-     var res = response.text();
-     console.log("response",response);
     
-
      //oundarray = this.extractjson(res);
      //parsedarray = this.parseJSON(foundarray);
-      
-
-
-});
+     
     return new Promise(resolve => {
-    this.http.get(msgurl).map(res => res.json()).subscribe(data => {
-   
-     console.log("Value is",data);
+    var newsrack = 'http://newsrack.in/stories/servelots/iihs_feeds/16.json';
+    this.http.get(newsrack).subscribe((response)=> {
+    var res = response.text();
+   var jsonobject = this.jsonconvert.parseJSON(res);
 
-     resolve(data);
+     resolve(jsonobject);
      }, (err) => {
       console.log(err);
       });
-   
+  });
 
-    
-     });
   }
 convertTojson(){
 
 let parseJSON = (text) => {
+  console.log("text",text);
   let quoteKeysAndParse = (text) => {
      //Quote keys in objects
      let quoted = text.replace(/([\{\[,]\s*)(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '$1"$3": ');
@@ -79,11 +66,12 @@ let parseJSON = (text) => {
   return obj;
 }
 
-fetch('https://cors-anywhere.herokuapp.com/newsrack.in/stories/servelots/iihs_feeds/16.json')
+fetch('http://newsrack.in/stories/servelots/iihs_feeds/16.json')
 .then(response => response.text())
 .then(parseJSON)
 .then(data => {
   console.log("data",data);
+  console.log("datavalue",data["_nr_stories"][0].title);
 });
 }
  

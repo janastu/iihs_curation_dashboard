@@ -15,7 +15,7 @@ export class LandingComponent implements OnInit {
     ngOnInit() {
     	this.service.getAll().then(result=>{
 
-this.feeds= result;
+this.feeds= result["_nr_stories"];
 console.log("feeds",this.feeds);
 });
     }
