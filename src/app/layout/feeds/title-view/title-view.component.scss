@@ -8,6 +8,7 @@
 .feeds-list{
 	display: inline;
     font-size: 13px;
+    width: 100%;
     line-height: normal;
     color: #333333;
     font-family: sans-serif;
@@ -17,9 +18,12 @@
 }
 
 .list-item{
-	display: inline-flex;
-	margin-top: 18px;
+	display: -webkit-inline-box;
 	margin-left: 19px;
+	max-height: 22px;
+    line-height: normal;
+    overflow: hidden;
+    width: 69%;
 }
 
 .items{
@@ -31,10 +35,8 @@
 	position: absolute;
 	right: 25px;
 	margin-top: -29px;
-}
-
-.ago a{
-	color: #a3a3a2;
+	opacity: 0;
+	transition: opacity .35s ease;
 }
 
 .desc{
@@ -42,7 +44,7 @@
 	color: #757575;
 	height: 17px;
     overflow: hidden;
-    padding-left: 76px;
+    padding-left: 5px;
 }
 
 .title-list{
@@ -58,3 +60,27 @@
 	border-bottom: 0px;
 }
 
+/*mouse over for each elements*/
+.title-views:hover .ago{
+	opacity: 1;
+}
+
+.ago a{
+	color: #a3a3a2; 
+	font-size: 19px;
+  	text-align: center; 
+  	border: transparent;
+  	z-index: 1;
+}
+
+.title-views:hover {
+	background-color: #f6f6f6;
+}
+
+.title-ago{
+	margin-left: 50px;
+}
+
+.title-views:hover .title-ago{
+	opacity: 0;
+}

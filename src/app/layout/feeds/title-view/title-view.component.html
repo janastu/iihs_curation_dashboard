@@ -10,14 +10,15 @@
     	<div class="col">
             <div class="mb-3">
     	<div class="card-header title-header"><strong>All Feeds</strong></div>
-    	<div class="list-entries lists" *ngFor="let item of feeds">
+    	<div class="list-entries title-views" *ngFor="let item of feeds">
         <div class="list-item">
             <a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></a>
             <a href={{item.url}} class="feeds-list">{{item.title}}</a>
+            <span class="list-group-item-text desc">{{item.desc}}</span>
         </div>
-
+        <small class="text-muted title-ago"><i class="fa fa-clock-o"></i> {{item.date}}</small>
         <div class="ago">
-        <a class="nav-item" href="#"><i class="fa fa-fw fa-star"></i></a>
+        <a class="nav-item" href="#"><i class="fa fa-fw fa-star-o"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-twitter"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-facebook"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-linkedin"></i></a>
@@ -25,7 +26,7 @@
         <small class="text-muted"><i class="fa fa-clock-o"></i> {{item.date}}</small>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-close"></i></a>
         </div>
-        <div><p class="list-group-item-text desc">{{item.desc}}</p></div>
+        
       </div> 
       
     </div>    
