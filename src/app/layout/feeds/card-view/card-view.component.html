@@ -1,0 +1,32 @@
+<div [@routerTransition]>
+    <div class="row">
+      <h2 class="feed-page-header">
+         Feeds
+      </h2>
+      <app-page-header></app-page-header>
+    </div>
+<div class="row centered card-magazine">
+   <div class="col">
+     <div class="mb-3">
+      
+    	    <div class="row list-entries lists" >
+                <div class="cardview col-sm-4" *ngFor="let item of feeds">
+                     <div class="mb-3">
+                      <!--TODO: if image available: display here -->
+                        <div class="card-view">
+                           <img src="https://apod.nasa.gov/apod/image/1505/AuroraNorway_Richardsen_2330.jpg">
+                         </div>
+                        <div class="card-block card-text">
+                  
+                            <a href={{item.url}} class="feed-title">{{item.title}}</a>
+                            <p class="feed-desc">{{item.desc}}</p>
+                        </div>
+                     </div>
+                </div>
+            </div> 
+    
+    </div>    
+  </div>
+</div>
+
+</div>

@@ -50,6 +50,16 @@ todate = this.formBuilder.control('', [Validators.required]);
         console.log(deviceValue);
         this.router.navigate(['/articleview'])
   }
+  else if(deviceValue === 'Title') 
+      { 
+        console.log(deviceValue);
+        this.router.navigate(['/title-view'])
+  }
+  else  
+      { 
+        console.log(deviceValue);
+        this.router.navigate(['/card-view'])
+  }
   
   
 }

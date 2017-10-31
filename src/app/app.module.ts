@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { Global } from './shared/global';
 import { JsonConvert } from './services/utilities';
-import { StoreModule } from '@ngrx/store';
+
 
 
 

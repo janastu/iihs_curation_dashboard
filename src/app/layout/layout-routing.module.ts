@@ -15,7 +15,10 @@ const routes: Routes = [
             { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'landing', loadChildren: './landing/landing.module#LandingModule' },
             { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule'},
-            { path: 'articleview', loadChildren: './feeds/articleview/articleview.module#ArticleviewModule' } 
+            { path: 'articleview', loadChildren: './feeds/articleview/articleview.module#ArticleviewModule' },
+            { path: 'title-view', loadChildren: './feeds/title-view/title-view.module#TitleViewModule' }, 
+            { path: 'card-view', loadChildren: './feeds/card-view/card-view.module#CardViewModule' } 
+
         ]
     }
 ];
