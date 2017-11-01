@@ -1,0 +1,60 @@
+.margin{
+	margin-right: 50px;
+	}
+.feed-time{
+	margin-bottom: 0rem;
+}
+
+.feeds-list{
+	display: inline;
+    font-size: 13px;
+    line-height: normal;
+    color: #333333;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.list-item{
+	display: inline-flex;
+	margin-top: 18px;
+	margin-left: 19px;
+}
+
+.items{
+	margin-right: 35px;
+}
+
+.ago{
+	font-size: 11px;
+	position: absolute;
+	right: 25px;
+	margin-top: -29px;
+}
+
+.ago a{
+	color: #a3a3a2;
+}
+
+.desc{
+	font-size: 13px;
+	color: #757575;
+	height: 17px;
+    overflow: hidden;
+    padding-left: 76px;
+}
+
+.title-list{
+	max-width: 888px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.title-header{
+	background-color: #fff;
+	border-bottom: 0px;
+}
+

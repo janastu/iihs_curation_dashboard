@@ -3,17 +3,18 @@
         <h2 >
             {{heading}}
         </h2>
-<div class="col-sm-6">
+
+<div class="col-sm-7">
     <form class="form-inline form-group">
-                    <label>From</label>
+                    <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-                    <label>To</label>
+                    <label class="page-header-form">To</label>
             <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
              <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
         </form>
 
 </div>
-<div class="col-sm-5 offset-sm-7">
+<div class="col-sm-6 offset-sm-6">
 
     <nav class="navbar navbar-toggleable-md navbar-light">
     
@@ -48,18 +49,11 @@
                     </fieldset>
                 </div>
             </div>
-  
+
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>
-                    <i class="fa fa-fw fa-bars icon-header" ></i>
-                    <i *ngIf="checkedartilce" class="fa fa-fw fa-grid" icon-header></i>
-                    <i *ngIf="checkedcard" class="fa fa-fw fa-grid icon-header" ></i>
-                    <i *ngIf="checkedtitle" class="fa fa-fw fa-list icon-header" ></i>
-                    
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
-            
-                
+                <i class="fa fa-fw fa-bars icon-header" ></i></button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
                 <fieldset class="form-group field">
                     <div class="radio">
                         <label>
@@ -85,10 +79,15 @@
             </div>
         </div>
                
-            
+        <div>    
         <button (click)="shareteam()" class="nav-item-filters"> <i class="fa fa-fw fa-users icon-header"></i></button>
+        </div>
+        <div>
         <button (click)="newsletter" class="nav-item-filters"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
+        </div>
+        <div>
         <button (click)="refresh()" class="nav-item-filters"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
+        </div>
         
         <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>

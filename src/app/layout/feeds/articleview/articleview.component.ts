@@ -9,15 +9,16 @@ import { FeedsComponent } from '../feeds.component';
   animations: [routerTransition()]
 })
 export class ArticleviewComponent implements OnInit {
-    @Input('feeds') incomingData: any;
+metadata:any=[];
 feeds:any=[];
   constructor(public service:Service) {
-  	console.log("articlwe",this.incomingData);
+  
    }
 
   ngOnInit() {
   	this.service.getAll().then(result=>{
   	this.feeds= result["_nr_stories"];
+    this.metadata = result["_nr_metadata"];
   });
 
 	}

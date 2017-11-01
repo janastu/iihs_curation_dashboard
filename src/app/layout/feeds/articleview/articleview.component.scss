@@ -35,7 +35,7 @@
     margin-top:-90px;
 }
 .feed-entry{
-        border-bottom: 0;
+    border-bottom: 0;
     border-left: 4px solid #ffffff;
     border-radius: 0;
     border-right: 0;
@@ -50,11 +50,11 @@
 }
 .feed-heading{
     font-size:16px;
-        font-family: sans-serif;
-        color:#333333;
+    font-family: sans-serif;
+    color:#333333;
 }
 .feed-content{
-    font-sizr:12px;
+    font-size:14px;
     font-family: 'Slab Serif', sans-serif;
     color: #9e9e9e;
 }
@@ -105,10 +105,14 @@
 }
 .article-image{
     max-width: 580px; 
-    width: 578px; 
-    margin-top: 5.2rem; 
+    max-height: 397px;
     margin-bottom: 3rem; 
     display: block; 
     border-radius: 3px; 
     border: 1px solid rgb(239, 239, 239);
+}
+.metadata-article{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
 }

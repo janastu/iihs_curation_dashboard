@@ -6,41 +6,44 @@
 </div>
 
 
-    <div class="row">
-    	<div class="col">
-            <div class="col-sm-6 offset-sm-3">
+  <div class="row">
+   
+        <div class="col-sm-6 offset-sm-3">
     
     	<div class="card-blocks">
           <div class="row">
             <div class="feeds-entries" *ngFor="let item of feeds">
-               <div class="feed-entry"> 
-               	<div class="article-feed-header">
-               	 <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
-                 <div class="navbar-nav article-tool-bar">
-                 <button class="save btn btn-sm btn-success"(click)="open(item)"><i class="fa fa-fw fa-star"></i>
-
-                    </button>
-                    <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></button>
-                    <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
+              <div class="row">
+              <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
+              </div>
+              <div class="row">
+              <div class="metadata-article">
+                      {{metadata.category_name}}
+              </div>
+              </div>
+              <div class="row">
+              <div class="navbar-nav article-tool-bar">
+                 <button class="save btn btn-sm btn-success"(click)="open(item)"><i class="fa fa-fw fa-star"></i></button>
+                  <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></button>
+                  <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
                     </i></button>
                 </div>
-                 </div>
-                 <div class="content">
-               	<img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
-                 
-
-
+              </div>
+              <div class="row">
+                <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+              </div>
+              <div class="row">
                 <div class="feed-content article-feed-content">
                         {{item.desc}}
                     </div>
-                </div>
-               </div> 
+              </div>
             </div>
+
         </div>
     
     </div>
 
       </div> 
-    </div>    
+       
     </div>
 </div>	
