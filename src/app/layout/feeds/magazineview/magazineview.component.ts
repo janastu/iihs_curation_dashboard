@@ -11,6 +11,7 @@ import { Service } from '../../../services/services';
 export class MagazineviewComponent implements OnInit {
 metadata:any=[];
 feeds:any=[];
+mouseover:boolean;
   constructor(public service:Service) {
   	
    }
@@ -19,7 +20,7 @@ feeds:any=[];
   	this.service.getAll().then(result=>{
   	this.feeds= result["_nr_stories"];
     this.metadata = result["_nr_metadata"];
-    console.log(this.metadata.category_name);
+    console.log(this.mouseover);
   });
 
 	}
