@@ -73,15 +73,15 @@
 }
 .article.image{
     max-width: 580px;
-     width: 578px;
-      margin-top: 3rem;
-       margin-bottom: 3rem; 
-       display: block; 
-       border-radius: 3px; 
-       border: 1px solid rgb(239, 239, 239);
+    width: 578px;
+    margin-top: 3rem;
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239);
 }
 .feed-heading{
-   font-size:16px;
+    font-size:16px;
     font-family: sans-serif;
     text-rendering: optimizeLegibility;
     line-height: 1.7rem;
@@ -95,9 +95,20 @@
     margin-right: -40.5rem;
 }
 .article-tool-bar{
-     margin-top: 0.5rem;
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
     display: inline-block;
 }
-
-
+.article-feed-content{
+    height: 100px;
+    overflow: hidden;
+}
+.article-image{
+    max-width: 580px; 
+    width: 578px; 
+    margin-top: 5.2rem; 
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239);
+}
