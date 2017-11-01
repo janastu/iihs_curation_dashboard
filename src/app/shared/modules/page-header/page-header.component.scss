@@ -1,3 +1,62 @@
-.margin{
-	margin-right: 50px;
-	}
+.page-header{
+        margin-left: 15rem;
+}
+.feed-toolbar{
+left: 60rem;
+text-align:right;
+}
+.nav-item-filters{
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 0.2rem;
+    cursor:pointer;
+    color: #757575;
+    margin: 0px 5px 0px 0px;
+    }
+.nav-item-filters:hover{
+    background-color: rgba(128, 128, 128, 0.13);
+
+}
+
+.popover{
+       top: 40px;
+    right: -53px;
+    background-color: white;
+    border-radius: 0.2rem;
+    position: absolute;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2), 0px 0px 2px rgba(0, 0, 0, 0.38);
+    
+}
+
+.menu{
+    max-height: 70vh;
+    min-width: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.field{
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+}
+.item{
+    display: flex;
+    font-size: 0.875rem;
+    font-weight: normal;
+    text-transform: none;
+    line-height: 24px;
+    cursor:pointer;
+}
+.border-more{
+border-top: solid 1px rgba(0, 0, 0, 0.15);
+margin-left: 0.5rem;
+    margin-top: -0.5rem;
+    }
+.icon-header{
+      font-size: 19px;
+}
+.dropdown-toggle::after{
+    display:none ! important;
+}
+.form-inline{
+        flex-flow: nowrap;
+}
