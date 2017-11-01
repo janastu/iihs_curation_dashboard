@@ -15,6 +15,7 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { TitleViewComponent } from './title-view.component';
+import { HoverToolbarComponent } from '../components';
 @NgModule({
     imports: [
         CommonModule,
@@ -28,7 +29,8 @@ import { TitleViewComponent } from './title-view.component';
         TitleViewRoutingModule
     ],
     declarations: [
-    TitleViewComponent
+    TitleViewComponent,
+    HoverToolbarComponent
        
     ],
   

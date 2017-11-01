@@ -16,7 +16,7 @@ import { AlertService } from './_services/index';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { HoverToolbarComponent } from './shared/components/hover-toolbar/hover-toolbar.component';
+//import { HoverToolbarModule } from '../../shared';
 @NgModule({
     imports: [
         CommonModule,
@@ -28,11 +28,11 @@ import { HoverToolbarComponent } from './shared/components/hover-toolbar/hover-t
         PageHeaderModule,
         FormsModule,
         ReactiveFormsModule
+      
     ],
     declarations: [
         FeedsComponent,
-        AlertComponent,
-        HoverToolbarComponent
+        AlertComponent
        
     ],
    
