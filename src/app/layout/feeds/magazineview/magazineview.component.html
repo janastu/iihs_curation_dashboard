@@ -1,22 +1,22 @@
 <router-outlet></router-outlet>
 <div [@routerTransition]>
     <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-sm-9 offset-sm-3">
             <app-page-header [heading]="'Feeds'"></app-page-header>
         </div>
     </div>
 
 
-    <div class="row">
-        <div class="col">
-            <div class="col-sm-6 offset-sm-3">
+  <div class="row">
+    <div class="col">
+      <div class="col-sm-6 offset-sm-3">
     
-    	       <div class="card-blocks">
-                    <div class="row">
-            <div class="feeds-entries" *ngFor="let item of feeds">
+          <div class="card-blocks">
+            <div class="row">
+              <div class="feeds-entries" *ngFor="let item of feeds">
                <div class="feed-entry magazine-feed-entry"> 
                 <div class="desc-image">
-                 <img src="http://lh3.googleusercontent.com/5t-_i_foAyiPgquCd2eFbNcZZmHnWQ4w86st-7oX1s9VFids5t2EkT3P0sCoibajvn1TUcSN721GGLMeCi2OvRh1c7Q=s130">
+                 <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                 
                 </div>
 
@@ -24,11 +24,14 @@
                   
                                     
                     <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
-                  
+                    <div class="metadata-magazine">
+                      {{metadata.category_name}}
+                    </div>
+                    
                     <div class="feed-content">
                         {{item.desc}}
                     </div>
-
+                   
                     <div class="row feed-bar">
                         <div class="col-6 col-sm-6 offset-sm-10">
                         <button class="btn btn-sm btn-success"(click)="open(item)"><i class="fa fa-fw fa-star"></i></button>
@@ -40,11 +43,11 @@
                 </div>
                </div> 
             </div>
-        </div>
+          </div>
     
-    </div>
+        </div>
 
       </div> 
     </div>    
-    </div>
-</div>	
+  </div>
+</div>  

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -10,7 +11,10 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent implements OnInit{
     @Input() heading: string;
     @Input() icon: string;
-
+checkedarticle:any=false;
+checkedtitle:any=false;
+checkedmagazine:any=false;
+checkedcard:any=false;
 loginForm;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
@@ -43,12 +47,14 @@ todate = this.formBuilder.control('', [Validators.required]);
     if(deviceValue === 'Magazine') 
       { 
         console.log(deviceValue);
-        this.router.navigate(['/feeds'])
+        this.router.navigate(['/magazineview'])
+        this.checkedmagazine=true;
   }
   else if(deviceValue === 'Article') 
       { 
         console.log(deviceValue);
         this.router.navigate(['/articleview'])
+        this.checkedarticle=true;
   }
   else if(deviceValue === 'Title') 
       { 

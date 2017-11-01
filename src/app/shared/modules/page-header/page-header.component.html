@@ -1,48 +1,128 @@
 <div class="row">
     <div class="col-xl-12">
-        <h2 class="page-header">
+        <h2 >
             {{heading}}
         </h2>
-     <div class="col-md-12 col-offset-8 feed-filters">
-        
-      <nav class="navbar navbar-toggleable-md navbar-light">
-       
-            <div class="navbar-nav margin">
-         <form class="form-inline margin form-group">
-                    <label>From</label>
+
+<div class="col-sm-7">
+    <form class="form-inline form-group">
+                    <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-                    <label>To</label>
+                    <label class="page-header-form">To</label>
             <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
              <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
         </form>
+
+</div>
+<div class="col-sm-6 offset-sm-6">
+
+    <nav class="navbar navbar-toggleable-md navbar-light">
     
-        
-        
-               <div class="form-group">
-                    <label>Categories</label>
-                    <select class="form-control">
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                        <option>Category 3</option>
-                        <option>Category 4</option>
-                        <option>Category 5</option>
-                    </select>
+       
+        <div class="nav navbar-nav navbar-right">
+
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
+                  
+                    <fieldset class="form-group field">
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> Category1
+                            </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Category2
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category3
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category4
+                                </label>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
+
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>
+                <i class="fa fa-fw fa-bars icon-header" ></i></button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
+                <fieldset class="form-group field">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Artilce View
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" checked=""> Magazine View
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Title View
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Card View
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+               
+        <div>    
+        <button (click)="shareteam()" class="nav-item-filters"> <i class="fa fa-fw fa-users icon-header"></i></button>
+        </div>
+        <div>
+        <button (click)="newsletter" class="nav-item-filters"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
+        </div>
+        <div>
+        <button (click)="refresh()" class="nav-item-filters"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
+        </div>
         
-       <div class="form-group">
-                    <label>Change view</label>
-                    <select class="form-control" (change)="onChange($event.target.value)">
-                        <option> Magazine </option>
-                        <option> Article </option>
-                        <option> Title </option>
-                        <option> Card</option>
-                        
-                    </select>
-                </div>
-                
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
+                <fieldset class="form-group field">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Most Popular
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')"> Latest
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Latest & Oldest
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Oldest
+                        </label>
+                    </div>
+                </fieldset>
+               <div class="border-more" >
+                <label class="checkbox-inline">
+                        <input type="checkbox" checked="">Unread
+                    </label>
+               </div>
+            </div>
+        </div>
+    </div>
     </nav>
-    
-    </div>
-    </div>
+</div>
+</div>
 </div>
