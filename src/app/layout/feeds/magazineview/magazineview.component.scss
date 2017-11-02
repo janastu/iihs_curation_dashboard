@@ -94,4 +94,31 @@
 }
 
 
+/*hover for feeds elements*/
+
+.feeds-entries:hover, .feeds-entries:hover .magazine-hover-control {
+    background-color: #f6f6f6;
+    opacity:1 !important;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 374px;
+}
+.ago{
+    font-size: 11px;
+    position: absolute;   
+    margin-top: 4px;  
+    transition: opacity .35s ease;   
+}
+.ago a{
+    color: #a3a3a2; 
+    font-size: 15px;
+    text-align: center; 
+    border: transparent;
+    z-index: 1;
+}
+
+
+
+
 

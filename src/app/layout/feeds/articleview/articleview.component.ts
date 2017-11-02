@@ -17,8 +17,7 @@ feeds:any=[];
 
   ngOnInit() {
   	this.service.getAll().then(result=>{
-  	this.feeds= result["_nr_stories"];
-    this.metadata = result["_nr_metadata"];
+  	this.feeds= result;
   });
 
 	}

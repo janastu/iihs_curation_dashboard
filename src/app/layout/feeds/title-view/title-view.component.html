@@ -7,7 +7,7 @@
       </div>
     <div class="row centered title-list">
     	<div class="col">
-            <div class="mb-3" (mouseover)="mouseover=true" (mouseout)="mouseover=false">
+            <div class="mb-3">
     	       <div class="card-header title-header"><strong>All Feeds</strong></div>
     	           <div class="list-entries" *ngFor="let item of feeds; let i=index;">
                         <div class="list-item">
@@ -17,7 +17,7 @@
                              <a href={{item.url}} class="feeds-list">{{item.title.substring(0,60)}}</a>
                             <span class="list-group-item-text desc">{{item.desc.substring(0,10)}}</span>
                            
-                           <div class="hover-control">
+                           <div class="title-hover-control">
                            <app-hover-toolbar></app-hover-toolbar>
                            </div> 
                          </div>

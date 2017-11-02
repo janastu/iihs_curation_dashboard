@@ -15,6 +15,7 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { CardViewComponent } from './card-view.component';
+import { HoverToolbarComponent } from '../components';
 //import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
@@ -32,7 +33,8 @@ import { CardViewComponent } from './card-view.component';
         //BrowserAnimationsModule
     ],
     declarations: [
-    CardViewComponent
+    CardViewComponent,
+    HoverToolbarComponent
        
     ],
   

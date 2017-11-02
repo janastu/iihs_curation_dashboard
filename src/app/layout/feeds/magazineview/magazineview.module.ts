@@ -12,6 +12,7 @@ import { Service } from '../../../services/services';
 import { PageHeaderModule } from '../../../shared';
 import { StatModule } from '../../../shared';
 import { DatePipe } from '@angular/common';
+import { HoverToolbarComponent } from '../components';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { DatePipe } from '@angular/common';
         ReactiveFormsModule
     ],
     declarations: [
-        MagazineviewComponent
+        MagazineviewComponent,
+        HoverToolbarComponent
     ],
     providers:[Service,DatePipe]
 })

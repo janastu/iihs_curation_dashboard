@@ -54,3 +54,43 @@
     padding-left: 24px;
     padding-right: 24px;
 }
+
+.card-ago{
+	font-size: 10px;
+	margin-right: 0.5rem;
+}
+
+.feeds-data{
+		color: #636363;
+	    margin-right: 0.5rem;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    width: 100px;
+	    font-size: 12px;
+	    font-family: sans-serif;
+}
+
+/*hover for feeds elements*/
+
+.visual:hover, .visual:hover .card-hover-control {
+	background-color: #f6f6f6;
+	opacity:1 !important;
+}
+.card-hover-control {
+	opacity: 0;
+	margin-left: 125px;
+}
+.ago{
+	font-size: 11px;
+	position: absolute;
+	margin-top: 4px;	
+	transition: opacity .35s ease;
+}
+.ago a{
+	color: #a3a3a2; 
+	font-size: 15px;
+  	text-align: center; 
+  	border: transparent;
+  	z-index: 1;
+}

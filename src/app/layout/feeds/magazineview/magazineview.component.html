@@ -14,6 +14,9 @@
           <div class="card-blocks">
             <div class="row">
               <div class="feeds-entries" *ngFor="let item of feeds">
+              <div class="magazine-hover-control">
+              <app-hover-toolbar></app-hover-toolbar>
+              </div>
                <div class="feed-entry magazine-feed-entry"> 
                 <div class="desc-image">
                  <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
@@ -38,8 +41,7 @@
                         <button class="btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></button>
                         <button class="btn btn-sm btn-success"><i class="fa fa-close hide-icon"></i></button>
                         </div>
-                    </div>   
-
+                    </div>    
                 </div>
                </div> 
             </div>

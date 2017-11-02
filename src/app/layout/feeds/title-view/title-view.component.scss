@@ -61,23 +61,27 @@
     font-family: sans-serif;
 }
 
+.title-ago{
+	font-size: 10px;
+	margin-right: 0.5rem;
+}
+
+
 /*hover for feeds elements*/
 
-.list-entries:hover, .list-entries:hover .hover-control {
+.list-entries:hover, .list-entries:hover .title-hover-control {
 	background-color: #f6f6f6;
 	opacity:1 !important;
 }
 
-.hover-control {
+.title-hover-control {
 	opacity: 0;
 }
 
 .ago{
 	font-size: 11px;
 	position: absolute;
-	
 	margin-top: 4px;
-	
 	transition: opacity .35s ease;
 }
 
@@ -89,7 +93,3 @@
   	z-index: 1;
 }
 
-.title-ago{
-	font-size: 10px;
-	margin-right: 0.5rem;
-}

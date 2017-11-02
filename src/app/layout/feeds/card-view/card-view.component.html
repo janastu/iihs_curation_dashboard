@@ -10,14 +10,19 @@
       
     	    <div class="row list-entries lists" >
                 <div class="cardview col-sm-4" *ngFor="let item of feeds">
-                     <div class="visual visual-first mb-3">
+                     <div class="visual mb-3">
+                     <div class="card-hover-control">
+                            <app-hover-toolbar></app-hover-toolbar>
+                            </div>
                       <!--TODO: if image available: display here -->
                         <div class="card-view">
                            <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
                          </div>
                         <div class="card-block card-text">
-                            <a href={{item.url}} class="feed-title">{{item.title}}</a>
-                            <p class="feed-desc">{{item.desc}}</p>
+                            <a href={{item.url}} class="feed-title">{{item.title.substring(0,60)}}</a>
+                            <a href={{item.url}} class="feeds-data">{{item.category.substring(0,60)}}</a>
+                            <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.date}}</small>
+                            <p class="feed-desc">{{item.desc.substring(0,85)}}</p>  
                         </div>
                      </div>
                 </div>
