@@ -40,7 +40,7 @@ todate = this.formBuilder.control('', [Validators.required]);
     else if(this.router.url === '/card-view'){
       this.iconcard = 1;
     }
-    else if(this.router.url === '/readlater'){
+    else if(this.router.url === '/readlater' || this.router.url === '/boardfeeds'){
       this.iconreadlater = 1;
     }
   }

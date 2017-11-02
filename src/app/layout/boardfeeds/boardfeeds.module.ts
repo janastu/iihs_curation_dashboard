@@ -5,14 +5,12 @@ import {
     NgbAlertModule,
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
-import { FeedsRoutingModule } from './feeds-routing.module';
-import { FeedsComponent } from './feeds.component';
+import { BoardfeedsRoutingModule } from './boardfeeds-routing.module';
+import { BoardfeedsComponent } from './boardfeeds.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
 import { Global } from '../../shared/global';
 import { Service } from '../../services/services';
-import { AlertComponent } from './_directives/index';
-import { AlertService } from './_services/index';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +21,7 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         NgbModule.forRoot(),
-        FeedsRoutingModule,
+        BoardfeedsRoutingModule,
         StatModule,
         PageHeaderModule,
         FormsModule,
@@ -31,12 +29,11 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
       
     ],
     declarations: [
-        FeedsComponent,
-        AlertComponent
+        BoardfeedsComponent
        
     ],
    
-    providers: [Service,AlertService,DatePipe,NgbModal,NgbActiveModal,Global]
+    providers: [Service,DatePipe,NgbModal,NgbActiveModal,Global]
      
 })
-export class FeedsModule { }
+export class BoardfeedsModule { }

@@ -10,13 +10,12 @@
       
     	    <div class="row list-entries lists" >
                 <div class="cardview col-sm-4" *ngFor="let item of feeds">
-                     <div class="mb-3">
+                     <div class="visual visual-first mb-3">
                       <!--TODO: if image available: display here -->
                         <div class="card-view">
                            <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
                          </div>
                         <div class="card-block card-text">
-                  
                             <a href={{item.url}} class="feed-title">{{item.title}}</a>
                             <p class="feed-desc">{{item.date}}</p>
                             <p class="feed-desc">{{item.desc}}</p>

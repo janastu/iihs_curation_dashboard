@@ -71,7 +71,7 @@
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu" *ngFor="let item of boardlabels">
                     <li>
-                      <a  (click)="board(item.label)">
+                      <a  [routerLink]="['/boardfeeds']" [routerLinkActive]="['router-link-active']">
                         <span>{{ item.label | translate }}</span></a>
                     </li>
                 </ul>

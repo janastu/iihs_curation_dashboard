@@ -14,7 +14,7 @@ import { Service } from '../../../services/services';
 export class MagazineviewComponent implements OnInit {
 metadata:any=[];
 feeds:any=[];
-mouseover:boolean;
+
   constructor(public service:Service) {
   	console.log(this.feeds);
    }

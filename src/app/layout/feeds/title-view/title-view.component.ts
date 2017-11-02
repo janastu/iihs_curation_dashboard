@@ -10,13 +10,17 @@ import { Service } from '../../../services/services';
 })
 export class TitleViewComponent implements OnInit {
 feeds:any=[];
+mouseover:boolean = false;
 
 
-  constructor(public service:Service) { }
+  constructor(public service:Service) {
+    	console.log("mouseover",this.mouseover);
+    	 }
 
   ngOnInit() {
   this.service.getAll().then(result=>{
   	this.feeds= result;
+
 
 });
   }
