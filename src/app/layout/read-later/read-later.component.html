@@ -2,7 +2,7 @@
 <div [@routerTransition]>
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="'Feeds'"></app-page-header>
+            <app-page-header [heading]="'Read Later'"></app-page-header>
         </div>
     </div>
 
@@ -39,6 +39,9 @@
 
                 </div>
                </div> 
+            </div>
+            <div class="col-sm-6 offset-sm-3" >
+                <button class="btn btn-lg btn-success" (click)="readlater(item)">Mark All as Read</button>
             </div>
         </div>
     

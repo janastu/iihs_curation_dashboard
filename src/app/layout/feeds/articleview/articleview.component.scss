@@ -116,3 +116,25 @@
     font-family: 'Slab Serif', sans-serif;
     color: #9e9e9e;
 }
+.border-board{
+    border-top: solid 1px rgba(0, 0, 0, 0.15);
+    margin-left: 0.5rem;
+    margin-top:  0.5rem;
+}
+.save-board{
+    height: 24px;
+    padding: 0;
+    margin-right: -30px;
+    width: 51px;
+}
+.field{
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+}
+.savebutton{
+    opacity:0;
+}
+.field:hover .savebutton{
+    opacity:1;
+    background-color:#f8f8f8;
+}

@@ -18,13 +18,32 @@
               </div>
               <div class="row">
               <div class="metadata-article">
-                      {{metadata.category_name}}
+                      {{item.date}}
               </div>
               </div>
               <div class="row">
               <div class="navbar-nav article-tool-bar">
-                 <button class="save btn btn-sm btn-success"(click)="open(item)"><i class="fa fa-fw fa-star"></i></button>
-                  <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></button>
+                <div ngbDropdown class="d-inline-block">
+                 <button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
+                      <form class="form-inline form-group">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
+                      </form>
+                      <div class="field" *ngFor="let item of boards">
+                        <i class="fa fa-fw fa-star-o"></i>
+                          {{item.title}}
+                          <div class="savebutton">
+                            <button class="save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+                          </div>
+                      </div>
+                      
+                      <div class="border-board" >
+                        <a href="javascript(0):void"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+                      </div>
+
+                    </div>
+                </div>
+                  <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o"></i></button>
                   <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
                     </i></button>
                 </div>
