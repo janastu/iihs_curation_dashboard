@@ -13,6 +13,7 @@
     
           <div class="card-blocks">
             <div class="row">
+
               <div class="feeds-entries" *ngFor="let item of feeds">
               <div class="magazine-hover-control">
               <app-hover-toolbar></app-hover-toolbar>
@@ -24,15 +25,17 @@
                 </div>
 
                 <div class="content">
-                  
                                     
                     <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
-                    <div class="metadata-magazine">
-                      {{metadata.category_name}}
-                    </div>
+                    <a href={{item.url}} class="metadata-magazine">
+                      {{item.category}}
+                    </a>
+                    <a href={{item.url}} class="metadata-magazine">
+                      {{item.date}}
+                    </a>
                     
                     <div class="feed-content">
-                        {{item.desc}}
+                        {{item.desc.substring(0,60)}}
                     </div>
                    
                     <div class="row feed-bar">

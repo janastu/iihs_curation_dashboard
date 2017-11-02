@@ -11,8 +11,14 @@ import { FeedsComponent } from '../feeds.component';
 export class ArticleviewComponent implements OnInit {
 metadata:any=[];
 feeds:any=[];
+boards:any=[];
   constructor(public service:Service) {
-  
+  this.boards.push({
+    title:'tech'
+  },
+  {
+    title:'science'
+  });
    }
 
   ngOnInit() {

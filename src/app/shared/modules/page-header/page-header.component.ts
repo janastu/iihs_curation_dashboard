@@ -11,24 +11,38 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent implements OnInit{
     @Input() heading: string;
     @Input() icon: string;
-checkedarticle:any=false;
-checkedtitle:any=false;
-checkedmagazine:any=false;
-checkedcard:any=false;
+iconarticle:any=0;
+iconmagazine:any=0;
+iconcard:any=0;
+icontitle:any=0;
+iconreadlater:any=0;
 loginForm;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
 
   ngOnInit() {
-
     this.loginForm = this.formBuilder.group({
       fromdate: this.fromdate,
       todate: this.todate
 
     });
   
-  	
+    if(this.router.url === '/articleview'){
+      this.iconarticle=1;
+    }
+    else if (this.router.url === '/magazineview'){
+      this.iconmagazine=1;
+    }
+    else if(this.router.url === '/title-view'){
+      this.icontitle=1;
+    }
+    else if(this.router.url === '/card-view'){
+      this.iconcard = 1;
+    }
+    else if(this.router.url === '/readlater' || this.router.url === '/boardfeeds'){
+      this.iconreadlater = 1;
+    }
   }
   datefilter(){
     var changefrom,changeto;
@@ -48,13 +62,13 @@ todate = this.formBuilder.control('', [Validators.required]);
       { 
         console.log(deviceValue);
         this.router.navigate(['/magazineview'])
-        this.checkedmagazine=true;
+       
   }
   else if(deviceValue === 'Article') 
       { 
         console.log(deviceValue);
         this.router.navigate(['/articleview'])
-        this.checkedarticle=true;
+     
   }
   else if(deviceValue === 'Title') 
       { 

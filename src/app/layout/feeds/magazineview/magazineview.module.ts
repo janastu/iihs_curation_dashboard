@@ -14,6 +14,7 @@ import { StatModule } from '../../../shared';
 import { DatePipe } from '@angular/common';
 import { HoverToolbarComponent } from '../components';
 
+
 @NgModule({
     imports: [
         CommonModule,

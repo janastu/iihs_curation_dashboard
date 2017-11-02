@@ -10,6 +10,7 @@ import { Global } from '../../global';
 
 export class SidebarComponent {
     boardlabels:any=[];
+    categoryfeeds:any=[];
     isActive = false;
     showMenu = '';
     eventCalled() {
@@ -22,14 +23,27 @@ export class SidebarComponent {
             this.showMenu = element;
         }
     }
+    addFeedClass(element: any) {
+        if (element === this.showMenu) {
+            this.showMenu = '0';
+        } else {
+            this.showMenu = element;
+        }
+    }
     constructor(public router:Router,public variab:Global){
         this.boardlabels.push({
-            label: 'label1'
+            label: 'tech'
         }, {
-            label: 'label2'
+            label: 'science'
+            
+        });
+        this.categoryfeeds.push({
+            categoryname: 'UrbanWater'
+        }, {
+            categoryname: 'UrbanEnvironment'
             
         }, {
-            label: 'label3'
+            categoryname: 'UrbanWaste'
         });
     }
     board(lab){
