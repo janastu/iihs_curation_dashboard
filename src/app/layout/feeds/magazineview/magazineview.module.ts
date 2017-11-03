@@ -21,7 +21,7 @@ import { HoverToolbarComponent } from '../components';
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         MagazineRoutingModule,
-         StatModule,
+        StatModule,
         PageHeaderModule,
         FormsModule,
         ReactiveFormsModule

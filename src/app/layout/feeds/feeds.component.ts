@@ -14,12 +14,13 @@ import { Service } from '../../services/services';
 export class FeedsComponent implements OnInit {
 feeds:any=[];
 metadata:any=[];
-
+Dataglobal:any;
 
   constructor(public service:Service) { }
 
   ngOnInit() {
  this.fetchData();
+ console.log("sam",this.Dataglobal);
   }
 
   fetchData(){
@@ -28,7 +29,10 @@ metadata:any=[];
     this.metadata=result["_nr_metadata"];
     });
   }
-
+  public handleEvent(childData:any){
+    this.Dataglobal = childData;
+    console.log("sam",this.Dataglobal);
+  }
 
 }
 

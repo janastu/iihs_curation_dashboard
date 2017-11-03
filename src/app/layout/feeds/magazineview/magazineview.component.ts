@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
-
+import { PageHeaderModule } from '../../../shared';
 
 @Component({
   selector: 'app-magazineview',
@@ -12,19 +12,26 @@ import { Service } from '../../../services/services';
 })
 
 export class MagazineviewComponent implements OnInit {
+
 metadata:any=[];
 feeds:any=[];
+Dataglobal:any;
 
   constructor(public service:Service) {
-  	console.log(this.feeds);
+  	
    }
 
   ngOnInit() {
+    
   	this.service.getAll().then(result=>{
   	this.feeds= result;
 
   });
 
 	}
+  public handleEvent(childData:any){
+    this.Dataglobal = childData;
+    console.log("sam",this.Dataglobal);
+  }
   
 }

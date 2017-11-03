@@ -52,32 +52,30 @@
 
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>
-                <i *ngIf="iconarticle" class="fa fa-fw fa-newspaper-o  icon-header" ></i>
-                <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
-                <i *ngIf="icontitle" class="fa fa-fw fa-list icon-header" ></i>
-                <i *ngIf="iconcard" class="fa fa-fw fa-th icon-header" ></i>
-                <i *ngIf="iconreadlater" class="fa fa-fw fa-bars icon-header" ></i>
+               
+                <i class="fa fa-fw fa-bars icon-header" ></i>
+                
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
                 <fieldset class="form-group field">
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" [checked]="iconarticle"> Artilce View
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" > Artilce View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" [checked]="iconmagazine"> Magazine View
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" > Magazine View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" [checked]="icontitle"> Title View
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" > Title View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" [checked]="iconcard"> Card View
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" > Card View
                         </label>
                     </div>
                 </fieldset>

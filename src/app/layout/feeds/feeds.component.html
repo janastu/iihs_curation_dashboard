@@ -1,50 +1,23 @@
 <router-outlet></router-outlet>
 <div [@routerTransition]>
     <div class="row">
-        <div class="col-sm-6 offset-sm-3">
-            <app-page-header [heading]="'Feeds'"></app-page-header>
+        <div class="col-sm-9 offset-sm-3">
+            <app-page-header [heading]="'Feeds'" (childData)='handleEvent($event)'></app-page-header>
         </div>
     </div>
-
-
-    <div class="row">
-        <div class="col">
-            <div class="col-sm-6 offset-sm-3">
-    
-    	       <div class="card-blocks">
-                    <div class="row">
-            <div class="feeds-entries" *ngFor="let item of feeds">
-               <div class="feed-entry magazine-feed-entry"> 
-                <div class="desc-image">
-                 <img src="http://lh3.googleusercontent.com/5t-_i_foAyiPgquCd2eFbNcZZmHnWQ4w86st-7oX1s9VFids5t2EkT3P0sCoibajvn1TUcSN721GGLMeCi2OvRh1c7Q=s130">
-                
-                </div>
-
-                <div class="content">
-                  
-                                    
-                    <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
-                  
-                    <div class="feed-content">
-                        {{item.desc}}
-                    </div>
-
-                    <div class="row feed-bar">
-                        <div class="col-6 col-sm-6 offset-sm-10">
-                        <button class="btn btn-sm btn-success"(click)="open(item)"><i class="fa fa-fw fa-star"></i></button>
-                        <button class="btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark"></i></button>
-                        <button class="btn btn-sm btn-success"><i class="fa fa-close hide-icon"></i></button>
-                        </div>
-                    </div>   
-
-                </div>
-               </div> 
-            </div>
-        </div>
-    
-    </div>
-
-      </div> 
-    </div>    
-    </div>
-</div>	
+<div *ngIf = "Dataglobal === undefined" > 
+  <app-magazineview></app-magazineview>
+</div>
+<div *ngIf = "Dataglobal === 'Magazine'" > 
+  <app-magazineview></app-magazineview>
+</div>
+<div *ngIf = "Dataglobal === 'Article'" > 
+  <app-articleview></app-articleview>
+</div>
+<div *ngIf = "Dataglobal === 'Card'" > 
+  <app-card-view></app-card-view>
+</div>
+<div *ngIf = "Dataglobal === 'Title'" > 
+  <app-title-view></app-title-view>
+</div>
+</div>  

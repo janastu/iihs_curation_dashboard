@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,38 +11,27 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent implements OnInit{
     @Input() heading: string;
     @Input() icon: string;
-iconarticle:any=0;
-iconmagazine:any=0;
-iconcard:any=0;
-icontitle:any=0;
-iconreadlater:any=0;
+    @Output('childData') outgoing:any = new EventEmitter();
+
+iconarticle:boolean=false;
+iconmagazine:boolean=false;
+iconcard:boolean=false;
+icontitle:boolean=false;
+iconreadlater:boolean=false;
 loginForm;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
+
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
 
   ngOnInit() {
+  
     this.loginForm = this.formBuilder.group({
       fromdate: this.fromdate,
       todate: this.todate
 
     });
   
-    if(this.router.url === '/articleview'){
-      this.iconarticle=1;
-    }
-    else if (this.router.url === '/magazineview'){
-      this.iconmagazine=1;
-    }
-    else if(this.router.url === '/title-view'){
-      this.icontitle=1;
-    }
-    else if(this.router.url === '/card-view'){
-      this.iconcard = 1;
-    }
-    else if(this.router.url === '/readlater' || this.router.url === '/boardfeeds'){
-      this.iconreadlater = 1;
-    }
   }
   datefilter(){
     var changefrom,changeto;
@@ -57,31 +46,21 @@ todate = this.formBuilder.control('', [Validators.required]);
 
   }
   onChange(deviceValue) {
-    console.log(deviceValue);
-    if(deviceValue === 'Magazine') 
-      { 
-        console.log(deviceValue);
-        this.router.navigate(['/magazineview'])
-       
-  }
-  else if(deviceValue === 'Article') 
-      { 
-        console.log(deviceValue);
-        this.router.navigate(['/articleview'])
+    this.outgoing.emit(deviceValue);
+
+    if(deviceValue === 'Article'){
+      this.iconarticle=true;
+    }
+    else if ( deviceValue === 'Magazine'){
+      this.iconmagazine=true;
+    }
+    else if(deviceValue === 'Title'){
+      this.icontitle=true;
+    }
+    else if(deviceValue === 'Card'){
+      this.iconcard = true;
+    }
      
-  }
-  else if(deviceValue === 'Title') 
-      { 
-        console.log(deviceValue);
-        this.router.navigate(['/title-view'])
-  }
-  else  
-      { 
-        console.log(deviceValue);
-        this.router.navigate(['/card-view'])
-  }
-  
-  
 }
 
  
