@@ -1,4 +1,6 @@
-$topnav-background-color: #222;
+$topnav-background-color: #efefef;
+$topnav-color:#222;
+$onhover:rgba( 0, 0, 0, 0.63 );
 .sidebar{
     border-radius: 0;
     position: fixed;
@@ -25,7 +27,7 @@ $topnav-background-color: #222;
             background: $topnav-background-color;
             border: 0;
             border-radius: 0;
-            color: #999;
+            color: $topnav-color;
             text-decoration: none;
             .fa {
                 margin-right: 10px;
@@ -33,11 +35,11 @@ $topnav-background-color: #222;
         }
         a:hover {
             background: darken($topnav-background-color, 5%);
-            color: #fff;
+            color: $onhover;
         }
         a.router-link-active {
             background: darken($topnav-background-color, 5%);
-            color: #fff;
+            color: $onhover;
         }
     }
     .sidebar-dropdown {
@@ -50,7 +52,7 @@ $topnav-background-color: #222;
             height : 50px;
             margin-bottom:0;
             a {
-                color : #999;
+                color : $topnav-color;
                 text-decoration : none;
                 font-weight:400;
                 background:$topnav-background-color;
@@ -62,7 +64,7 @@ $topnav-background-color: #222;
                 }
             }
             a:hover,a:focus {
-                color: #fff;
+                color: $onhover;
                 outline: none;
                 outline-offset: -2px;
             }
@@ -79,10 +81,10 @@ $topnav-background-color: #222;
                     background-color: $topnav-background-color;
                     border: 0 solid transparent;
                     a {
-                        color:#999;
+                        color:$topnav-color;
                     }
                     a:hover {
-                        color:#FFF;
+                        color:$onhover;
                     }
                 }
                 .list-group-item:hover {
@@ -110,7 +112,7 @@ $topnav-background-color: #222;
             height: auto;
             li {
                 a {
-                    color: #FFF;
+                    color: $topnav-color;
                     padding: 10px;
                     display: block;
                 }
