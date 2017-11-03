@@ -7,13 +7,19 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ReadLaterRoutingModule } from './read-later-routing.module';
 import { ReadLaterComponent } from './read-later.component';
-import { PageHeaderModule } from './../../shared';
+import { PageHeaderModule } from '../../shared';
 import { StatModule } from '../../shared';
-import { Global } from '../../shared/global';
 import { Service } from '../../services/services';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {
+    ArticleviewModule,
+    MagazineviewModule,
+    TitleViewModule,
+    CardViewModule
+} from '../../sharedfeeds/view';
+import { HoverToolbarModule } from '../../sharedfeeds/components';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -24,14 +30,20 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
         StatModule,
         PageHeaderModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MagazineviewModule,
+        TitleViewModule,
+        CardViewModule,
+        ArticleviewModule,
+        HoverToolbarModule
     ],
     declarations: [
         ReadLaterComponent
+        
        
     ],
    
-    providers: [Service,DatePipe,NgbModal,NgbActiveModal,Global]
+    providers: [Service,DatePipe]
      
 })
 export class ReadLaterModule { }

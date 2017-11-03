@@ -1,0 +1,36 @@
+<div [@routerTransition]>
+    <!--<div class="row">
+      <div class="col-sm-9 offset-sm-3">
+              <app-page-header [heading]="'Feeds'"></app-page-header>
+        </div>
+    </div>-->
+<div class="row centered card-magazine">
+  <div class="col">
+    <div class="mb-3">
+      <div class="row list-entries lists" >
+        <div class="cardview col-sm-4" *ngFor="let item of feeds">
+          <div class="visual mb-3">
+          <!--Mouse over for each element-->
+            <div class="card-hover-control"><app-hover-toolbar></app-hover-toolbar></div>
+                      <!--TODO: if image available: display here -->
+                <div class="card-view">
+                  <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
+                </div>
+                    <div class="card-block card-text">
+                      <!--Feed Title-->
+                      <a href={{item.url}} class="feed-title">{{item.title.substring(0,60)}}</a>
+                       <!--Feed Category-->
+                      <a href={{item.url}} class="feeds-data">{{item.category.substring(0,60)}}</a>
+                      <!--Feed Date-->
+                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.date}}</small>
+                      <!--Feed description--> 
+                      <p class="feed-desc">{{item.desc.substring(0,85)}}</p> 
+                    </div>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>
+
+</div>

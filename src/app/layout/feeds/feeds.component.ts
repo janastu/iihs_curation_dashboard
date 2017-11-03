@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { Service } from '../../services/services';
+
 
 
 @Component({
@@ -16,19 +16,13 @@ feeds:any=[];
 metadata:any=[];
 Dataglobal:any;
 
-  constructor(public service:Service) { }
+  constructor() { }
 
   ngOnInit() {
- this.fetchData();
+ //this.fetchData();
  console.log("sam",this.Dataglobal);
   }
 
-  fetchData(){
-    this.service.getAll().then(result=>{
-    this.feeds= result["_nr_stories"];
-    this.metadata=result["_nr_metadata"];
-    });
-  }
   public handleEvent(childData:any){
     this.Dataglobal = childData;
     console.log("sam",this.Dataglobal);

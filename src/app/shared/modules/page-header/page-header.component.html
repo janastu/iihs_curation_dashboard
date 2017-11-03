@@ -52,8 +52,14 @@
 
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>
-               
-                <i class="fa fa-fw fa-bars icon-header" ></i>
+               <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
+                <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
+
+                <i *ngIf="iconarticle" class="fa fa-fw fa-newspaper-o icon-header" ></i>
+
+                <i *ngIf="icontitle" class="fa fa-fw fa-list icon-header" ></i>
+
+                <i *ngIf="iconcard" class="fa fa-fw fa-th icon-header" ></i>
                 
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    

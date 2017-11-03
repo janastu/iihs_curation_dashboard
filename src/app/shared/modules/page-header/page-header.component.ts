@@ -25,7 +25,7 @@ todate = this.formBuilder.control('', [Validators.required]);
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
 
   ngOnInit() {
-  
+  console.log(this.iconarticle);
     this.loginForm = this.formBuilder.group({
       fromdate: this.fromdate,
       todate: this.todate
@@ -50,15 +50,28 @@ todate = this.formBuilder.control('', [Validators.required]);
 
     if(deviceValue === 'Article'){
       this.iconarticle=true;
+      this.iconmagazine = false;
+      this.iconcard = false;
+      this.icontitle=false;
+      
     }
     else if ( deviceValue === 'Magazine'){
       this.iconmagazine=true;
+      this.iconarticle = false;
+      this.iconcard = false;
+      this.icontitle=false;
     }
     else if(deviceValue === 'Title'){
       this.icontitle=true;
+      this.iconmagazine = false;
+      this.iconcard = false;
+      this.iconarticle=false;
     }
     else if(deviceValue === 'Card'){
       this.iconcard = true;
+      this.iconmagazine = false;
+      this.icontitle = false;
+      this.iconarticle=false;
     }
      
 }

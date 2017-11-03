@@ -11,13 +11,20 @@ import { Service } from '../../services/services';
 export class ReadLaterComponent implements OnInit {
 feeds:any=[];
 metadata:any=[];
-  constructor(public service:Service) { }
+Dataglobal:any;
+  constructor(public service:Service) {
+   console.log("sam",this.Dataglobal); }
+   
 
   ngOnInit() {
   	this.service.getAll().then(result=>{
     this.feeds= result;
     this.metadata=result["_nr_metadata"];
     });
+  }
+  public handleEvent(childData:any){
+    this.Dataglobal = childData;
+   
   }
 
 }
