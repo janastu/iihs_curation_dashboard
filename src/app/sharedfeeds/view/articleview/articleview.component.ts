@@ -12,6 +12,7 @@ export class ArticleviewComponent implements OnInit {
 metadata:any=[];
 feeds:any=[];
 boards:any=[];
+visible:boolean=false;
   constructor(public service:Service) {
   this.boards.push({
     title:'tech'
@@ -27,4 +28,12 @@ boards:any=[];
   });
 
 	}
+  oncreateboard(){
+    this.visible=true;
+    console.log(this.visible);
+  }
+  cancelboard(){
+    this.visible=false;
+    console.log(this.visible);
+  }
 }

@@ -5,8 +5,8 @@
     margin: 10px;
 }
 .feed-toolbar{
-left: 60rem;
-text-align:right;
+    left: 60rem;
+    text-align:right;
 }
 .nav-item-filters{
     background-color: transparent;
@@ -22,7 +22,7 @@ text-align:right;
 }
 
 .popover{
-       top: 40px;
+    top: 40px;
     right: -53px;
     background-color: white;
     border-radius: 0.2rem;
@@ -61,5 +61,5 @@ text-align:right;
     display:none ! important;
 }
 .form-inline{
-        flex-flow: nowrap;
+    flex-flow: nowrap;
 }

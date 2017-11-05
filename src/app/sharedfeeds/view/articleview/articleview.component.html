@@ -43,11 +43,27 @@
                       </div>
                       
                       <div class="border-board" >
-                        <a href="javascript(0):void"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+                        <a (click)="oncreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
                       </div>
+                     
 
                     </div>
+                   
                 </div>
+                <div *ngIf="visible" class="form-group savetoboard">
+                  <form class="form-inline form-group">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Create a board">
+                  </form>
+                
+                  
+                  <div>
+                    <button (click)="savetoboard()" class="btn btn-sm btn-success">Create a Board</button>
+                    <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
+                  </div>
+
+                </div>
+               
+               
                 
                   <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o"></i></button>
                
