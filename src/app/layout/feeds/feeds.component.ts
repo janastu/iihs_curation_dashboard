@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-
+import { fadeInAnimation } from '../../fade-in.animation';
 
 
 @Component({
@@ -8,7 +8,8 @@ import { routerTransition } from '../../router.animations';
   selector: 'app-feeds',
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.scss'],
-  animations: [routerTransition()]
+  animations: [routerTransition(),fadeInAnimation],
+  host: { '[@fadeInAnimation]': '' }
 })
 
 export class FeedsComponent implements OnInit {

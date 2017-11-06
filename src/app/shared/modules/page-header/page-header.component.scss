@@ -1,5 +1,5 @@
 .page-header{
-    margin-left: 15rem;
+    margin-left: -15rem;
 }
 .page-header-form{
     margin: 10px;
@@ -19,6 +19,9 @@
 .nav-item-filters:hover{
     background-color: rgba(128, 128, 128, 0.13);
 
+}
+.page-header-nav{
+        flex-direction: row;
 }
 
 .popover{

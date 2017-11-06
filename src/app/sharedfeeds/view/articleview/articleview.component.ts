@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
-
+import { fadeInAnimation } from '../../../fade-in.animation';
 @Component({
   selector: 'app-articleview',
   templateUrl: './articleview.component.html',
   styleUrls: ['./articleview.component.scss'],
-  animations: [routerTransition()]
+  animations: [routerTransition(),fadeInAnimation],
+  host: { '[@fadeInAnimation]': '' }
 })
 export class ArticleviewComponent implements OnInit {
 metadata:any=[];

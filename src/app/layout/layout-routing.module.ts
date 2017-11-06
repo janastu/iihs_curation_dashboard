@@ -16,7 +16,8 @@ const routes: Routes = [
             { path: 'landing', loadChildren: './landing/landing.module#LandingModule' },
             { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule'},
             { path: 'readlater', loadChildren: './read-later/read-later.module#ReadLaterModule'},
-            { path: 'boardfeeds', loadChildren: './boardfeeds/boardfeeds.module#BoardfeedsModule'}
+            { path: 'boardfeeds', loadChildren: './boardfeeds/boardfeeds.module#BoardfeedsModule'},
+            { path: 'onfeed', loadChildren: './on-feed/on-feed.module#OnFeedModule'}
             //{ path: 'articleview', loadChildren: './feeds/articleview/articleview.module#ArticleviewModule' },
             //{ path: 'magazineview', loadChildren: './feeds/magazineview/magazineview.module#MagazineviewModule' },
             //{ path: 'title-view', loadChildren: './feeds/title-view/title-view.module#TitleViewModule' }, 
