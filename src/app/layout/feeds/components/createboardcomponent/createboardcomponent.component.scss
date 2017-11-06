@@ -1,0 +1,55 @@
+/*board elements*/
+.border-board{
+    border-top: solid 1px rgba(0, 0, 0, 0.15);
+    margin-left: 0.5rem;
+    margin-top:  0.5rem;
+}
+.save-board{
+    height: 24px;
+    padding: 0;
+    width: 51px;
+    opacity:0;
+}
+.save{
+    font-size: 15px;
+    margin-left: -33px;
+}
+.field{
+    margin-top: 0.5rem;
+}
+.board-item{
+    display:block;
+}
+.board-item:hover .save-board{
+    opacity:1;
+}
+.board-item:hover{
+    background-color:#f8f8f8;
+}
+.board-field{
+    height: 0px;
+}
+.board-field a{
+    color: #a3a3a2;
+}
+.create-board button{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.create-board input{
+    margin-left: 15px;
+}
+.create-view{
+    color: #249540;
+    border: 0px;
+    font-family: sans-serif;
+    font-size: 14px;  
+}
+.create{
+    color: #249540;
+    font-size: 14px;
+    margin-left: 15px;
+}
+.board-list {
+    margin-left: 15px;
+}

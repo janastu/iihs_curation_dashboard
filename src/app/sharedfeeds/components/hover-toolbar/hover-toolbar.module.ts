@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HoverToolbarComponent } from './hover-toolbar.component';
 import { CreateboardcomponentModule } from '../createboardcomponent/createboardcomponent.module';
 
-
 @NgModule({
     imports: [
         CommonModule,

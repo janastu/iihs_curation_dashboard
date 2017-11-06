@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         HoverToolbarModule,
         NgbModule.forRoot(),
        	CreateboardcomponentModule
+
     ],
     declarations: [ArticleviewComponent],
     exports: [ArticleviewComponent]
