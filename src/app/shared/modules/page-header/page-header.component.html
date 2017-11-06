@@ -21,7 +21,7 @@
 
     <div class="nav navbar-nav navbar-right page-header-nav">
             <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
+                <button class="btn btn-outline-primary nav-item-filters" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
                   
                     <fieldset class="form-group field">
@@ -50,7 +50,7 @@
             </div>
 
             <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>
+                <button class="btn btn-outline-primary nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
                <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
                 <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
 
@@ -88,15 +88,15 @@
         </div>
                
          
-        <button (click)="shareteam()" class="nav-item-filters"> <i class="fa fa-fw fa-users icon-header"></i></button>
+        <button (click)="shareteam()" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
    
        
-        <button (click)="newsletter" class="nav-item-filters"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
+        <button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
         
-        <button (click)="refresh()" class="nav-item-filters"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
+        <button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
          
         <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
+            <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
                 <fieldset class="form-group field">
                     <div class="radio">
