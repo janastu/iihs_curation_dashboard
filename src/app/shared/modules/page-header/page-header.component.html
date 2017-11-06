@@ -7,7 +7,9 @@
     </div>
 </div>
 <div class="row">
-<div class="col-sm-7">
+
+<div class="col-sm-6 form-item">
+
     <form class="form-inline form-group">
                     <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
@@ -16,14 +18,8 @@
              <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
         </form>
 
-</div>
-<div class="col-sm-6 offset-sm-6">
 
-
-    
-       
-        <div class="nav navbar-nav navbar-right page-header-nav">
-
+    <div class="nav navbar-nav navbar-right page-header-nav">
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">

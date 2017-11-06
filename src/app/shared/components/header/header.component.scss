@@ -68,5 +68,13 @@ $topnav-background-color: #222;
     }
 }
 .header .navbar {
-    background: $topnav-background-color !important;
+    /*background: $topnav-background-color !important;*/
+    background: #000;
+}
+.header{
+    left:268px;   
+}
+.header-text{
+    color: rgba( 0, 0, 0, 0.63 ) !important;
+    opacity: 1 !important;
 }
