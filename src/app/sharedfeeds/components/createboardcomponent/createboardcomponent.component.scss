@@ -18,6 +18,11 @@
 .field{
     margin-top: 0.5rem;
 }
+.board{
+    margin-bottom: -20px;
+    margin-left: 11px;
+    color: #a3a3a2;
+}
 .board-item{
     display:block;
 }
@@ -38,7 +43,7 @@
     margin-left: 15px;
 }
 .create-board input{
-    margin-left: 15px;
+    margin-left: 8px;
 }
 .create-view{
     color: #249540;

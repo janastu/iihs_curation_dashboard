@@ -5,14 +5,15 @@ $onhover:rgba( 0, 0, 0, 0.63 );
     border-radius: 0;
     position: fixed;
     z-index: 1000;
-    top: 55px;
+    top: 0px;
     left: 235px;
-    width: 235px;
+    width: 268px;
     margin-left: -235px;
     border: none;
     border-radius: 0;
     overflow-y: auto;
-    background-color: $topnav-background-color;
+    /*background-color: $topnav-background-color;*/
+    background-color: #EFEFEF;
     bottom: 0;
     overflow-x: hidden;
     padding-bottom: 40px;

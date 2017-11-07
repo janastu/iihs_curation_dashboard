@@ -32,15 +32,14 @@
               <!--Feed Toolbar-->
               <div class="row">
               <div class="navbar-nav article-tool-bar">
-                <app-createboardcomponent></app-createboardcomponent>
+                <app-createboardcomponent class="article-star"></app-createboardcomponent>
                
                
                 
-                  <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o"></i></button>
-               
-                
-                  <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
-                    </i></button>
+                  <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
+                  <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+
+                 <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
                 
                 </div>
               </div>

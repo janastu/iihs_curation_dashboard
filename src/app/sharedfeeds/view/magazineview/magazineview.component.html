@@ -21,14 +21,14 @@
               <app-hover-toolbar></app-hover-toolbar>
               </div>
 
-               <div class="feed-entry magazine-feed-entry">
+               <div class="feed-entry">
                <!--Feed Image--> 
                 <div class="desc-image">
                  <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                 
                 </div>
 
-                <div class="content">
+                <div>
                   <!--Feed Title-->
                       <app-modal #modal [item]="item"></app-modal>
                      <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>

@@ -7,7 +7,18 @@
                 
                 <ng-template  #content let-c="close" let-d="dismiss">
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title">
+                          <div class="row">
+                             <div class="modal-tool-bar">
+                                <app-createboardcomponent class="modal-star"></app-createboardcomponent>
+                                    
+                                <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
+                                <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+                                <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
+                                    
+                              </div>
+                            </div>
+                          </h4>
                         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -15,25 +26,11 @@
                     <div class="modal-body">
                         <div class="row">
                          
-                              <div class="col-sm-6 offset-sm-3">
+                              <div class="col-sm-8 offset-sm-2">
                           
                             <div class="card-blocks">
                                 <div class="row">
-                                  <div class="row">
-                                  <div class="article-tool-bar">
-                                    <app-createboardcomponent></app-createboardcomponent>
-
-                                   
-                                   
-                                    
-                                      <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o"></i></button>
-                                   
-                                    
-                                      <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
-                                        </i></button>
-                                    
-                                    </div>
-                                  </div>
+                                  
                     
                                     <div class="row">
                                      <a><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
@@ -41,19 +38,19 @@
                                     </div>
                                     
                                     <div class="row">
-                                    <a class="metadata-article">
+                                    <a class="metadata-modal">
                                        {{item.category}}     
                                     </a>
-                                    <a class="metadata-article">
+                                    <a class="metadata-modal">
                                        {{item.date}}      
                                     </a>
                                     </div>
                                     
                                     <div class="row">
-                                      <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+                                      <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="modal-image">
                                     </div>
                                     <div class="row">
-                                      <div class="feed-content article-feed-content">
+                                      <div class="modal-feed-content">
                                              {{item.desc}}
                                           </div>
                                     </div>
