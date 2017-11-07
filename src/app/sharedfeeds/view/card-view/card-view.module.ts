@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardViewComponent } from './card-view.component';
-import { HoverToolbarModule } from '../../components';
+import { HoverToolbarModule,ModalModule } from '../../components';
 //import { CreateboardcomponentModule } from '../../components';
 //import { DropdownComponent } from '../../../layout/bs-component/components';
 
@@ -13,7 +13,7 @@ import { HoverToolbarModule } from '../../components';
         RouterModule,
         NgbModule.forRoot(),
         HoverToolbarModule,
-        //CreateboardcomponentModule
+        ModalModule
     ],
     declarations: [CardViewComponent],
     exports: [CardViewComponent]

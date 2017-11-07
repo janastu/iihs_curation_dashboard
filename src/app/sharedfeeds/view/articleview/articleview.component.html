@@ -13,34 +13,41 @@
     	<div class="card-blocks">
           <div class="row">
             <div class="feeds-entries" *ngFor="let item of feeds">
+              <!--Feed Title-->
               <div class="row">
-              <a [routerLink]="['/onfeed']" [routerLinkActive]="['router-link-active']" ><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
+                <app-modal #modal [item]="item"></app-modal>
+               <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
+               
               </div>
+              <!--Feed Category-->
               <div class="row">
               <a href={{item.url}} class="metadata-article">
                       {{item.category}}
               </a>
+              <!--Feed Date-->
               <a href={{item.url}} class="metadata-article">
                       {{item.date}}
               </a>
               </div>
+              <!--Feed Toolbar-->
               <div class="row">
               <div class="navbar-nav article-tool-bar">
-                <app-createboardcomponent></app-createboardcomponent>
+                <app-createboardcomponent class="article-star"></app-createboardcomponent>
                
                
                 
-                  <button class="readlater btn btn-sm btn-success" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o"></i></button>
-               
-                
-                  <button class="hide btn btn-sm btn-success"><i class="fa fa-close hide-icon">
-                    </i></button>
+                  <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
+                  <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+
+                 <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
                 
                 </div>
               </div>
+              <!--Feed Image-->
               <div class="row">
                 <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
               </div>
+              <!--Feed Desc-->
               <div class="row">
                 <div class="feed-content article-feed-content">
                         {{item.desc}}

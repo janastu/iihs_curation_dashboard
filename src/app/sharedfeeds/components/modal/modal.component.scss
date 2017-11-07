@@ -1,0 +1,81 @@
+/*Styles for tool bar*/
+
+
+.modal-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 30px;
+}
+.modal-tool-bar a{
+        color: #a3a3a2; 
+        font-size: 15px;
+        text-align: center; 
+        border: transparent;
+        z-index: 1;
+}
+
+.modal-tool-bar button {
+    color: #a3a3a2;
+    background-color: #fff;
+    border-color: white;
+}
+.modal-star{
+    display: inline-flex;
+    margin-right: -14px;
+    margin-left: 5px;
+}
+
+/*Styles for Feed Content*/
+
+.modal-feed-content{
+    height: 100px;
+    overflow: hidden;
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*Styles for Feed Image*/
+.modal-image{
+    max-width: 580px;
+    width: 578px;
+    margin-top: 3rem;
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239); 
+    max-height: 397px;
+    
+}
+/*Styles for Feed Heading*/
+.feed-heading{
+    font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;
+}
+
+
+/*Styles for Feed Heading*/
+.metadata-modal{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+    margin-top: 28px;
+    margin-left: 15px;
+    margin-bottom: 11px;
+
+
+}
+

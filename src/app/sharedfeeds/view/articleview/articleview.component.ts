@@ -1,19 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
 import { fadeInAnimation } from '../../../fade-in.animation';
+//import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-articleview',
   templateUrl: './articleview.component.html',
   styleUrls: ['./articleview.component.scss'],
-  animations: [routerTransition(),fadeInAnimation],
-  host: { '[@fadeInAnimation]': '' }
+  animations: [routerTransition()]
 })
 export class ArticleviewComponent implements OnInit {
 metadata:any=[];
 feeds:any=[];
 boards:any=[];
 visible:boolean=false;
+closeResult: string;
   constructor(public service:Service) {
   this.boards.push({
     title:'tech'

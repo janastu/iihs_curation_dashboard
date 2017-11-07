@@ -16,25 +16,31 @@
             <div class="row">
 
               <div class="feeds-entries" *ngFor="let item of feeds">
+                <!--Feed Hover-->
               <div class="magazine-hover-control">
               <app-hover-toolbar></app-hover-toolbar>
               </div>
-               <div class="feed-entry magazine-feed-entry"> 
+
+               <div class="feed-entry">
+               <!--Feed Image--> 
                 <div class="desc-image">
                  <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                 
                 </div>
 
-                <div class="content">
-                                    
-                    <h4 class="feed-heading"><strong>{{item.title}}</strong></h4>
+                <div>
+                  <!--Feed Title-->
+                      <app-modal #modal [item]="item"></app-modal>
+                     <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
+                     <!--Feed Category-->
                     <a href={{item.url}} class="metadata-magazine">
                       {{item.category}}
                     </a>
+                    <!--Feed Date-->
                     <a href={{item.url}} class="metadata-magazine">
                       {{item.date}}
                     </a>
-                    
+                    <!--Feed Desc-->
                     <div class="feed-content">
                         {{item.desc.substring(0,60)}}
                     </div>
