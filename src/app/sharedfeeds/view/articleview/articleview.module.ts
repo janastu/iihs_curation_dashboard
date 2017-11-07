@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ArticleviewComponent } from './articleview.component';
 import { HoverToolbarModule,CreateboardcomponentModule } from '../../components';
+import { ModalModule } from '../../components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -12,7 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         RouterModule,
         HoverToolbarModule,
         NgbModule.forRoot(),
-       	CreateboardcomponentModule
+       	CreateboardcomponentModule,
+       	ModalModule
 
     ],
     declarations: [ArticleviewComponent],
