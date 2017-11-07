@@ -127,3 +127,29 @@ $onhover:rgba( 0, 0, 0, 0.63 );
         left: 0px;
     }
 }
+.add-content{
+    top: -105px !important;
+    background-color: #efefef;
+    border: 0px;
+}
+.add-content i{
+        color: rgba( 0, 0, 0, 0.63 );
+        margin-right: 10px;
+        font-size: 0.875rem;
+}
+.add-content button{
+    color: #292b2c;
+}
+.side-content{
+    position:absolute;
+    bottom:0;
+}
+.side-content button{
+    width: 267px;
+    border: 0px;
+     color: #292b2c;
+}
+.side-content:hover button{
+    background: #e2e2e2;
+    color: rgba(0, 0, 0, 0.63);
+}

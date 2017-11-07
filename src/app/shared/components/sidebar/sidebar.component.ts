@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 import { Global } from '../../global';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
+    providers: [NgbDropdownConfig],
     styleUrls: ['./sidebar.component.scss']
 })
 
@@ -30,7 +32,7 @@ export class SidebarComponent {
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig){
         this.boardlabels.push({
             label: 'tech'
         }, {
@@ -45,13 +47,13 @@ export class SidebarComponent {
         }, {
             categoryname: 'UrbanWaste'
         });
+        config.placement = 'top-left';
+        config.autoClose = false;
     }
     board(lab){
         console.log("fucn",lab);
         this.router.navigate(['/feeds/boardfeeds'])
 
-    }
-    
-        
+    }  
     
 }
