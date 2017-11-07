@@ -133,9 +133,9 @@ $onhover:rgba( 0, 0, 0, 0.63 );
     border: 0px;
 }
 .add-content i{
-        color: rgba( 0, 0, 0, 0.63 );
-        margin-right: 10px;
-        font-size: 0.875rem;
+    color: rgba( 0, 0, 0, 0.63 );
+    margin-right: 10px;
+    font-size: 0.875rem;
 }
 .add-content button{
     color: #292b2c;
@@ -147,9 +147,12 @@ $onhover:rgba( 0, 0, 0, 0.63 );
 .side-content button{
     width: 267px;
     border: 0px;
-     color: #292b2c;
+    color: #292b2c;
+    background-color: #efefef;
+    box-shadow: 0 0 0 2px rgba(177, 180, 183, 0.23);
 }
 .side-content:hover button{
     background: #e2e2e2;
     color: rgba(0, 0, 0, 0.63);
+    
 }
