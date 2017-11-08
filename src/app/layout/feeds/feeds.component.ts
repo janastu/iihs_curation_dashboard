@@ -14,6 +14,7 @@ import * as _ from 'lodash'
 })
 
 export class FeedsComponent implements OnInit {
+globalfeeds:any=[];
 feeds:any=[];
 metadata:any=[];
 Dataglobal:any;
@@ -23,10 +24,10 @@ date:any;
   ngOnInit() {
  //this.fetchData();
  
-   this.service.getAll().then(result=>{
-   this.feeds= result;
-
- });
+     this.service.getAll().then(result=>{
+       this.globalfeeds= result;
+       this.feeds = this.globalfeeds;
+     });
   }
 
   public handleEvent(childData:any){
@@ -34,16 +35,21 @@ date:any;
 
   }
   public handleDate(childDates:any){
-    
+
     this.date = childDates;
-    console.log("sam",this.date,this.feeds);
-   var datefilteredfeeds =  this.feeds.map((res)=>{
-      console.log(res.date,this.date.changefrom);
-        if(res.date >= this.date.changefrom && res.date <= this.date.changeto ){
-          console.log(res.title);
+    var fromdate = Date.parse(this.date.changefrom);
+    var todate = Date.parse(this.date.changeto);
+    console.log("global",this.globalfeeds);
+   var datefilteredfeeds =  this.globalfeeds.filter((res)=>{
+      var checkdate = Date.parse(res.date);
+       if(fromdate<=checkdate && todate>=checkdate){
+          return res;
         }
 
-    })
+    });
+   
+   this.feeds = datefilteredfeeds;
+   console.log("filtered",datefilteredfeeds);
   }
 
 }
