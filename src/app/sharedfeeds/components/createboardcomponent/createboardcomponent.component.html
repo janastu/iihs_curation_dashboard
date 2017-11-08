@@ -1,4 +1,4 @@
-<div ngbDropdown class="board" [autoClose]="false">
+<div ngbDropdown class="board">
 <a class="save" ngbDropdownToggle aria-expanded="true"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>
  <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
@@ -16,7 +16,7 @@
       </div>
       
       <div class="border-board" >
-        <a (click)="oncreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+        <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
       </div>
      
 

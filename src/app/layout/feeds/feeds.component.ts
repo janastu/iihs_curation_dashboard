@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
-
+import { Service } from '../../services/services';
+import * as _ from 'lodash'
 
 @Component({
   
@@ -16,17 +17,33 @@ export class FeedsComponent implements OnInit {
 feeds:any=[];
 metadata:any=[];
 Dataglobal:any;
-
-  constructor() { }
+date:any;
+  constructor(public service:Service) { }
 
   ngOnInit() {
  //this.fetchData();
- console.log("sam",this.Dataglobal);
+ 
+   this.service.getAll().then(result=>{
+   this.feeds= result;
+
+ });
   }
 
   public handleEvent(childData:any){
     this.Dataglobal = childData;
-    console.log("sam",this.Dataglobal);
+
+  }
+  public handleDate(childDates:any){
+    
+    this.date = childDates;
+    console.log("sam",this.date,this.feeds);
+   var datefilteredfeeds =  this.feeds.map((res)=>{
+      console.log(res.date,this.date.changefrom);
+        if(res.date >= this.date.changefrom && res.date <= this.date.changeto ){
+          console.log(res.title);
+        }
+
+    })
   }
 
 }

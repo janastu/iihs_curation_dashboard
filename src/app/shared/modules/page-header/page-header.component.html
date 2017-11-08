@@ -10,7 +10,7 @@
 
 <div class="col-sm-6 form-item">
 
-    <form class="form-inline form-group">
+    <form [formGroup]="loginForm" class="form-inline form-group">
                     <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
                     <label class="page-header-form">To</label>
@@ -101,22 +101,22 @@
                 <fieldset class="form-group field">
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Most Popular
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> Most Popular
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')"> Latest
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Latest
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Latest & Oldest
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Latest & Oldest
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Oldest
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Oldest
                         </label>
                     </div>
                 </fieldset>

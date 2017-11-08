@@ -9,7 +9,7 @@
     	<div class="col">
             <div class="mb-3">
     	       <div class="card-header title-header"><strong>All Feeds</strong></div>
-    	           <div class="list-entries" *ngFor="let item of feeds; let i=index;">
+    	           <div class="list-entries" *ngFor="let item of incomingfeeds; let i=index;">
                         <div class="list-item">
                         <!--Read Later Button-->
                              <a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>

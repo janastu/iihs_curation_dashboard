@@ -10,6 +10,7 @@ import { fadeInAnimation } from '../../../fade-in.animation';
   animations: [routerTransition()]
 })
 export class ArticleviewComponent implements OnInit {
+  @Input('feeds') incomingfeeds:any=[];
 metadata:any=[];
 feeds:any=[];
 boards:any=[];
