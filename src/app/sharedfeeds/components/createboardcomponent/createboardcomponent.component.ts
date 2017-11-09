@@ -11,7 +11,6 @@ boards:any=[];
 visible:boolean;
 invisible:boolean;
   constructor(public ngconfig:NgbDropdownConfig) {
-    ngconfig.autoClose=false;
     
   this.boards.push({
     title:'tech'
