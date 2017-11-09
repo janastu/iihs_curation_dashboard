@@ -9,33 +9,34 @@
 <div class="row">
 
 <div class="col-sm-6 form-item">
-
+<!--Date filter form-->
     <form [formGroup]="loginForm" class="form-inline form-group">
                     <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
                     <label class="page-header-form">To</label>
             <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
              <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
-        </form>
+    </form>
 
-
+    <!--Feed toolbar for filters and Views-->
     <div class="nav navbar-nav navbar-right page-header-nav">
+        <!--Dropdown for filters according to Category-->
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
                   
                     <fieldset class="form-group field">
                         <div class="radio">
-                            <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> Category1
-                            </label>
-                        </div>
-                        <div class="radio">
                                 <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Category2
+                                    <input #cat1 type="radio" name="optionsRadios" id="optionsRadios1" value="Chikungunya" (click)="onCate(cat1)"> Chikunguniya
                                 </label>
                         </div>
                         <div class="radio">
+                                <label>
+                                    <input type="radio" #cat2 name="optionsRadios" id="optionsRadios2" value="UrbanWater" (click)="onCate(cat2)"> UrbanWater
+                                </label>
+                        </div>
+                        <!--<div class="radio">
                                 <label>
                                     <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category3
                                 </label>
@@ -44,14 +45,14 @@
                                 <label>
                                     <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category4
                                 </label>
-                        </div>
+                        </div>-->
                     </fieldset>
                 </div>
             </div>
-
+            <!--Dropdown to change views-->
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
-               <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
+               <i *ngIf="!iconmagazine && !iconcard && !icontitle  && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
                 <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
 
                 <i *ngIf="iconarticle" class="fa fa-fw fa-newspaper-o icon-header" ></i>
@@ -65,36 +66,38 @@
                 <fieldset class="form-group field">
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" > Artilce View
+                            <input type="radio" #articleview name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChangeView(articleview)" > Artilce View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" > Magazine View
+                            <input type="radio" #magazineview name="optionsRadios" id="optionsRadios2" value="Magazine" (click)="onChangeView(magazineview)" > Magazine View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" > Title View
+                            <input type="radio" #titleview name="optionsRadios" id="optionsRadios3" value="Title" (click)="onChangeView(titleview)" > Title View
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" > Card View
+                            <input type="radio" #cardview name="optionsRadios" id="optionsRadios3" value="Card" (click)="onChangeView(cardview)" > Card View
                         </label>
                     </div>
                 </fieldset>
             </div>
         </div>
                
-         
+        <!--Button to share to team--> 
         <button (click)="shareteam()" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
    
-       
+       <!--Button to create newsletter-->
         <button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
-        
+
+        <!--Button to Refresh feeds-->
         <button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
-         
+        
+        <!--Dropdown to filter feeds according to the latest and oldest feeds--> 
         <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">

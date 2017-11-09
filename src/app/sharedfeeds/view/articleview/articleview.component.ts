@@ -16,6 +16,7 @@ feeds:any=[];
 boards:any=[];
 visible:boolean=false;
 closeResult: string;
+icon:boolean=false;
   constructor(public service:Service) {
   this.boards.push({
     title:'tech'
@@ -38,5 +39,9 @@ closeResult: string;
   cancelboard(){
     this.visible=false;
     console.log(this.visible);
+  }
+  change(index){
+    console.log(index);
+     this.icon=true;
   }
 }

@@ -12,7 +12,7 @@
     
     	<div class="card-blocks">
           <div class="row">
-            <div class="feeds-entries" *ngFor="let item of incomingfeeds">
+            <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
                 <app-modal #modal [item]="item"></app-modal>
@@ -31,17 +31,8 @@
               </div>
               <!--Feed Toolbar-->
               <div class="row">
-              <div class="navbar-nav article-tool-bar">
-                <app-createboardcomponent class="article-star"></app-createboardcomponent>
-               
-               
-                
-                  <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
-                  <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
-
-                 <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
-                
-                </div>
+                <app-article-toolbar></app-article-toolbar>
+              
               </div>
               <!--Feed Image-->
               <div class="row">

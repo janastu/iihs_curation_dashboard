@@ -12,7 +12,9 @@
                              <div class="modal-tool-bar">
                                 <app-createboardcomponent class="modal-star"></app-createboardcomponent>
                                     
-                                <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
+                                <a class="nav-item" (click)="change()"><i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
+                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i>
+                                </a>
                                 <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
                                 <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
                                     
@@ -54,17 +56,26 @@
                                              {{item.desc}}
                                           </div>
                                     </div>
-                                  
+                                    <div class="row">
+                                      <button type="button" class="btn btn-secondary"><a href="{{item.url}}">Visit Website
+                                      </a></button>
+                                    
+                                    </div>
 
                               </div>
                           
                           </div>
 
+
                             </div> 
                              
                           </div>
+                        
+                         
+                          
                     </div>
                     <div class="modal-footer">
+
                         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
                     </div>
                 </ng-template>

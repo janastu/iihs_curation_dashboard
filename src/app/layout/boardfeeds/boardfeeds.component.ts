@@ -8,21 +8,24 @@ import { Service } from '../../services/services';
   animations: [routerTransition()]
 })
 export class BoardfeedsComponent implements OnInit {
- globalfeeds:any=[];
-feeds:any=[];
-Dataglobal:any;
-date:any;
+globalfeeds:any=[];    //variable to store feeds globally
+feeds:any=[];          //variable to store feeds to display
+view:any;              //variable to store the view state
+date:any;              //variable to store the state of dates to filters
   constructor(public service:Service) { }
-
+  //On loading Component
   ngOnInit() {
+    //Fetch the data from service and store in global variable
   	this.service.getAll().then(result=>{
       this.globalfeeds= result;
       this.feeds = this.globalfeeds;
     });
   }
-  public handleEvent(childData:any){
-    this.Dataglobal = childData;
+  //Function to handle view event from page-header component
+  public handleView(childView:any){
+    this.view = childView;
   }
+  //Function to handle Date event from page-header component
   public handleDate(childDates:any){
 
     this.date = childDates;
@@ -40,6 +43,18 @@ date:any;
    this.feeds = datefilteredfeeds;
    console.log("filtered",datefilteredfeeds);
   }
+  //Function to handle Category event from page-header component
+  public handleCategory(childCategory:any){
+
+   this.feeds =  this.globalfeeds.filter((res)=>{
+     console.log(childCategory,res.category);
+       if(res.category === childCategory){
+          return res;
+        }
+
+    });
+  }
+
 
 
 }
