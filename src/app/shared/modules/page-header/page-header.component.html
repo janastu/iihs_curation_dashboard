@@ -7,128 +7,171 @@
     </div>
 </div>
 <div class="row">
-
-<div class="col-sm-6 form-item">
-
-    <form class="form-inline form-group">
-                    <label class="page-header-form">From</label>
+    <div class="col-sm-6 form-item">
+    <form class="form-inline">
+        <div class="form-from form-group">
+            <label class="page-header-form">From</label>
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-                    <label class="page-header-form">To</label>
+        </div>
+        <div class="form-to form-group">
+            <label class="page-header-form">To</label>
             <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
-             <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
-        </form>
+            <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
+        </div>
+    </form>
 
+    </div>
+    <div class="col-sm-6">
+        <div class="nav navbar-nav navbar-right page-header-nav">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary nav-item-filters" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
+                      
+                        <fieldset class="form-group field">
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> UrbanWater 
+                                </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Urban Environment
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Urban Waste
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios4" value="option3"> Urban Transportation and Mobility
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios" value="optionsRadios5"> Urban Infrastructure
+                                </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2"> Urban Economic Growth and Development
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios7" value="option3"> Urban Power
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios8" value="option3"> Urban Housing and Land    
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios" value="optionsRadios9"> Urban Heritage
+                                </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios10" value="option2"> Urban Health
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios11" value="option3"> AMRUT Smart Cities Mission
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios12" value="option3"> Agriculture   
+                                    </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
 
-    <div class="nav navbar-nav navbar-right page-header-nav">
-            <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary nav-item-filters" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
-                  
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
+                   <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
+                    <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
+
+                    <i *ngIf="iconarticle" class="fa fa-fw fa-newspaper-o icon-header" ></i>
+
+                    <i *ngIf="icontitle" class="fa fa-fw fa-list icon-header" ></i>
+
+                    <i *ngIf="iconcard" class="fa fa-fw fa-th icon-header" ></i>
+                    
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
                     <fieldset class="form-group field">
                         <div class="radio">
                             <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> Category1
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" > Artilce View
                             </label>
                         </div>
                         <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Category2
-                                </label>
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" > Magazine View
+                            </label>
                         </div>
                         <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category3
-                                </label>
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" > Title View
+                            </label>
                         </div>
                         <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Category4
-                                </label>
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" > Card View
+                            </label>
                         </div>
                     </fieldset>
                 </div>
             </div>
-
-            <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
-               <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
-                <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
-
-                <i *ngIf="iconarticle" class="fa fa-fw fa-newspaper-o icon-header" ></i>
-
-                <i *ngIf="icontitle" class="fa fa-fw fa-list icon-header" ></i>
-
-                <i *ngIf="iconcard" class="fa fa-fw fa-th icon-header" ></i>
-                
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
-                <fieldset class="form-group field">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" > Artilce View
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" > Magazine View
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" > Title View
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" > Card View
-                        </label>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
-               
-         
-        <button (click)="shareteam()" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
-   
+                   
+             
+            <button (click)="shareteam()" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
        
-        <button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
-        
-        <button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
-         
-        <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
-                <fieldset class="form-group field">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Most Popular
+           
+            <button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
+            
+            <button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
+             
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
+                <div ngbDropdownMenu dropdown-menu-left aria-labelledby="dropdownBasic1" class="form-group">
+                    <fieldset class="form-group field">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Most Popular
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')"> Latest
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Latest & Oldest
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Oldest
+                            </label>
+                        </div>
+                    </fieldset>
+                   <div class="border-more" >
+                    <label class="checkbox-inline">
+                            <input type="checkbox" checked="">Unread
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')"> Latest
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Latest & Oldest
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Oldest
-                        </label>
-                    </div>
-                </fieldset>
-               <div class="border-more" >
-                <label class="checkbox-inline">
-                        <input type="checkbox" checked="">Unread
-                    </label>
-               </div>
+                   </div>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
+    
 </div>
 

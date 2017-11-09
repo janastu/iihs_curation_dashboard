@@ -1,5 +1,9 @@
 .page-header{
     margin-left: -14.5rem;
+    color: #4d4d4d;
+}
+.page-header:hover{
+    color: #b3b3b3;
 }
 .page-header-form{
     margin: 10px;
@@ -23,7 +27,10 @@
 .page-header-nav{
         flex-direction: row;
         margin-bottom: 10px;
-        margin-left: 50px;
+        margin-left: 30px;
+}
+.page-header-nav i{
+    color: #4d4d4d;
 }
 
 .popover{
@@ -45,6 +52,7 @@
 .field{
     margin-left: 0.5rem;
     margin-top: 0.5rem;
+    width: 20rem;
 }
 .item{
     display: flex;
@@ -72,3 +80,172 @@
 .form-item{
     display: inherit;
 }
+
+
+/*MEDIA QUERIES*/
+
+@media (max-width: 320px) {
+
+}
+
+@media (max-width: 480px) {
+
+}
+
+@media (max-width: 767px) {
+
+}
+
+@media (max-width: 995px) {
+
+}
+
+@media (max-width: 1024px) {
+ 
+}
+
+@media (max-width: 1440px) {
+  
+}
+
+
+/*Bootstrap 3 Media Queries*/
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+  .page-header{
+      margin-left: 0.5rem;
+      color: #4d4d4d;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+  }
+  .form-from{
+       margin-left: 240px;
+       display: inherit;
+   }
+   .form-to{
+       margin-left: -216px;
+       margin-bottom: -98px;
+       display: inherit;
+   }
+   .form-to button{
+       margin-left: 11px;
+    }
+  .page-header-nav{
+      flex-direction: row;
+      margin-bottom: 4px;
+      margin-left: -12px;
+      margin-top: 9px;
+  }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  .page-header{
+      margin-left: 0.5rem;
+      color: #4d4d4d;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+  }
+  .form-from{
+       margin-left: 236px;
+       display: inherit;
+   }
+   .form-to{
+       margin-left: -233px;
+       margin-bottom: -98px;
+       display: inherit;
+   }
+   .form-to button{
+       margin-left: 11px;
+    }
+  .page-header-nav{
+      flex-direction: row;
+      margin-bottom: 4px;
+      margin-left: -12px;
+      margin-top: 9px;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .page-header{
+      margin-left: -10.5rem;
+      color: #4d4d4d;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+  }
+  .form-from{
+       margin-left: 60px;
+       display: inherit;
+   }
+   .form-to{
+       margin-left: -10px;
+       margin-bottom: 0px;
+       display: inherit;
+   }
+   .form-to button{
+       margin-left: 0px;
+    }
+  .page-header-nav{
+      flex-direction: row;
+      margin-left: -287px;
+      margin-top: 47px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  
+}
+@media only screen and (min-width : 1024px) {
+  .page-header{
+      margin-left: -11.5rem;
+      /*margin-top: 29px;*/
+      color: #4d4d4d;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+  }
+  .form-from{
+       margin-left: 47px;
+       display: inherit;
+       /*font-size: 16px;*/
+   }
+.form-from input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+      }
+.form-to{
+        margin-left: -13px;
+        margin-bottom: 2px;
+        display: inherit;
+        /*font-size: 16px;*/
+      }
+.form-to input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+            }
+.page-header-nav{
+    flex-direction: row;
+    margin-bottom: 10px;
+    margin-left: -56px;
+}
+}
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  
+}
+
+
+
+

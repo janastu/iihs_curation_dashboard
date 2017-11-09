@@ -4,21 +4,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand header-text" href="javascript:void(0)">IIHS MM logo</a>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse form-search">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="{{ 'Search' | translate }}" >
             </form>
-            
-            <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+        </div>   
+            <ul class="navbar-nav ml-auto mt-2 mt-md-0 header-list">
                 <!--<li class="nav-item hidden-lg-down">
                     <a href="https://github.com/start-angular/SB-Admin-BS4-Angular-2/archive/master.zip" class="nav-link btn mt-1" role="button" style="padding: .375rem 1rem !important; border-color: #999;">{{ 'Download Now' | translate }}</a>
                 </li> &nbsp;-->
                
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link mt-1 header-text" style="padding: 0.375rem 1rem !important; border-color: #999;" (click)="rltAndLtr()">RTL/LTR</a>
                 </li> &nbsp;
                
-               <!-- <li class="nav-item dropdown" ngbDropdown>
+                <li class="nav-item dropdown" ngbDropdown>
                     <div class="dropdown"> 
                     <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
                         <i class="fa fa-envelope"></i> <b class="caret"></b><span class="sr-only">(current)</span>
@@ -49,7 +49,7 @@
                             </div>
                         </li>
                     </ul>
-                </li>-->
+                </li>
                 
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link header-text" ngbDropdownToggle>
@@ -63,7 +63,7 @@
                         <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('it')">{{ 'Italian' | translate }}</a>
                         <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('fa')">{{ 'Farsi' | translate }}</a>
                     </div>
-                </li>
+                </li>-->
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link header-text" ngbDropdownToggle>
                         <i class="fa fa-user"></i> John Smith <b class="caret"></b>
@@ -76,6 +76,6 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        
     </nav>
 </div>
