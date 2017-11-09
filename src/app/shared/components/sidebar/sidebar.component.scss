@@ -7,7 +7,7 @@ $onhover:rgba( 0, 0, 0, 0.63 );
     z-index: 1000;
     top: 0px;
     left: 235px;
-    width: 247px;
+    width: 226px;
     margin-left: -235px;
     border: none;
     border-radius: 0;
@@ -123,7 +123,7 @@ $onhover:rgba( 0, 0, 0, 0.63 );
 }
 @media screen and (max-width: 992px) {
     .sidebar {
-        top: 54px;
+        top: 0px;
         left: 0px;
     }
 }
@@ -155,4 +155,6 @@ $onhover:rgba( 0, 0, 0, 0.63 );
     background: #e2e2e2;
     color: rgba(0, 0, 0, 0.63);
     
+
 }
+

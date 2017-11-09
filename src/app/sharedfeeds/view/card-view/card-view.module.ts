@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardViewComponent } from './card-view.component';
 import { HoverToolbarModule,ModalModule } from '../../components';
-//import { CreateboardcomponentModule } from '../../components';
-//import { DropdownComponent } from '../../../layout/bs-component/components';
 
 @NgModule({
     imports: [

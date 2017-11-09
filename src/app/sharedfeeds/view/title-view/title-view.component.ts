@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
 
@@ -11,7 +11,7 @@ import { Service } from '../../../services/services';
 export class TitleViewComponent implements OnInit {
 feeds:any=[];
 mouseover:boolean = false;
-
+@Input('feeds') incomingfeeds:any=[];
 
   constructor(public service:Service) {
     	console.log("mouseover",this.mouseover);

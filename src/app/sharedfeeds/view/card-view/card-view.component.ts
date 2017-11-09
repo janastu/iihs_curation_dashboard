@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
 
@@ -10,7 +10,7 @@ import { Service } from '../../../services/services';
 })
 export class CardViewComponent implements OnInit {
 feeds:any=[];
-
+@Input('feeds') incomingfeeds:any=[];
   constructor(public service:Service) { }
 
   ngOnInit() {

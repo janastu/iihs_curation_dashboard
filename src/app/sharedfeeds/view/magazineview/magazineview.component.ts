@@ -18,7 +18,6 @@ feeds:any=[];
 Dataglobal:any;
 
   constructor(public service:Service) {
-  	
    }
 
   ngOnInit() {

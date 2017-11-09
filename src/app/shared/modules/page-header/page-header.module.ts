@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageHeaderComponent } from './page-header.component';
-//import { DropdownComponent } from '../../../layout/bs-component/components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [PageHeaderComponent],
     exports: [PageHeaderComponent]

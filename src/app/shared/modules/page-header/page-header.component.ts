@@ -1,5 +1,5 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
-import { FormBuilder, Validators, FormGroup} from '@angular/forms';
+import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -11,70 +11,73 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent implements OnInit{
     @Input() heading: string;
     @Input() icon: string;
-    @Output('childData') outgoing:any = new EventEmitter();
-
+    @Output('childView') outgoing:any = new EventEmitter();
+    @Output('childDates') Dates:any = new EventEmitter();
+    @Output('childCategory') Category:any = new EventEmitter();
 iconarticle:boolean=false;
 iconmagazine:boolean=false;
 iconcard:boolean=false;
 icontitle:boolean=false;
 iconreadlater:boolean=false;
-loginForm;
+loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
 
   ngOnInit() {
-  console.log(this.iconarticle);
     this.loginForm = this.formBuilder.group({
+
       fromdate: this.fromdate,
       todate: this.todate
-
     });
-  
   }
+  //function to get input values annd emit to feed component
   datefilter(){
+ 
     var changefrom,changeto;
-     changefrom = this.datepipe.transform(this.fromdate.value, 'dd.MM.yyyy');
-     changeto = this.datepipe.transform(this.todate.value, 'dd.MM.yyyy');
-   
-    }
-  
-   readlater(item){
-  	console.log("called",item);
-  
-
+    changefrom = this.datepipe.transform(this.fromdate.value, 'dd.MM.yyyy');
+    changeto = this.datepipe.transform(this.todate.value, 'dd.MM.yyyy');
+    console.log("date value",changefrom);
+    this.Dates.emit({changefrom,changeto});
+    this.loginForm.reset();
   }
-  onChange(deviceValue) {
-    this.outgoing.emit(deviceValue);
+  //function to get radio input values for view annd emit to feed component
+  onChangeView(deviceValue) {
+    this.outgoing.emit(deviceValue.value);
 
-    if(deviceValue === 'Article'){
+    if(deviceValue.value.value === 'Article'){
       this.iconarticle=true;
       this.iconmagazine = false;
       this.iconcard = false;
       this.icontitle=false;
       
     }
-    else if ( deviceValue === 'Magazine'){
+    else if ( deviceValue.value === 'Magazine'){
       this.iconmagazine=true;
       this.iconarticle = false;
       this.iconcard = false;
       this.icontitle=false;
     }
-    else if(deviceValue === 'Title'){
+    else if(deviceValue.value === 'Title'){
       this.icontitle=true;
       this.iconmagazine = false;
       this.iconcard = false;
       this.iconarticle=false;
     }
-    else if(deviceValue === 'Card'){
+    else if(deviceValue.value === 'Card'){
       this.iconcard = true;
       this.iconmagazine = false;
       this.icontitle = false;
       this.iconarticle=false;
     }
      
-}
+  }
+ //function to get radio input values for Category annd emit to feed component
+  onCate(cat){
+    console.log(cat.value);
+    this.Category.emit(cat.value);
+  }
 
  
 

@@ -9,22 +9,56 @@ import { Service } from '../../services/services';
   animations: [routerTransition()]
 })
 export class ReadLaterComponent implements OnInit {
-feeds:any=[];
-metadata:any=[];
-Dataglobal:any;
+feeds:any=[];                //variable to store feeds to display
+metadata:any=[];             //variable to store metadata of feeds
+view:any;                    //variable to store the view state
+globalfeeds:any=[];          //variable to store feeds globally
+date:any;                    //variable to store the state of dates to filters
   constructor(public service:Service) {
-   console.log("sam",this.Dataglobal); }
+   }
    
-
+   //On loading Component
   ngOnInit() {
+    //Fetch the data from service and store in global variable
   	this.service.getAll().then(result=>{
-    this.feeds= result;
-    this.metadata=result["_nr_metadata"];
+      this.globalfeeds= result;
+      this.feeds = this.globalfeeds;
     });
   }
-  public handleEvent(childData:any){
-    this.Dataglobal = childData;
-   
+  //Function to handle view event from page-header component
+  public handleView(childView:any){
+    this.view = childView;
+
   }
+  //Function to handle Date event from page-header component
+  public handleDate(childDates:any){
+
+    this.date = childDates;
+    var fromdate = Date.parse(this.date.changefrom);
+    var todate = Date.parse(this.date.changeto);
+    console.log("global",this.globalfeeds);
+   var datefilteredfeeds =  this.globalfeeds.filter((res)=>{
+      var checkdate = Date.parse(res.date);
+       if(fromdate<=checkdate && todate>=checkdate){
+          return res;
+        }
+
+    });
+   
+   this.feeds = datefilteredfeeds;
+   console.log("filtered",datefilteredfeeds);
+  }
+  //Function to handle Category event from page-header component
+  public handleCategory(childCategory:any){
+
+   this.feeds =  this.globalfeeds.filter((res)=>{
+     console.log(childCategory,res.category);
+       if(res.category === childCategory){
+          return res;
+        }
+
+    });
+  }
+
 
 }

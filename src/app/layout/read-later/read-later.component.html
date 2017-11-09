@@ -1,28 +1,29 @@
+<router-outlet></router-outlet>
 <div [@routerTransition]>
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="'Read later'" (childData)='handleEvent($event)'></app-page-header>
+            <app-page-header [heading]="'Read Later'" (childView)='handleView($event)' (childDates)='handleDate($event)'></app-page-header>
         </div>
     </div>
-    <!--Component to display if no view is selected-->
-<div *ngIf = "Dataglobal === undefined" > 
-  <app-magazineview></app-magazineview>
+<!--Component to display if no view is selected-->
+<div *ngIf = "view === undefined" > 
+  <app-magazineview [feeds]='feeds'></app-magazineview>
 </div>
 <!--Component to display if Magazine view is selected-->
-<div *ngIf = "Dataglobal === 'Magazine'" > 
-  <app-magazineview></app-magazineview>
+<div *ngIf = "view === 'Magazine'" > 
+  <app-magazineview [feeds]='feeds'></app-magazineview>
 </div>
 <!--Component to display if Article view is selected-->
-<div *ngIf = "Dataglobal === 'Article'" > 
-  <app-articleview></app-articleview>
+<div *ngIf = "view === 'Article'" > 
+  <app-articleview [feeds]='feeds'></app-articleview>
 </div>
 <!--Component to display if Card view is selected-->
-<div *ngIf = "Dataglobal === 'Card'" > 
-  <app-card-view></app-card-view>
+<div *ngIf = "view === 'Card'" > 
+  <app-card-view [feeds]='feeds'></app-card-view>
 </div>
 <!--Component to display if Title view is selected-->
-<div *ngIf = "Dataglobal === 'Title'" > 
-  <app-title-view></app-title-view>
+<div *ngIf = "view === 'Title'" > 
+  <app-title-view [feeds]='feeds'></app-title-view>
 </div>
 </div>  

@@ -2,7 +2,8 @@
 
         <div class="ago">
         <app-createboardcomponent></app-createboardcomponent>
-        <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
+        <a class="nav-item" (click)="change()"><i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
+                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
 
         <!--<a class="nav-item" href="#"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>-->

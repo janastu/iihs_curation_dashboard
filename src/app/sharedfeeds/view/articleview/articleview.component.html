@@ -12,7 +12,7 @@
     
     	<div class="card-blocks">
           <div class="row">
-            <div class="feeds-entries" *ngFor="let item of feeds">
+            <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
                 <app-modal #modal [item]="item"></app-modal>
@@ -31,56 +31,10 @@
               </div>
               <!--Feed Toolbar-->
               <div class="row">
-              <div class="navbar-nav article-tool-bar">
-              <!--Save to board-->
-              <div>
-                <div ngbDropdown class="board" [autoClose]="false">
-                <a class="save" ngbDropdownToggle aria-expanded="true"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>
-                 <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
-                      <form class="form-inline form-group">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
-                      </form>
-                      <div class="field" *ngFor="let item of boards">
 
-                        <div class="board-item"><i class="fa fa-fw fa-star-o board-list"></i>
-                          {{item.title}}
-                         
-                            <button class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-                         </div>
-                       
-                      </div>
-                      
-                      <div class="border-board" >
-                        <a (click)="oncreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
-                      </div>
-                     
+                <app-article-toolbar></app-article-toolbar>
+              
 
-                    </div>
-                   
-                </div>
-
-                <div *ngIf="visible" class="form-group savetoboard">
-                  <form class="form-inline form-group">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Create a board">
-                  </form>
-
-                  
-                  <div>
-                    <button (click)="savetoboard()" class="btn btn-sm btn-success">Create a Board</button>
-                    <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
-                  </div>
-
-                </div>
-               
-               </div>
-                
-                  <a class="nav-item" href="#"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a>
-                  <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
-
-                 <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
-                
-                </div>
               </div>
               <!--Feed Image-->
               <div class="row">

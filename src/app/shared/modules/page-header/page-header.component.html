@@ -7,15 +7,21 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6 form-item">
-    <form class="form-inline">
-        <div class="form-from form-group">
-            <label class="page-header-form">From</label>
+
+
+<div class="col-sm-6 form-item">
+<!--Date filter form-->
+
+    <form [formGroup]="loginForm" class="form-inline form-group">
+    <div class="form-from">
+                    <label class="page-header-form">From</label>
+
             <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
-        </div>
+      </div>
         <div class="form-to form-group">
             <label class="page-header-form">To</label>
             <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
+
             <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
         </div>
     </form>
@@ -105,28 +111,28 @@
                     
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">                    
-                    <fieldset class="form-group field">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')" > Artilce View
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')" > Magazine View
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')" > Title View
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')" > Card View
-                            </label>
-                        </div>
-                    </fieldset>
+                   <fieldset class="form-group field">
+                       <div class="radio">
+                           <label>
+                               <input type="radio" #articleview name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChangeView(articleview)" > Artilce View
+                           </label>
+                       </div>
+                       <div class="radio">
+                           <label>
+                               <input type="radio" #magazineview name="optionsRadios" id="optionsRadios2" value="Magazine" (click)="onChangeView(magazineview)" > Magazine View
+                           </label>
+                       </div>
+                       <div class="radio">
+                           <label>
+                               <input type="radio" #titleview name="optionsRadios" id="optionsRadios3" value="Title" (click)="onChangeView(titleview)" > Title View
+                           </label>
+                       </div>
+                       <div class="radio">
+                           <label>
+                               <input type="radio" #cardview name="optionsRadios" id="optionsRadios3" value="Card" (click)="onChangeView(cardview)" > Card View
+                           </label>
+                       </div>
+                   </fieldset>
                 </div>
             </div>
                    
@@ -166,6 +172,7 @@
                    <div class="border-more" >
                     <label class="checkbox-inline">
                             <input type="checkbox" checked="">Unread
+
                         </label>
                    </div>
                 </div>

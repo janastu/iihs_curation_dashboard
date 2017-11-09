@@ -1,0 +1,25 @@
+.article-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 21px;
+
+}
+.article-tool-bar a{
+    color: #a3a3a2;
+}
+.article-tool-bar button {
+    color: #a3a3a2;
+    background-color: #fff;
+    border-color: white;
+}
+.article-tool-bar .savetoboard{
+    top: 84px;
+    left: -2px;
+}
+
+.article-star{
+    display: inline-flex;
+    margin-right: -14px;
+    margin-left: 5px;
+}

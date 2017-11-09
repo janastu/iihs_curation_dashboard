@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class CreateboardcomponentComponent implements OnInit {
 boards:any=[];
 visible:boolean;
-  constructor() {
+invisible:boolean;
+  constructor(public ngconfig:NgbDropdownConfig) {
+    
   this.boards.push({
     title:'tech'
   },
@@ -16,18 +19,16 @@ visible:boolean;
     title:'science'
   }); 
   //This will hide the DIV by default.
+
  
 }
 
   ngOnInit() {
 
   }
-  oncreateboard(){
-    this.visible=true;
-    console.log(this.visible);
-  }
   cancelboard(){
     this.visible=false;
-    console.log(this.visible);
+    
   }
+  
 }

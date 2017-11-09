@@ -1,4 +1,4 @@
-import { Component,Input,ViewChild} from '@angular/core';
+import { Component,Input,ViewChild,ElementRef} from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,7 +10,10 @@ export class ModalComponent {
     @Input() item: any;
     closeResult: string;
     @ViewChild('content') modal:any;
-    constructor(private modalService: NgbModal) { }
+    @ViewChild('ic') ElementRef:any;
+    icon:boolean=false;
+
+    constructor(private modalService: NgbModal,public elementRef:ElementRef) { }
 
     open(content) {
        this.modalService.open(this.modal).result.then((result) => {
@@ -29,5 +32,8 @@ export class ModalComponent {
         } else {
             return  `with: ${reason}`;
         }
+    }
+    change(){
+       this.icon=true;       
     }
 }

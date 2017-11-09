@@ -69,7 +69,7 @@ $topnav-background-color: #222;
 }
 .header .navbar {
     /*background: $topnav-background-color !important;*/
-    background: #000;
+    background: white;
 }
 .header{
     left:268px;   
@@ -78,6 +78,7 @@ $topnav-background-color: #222;
     color: rgba( 0, 0, 0, 0.63 ) !important;
     opacity: 1 !important;
 }
+
 
 
 /*===============================================================================================
@@ -113,14 +114,23 @@ Bootstrap 3 Media Queries
 .header{
     left:10px;   
 }
+.header-text{
+    font-size: 13px;
+}
 .form-search{
     display: block !important;
     margin-left: 132px;
     margin-top: -45px;
 }
-.header-list{
+.form-search .form-inline input{
+    font-size: 13px;
+    margin-left: -42px;
+    margin-top: 7px;
+    width: 84px;
+}
+.header-list li{
     display: block;
-    margin-right: 103px;
+    margin-top: -52px;
 }
 }
 
@@ -131,6 +141,9 @@ Bootstrap 3 Media Queries
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
+.header{
+    left:6px;   
+}
   .header-list li{
     display: block;
     margin-right: 0px;
@@ -145,20 +158,31 @@ Bootstrap 3 Media Queries
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1024px) {
 .header{
-    left:268px; 
-    margin-top: 2px; 
+    left: 225px; 
+    margin-top: -9px; 
+}
+.header-text{
+    font-size: 20px;
 }
 .form-search{
     display: block !important;
-    margin-left: 9px;
+    margin-left: 36px;
     margin-bottom: -47px;
+}
+.form-search .form-inline input{
+    margin-left: -42px;
+    margin-top: 7px;
+    width: 170px;
 }
 .header-list li{
     display: block;
-    margin-right: -133px;
-    margin-left: -19px;
+    margin-right: -19px;
+    margin-top: 0px;
+    margin-left: -147px;
 }
 }
 @media only screen and (min-width : 1200px) {
 
 }
+
+

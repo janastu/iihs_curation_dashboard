@@ -116,8 +116,12 @@
   .page-header{
       margin-left: 0.5rem;
       color: #4d4d4d;
+      margin-top: -11px;
   }
-   .form-item{
+  .page-header h2{
+    font-size: 21px;
+  }
+  .form-item{
       display: inherit;
       margin-bottom: 46px;
   }
@@ -174,12 +178,12 @@
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
   .page-header{
-      margin-left: -10.5rem;
-      color: #4d4d4d;
+      margin-left: -11.5rem;
   }
    .form-item{
       display: inherit;
       margin-bottom: 46px;
+      margin-left: -13px;
   }
   .form-from{
        margin-left: 60px;
@@ -206,13 +210,17 @@
 }
 @media only screen and (min-width : 1024px) {
   .page-header{
-      margin-left: -11.5rem;
+      margin-left: -12.5rem;
       /*margin-top: 29px;*/
       color: #4d4d4d;
+  }
+  .page-header h2{
+    font-size: 25px;
   }
    .form-item{
       display: inherit;
       margin-bottom: 46px;
+      margin-left: -14px;
   }
   .form-from{
        margin-left: 47px;
@@ -237,7 +245,7 @@
             }
 .page-header-nav{
     flex-direction: row;
-    margin-bottom: 10px;
+    margin-top: 0px;
     margin-left: -56px;
 }
 }

@@ -6,11 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hover-toolbar.component.scss']
 })
 export class HoverToolbarComponent implements OnInit {
-
+icon:boolean=false;
   constructor() { }
 
   ngOnInit() {
   	console.log("hover");
+  }
+  change(){
+     this.icon=true;       
   }
 
 }
