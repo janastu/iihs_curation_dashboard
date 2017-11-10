@@ -76,30 +76,14 @@ To change breakpoint for nav collapse
 
 
 @media (max-width: 480px) {
- .magazine-hover-control {
-     opacity: 0;
-     margin-left: 356px;
-   }
+ 
 }
 
 @media (max-width: 767px) {
-.magazine-hover-control {
-    opacity: 0;
-    margin-left: 278px;
-  }
-}
-
-@media (max-width: 995px) {
   
 }
 
-@media (max-width: 1024px) {
- .magazine-hover-control {
-     opacity: 0;
-     margin-left: 443px;
-   } 
-}
-@media (max-width: 1440px) {
+@media (max-width: 995px) {
   
 }
 
@@ -112,29 +96,47 @@ Bootstrap 3 Media Queries
 
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
-  
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: -86px !important;
+}
 }
 
 /* Extra Small Devices, Phones */ 
 @media only screen and (min-width : 480px) {
-  
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: -94px !important;
+}  
 }
 
 /* Small Devices, Tablets */
+@media only screen and (min-width : 576px) {
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: -79px !important;
+}   
+}
+
 @media only screen and (min-width : 768px) {
-  
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 21px !important;
+}   
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
-  
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 293px !important;
+}   
 }
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
-  
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 440px !important;
 }
-
-
-
-
+}
