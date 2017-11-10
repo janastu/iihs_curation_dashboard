@@ -13,7 +13,8 @@
       <div class="col-sm-6 offset-sm-3">
     
           <div class="card-blocks">
-            <div class="row">
+            <div class="row centered">
+              
 
               <div class="feeds-entries" *ngFor="let item of incomingfeeds">
                 <!--Feed Hover-->
@@ -42,7 +43,7 @@
                     </a>
                     <!--Feed Desc-->
                     <div class="feed-content">
-                        {{item.desc.substring(0,60)}}
+                        {{item.desc.substring(0,80)}}
                     </div>
                    
                 </div>

@@ -33,15 +33,6 @@
     color: #4d4d4d;
 }
 
-.popover{
-    top: 40px;
-    right: -53px;
-    background-color: white;
-    border-radius: 0.2rem;
-    position: absolute;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2), 0px 0px 2px rgba(0, 0, 0, 0.38);
-    
-}
 
 .menu{
     max-height: 70vh;
@@ -79,6 +70,9 @@
 }
 .form-item{
     display: inherit;
+}
+.dropdown-width{
+  max-width: 100px;
 }
 
 
@@ -142,6 +136,9 @@
       margin-bottom: 4px;
       margin-left: -12px;
       margin-top: 9px;
+  }
+  .placement-small-screen{
+      left: 150px !important;
   }
 }
 
@@ -248,6 +245,9 @@
     margin-top: 0px;
     margin-left: -56px;
 }
+.placement-small-screen{
+      left: 115px !important;
+  }
 }
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {

@@ -12,7 +12,6 @@
     max-width: 624px;
     padding-left: 12px;
     max-height:100px;
-    overflow:hidden;
 }
 /*Styles for Feed Heading*/
 .feed-heading{
@@ -21,7 +20,7 @@
     color:#333333;
     cursor:pointer;
 }
-/*Styles for Feed Heading*/
+/*Styles for Feed Code*/
 .feed-content{
     font-size:14px;
     font-family: 'Slab Serif', sans-serif;
@@ -75,9 +74,37 @@ To change breakpoint for nav collapse
 ==============================================================================================*/
 
 
-@media (max-width: 480px) {
- 
+
+@media  (max-width: 480px) {
+ .magazine-hover-control {
+     opacity: 0;
+     margin-left: 356px;
+   }
+ .feed-entry{
+    border-bottom: 0;
+     border-radius: 0;
+     border-right: 0;
+     border-top: 0;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     margin-bottom: 32px;
+     margin-left: 0px;
+     margin-top: 23px;
+     max-width: 300px;
+     max-height:200px;
+     padding-left: 0px;
+     /* max-height: 100px; */
+     /* overflow: hidden; */
+ }
+ .feed-content{
+    width: 289px;
+    margin-left: -150px;
+ }
+
 }
+
+
 
 @media (max-width: 767px) {
   
@@ -96,32 +123,32 @@ Bootstrap 3 Media Queries
 
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
-.magazine-hover-control {
+/*.magazine-hover-control {
     opacity: 0;
     margin-left: -86px !important;
-}
+}*/
 }
 
 /* Extra Small Devices, Phones */ 
 @media only screen and (min-width : 480px) {
-.magazine-hover-control {
+/*.magazine-hover-control {
     opacity: 0;
     margin-left: -94px !important;
-}  
+} */ 
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 576px) {
 .magazine-hover-control {
     opacity: 0;
-    margin-left: -79px !important;
+    margin-left: 261px !important;
 }   
 }
 
 @media only screen and (min-width : 768px) {
 .magazine-hover-control {
     opacity: 0;
-    margin-left: 21px !important;
+    margin-left: 338px !important;
 }   
 }
 

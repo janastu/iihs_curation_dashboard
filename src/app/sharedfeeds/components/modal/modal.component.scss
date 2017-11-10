@@ -13,6 +13,7 @@
         text-align: center; 
         border: transparent;
         z-index: 1;
+        cursor:pointer
 }
 
 .modal-tool-bar button {
@@ -79,3 +80,14 @@
 
 }
 
+@media  (max-width: 480px) {
+    .modal-image{
+        max-width: 270px;
+    }
+    .feed-heading{
+        max-width: 300px;
+    }
+    .metadata-modal{
+        margin-top: 65px;
+    }
+}

@@ -95,3 +95,76 @@
   	border: transparent;
   	z-index: 1;
 }
+
+/*===============================================================================================
+MEDIA QUERIES
+
+To change breakpoint for nav collapse
+==============================================================================================*/
+
+
+@media (max-width: 480px) {
+ 
+}
+
+@media (max-width: 767px) {
+  
+}
+
+@media (max-width: 995px) {
+  
+}
+
+
+/*========================================================
+  
+Bootstrap 3 Media Queries
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+ .card-hover-control {
+	opacity: 0;
+	margin-left: 208px;
+}  
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+ .card-hover-control {
+	opacity: 0;
+	margin-left: 317px;
+}  
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 576px) {
+.card-hover-control {
+	opacity: 0;
+	margin-left: 91px;
+} 
+}
+
+@media only screen and (min-width : 768px) {
+ .card-hover-control {
+	opacity: 0;
+	margin-left: 163px;
+}  
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+ .card-hover-control {
+	opacity: 0;
+	margin-left: 147px;
+}  
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+.card-hover-control {
+	opacity: 0;
+	margin-left: 190px;
+} 
+}
