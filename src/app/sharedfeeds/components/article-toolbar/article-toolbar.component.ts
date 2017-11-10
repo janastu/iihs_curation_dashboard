@@ -6,14 +6,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./article-toolbar.component.scss']
 })
 export class ArticleToolbarComponent implements OnInit {
-icon:boolean=false;
-  constructor() { }
+bookmarkicon:boolean=false;
+staricon:boolean=false;
+boards:any=[];
+visible:boolean;
+
+  constructor() { 
+    this.boards.push({
+      title:'tech'
+    },
+    {
+      title:'science'
+    }); 
+    //This will hide the DIV by default.
+
+   
+  }
 
   ngOnInit() {
-  	console.log("article");
+
   }
-  change(){
-     this.icon=true;       
+  cancelboard(){
+    this.visible=false;
+  }
+  savetoboard(){
+    
+    this.staricon=true;
+  }
+  removefromboard(){
+    
+    this.staricon=false;
   }
 
 }

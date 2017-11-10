@@ -134,3 +134,55 @@
 }
 
 
+ 
+
+@media  (max-width: 480px) {
+ .magazine-hover-control {
+     opacity: 0;
+     margin-left: 356px;
+   }
+   .feeds-entries{
+    padding-left: 10px;
+   }
+   .feed-heading{
+       width: 300px;
+    }
+   .article-image{
+    max-width: 300px;
+    max-height: 300px;
+    margin-bottom: 3rem;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+   }
+}
+
+
+
+@media (max-width: 768px) {
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 278px;
+  }
+  .feed-heading{
+      max-width: 500px;
+   }
+}
+
+@media (max-width: 995px) {
+  
+}
+
+@media (max-width: 1024px) {
+ .magazine-hover-control {
+     opacity: 0;
+     margin-left: 443px;
+   } 
+   .feed-heading{
+       max-width: 550px;
+    }
+
+}
+@media (max-width: 1440px) {
+  
+}

@@ -10,6 +10,7 @@ export class CreateboardcomponentComponent implements OnInit {
 boards:any=[];
 visible:boolean;
 invisible:boolean;
+staricon:boolean=false;
   constructor(public ngconfig:NgbDropdownConfig) {
     
   this.boards.push({
@@ -29,6 +30,9 @@ invisible:boolean;
   cancelboard(){
     this.visible=false;
     
+  }
+  savetoboard(){
+    this.staricon=true;
   }
   
 }

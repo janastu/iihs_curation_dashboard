@@ -142,3 +142,12 @@
 @include media-breakpoint-up(lg) {
   .modal-lg { max-width: $modal-lg; }
 }
+@media  (max-width: 480px) {
+    .modal-content{
+        width:300px;
+        height: 848px;
+    }
+    .modal-body{
+        padding-left: 30px;
+    }
+}

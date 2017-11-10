@@ -7,10 +7,11 @@
       </form>
       <div class="field" *ngFor="let item of boards">
 
-        <div class="board-item"><i class="fa fa-fw fa-star-o board-list"></i>
+        <div class="board-item"><i *ngIf="!staricon"class="fa fa-fw fa-star-o" title="Save to board"></i>
+              <i *ngIf="staricon" class="fa fa-fw fa-star"></i>
           {{item.title}}
          
-            <button class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+            <button (click)="savetoboard()" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
          </div>
        
       </div>

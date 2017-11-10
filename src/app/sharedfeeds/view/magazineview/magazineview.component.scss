@@ -12,7 +12,6 @@
     max-width: 624px;
     padding-left: 12px;
     max-height:100px;
-    overflow:hidden;
 }
 /*Styles for Feed Heading*/
 .feed-heading{
@@ -21,7 +20,7 @@
     color:#333333;
     cursor:pointer;
 }
-/*Styles for Feed Heading*/
+/*Styles for Feed Code*/
 .feed-content{
     font-size:14px;
     font-family: 'Slab Serif', sans-serif;
@@ -75,12 +74,35 @@ To change breakpoint for nav collapse
 ==============================================================================================*/
 
 
-@media (max-width: 480px) {
+@media  (max-width: 480px) {
  .magazine-hover-control {
      opacity: 0;
      margin-left: 356px;
    }
+ .feed-entry{
+    border-bottom: 0;
+     border-radius: 0;
+     border-right: 0;
+     border-top: 0;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     margin-bottom: 32px;
+     margin-left: 0px;
+     margin-top: 23px;
+     max-width: 300px;
+     max-height:200px;
+     padding-left: 0px;
+     /* max-height: 100px; */
+     /* overflow: hidden; */
+ }
+ .feed-content{
+    width: 289px;
+    margin-left: -150px;
+ }
 }
+
+
 
 @media (max-width: 767px) {
 .magazine-hover-control {
