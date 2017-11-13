@@ -76,31 +76,7 @@ To change breakpoint for nav collapse
 
 
 @media  (max-width: 480px) {
- .magazine-hover-control {
-     opacity: 0;
-     margin-left: 356px;
-   }
- .feed-entry{
-    border-bottom: 0;
-     border-radius: 0;
-     border-right: 0;
-     border-top: 0;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     margin-bottom: 32px;
-     margin-left: 0px;
-     margin-top: 23px;
-     max-width: 300px;
-     max-height:200px;
-     padding-left: 0px;
-     /* max-height: 100px; */
-     /* overflow: hidden; */
- }
- .feed-content{
-    width: 289px;
-    margin-left: -150px;
- }
+ 
 
 }
 
@@ -123,32 +99,32 @@ Bootstrap 3 Media Queries
 
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
-/*.magazine-hover-control {
+.magazine-hover-control {
     opacity: 0;
-    margin-left: -86px !important;
-}*/
+    margin-left: 229px !important;
+}
 }
 
 /* Extra Small Devices, Phones */ 
 @media only screen and (min-width : 480px) {
-/*.magazine-hover-control {
+.magazine-hover-control {
     opacity: 0;
-    margin-left: -94px !important;
-} */ 
+    margin-left: 357px !important;
+}
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 576px) {
 .magazine-hover-control {
     opacity: 0;
-    margin-left: 261px !important;
+    margin-left: 202px !important;
 }   
 }
 
 @media only screen and (min-width : 768px) {
 .magazine-hover-control {
     opacity: 0;
-    margin-left: 338px !important;
+    margin-left: 303px !important;
 }   
 }
 
@@ -161,9 +137,15 @@ Bootstrap 3 Media Queries
 }
 
 /* Large Devices, Wide Screens */
+@media only screen and (min-width : 1024px) {
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 327px !important;
+}
+}
 @media only screen and (min-width : 1200px) {
 .magazine-hover-control {
     opacity: 0;
-    margin-left: 440px !important;
+    margin-left: 399px !important;
 }
 }
