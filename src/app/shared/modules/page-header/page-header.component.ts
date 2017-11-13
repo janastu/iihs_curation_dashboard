@@ -40,7 +40,7 @@ todate = this.formBuilder.control('', [Validators.required]);
     changeto = this.datepipe.transform(this.todate.value, 'dd.MM.yyyy');
     console.log("date value",changefrom);
     this.Dates.emit({changefrom,changeto});
-    this.loginForm.reset();
+    
   }
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {

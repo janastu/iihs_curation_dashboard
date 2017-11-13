@@ -29,72 +29,42 @@
     </div>
     <div class="col-sm-6">
         <div class="nav navbar-nav navbar-right page-header-nav">
-                <div ngbDropdown class="d-inline-block">
+                <div ngbDropdown class="d-inline-block" [autoClose]='false'>
                     <button class="btn btn-outline-primary nav-item-filters categories" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
                       
-                        <fieldset class="form-group field">
-                            <div class="radio">
-                                <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> UrbanWater 
-                                </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Urban Environment
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Urban Waste
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios4" value="option3"> Urban Transportation and Mobility
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios" value="optionsRadios5"> Urban Infrastructure
-                                </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2"> Urban Economic Growth and Development
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios7" value="option3"> Urban Power
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios8" value="option3"> Urban Housing and Land    
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios" value="optionsRadios9"> Urban Heritage
-                                </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios10" value="option2"> Urban Health
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios11" value="option3"> AMRUT Smart Cities Mission
-                                    </label>
-                            </div>
-                            <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios12" value="option3"> Agriculture   
-                                    </label>
-                            </div>
-                        </fieldset>
+                    
+                            <select multiple="" class="form-control">
+                                <option> UrbanWater</option>
+                                <option> Urban Environment</option>
+                                <option> Urban Waste</option>
+                    
+                            <option> Urban Transportation and Mobility
+                                    </option>
+                            
+                                <option> Urban Infrastructure
+                                </option>
+                            
+                                    <option> Urban Economic Growth and Development
+                                    </option>
+                            
+                            <option> Urban Power
+                                    </option>
+                         <option>Urban Housing and Land    
+                                    </option>
+                    
+                                <option> Urban Heritage
+                                </option>
+                            
+                            <option> Urban Health
+                                    </option>
+                        <option> AMRUT Smart Cities Mission
+                                    </option>
+                            <option>
+                            Agriculture   
+                                </option>
+                            </select>
+               
                     </div>
                 </div>
 
