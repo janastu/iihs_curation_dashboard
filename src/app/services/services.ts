@@ -12,7 +12,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
 
 public getAll(){ 
     var msgurl = 'assets/example.json';
-    return new Promise(resolve => {
+    /*return new Promise(resolve => {
      this.http.get(msgurl).map(res => res.json()).subscribe(data => {
      
       console.log("Value is",data);
@@ -20,26 +20,11 @@ public getAll(){
       }, (err) => {
        console.log(err);
        });
-      });
-     //oundarray = this.extractjson(res);
-     //parsedarray = this.parseJSON(foundarray);
+      });*/
 
      
      
-    /*return new Promise(resolve => {
-=======
-     return new Promise(resolve => {
-          this.http.get(msgurl).map(res => res.json()).subscribe(data => {
-          
-           console.log("Value is",data);
-           resolve(data);
-           }, (err) => {
-            console.log(err);
-            });
-           });
-     /*
-    return new Promise(resolve => {
->>>>>>> 9db258907d6d0136e146279a9fe52458651f21e6
+   return new Promise(resolve => {
     var newsrack = 'http://newsrack.in/stories/servelots/iihs_feeds/16.json';
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
@@ -49,8 +34,7 @@ public getAll(){
      }, (err) => {
       console.log(err);
       });
-<<<<<<< HEAD
-  });*/
+  });
 
 
 

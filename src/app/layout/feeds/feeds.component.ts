@@ -24,7 +24,10 @@ date:any;              //variable to store the state of dates to filters
 
      //Fetch the data from service and store in global variable
      this.service.getAll().then(result=>{
-       this.globalfeeds= result;
+       
+       this.globalfeeds= result['_nr_stories'];
+       this.metadata= result['_nr_metadata'];
+       console.log("display",this.metadata)
        this.feeds = this.globalfeeds;
      });
   }

@@ -1,9 +1,6 @@
 export class JsonConvert { 
 
 constructor(){}
-foo(){
-  console.log("callrd");
-}
 
 parseJSON = (text) => {
   let quoteKeysAndParse = (text) => {

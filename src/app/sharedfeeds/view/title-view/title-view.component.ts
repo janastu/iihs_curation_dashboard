@@ -12,7 +12,7 @@ export class TitleViewComponent implements OnInit {
 feeds:any=[];
 mouseover:boolean = false;
 @Input('feeds') incomingfeeds:any=[];
-
+@Input('metadata') incomingmetadata:any=[];
   constructor(public service:Service) {
     	console.log("mouseover",this.mouseover);
     	 }

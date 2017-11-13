@@ -13,24 +13,20 @@ import { Service } from '../../../services/services';
 
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
-metadata:any=[];
-feeds:any=[];
+@Input('metadata') incomingmetadata:any=[];
+
 Dataglobal:any;
 
   constructor(public service:Service) {
    }
 
   ngOnInit() {
-    console.log("fes",this.incomingfeeds);
-  	this.service.getAll().then(result=>{
-  	this.feeds= result;
-
-  });
+     console.log("sam",this.incomingmetadata);
 
 	}
   public handleEvent(childData:any){
     this.Dataglobal = childData;
-    console.log("sam",this.Dataglobal);
+   
   }
   
 }
