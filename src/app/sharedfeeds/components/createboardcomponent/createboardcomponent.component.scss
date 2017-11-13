@@ -11,6 +11,12 @@
     width: 51px;
     opacity:0;
 }
+.remove-board{
+    height: 24px;
+    padding: 0;
+    width: 80px;
+    opacity:0;
+}
 .save{
     font-size: 15px;
     margin-left: -33px;
@@ -32,6 +38,9 @@
 }
 .board-item:hover{
     background-color:#f8f8f8;
+}
+.board-item:hover .remove-board{
+    opacity:1;
 }
 .board-field{
     height: 0px;

@@ -14,10 +14,12 @@ staricon:boolean=false;
   constructor(public ngconfig:NgbDropdownConfig) {
     
   this.boards.push({
-    title:'tech'
+    title:'tech',
+    status:'false'
   },
   {
-    title:'science'
+    title:'science',
+    status:'false'
   }); 
   //This will hide the DIV by default.
 
@@ -31,8 +33,13 @@ staricon:boolean=false;
     this.visible=false;
     
   }
-  savetoboard(){
-    this.staricon=true;
+  savetoboard(i){
+    
+    this.boards[i].status = 'true';
   }
+  removefromboard(i){
+    this.boards[i].status = 'false';
+  }
+ 
   
 }

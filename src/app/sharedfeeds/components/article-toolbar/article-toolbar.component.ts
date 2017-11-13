@@ -13,12 +13,14 @@ visible:boolean;
 
   constructor() { 
     this.boards.push({
-      title:'tech'
+      title:'tech',
+      status:'false'
     },
     {
-      title:'science'
+      title:'science',
+      status:'false'
     }); 
-    //This will hide the DIV by default.
+    //s will hide the DIV by default.
 
    
   }
@@ -29,13 +31,15 @@ visible:boolean;
   cancelboard(){
     this.visible=false;
   }
-  savetoboard(){
+  savetoboard(i){
     
-    this.staricon=true;
+    this.boards[i].status = 'true';
+    console.log(i,this.boards[i].status);
+    
   }
-  removefromboard(){
+  removefromboard(i){
     
-    this.staricon=false;
+  this.boards[i].status = 'false';
   }
 
 }
