@@ -18,6 +18,7 @@ feeds:any=[];          //variable to store feeds to display
 metadata:any=[];       //variable to store metadata of feeds
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
+
   constructor(public service:Service) { }
   //On loading Component
   ngOnInit() {
@@ -27,10 +28,12 @@ date:any;              //variable to store the state of dates to filters
        
        this.globalfeeds= result['_nr_stories'];
        this.metadata= result['_nr_metadata'];
-       console.log("display",this.metadata)
+       console.log("display",this.globalfeeds)
        this.feeds = this.globalfeeds;
      });
   }
+  
+
   //Function to handle view event from page-header component
   public handleView(childView:any){
     this.view= childView;
@@ -44,7 +47,8 @@ date:any;              //variable to store the state of dates to filters
     var todate = Date.parse(this.date.changeto);
     console.log("global",this.globalfeeds);
    this.feeds =  this.globalfeeds.filter((res)=>{
-      var checkdate = Date.parse(res.date);
+      var checkdate = Date.parse(res.date)/1000;
+      console.log(checkdate);
        if(fromdate<=checkdate && todate>=checkdate){
           return res;
         }

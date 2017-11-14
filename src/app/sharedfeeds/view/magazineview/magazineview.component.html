@@ -25,7 +25,8 @@
                <div class="feed-entry">
                <!--Feed Image--> 
                 <div class="desc-image">
-                 <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
+                 <img *ngIf="!itsimage" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
+                 <img *ngIf="itsimage" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                 
                 </div>
 
