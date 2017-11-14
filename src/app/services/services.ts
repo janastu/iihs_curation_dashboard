@@ -12,7 +12,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
 
 public getAll(){ 
     var msgurl = 'assets/example.json';
-    /*return new Promise(resolve => {
+  /*  return new Promise(resolve => {
      this.http.get(msgurl).map(res => res.json()).subscribe(data => {
      
       console.log("Value is",data);
@@ -20,8 +20,8 @@ public getAll(){
       }, (err) => {
        console.log(err);
        });
-      });*/
-
+      });
+*/
      
      
    return new Promise(resolve => {
@@ -35,7 +35,6 @@ public getAll(){
       console.log(err);
       });
   });
-
 
 
   }
