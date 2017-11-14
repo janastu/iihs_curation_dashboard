@@ -22,10 +22,10 @@ images:any=[];
    }
 
   ngOnInit() {
-   this.images = this.checkimg(this.incomingfeeds);
-   console.log("images",this.images);
+   //this.images = this.checkimg(this.incomingfeeds);
+   //console.log("images",this.images);
 	}
-  checkimg(feeds){
+  /*checkimg(feeds){
     var imagecollection = feeds.filter((val)=>{ 
       if(/<img[\s\S]*>/i.test(val.desc)){
         this.itsimage=true;
@@ -34,7 +34,7 @@ images:any=[];
     });
     return imagecollection;
    
-  }
+  }*/
   public handleEvent(childData:any){
     this.Dataglobal = childData;
    
