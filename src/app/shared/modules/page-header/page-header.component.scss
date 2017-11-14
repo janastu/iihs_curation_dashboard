@@ -74,7 +74,11 @@
 .dropdown-width{
   max-width: 100px;
 }
-
+.categories input{
+  width: 80px;
+  border-color: #e2e2e2;
+  border: 0px;
+}
 
 /*MEDIA QUERIES*/
 
@@ -222,6 +226,7 @@
   .form-from{
        margin-left: 47px;
        display: inherit;
+       line-height: 0;
        /*font-size: 16px;*/
    }
 .form-from input{
