@@ -26,7 +26,7 @@
                <!--Feed Image--> 
                 <div class="desc-image">
                  <img *ngIf="!itsimage" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
-                 <img *ngIf="itsimage" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
+                 <img *ngIf="itsimage" src="http://media2.intoday.in/indiatoday/images/stories/dengue305_102617022722.jpg" class="magazine-image">
                 
                 </div>
 
@@ -36,7 +36,7 @@
                      <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.url}} class="metadata-magazine">
-                                 {{incomingmetadata.category_name}}         </a>
+                      {{incomingmetadata.category_name}}</a>
                     <!--Feed Date-->
                     <a href={{item.url}} class="metadata-magazine">
                       {{item.date}}

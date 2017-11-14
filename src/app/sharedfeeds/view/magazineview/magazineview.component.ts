@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
-
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-magazineview',
@@ -16,23 +16,24 @@ export class MagazineviewComponent implements OnInit {
 @Input('metadata') incomingmetadata:any=[];
 itsimage:boolean=false;
 Dataglobal:any;
-
+images:any=[];
 
   constructor(public service:Service) {
    }
 
   ngOnInit() {
-     console.log("sam",this.incomingmetadata);
-
-     this.checkimg(this.incomingfeeds);
+   this.images = this.checkimg(this.incomingfeeds);
+   console.log("images",this.images);
 	}
   checkimg(feeds){
-    feeds.map((val)=>{
+    var imagecollection = feeds.filter((val)=>{ 
       if(/<img[\s\S]*>/i.test(val.desc)){
-        this.itsimage = true;
-        console.log(val.desc);
+        this.itsimage=true;
+        return val;
       }
     });
+    return imagecollection;
+   
   }
   public handleEvent(childData:any){
     this.Dataglobal = childData;
