@@ -10,6 +10,7 @@ export class ModalComponent {
     @Input() item: any;
     closeResult: string;
     @ViewChild('content') modal:any;
+    @ViewChild('newcontent') newmodal:any;
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
 
@@ -17,6 +18,14 @@ export class ModalComponent {
 
     open(content) {
        this.modalService.open(this.modal).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+        
+    }
+    openanother(content) {
+       this.modalService.open(this.newmodal).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

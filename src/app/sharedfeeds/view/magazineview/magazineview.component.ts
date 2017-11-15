@@ -22,19 +22,37 @@ images:any=[];
    }
 
   ngOnInit() {
-   //this.images = this.checkimg(this.incomingfeeds);
-   //console.log("images",this.images);
-	}
-  /*checkimg(feeds){
-    var imagecollection = feeds.filter((val)=>{ 
-      if(/<img[\s\S]*>/i.test(val.desc)){
-        this.itsimage=true;
-        return val;
-      }
-    });
-    return imagecollection;
    
-  }*/
+	}
+  checkimg(feeds){
+
+      return (/<img[\s\S]*>/i.test(feeds));
+   
+  }
+  extracturl(str){
+    //var regex = /<img.*?src='(.*?)'/;
+    //var regex = /<img[\s\S]*>/i;
+     //var src = regex.exec(str);
+     //console.log("src",src[0]);
+     //var s = src[0].replace(/(height=")\d+("\W+width=")\d+/, '$1$2');
+     //console.log("s",s);
+     var tmp = document.createElement('div');
+     tmp.innerHTML = str;
+     var src = tmp.querySelector('img').getAttribute('src');
+     console.log(src)
+     return src;
+     /*var div = document.createElement('div');
+     div.innerHTML = src[0];
+     var elements = div.childNodes;
+     console.log("eleme",elements[0]);
+     if(elements[0]){
+       return elements[0]|| null;
+     }
+     else{
+       return null;
+     }*/
+   
+  }
   public handleEvent(childData:any){
     this.Dataglobal = childData;
    

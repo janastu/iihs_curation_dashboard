@@ -77,6 +77,34 @@
                     <div class="modal-footer">
                     </div>
                 </ng-template>
+                <ng-template  #newcontent let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                          <div class="row">
+                             <div class="modal-tool-bar">
+                                <app-createboardcomponent class="modal-star"></app-createboardcomponent>
+                                    
+                                <a class="nav-item" (click)="change()"><i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
+                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i>
+                                </a>
+                                <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+                                <a class="nav-item" (click)="d('Cross click')"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
+                                    
+                              </div>
+                            </div>
+                          </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        hello
+                         
+                          
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
            <!-- </div>
         </div>
     </div>

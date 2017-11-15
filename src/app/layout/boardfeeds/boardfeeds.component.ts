@@ -9,6 +9,7 @@ import { Service } from '../../services/services';
 })
 export class BoardfeedsComponent implements OnInit {
 globalfeeds:any=[];    //variable to store feeds globally
+metadata:any=[];
 feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
@@ -17,7 +18,8 @@ date:any;              //variable to store the state of dates to filters
   ngOnInit() {
     //Fetch the data from service and store in global variable
   	this.service.getAll().then(result=>{
-      this.globalfeeds= result;
+      this.globalfeeds= result['_nr_stories'];
+      this.metadata = result['_nr_metadata'];
       this.feeds = this.globalfeeds;
     });
   }

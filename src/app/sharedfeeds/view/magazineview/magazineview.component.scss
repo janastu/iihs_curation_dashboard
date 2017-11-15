@@ -1,3 +1,4 @@
+
 /*Styles for Feed*/
 .feed-entry{
     border-bottom: 0;
@@ -34,6 +35,14 @@
 }
 .magazine-image{
     width: 130px;
+}
+.magazine-image img{
+    max-width: 137px !important;
+    max-height: 135px !important;
+}
+.desc-image magazine-image img{
+      width: 130px;
+      height: 90px;  
 }
 /*Styles for Feed Metadata*/
 .metadata-magazine{

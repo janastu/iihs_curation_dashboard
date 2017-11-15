@@ -12,8 +12,12 @@
           <div class="visual mb-3">
           <!--Mouse over for each element-->
             <div class="card-hover-control"><app-hover-toolbar></app-hover-toolbar></div>
-                      <!--TODO: if image available: display here -->
-                <div class="card-view">
+                
+                <div *ngIf="checkimg(item.desc)" class="card-view">
+                  <!--<div [innerHtml]="extracturl(item.desc)" class="card-view"></div>-->
+                  <img [src]="extracturl(item.desc)">
+                </div>
+                <div *ngIf="!checkimg(item.desc)" class="card-view">
                   <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
                 </div>
                     <div class="card-block card-text">
@@ -25,7 +29,8 @@
                       <!--Feed Date-->
                       <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.date}}</small>
                       <!--Feed description--> 
-                      <p class="feed-desc">{{item.desc.substring(0,85)}}</p> 
+                      <p *ngIf="checkimg(item.desc)" class="feed-desc"></p> 
+                      <p *ngIf="!checkimg(item.desc)" class="feed-desc">{{item.desc.substring(0,85)}}</p>
                     </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 $topnav-background-color: #efefef;
 $topnav-color:#222;
 $onhover:rgba( 0, 0, 0, 0.63 );
+$sidebutton:#292b2c;
+$sidecontentcolor:rgba(0, 0, 0, 0.63);
 .sidebar{
     border-radius: 0;
     position: fixed;
@@ -12,8 +14,7 @@ $onhover:rgba( 0, 0, 0, 0.63 );
     border: none;
     border-radius: 0;
     overflow-y: auto;
-    /*background-color: $topnav-background-color;*/
-    background-color: #EFEFEF;
+    background-color: $topnav-background-color;
     bottom: 0;
     overflow-x: hidden;
     padding-bottom: 40px;
@@ -129,16 +130,16 @@ $onhover:rgba( 0, 0, 0, 0.63 );
 }
 .add-content{
     top: -105px !important;
-    background-color: #efefef;
+    background-color:$topnav-background-color;
     border: 0px;
 }
 .add-content i{
-    color: rgba( 0, 0, 0, 0.63 );
+    color: $sidecontentcolor;
     margin-right: 10px;
     font-size: 0.875rem;
 }
 .add-content button{
-    color: #292b2c;
+    color: $sidebutton;
 }
 .side-content{
     position:absolute;
@@ -147,13 +148,13 @@ $onhover:rgba( 0, 0, 0, 0.63 );
 .side-content button{
     width: 267px;
     border: 0px;
-    color: #292b2c;
-    background-color: #efefef;
+    color: $sidebutton;
+    background-color: $topnav-background-color;
     box-shadow: 0 0 0 2px rgba(177, 180, 183, 0.23);
 }
 .side-content:hover button{
     background: #e2e2e2;
-    color: rgba(0, 0, 0, 0.63);
+    color: $sidecontentcolor;
     
 
 }

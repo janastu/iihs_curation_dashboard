@@ -24,7 +24,11 @@
 
                <div class="feed-entry">
                <!--Feed Image--> 
-                <div class="desc-image">
+                <div *ngIf="checkimg(item.desc)" class="desc-image">
+                 <img [src]="extracturl(item.desc)" class="magazine-image">
+                <!--<div [innerHtml]="extracturl(item.desc)" class="magazine-image"></div>-->
+                </div>
+                <div *ngIf="!checkimg(item.desc)" class="desc-image">
                  <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                
                 
@@ -42,7 +46,10 @@
                       {{item.date}}
                     </a>
                     <!--Feed Desc-->
-                    <div class="feed-content">
+                    <div *ngIf="checkimg(item.desc)" class="feed-content">
+                        
+                    </div>
+                    <div *ngIf="!checkimg(item.desc)" class="feed-content">
                         {{item.desc.substring(0,80)}}
                     </div>
                    
