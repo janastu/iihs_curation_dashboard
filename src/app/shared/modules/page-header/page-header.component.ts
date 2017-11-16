@@ -37,9 +37,9 @@ todate = this.formBuilder.control('', [Validators.required]);
   datefilter(){
  
     var changefrom,changeto;
-    changefrom = this.fromdate.value;
-    changeto = this.todate.value;
-    console.log("date value",this.fromdate.value,Date.parse(changefrom));
+    changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
+    changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
+    console.log("date value",changefrom,Date.parse(changefrom));
     this.Dates.emit({changefrom,changeto});
     
   }

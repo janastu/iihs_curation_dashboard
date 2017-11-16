@@ -37,17 +37,19 @@ date:any;                    //variable to store the state of dates to filters
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
-    console.log("global",this.globalfeeds);
-   var datefilteredfeeds =  this.globalfeeds.filter((res)=>{
-      var checkdate = Date.parse(res.date);
+    console.log("global",this.globalfeeds,fromdate);
+    this.feeds =  this.globalfeeds.filter((res)=>{
+      
+      var chunks = res.date.split('.');
+
+      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
+      var checkdate = Date.parse(formattedDate);
+      console.log("ch",formattedDate,checkdate);
        if(fromdate<=checkdate && todate>=checkdate){
           return res;
         }
 
     });
-   
-   this.feeds = datefilteredfeeds;
-   console.log("filtered",datefilteredfeeds);
   }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){

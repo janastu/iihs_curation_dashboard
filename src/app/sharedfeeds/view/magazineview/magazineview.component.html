@@ -13,7 +13,7 @@
       <div class="col-sm-6 offset-sm-3">
     
           <div class="card-blocks">
-            <div class="row centered">
+            <div class="row centered magazine-list">
               
 
               <div class="feeds-entries" *ngFor="let item of incomingfeeds">
@@ -36,7 +36,8 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item"></app-modal>
+                      <app-modal #modal [item]="item" [metadata]=
+                      "incomingmetadata"></app-modal>
                      <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.url}} class="metadata-magazine">

@@ -8,6 +8,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent {
     @Input() item: any;
+    @Input() metadata: any;
     closeResult: string;
     @ViewChild('content') modal:any;
     @ViewChild('newcontent') newmodal:any;
@@ -45,8 +46,33 @@ export class ModalComponent {
     change(){
        this.icon=true;       
     }
-    newval(){
-        console.log("called");
-        this.val=true;
-    }
+    checkimg(feeds){
+
+          return (/<img[\s\S]*>/i.test(feeds));
+       
+      }
+      extracturl(str){
+        //var regex = /<img.*?src='(.*?)'/;
+        //var regex = /<img[\s\S]*>/i;
+         //var src = regex.exec(str);
+         //console.log("src",src[0]);
+         //var s = src[0].replace(/(height=")\d+("\W+width=")\d+/, '$1$2');
+         //console.log("s",s);
+         var tmp = document.createElement('div');
+         tmp.innerHTML = str;
+         var src = tmp.querySelector('img').getAttribute('src');
+         //console.log(src)
+         return src;
+         /*var div = document.createElement('div');
+         div.innerHTML = src[0];
+         var elements = div.childNodes;
+         console.log("eleme",elements[0]);
+         if(elements[0]){
+           return elements[0]|| null;
+         }
+         else{
+           return null;
+         }*/
+       
+      }
 }

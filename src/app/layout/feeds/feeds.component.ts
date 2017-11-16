@@ -50,11 +50,15 @@ date:any;              //variable to store the state of dates to filters
     var todate = Date.parse(this.date.changeto);
     console.log("global",this.globalfeeds,fromdate);
     this.feeds =  this.globalfeeds.filter((res)=>{
-      var checkdate = Date.parse(res.date);
-      console.log("ch",checkdate,res.date);
-       /*if(fromdate<=checkdate && todate>=checkdate){
+      
+      var chunks = res.date.split('.');
+
+      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
+      var checkdate = Date.parse(formattedDate);
+      console.log("ch",formattedDate,checkdate);
+       if(fromdate<=checkdate && todate>=checkdate){
           return res;
-        }*/
+        }
 
     });
   

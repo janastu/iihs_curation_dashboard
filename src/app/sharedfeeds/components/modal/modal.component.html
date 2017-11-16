@@ -41,17 +41,23 @@
                                     
                                     <div class="row">
                                     <a class="metadata-modal">
-                                       {{item.category}}     
+                                       {{metadata.category_name}}     
                                     </a>
                                     <a class="metadata-modal">
                                        {{item.date}}      
                                     </a>
                                     </div>
                                     
-                                    <div class="row">
+                                    <div *ngIf="checkimg(item.desc)"  class="row">
+                                      <img data-external="yes" [src]="extracturl(item.desc)" data-image-enhancer="larger than 578" class="modal-image">
+                                    </div>
+                                    <div *ngIf="!checkimg(item.desc)"  class="row">
                                       <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="modal-image">
                                     </div>
-                                    <div class="row">
+                                    <div *ngIf="checkimg(item.desc)"  class="row">
+                                      
+                                    </div>
+                                    <div *ngIf="!checkimg(item.desc)"  class="row">
                                       <div class="modal-feed-content">
                                              {{item.desc}}
                                           </div>
