@@ -76,8 +76,59 @@
     margin-top: 28px;
     margin-left: 15px;
     margin-bottom: 11px;
+}
 
-
+/*Styles for share with teams*/
+.team-heading{
+    font-size:2.125rem;
+    font-family: sans-serif;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;   
+}
+.heading-sub{
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: -4px;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: #757575;
+}
+/*Style for form*/
+.company-name{
+    color: #333333;
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    line-height: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+.text-field input{
+    border-radius: 0.25rem;
+    /*border-color: #2bb24c;*/
+    width: 37rem;
+}
+.hint{
+    font-size: 10px;
+    color: #757575;
+}
+.user-list label{
+    margin-left: 10px;
+}
+.team-info div{
+    margin-bottom: 1.5rem;
+}
+/*Styles for Next Button*/
+.next-buttton{
+    width: 126px;
+    height: 36px;
+    background-color: #2bb24c;
+    color: #fff;
 }
 
 @media  (max-width: 480px) {

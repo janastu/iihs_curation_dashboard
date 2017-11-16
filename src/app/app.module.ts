@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { Global } from './shared/global';
 import { JsonConvert } from './services/utilities';
+import { TeammodalComponent } from './sharedfeeds/components/teammodal/teammodal.component';
 
 
 
@@ -23,7 +24,8 @@ export function HttpLoaderFactory(http: Http) {
 }
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        TeammodalComponent
     ],
     imports: [
         BrowserModule,

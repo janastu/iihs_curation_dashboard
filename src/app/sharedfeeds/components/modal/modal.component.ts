@@ -10,6 +10,8 @@ export class ModalComponent {
     @Input() item: any;
     closeResult: string;
     @ViewChild('content') modal:any;
+    @ViewChild('sharewithteam') teammodal:any;
+    @ViewChild('ssharefeed') sharefeeds:any;
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
 
@@ -23,6 +25,26 @@ export class ModalComponent {
         });
         
     }
+
+    openshareteam(content) {
+       this.modalService.open(this.teammodal).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+        
+    }
+
+    opensharefeeds(content) {
+       this.modalService.open(this.sharefeeds).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+        
+    }
+
+    
 
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {

@@ -22,6 +22,7 @@ iconreadlater:boolean=false;
 loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
+globalfeeds:any=[];
 
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
 
@@ -40,7 +41,7 @@ todate = this.formBuilder.control('', [Validators.required]);
     changeto = this.datepipe.transform(this.todate.value, 'dd.MM.yyyy');
     console.log("date value",changefrom);
     this.Dates.emit({changefrom,changeto});
-    
+    this.loginForm.reset();
   }
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {
@@ -79,7 +80,14 @@ todate = this.formBuilder.control('', [Validators.required]);
     this.Category.emit(cat.value);
   }
 
- 
-
-
+ //function to reload the page
+ refresh(): void{
+   window.location.reload();
+   //this.globalfeeds = setInterval(() =>{},30000);
+ }
+ //function to share with teammates
+ shareteam(event){
+   
+   console.log("share with team");
+ }
 }
