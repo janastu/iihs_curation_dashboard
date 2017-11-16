@@ -24,5 +24,9 @@ mouseover:boolean = false;
 
 });
   }
+  checkimg(feeds){
+    return (/<img[\s\S]*>/i.test(feeds));
+   
+  }
 
 }

@@ -49,7 +49,7 @@ date:any;              //variable to store the state of dates to filters
    this.feeds =  this.globalfeeds.filter((res)=>{
       var checkdate = Date.parse(res.date)/1000;
       console.log(checkdate);
-       if(fromdate<=checkdate && todate>=checkdate){
+       if(this.date.changefrom<=res.date && this.date.changeto>=res.date){
           return res;
         }
 

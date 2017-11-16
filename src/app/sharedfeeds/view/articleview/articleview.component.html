@@ -21,7 +21,8 @@
               </div>
               <!--Feed Category-->
               <div class="row">
-              <a href={{item.url}} class="metadata-article">
+                <app-modal #modal></app-modal>
+              <a (click)="modal.openanother(desc)" class="metadata-article">
                       {{metadata.category_name}}
               </a>
               <!--Feed Date-->
@@ -37,14 +38,22 @@
 
               </div>
               <!--Feed Image-->
-              <div class="row">
-                <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+              <div *ngIf="checkimg(item.desc)" class="row">
+                <!--<div [innerHtml]="extracturl(item.desc)" class="article-image"></div>-->
+                <img [src]="extracturl(item.desc)" data-image-enhancer="larger than 578" class="article-image">
+              </div>
+              <div *ngIf="!checkimg(item.desc)" class="row">
+                <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+                
               </div>
               <!--Feed Desc-->
               <div class="row">
-                <div class="feed-content article-feed-content">
+                <div *ngIf="checkimg(item.desc)" class="feed-content article-feed-content">
+                      
+                </div>
+                <div *ngIf="!checkimg(item.desc)" class="feed-content article-feed-content">
                         {{item.desc.substring(0,250)}}
-                    </div>
+                </div>
               </div>
             </div>
 

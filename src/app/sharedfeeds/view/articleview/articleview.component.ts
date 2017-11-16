@@ -41,4 +41,21 @@ icon:boolean=false;
     console.log(index);
      this.icon=true;
   }
+  checkimg(feeds){
+    return (/<img[\s\S]*>/i.test(feeds));
+   
+  }
+  extracturl(str){
+    //var regex = /<img.*?src='(.*?)'/;
+    /*var regex = /<img[\s\S]*>/i;
+    var src = regex.exec(str);
+     console.log("src",src[0]);
+     return src[0];*/
+     var tmp = document.createElement('div');
+     tmp.innerHTML = str;
+     var src = tmp.querySelector('img').getAttribute('src');
+     console.log(src)
+     return src;
+   
+  }
 }

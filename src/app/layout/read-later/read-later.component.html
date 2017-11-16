@@ -8,22 +8,22 @@
     </div>
 <!--Component to display if no view is selected-->
 <div *ngIf = "view === undefined" > 
-  <app-magazineview [feeds]='feeds'></app-magazineview>
+  <app-magazineview [feeds]='feeds' [metadata]='metadata'></app-magazineview>
 </div>
 <!--Component to display if Magazine view is selected-->
 <div *ngIf = "view === 'Magazine'" > 
-  <app-magazineview [feeds]='feeds'></app-magazineview>
+  <app-magazineview [feeds]='feeds' [metadata]='metadata'></app-magazineview>
 </div>
 <!--Component to display if Article view is selected-->
 <div *ngIf = "view === 'Article'" > 
-  <app-articleview [feeds]='feeds'></app-articleview>
+  <app-articleview [feeds]='feeds' [metadata]='metadata'></app-articleview>
 </div>
 <!--Component to display if Card view is selected-->
 <div *ngIf = "view === 'Card'" > 
-  <app-card-view [feeds]='feeds'></app-card-view>
+  <app-card-view [feeds]='feeds' [metadata]='metadata'></app-card-view>
 </div>
 <!--Component to display if Title view is selected-->
 <div *ngIf = "view === 'Title'" > 
-  <app-title-view [feeds]='feeds'></app-title-view>
+  <app-title-view [feeds]='feeds' [metadata]='metadata'></app-title-view>
 </div>
 </div>  
