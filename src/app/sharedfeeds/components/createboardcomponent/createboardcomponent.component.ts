@@ -35,8 +35,19 @@ staricon:boolean=false;
   }
   savetoboard(i){
     
-    this.boards[i].status = 'true';
+    
+    if(this.boards[i].title){
+      console.log(this.boards[i].title);
+      this.boards[i].status = 'true';
+    }
+    
+    
+    
   }
+  createboard(){
+    console.log("df");
+  }
+
   removefromboard(i){
     this.boards[i].status = 'false';
   }

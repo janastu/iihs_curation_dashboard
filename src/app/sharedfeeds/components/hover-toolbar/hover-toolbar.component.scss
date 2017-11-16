@@ -1,3 +1,5 @@
+/*Saas Variables*/
+$acolor:#a3a3a2;
 .ago{
 	font-size: 11px;
 	position: absolute;
@@ -6,7 +8,7 @@
 }
 
 .ago a{
-	color: #a3a3a2; 
+	color: $acolor; 
 	font-size: 15px;
   	text-align: center; 
   	border: transparent;

@@ -13,7 +13,7 @@ export class ModalComponent {
     @ViewChild('newcontent') newmodal:any;
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
-
+    val:boolean=false;
     constructor(private modalService: NgbModal,public elementRef:ElementRef) { }
 
     open(content) {
@@ -44,5 +44,9 @@ export class ModalComponent {
     }
     change(){
        this.icon=true;       
+    }
+    newval(){
+        console.log("called");
+        this.val=true;
     }
 }

@@ -1,3 +1,9 @@
+/*Saas Variables*/
+$articletoolbarcolor:#a3a3a2;
+$boardcolor:#a3a3a2;
+$hoveronaboard:#f8f8f8;
+$saveboardcolor:#292b2c;
+$saveboardbackground:#fff;
 /*Styles for tool-bar*/
 .article-tool-bar{
     margin-top: 0.5rem;
@@ -7,7 +13,7 @@
 
 }
 .article-tool-bar a{
-    color: #a3a3a2;
+    color: $articletoolbarcolor;
 }
 
 .article-tool-bar .savetoboard{
@@ -50,7 +56,7 @@
 
     margin-bottom: -24px;
     margin-left: 11px;
-    color: #a3a3a2;
+    color: $boardcolor;
 }
 .board-item{
     display:block;
@@ -62,13 +68,13 @@
     opacity:1;
 }
 .board-item:hover{
-    background-color:#f8f8f8;
+    background-color:$hoveronaboard;
 }
 .board-field{
     height: 0px;
 }
 .board-field a{
-    color: #a3a3a2;
+    color: $boardcolor;
 }
 .create-board button{
     margin-top: 10px;
@@ -77,17 +83,7 @@
 .create-board input{
     margin-left: 8px;
 }
-.create-view{
-    color: #249540;
-    border: 0px;
-    font-family: sans-serif;
-    font-size: 14px;  
-}
-.create{
-    color: #249540;
-    font-size: 14px;
-    margin-left: 15px;
-}
+
 .board-list {
     margin-left: 15px;
 }
@@ -102,10 +98,10 @@
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 1rem;
-    color: #292b2c;
+    color: $saveboardcolor;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: $saveboardbackground;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.25rem;

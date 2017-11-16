@@ -3,7 +3,9 @@ import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
 import { Service } from '../../services/services';
 import * as _ from 'lodash'
-
+import { DatePipe } from '@angular/common';
+declare var require:any;
+var moment = require('moment');
 @Component({
   
   selector: 'app-feeds',
@@ -13,13 +15,14 @@ import * as _ from 'lodash'
 })
 
 export class FeedsComponent implements OnInit {
+
 globalfeeds:any=[];    //variable to store feeds globally
 feeds:any=[];          //variable to store feeds to display
 metadata:any=[];       //variable to store metadata of feeds
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 
-  constructor(public service:Service) { }
+  constructor(public service:Service,private datepipe:DatePipe) { }
   //On loading Component
   ngOnInit() {
 
@@ -45,13 +48,13 @@ date:any;              //variable to store the state of dates to filters
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
-    console.log("global",this.globalfeeds);
-   this.feeds =  this.globalfeeds.filter((res)=>{
-      var checkdate = Date.parse(res.date)/1000;
-      console.log(checkdate);
-       if(this.date.changefrom<=res.date && this.date.changeto>=res.date){
+    console.log("global",this.globalfeeds,fromdate);
+    this.feeds =  this.globalfeeds.filter((res)=>{
+      var checkdate = Date.parse(res.date);
+      console.log("ch",checkdate,res.date);
+       /*if(fromdate<=checkdate && todate>=checkdate){
           return res;
-        }
+        }*/
 
     });
   

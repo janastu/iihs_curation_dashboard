@@ -54,7 +54,6 @@ icon:boolean=false;
      var tmp = document.createElement('div');
      tmp.innerHTML = str;
      var src = tmp.querySelector('img').getAttribute('src');
-     console.log(src)
      return src;
    
   }
