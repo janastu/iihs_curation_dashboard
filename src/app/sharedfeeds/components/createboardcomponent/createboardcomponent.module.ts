@@ -4,10 +4,13 @@ import { RouterModule } from '@angular/router';
 import { CreateboardcomponentComponent } from './createboardcomponent.component';
 //import { DropdownComponent } from '../../../layout/bs-component/components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
         NgbModule.forRoot()
     ],
     declarations: [CreateboardcomponentComponent ],

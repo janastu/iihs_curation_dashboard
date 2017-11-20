@@ -50,10 +50,5 @@ export class SidebarComponent {
         config.placement = 'top-left';
         config.autoClose = false;
     }
-    board(lab){
-        console.log("fucn",lab);
-        this.router.navigate(['/feeds/boardfeeds'])
-
-    }  
     
 }

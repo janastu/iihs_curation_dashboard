@@ -42,13 +42,13 @@ globalfeeds:any=[];
     changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
     console.log("date value",changefrom,Date.parse(changefrom));
     this.Dates.emit({changefrom,changeto});
-    this.loginForm.reset();
+    
   }
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {
     this.outgoing.emit(deviceValue.value);
 
-    if(deviceValue.value.value === 'Article'){
+    if(deviceValue.value === 'Article'){
       this.iconarticle=true;
       this.iconmagazine = false;
       this.iconcard = false;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -11,7 +12,9 @@ boards:any=[];
 visible:boolean;
 invisible:boolean;
 staricon:boolean=false;
-  constructor(public ngconfig:NgbDropdownConfig) {
+boardForm:FormGroup;
+boardname = this.formBuilder.control('', [Validators.required]);
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder) {
     
   this.boards.push({
     title:'tech',
@@ -27,6 +30,10 @@ staricon:boolean=false;
 }
 
   ngOnInit() {
+    console.log("boar",this.boards);
+    this.boardForm = this.formBuilder.group({
+      boardname: this.boardname
+    });
 
   }
   cancelboard(){
@@ -34,18 +41,19 @@ staricon:boolean=false;
     
   }
   savetoboard(i){
-    
-    
     if(this.boards[i].title){
       console.log(this.boards[i].title);
       this.boards[i].status = 'true';
     }
     
-    
-    
   }
   createboard(){
-    console.log("df");
+    console.log("df",this.boardname.value,this.boards);
+
+    this.boards.push(
+      {title:this.boardname.value,
+      status:'true'});
+    this.visible=false;
   }
 
   removefromboard(i){

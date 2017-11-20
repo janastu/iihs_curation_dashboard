@@ -27,8 +27,8 @@
 </div>
 
 <div *ngIf="visible" class="form-group savetoboard">
-  <form class="form-inline form-group">
-    <input class="form-control mr-sm-2" type="text" placeholder="Create a board">
+  <form [formGroup]="boardForm" class="form-inline form-group">
+    <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Create a board">
   </form>
 
   
