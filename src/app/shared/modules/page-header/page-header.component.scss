@@ -207,7 +207,46 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
-  
+  .page-header{
+      margin-left: -12.5rem;
+      /*margin-top: 29px;*/
+      color: #4d4d4d;
+  }
+  .page-header h2{
+    font-size: 25px;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+      margin-left: -14px;
+  }
+  .form-from{
+       margin-left: 47px;
+       display: inherit;
+       line-height: 0;
+       /*font-size: 16px;*/
+   }
+.form-from input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+      }
+.form-to{
+        margin-left: -13px;
+        margin-bottom: 2px;
+        display: inherit;
+        /*font-size: 16px;*/
+      }
+.form-to input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+            }
+.page-header-nav{
+      flex-direction: row;
+      margin-left: -287px;
+      margin-top: 47px;
+  }
 }
 @media only screen and (min-width : 1024px) {
   .page-header{
@@ -247,16 +286,65 @@
             }
 .page-header-nav{
     flex-direction: row;
-    margin-top: 0px;
-    margin-left: -56px;
+    margin-top: 44px;
+    margin-right: -26px;
+    margin-left: -220px;
 }
 .placement-small-screen{
-      left: 115px !important;
+    left: 130px !important;
+    top: 81px !important;
   }
 }
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
-  
+  .page-header{
+      margin-left: -12.5rem;
+      /*margin-top: 29px;*/
+      color: #4d4d4d;
+  }
+  .page-header h2{
+    font-size: 25px;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+      margin-left: -14px;
+  }
+  .form-from{
+       margin-left: 47px;
+       display: inherit;
+       line-height: 0;
+       /*font-size: 16px;*/
+   }
+.form-from input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+      }
+.form-to{
+        margin-left: -13px;
+        margin-bottom: 2px;
+        display: inherit;
+        /*font-size: 16px;*/
+      }
+.form-to input{
+        margin-left: -5px;
+        display: inherit;
+        font-size: 12px;
+            }
+.page-header-nav{
+    flex-direction: row;
+    margin-top: 0px;
+    margin-left: -103px;
+    margin-right: -29px;
+}
+.categories-input{
+  width: 140px;
+}
+.placement-small-screen{
+    left: 188px !important;
+    top: 37px !important;
+  }
 }
 
 
