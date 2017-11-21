@@ -4,11 +4,14 @@ import { CommonModule } from '@angular/common';
 import { LandingRoutingModule } from './landing-routing.module';
 import { LandingComponent } from './landing.component';
 import { PageHeaderModule } from './../../shared';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Service } from '../../services/services';
 @NgModule({
   imports: [
     CommonModule,
     LandingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
         PageHeaderModule
   ],
   declarations: [LandingComponent],
