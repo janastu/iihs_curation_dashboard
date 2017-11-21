@@ -1,9 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbCarouselModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {
+  TimelineComponent,
+  NotificationComponent,
+  ChatComponent
+} from './components';
+import { StatModule } from '../../shared';
 import { DashboardComponent } from './dashboard.component';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { PageHeaderModule } from './../../shared';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -11,11 +15,17 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-      RouterTestingModule,
-      PageHeaderModule
+    imports: [
+        NgbCarouselModule.forRoot(),
+        NgbAlertModule.forRoot(),
+        StatModule,
     ],
-      declarations: [ DashboardComponent ]
+      declarations: [
+        DashboardComponent,
+        TimelineComponent,
+        NotificationComponent,
+        ChatComponent
+      ]
     })
     .compileComponents();
   }));

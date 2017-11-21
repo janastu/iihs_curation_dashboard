@@ -1,63 +1,216 @@
 <div [@routerTransition]>
-    <h2 class="text-muted">Dashboard <small>Statistics Overview</small></h2>
+    <h2 class="text-muted">IIHS-MM</h2>
     <div class="row">
-        <div class="col-md-12">
-            <ngb-carousel>
-                <ng-template ngbSlide *ngFor="let slider of sliders">
-                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
-                    <div class="carousel-caption">
-                        <h3>{{slider.label}}</h3>
-                        <p>{{slider.text}}</p>
-                    </div>
-                </ng-template>
-            </ngb-carousel>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-info'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-danger'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></app-stat>
-        </div>
-    </div>
-    <hr />
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
-    <hr />
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Recent Posts
+        <div class="col col-xl-6 col-lg-12">
+            
+                <div class="card-header" >
+                   Categories
                 </div>
-                <!-- /.card-header -->
-                <app-timeline></app-timeline>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-            <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-bell fa-fw"></i> Notifications card
+          <div class="card-block table-responsive">
+             <table class="table">
+           	
+           <tr>	
+             <td [routerLink]="['/feeds']">
+            <div class="card mb-3">
+                <div class="card-header card-default" >
+                  UrbanWater
                 </div>
-                <!-- /.card-header -->
-                <app-notification></app-notification>
-                <!-- /.card-body -->
+                <!--<div class="card-block">
+                    Card content
+                </div>-->
             </div>
-            <!-- /.card -->
+        </td>
+        <td [routerLink]="['/feeds']">
+            <div class="card card-primary card-inverse mb-3">
+                <div class="card-header card-primary">
+                    Urban Environment
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+       <td [routerLink]="['/feeds']">
+            <div class="card card-success card-inverse mb-3">
+                <div class="card-header card-success">
+                    Urban Waste
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
 
-            <app-chat></app-chat>
-            <!-- /.card .chat-card -->
-        </div>
-        <!-- /.col-lg-4 -->
+        </tr>
+       <tr>
+       	<td [routerLink]="['/feeds']">
+            <div class="card card-info card-inverse">
+                <div class="card-header card-info">
+                    Urban Transportation and Mobility
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-warning card-inverse mb-3">
+                <div class="card-header card-warning">
+                    Urban Infrastructure
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>    
+        <td [routerLink]="['/feeds']">    
+            <div class="card card-danger card-inverse">
+                <div class="card-header card-danger">
+                    Urban Economic Growth and Development
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+          </tr>	
+         <tr>
+         <td [routerLink]="['/feeds']">	
+            <div class="card card-success card-inverse mb-3">
+                <div class="card-header card-success">
+                    Urban Power
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-warning card-inverse mb-3">
+                <div class="card-header card-warning">
+                    Urban Housing and Land
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-danger card-inverse mb-3">
+                <div class="card-header card-danger">
+                    Urban Heritage  
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        </tr>
+         <tr>
+         <td [routerLink]="['/feeds']"> 
+            <div class="card card-success card-inverse mb-3">
+                <div class="card-header card-success">
+                    Urban Health
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-warning card-inverse mb-3">
+                <div class="card-header card-warning">
+                    AMRUT Smart Cities Mission
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        <!-- /.col-sm-4 -->
+        <td [routerLink]="['/feeds']">
+            <div class="card card-danger card-inverse mb-3">
+                <div class="card-header card-danger">
+                    Agriculture 
+                </div>
+                <!--<div class="card-block bg-white">
+                    Card content
+                </div>-->
+            </div>
+        </td>
+        </tr>
+          </table>
+        </div>  
+     </div>
+     <div class="col col-xl-6 col-lg-12">
+            <div class="card mb-3">
+    	<div class="card-header">Recent Feeds</div>
+    	<div class="card-block table-responsive">
+                    <table class="table table-inverse">
+            <div class="list-group" *ngFor="let item of feeds| slice:0:3;">
+                <a href="javascript:;" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{item.title}}</h4>
+                
+                </a>
+            </div>
+        </table>
     </div>
+
+      </div> 
+
+      <div class="row">
+          <div class="col">
+              <h4>User Management</h4>
+          </div>
+          <form class="form-group form-mangement">
+          <div class="form-id">
+              <label>User Id</label>
+              <input type="text" placeholder="user id">
+          </div>
+            <div class="form-name">
+                <label>First Name</label>
+                <input type="text" placeholder="enter first name">
+            
+            <div>
+                <label>Last Name</label>
+                <input class="form-lastname" type="text" placeholder="enter last name">
+            </div>
+            <div>
+                <label>User Name</label>
+                <input class="form-username" type="text" placeholder="enter user name">
+            </div>
+            </div>
+            <div class="form-mail">
+                <label>Email</label>
+                <input type="email" placeholder="enter email address">
+            </div>
+            <div class="form-number">
+                <label>Phone Number</label>
+                <input type="number" placeholder="enter phone number">
+            </div>
+            <div>
+
+                <label>Type:
+                <input list="browsers" name="myBrowser" class="form-type" /></label>
+                <datalist id="browsers">
+                  <option value="Type1">
+                  <option value="Type2">
+                  <option value="Type3">
+                  <option value="Type4">
+                  <option value="Type5">
+                </datalist>
+
+                </div>
+            <div><button>ADD-User</button></div>
+          </form>
+      </div>  
+    </div>  
+
+
+</div>
 </div>

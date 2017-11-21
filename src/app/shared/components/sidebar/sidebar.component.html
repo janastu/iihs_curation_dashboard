@@ -39,7 +39,7 @@
                 </ul>
             </li>
         </div>-->
-        <a [routerLink]="['/landing']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;{{ 'IIHS-MM' | translate }}
         </a>
         <div class="nested-menu">
@@ -87,12 +87,12 @@
     </ul>
 <!--ADD CONTENT-->
 <div ngbDropdown class="side-content">
-  <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle><i _ngcontent-c11="" class="fa fa-fw fa-plus"></i>ADD CONTENT</button>
-  <div class="dropdown-menu add-content" ngbDropdownMenu aria-labelledby="dropdownConfig">
+  <button class="btn btn-outline-primary" id="dropdownConfig"  [routerLink]="['/sources']" [routerLinkActive]="['router-link-active']" ><i _ngcontent-c11="" class="fa fa-fw fa-plus"></i>ADD CONTENT</button>
+ <!-- <div class="dropdown-menu add-content" ngbDropdownMenu aria-labelledby="dropdownConfig">
     <a  [routerLink]="['/sources']" [routerLinkActive]="['router-link-active']" class="dropdown-item"><i class="fa fa-rss" aria-hidden="true"></i>Publications & Blogs</a>
     <button class="dropdown-item"><i class="fa fa-google" aria-hidden="true"></i>Keyword alerts</button>
     <button class="dropdown-item"><i class="fa fa-dot-circle-o" aria-hidden="true"></i>Import OPML</button>
-  </div>
+  </div>-->
 </div>
    
 </nav>

@@ -10,69 +10,31 @@
                             </div>
                             <div class="row source-row-margin">
                             	<div class="form-group input-group sources-form">
-                            	    <input type="text" class="form-control" placeholder="Search by title,url or #topic">
+                            	    <input type="text" class="form-control" placeholder="Search by title,url or #topic" value="{{catvalue}}">
                             	    <span class="input-group-btn">
-                            	    <div class="btn-group" ngbDropdown>
-                            	    	<button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
-                            	    	  <div class="dropdown-menu" ngbDropdownMenu>
-                            	    	    <button class="dropdown-item">One</button>
-                            	    	    <button class="dropdown-item">Two</button>
-                            	    	    <button class="dropdown-item">Four!</button>
-                            	    	  </div>
-                            	    </div>
+                            	    
+                            	    <button class="btn btn-primary dropdown-toggle-split">Add</button>
+                            	    	  
                             	    </span>
                             	</div>
 
                             </div>
-                            <div class="row source-row-margin">
-                            	<div class="col-sm-3">
+                            <div  class="row source-row-margin">
+                            	<div *ngFor="let cat of categories" class="col-sm-3">
                             	    <div class="card mb-3 source-card">
                             	        
-                            	        <div class="card-block">
-                            	            #Buisness
+                            	        <div class="card-block" (click)="onselectingcategory(cat.category)">
+                            	            #{{cat.category}}
                             	        </div>
                             	    </div>
-                            	    <div class="card  mb-3 source-card">
-                            	        
-                            	        <div class="card-block bg-white">
-                            	            #tech
-                            	        </div>
-                            	    </div>
+                            	    
                             	</div>
-                            	<div class="col-sm-3">
-                            	    <div class="card mb-3 source-card ">
-                            	        
-                            	        <div class="card-block">
-                            	            #marketing
-                            	        </div>
-                            	    </div>
-                            	    <div class="card mb-3 source-card">
-                            	        
-                            	        <div class="card-block bg-white">
-                            	            #science
-                            	        </div>
-                            	    </div>
-                            	</div>
-                            	<div class="col-sm-3">
-                            	    <div class="card mb-3 source-card">
-                            	        
-                            	        <div class="card-block">
-                            	            #fashion
-                            	        </div>
-                            	    </div>
-                            	    <div class="card mb-3 source-card">
-                            	        
-                            	        <div class="card-block bg-white">
-                            	            # startup
-                            	        </div>
-                            	    </div>
-                            	</div>
-
+                            	   
                             </div>
                         </ng-template>
                     </ngb-tab>
                     <ngb-tab>
-                        <ng-template ngbTabTitle><b>Keyword</b> Alerts</ng-template>
+                        <!--<ng-template ngbTabTitle><b>Keyword</b> Alerts</ng-template>
                         <ng-template ngbTabContent>
                             <div class="row source-row-margin">
                                 What product, brand, company, or keyword do you want to track?
@@ -129,7 +91,7 @@
                             </div>
                                  <div class="row source-row-margin text-font">Use AND to search for multiple keywords in the same article</div>
 
-                        </ng-template>
+                        </ng-template>-->
                     </ngb-tab>
                
                 </ngb-tabset>
