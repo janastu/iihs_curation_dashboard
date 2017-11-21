@@ -1,2 +1,7 @@
 // shared css for the login and signup page
 @import "../login/login.component.scss";
+.img-log{
+    width:"100%";
+    border-radius: 0px ! important;
+    border: 0px ! important;
+}

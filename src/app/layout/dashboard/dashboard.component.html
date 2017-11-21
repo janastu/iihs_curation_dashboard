@@ -164,50 +164,65 @@
       </div> 
 
       <div class="row">
-          <div class="col">
-              <h4>User Management</h4>
+            <div class="usermang">
+                  <div class="col">
+                  <h4>User Management</h4>
+                  </div>
+              <div>
+                <table>
+                  <tr class="form-title">
+                    <th>User Name</th>
+                    <th>Email ID</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="form-input">
+                    <td><input type="text" class="form-name" formControlName="name"></td>
+                    <td><input type="text" class="form-name" formControlName="mail"></td>
+                    <td><select class="form-name" #user formControlName="usertype">
+                      
+                        <option value=null disabled selected>Type1</option>
+                        <option *ngFor="let item of usertypes" [value]="item.name">{{item.name}}</option>
+                      </select>
+                  ` </td>
+                  <td><button (click)= "adduser($event)">ADD</button></td>
+                  </tr>
+                </table>
+              </div>
+              <div *ngFor="let user of usersinfo" class="display">
+                  <div> {{user.name}}</div>
+           
           </div>
-          <form class="form-group form-mangement">
-          <div class="form-id">
-              <label>User Id</label>
-              <input type="text" placeholder="user id">
-          </div>
-            <div class="form-name">
-                <label>First Name</label>
-                <input type="text" placeholder="enter first name">
-            
-            <div>
-                <label>Last Name</label>
-                <input class="form-lastname" type="text" placeholder="enter last name">
-            </div>
-            <div>
-                <label>User Name</label>
-                <input class="form-username" type="text" placeholder="enter user name">
-            </div>
-            </div>
-            <div class="form-mail">
-                <label>Email</label>
-                <input type="email" placeholder="enter email address">
-            </div>
-            <div class="form-number">
-                <label>Phone Number</label>
-                <input type="number" placeholder="enter phone number">
-            </div>
-            <div>
 
-                <label>Type:
-                <input list="browsers" name="myBrowser" class="form-type" /></label>
-                <datalist id="browsers">
-                  <option value="Type1">
-                  <option value="Type2">
-                  <option value="Type3">
-                  <option value="Type4">
-                  <option value="Type5">
-                </datalist>
-
+            <!--div class="row usermang">
+                <div class="col">
+                    <h4>User Management</h4>
                 </div>
-            <div><button>ADD-User</button></div>
-          </form>
+                <form class="form-group form-mangement">
+                  <div class="form-mail">
+                      <label>Email</label>
+                      <input type="email" placeholder="enter email address">
+                  </div>
+                  <div>
+
+                      <label>Type:
+                      <input list="browsers" name="myBrowser" class="form-type" /></label>
+                      <datalist id="browsers">
+                        <option value="Type1">
+                        <option value="Type2">
+                        <option value="Type3">
+                        <option value="Type4">
+                        <option value="Type5">
+                      </datalist>
+
+                      </div>
+                  <div><button>ADD-User</button>
+                  <button class="removeuser">Remove User</button></div>
+                </form>
+                <div class="display">
+                    
+                </div>
+            </div-->  
+          </div>  
       </div>  
     </div>  
 
