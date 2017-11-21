@@ -81,8 +81,21 @@
                                 <div class="form-group input-group sources-form">
                                     <input type="text" class="form-control">
                                     <span class="input-group-btn">
+
                                     <div class="btn-group" ngbDropdown>
-                                        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                                        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle>All news sites</button>
+                                          <div class="dropdown-menu" ngbDropdownMenu>
+                                            <div>Refine to a specific news site</div>
+                                            <form class="form-inline form-group">
+                                              <input class="form-control mr-sm-2" type="text">
+                                            </form>
+                                            <button class="btn btn-primary">Filter</button>
+                                          </div>
+                                    </div>
+                                    </span>
+                                    <span class="input-group-btn">
+                                    <div class="btn-group" ngbDropdown>
+                                        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle>English</button>
                                           <div class="dropdown-menu" ngbDropdownMenu>
                                             <button class="dropdown-item">One</button>
                                             <button class="dropdown-item">Two</button>
@@ -93,6 +106,29 @@
                                 </div>
 
                             </div>
+                            <div class="row source-row-margin">
+                                Did You Know????
+
+                            </div>
+                            <div class="row source-row-margin">
+                                <button class="btn btn-primary">Elon Musk</button>
+
+                            </div>
+                                <div class="row source-row-margin text-font">Put phrase inside quotes for an exact match. This is particularly useful for names.
+                                </div>
+                            <div class="row source-row-margin">
+                                <button class="btn btn-primary">Elon Musk-Tesla</button>
+                               
+
+                            </div>
+                                <div class="row source-row-margin text-font">Use the minus (-) operator to exclude results which match specific keywords</div>
+                            <div class="row source-row-margin">
+                                <button class="btn btn-primary">Tesla AND Musk</button>
+                                
+
+                            </div>
+                                 <div class="row source-row-margin text-font">Use AND to search for multiple keywords in the same article</div>
+
                         </ng-template>
                     </ngb-tab>
                

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { routerTransition } from '../router.animations';
+import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Userservice } from '../services/userservice';
 
 @Component({
     selector: 'app-login',
@@ -10,13 +12,32 @@ import { routerTransition } from '../router.animations';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(public router: Router) {
+    loginForm:FormGroup;
+    username=this.formBuilder.control('', [Validators.required]);
+    password=this.formBuilder.control('', [Validators.required]);
+
+    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice) {
     }
 
     ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+           
+            username:this.username,
+            password:this.password
+
+        });
     }
 
     onLoggedin() {
+        let credentials = {
+            'username':this.username.value,
+            'password':this.password.value
+        };
+        console.log("log",credentials);
+        this.userService.login(credentials).then(response=>{
+            console.log("response",response);
+        })
+
         localStorage.setItem('isLoggedin', 'true');
     }
 
