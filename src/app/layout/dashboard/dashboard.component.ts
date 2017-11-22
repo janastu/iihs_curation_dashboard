@@ -37,7 +37,7 @@ console.log("feeds",this.feeds);
         this.contacts.splice(index,1);
     }
 }
-export class Contact{
+ class Contact{
     name:string;
     mail:string;
     user:string;
