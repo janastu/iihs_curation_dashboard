@@ -3,14 +3,17 @@ export class JsonConvert {
 constructor(){}
 
 parseJSON = (text) => {
+
   let quoteKeysAndParse = (text) => {
-     //Quote keys in objects
+           //Quote keys in objects
      let quoted = text.replace(/([\{\[,]\s*)(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '$1"$3": ');
      //Remove the "last item" text
      quoted = quoted.replace(/,\s+'' \/\/ Last item[^\]^}]+([\]\}])/g, '$1');
      //Remove improperly escaping of apostrophes
      quoted = quoted.replace(/([^\\])\\'/g, '$1\'');
      //Parse the JSON
+
+
      return JSON.parse(quoted);
   }
   
@@ -24,6 +27,7 @@ parseJSON = (text) => {
     text = currentText;
     if(prevKey){
       //Parse the prior split section
+
       obj[prevKey] = quoteKeysAndParse(text[0]);
     }
     prevKey = key;
@@ -33,6 +37,7 @@ parseJSON = (text) => {
   if(prevKey){
     obj[prevKey] = quoteKeysAndParse(text[1]);
   }
+ 
   return obj;
 }
 }

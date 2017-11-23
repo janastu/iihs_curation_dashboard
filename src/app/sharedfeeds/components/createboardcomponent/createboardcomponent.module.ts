@@ -5,6 +5,7 @@ import { CreateboardcomponentComponent } from './createboardcomponent.component'
 //import { DropdownComponent } from '../../../layout/bs-component/components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BoardService } from '../../../services/board-service';
 @NgModule({
     imports: [
         CommonModule,
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         NgbModule.forRoot()
     ],
     declarations: [CreateboardcomponentComponent ],
-    exports: [CreateboardcomponentComponent ]
+    exports: [CreateboardcomponentComponent ],
+    providers: [BoardService]
 })
 export class CreateboardcomponentModule { }

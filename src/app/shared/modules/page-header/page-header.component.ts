@@ -1,8 +1,7 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
-
+import { CategoryService } from '../../../services/category-service';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -22,9 +21,10 @@ iconreadlater:boolean=false;
 loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
-globalfeeds:any=[];
 
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public router:Router) { }
+displaycategory:any=[];
+
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public categoryService:CategoryService) { }
 
   ngOnInit() {
 
@@ -32,6 +32,9 @@ globalfeeds:any=[];
 
       fromdate: this.fromdate,
       todate: this.todate
+    });
+    this.categoryService.getAll().then((result)=>{
+      this.displaycategory=result;
     });
   }
   //function to get input values annd emit to feed component
