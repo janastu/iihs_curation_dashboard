@@ -15,6 +15,7 @@ import { JsonConvert } from './services/utilities';
 
 
 
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
@@ -24,6 +25,7 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
     declarations: [
         AppComponent
+       
     ],
     imports: [
         BrowserModule,

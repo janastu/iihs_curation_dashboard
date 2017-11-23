@@ -1,0 +1,27 @@
+<div [@routerTransition]>
+      <div class="row">
+            <div class="usermang">
+                  <div class="col">
+                  <h4>User Management</h4>
+                  </div>
+              
+
+              <div class="form-item" >
+                <input #name placeholder="name" />
+                <input #mail placeholder="mail">
+                  <select  #user class="form-type">
+                    <option value=null disabled selected>Type</option>
+                    <option *ngFor="let item of usertypes" [value]="item.name">{{item.name}}</option>
+                  </select>
+                <button (click)="addContact(name.value,mail.value,user.value)">Add User</button>
+
+              </div>
+
+              <table class="userinfo">
+              <tr *ngFor="let contact of contacts" style="margin-bottom: 10px;">
+              <td>{{contact.descr}}</td> <td><button (click)="removeContact(contact)">Remove</button></td>
+              </tr>
+            </table>
+          </div>  
+      </div> 
+</div>
