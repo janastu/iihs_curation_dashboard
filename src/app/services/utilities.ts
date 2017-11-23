@@ -12,7 +12,7 @@ parseJSON = (text) => {
      //Remove improperly escaping of apostrophes
      quoted = quoted.replace(/([^\\])\\'/g, '$1\'');
      //Parse the JSON
-
+     console.log(quoted);
 
      return JSON.parse(quoted);
   }
