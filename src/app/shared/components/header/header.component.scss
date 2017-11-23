@@ -113,6 +113,7 @@ Bootstrap 3 Media Queries
 @media only screen and (min-width : 320px) {
 .header{
     left:10px;
+    position: initial;
    /* z-index: 0;   */
 }
 .header-text{
@@ -126,7 +127,7 @@ Bootstrap 3 Media Queries
 .form-search .form-inline input{
     font-size: 13px;
     margin-left: -42px;
-    margin-top: 7px;
+    margin-top: 46px;
     width: 84px;
 }
 .header-list li{
@@ -146,23 +147,111 @@ Bootstrap 3 Media Queries
 
 /* Extra Small Devices, Phones */ 
 @media only screen and (min-width : 480px) {
+.header{
+    left:10px;
+    position: initial;
+   /* z-index: 0;   */
+}
+.header-text{
+    font-size: 13px;
+}
+.form-search{
+    display: block !important;
+    margin-left: 132px;
+    margin-top: -45px;
+}
+.form-search .form-inline input{
+    font-size: 13px;
+    margin-left: -42px;
+    margin-top: 46px;
+    width: 84px;
+}
+.header-list li{
+    display: block;
+    margin-top: -52px;
+}
+.header-button{
+    background: #efefef;
+    margin-top: 36px;
+    font-size: 16px;
+}
+.menu-item{
+    font-size: 10px;
+    max-width: 100px;
+}
   
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
 .header{
-    left:6px;   
+    left:6px;  
+    position: initial; 
+}
+
+.header-text{
+    font-size: 13px;
+}
+.form-search{
+    display: block !important;
+    margin-left: 132px;
+    margin-top: -45px;
+}
+.form-search .form-inline input{
+    font-size: 13px;
+    margin-left: -95px;
+    margin-top: 46px;
+    width: 120px;
 }
   .header-list li{
     display: block;
     margin-right: 0px;
 }
+.header-button{
+    background: #efefef;
+    margin-top: 29px;
+    font-size: 16px;
+}
+.menu-item{
+    font-size: 10px;
+    max-width: 100px;
+}
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
-  
+  .header{
+    left:6px;  
+    position: initial; 
+}
+
+.header-text{
+    font-size: 13px;
+}
+.form-search{
+    display: block !important;
+    margin-left: 132px;
+    margin-top: -45px;
+}
+.form-search .form-inline input{
+    font-size: 13px;
+    margin-left: 90px;
+    margin-top: 46px;
+    width: 120px;
+}
+  .header-list li{
+    display: block;
+    margin-right: 0px;
+}
+.header-button{
+    background: #efefef;
+    margin-top: 29px;
+    font-size: 16px;
+}
+.menu-item{
+    font-size: 10px;
+    max-width: 100px;
+}
 }
 
 /* Large Devices, Wide Screens */
@@ -180,8 +269,8 @@ Bootstrap 3 Media Queries
     margin-bottom: -47px;
 }
 .form-search .form-inline input{
-    margin-left: -25px;
-    margin-top: 7px;
+    margin-left: 177px;
+    margin-top: -1px;
     width: 170px;
 }
 .header-list li{
