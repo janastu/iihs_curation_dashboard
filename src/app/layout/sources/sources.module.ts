@@ -10,8 +10,7 @@ import { SourcesComponent } from './sources.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
 import { Service } from '../../services/services';
-
-
+import { SidebarComponent } from '../../shared'
 
 @NgModule({
     imports: [

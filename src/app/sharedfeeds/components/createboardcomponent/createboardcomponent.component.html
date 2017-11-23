@@ -5,7 +5,7 @@
       <form class="form-inline form-group">
         <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
       </form>
-      <div class="field" *ngFor="let item of boards;let i=index;">
+      <div class="field" *ngFor="let item of variab.boards;let i=index;">
 
         <div class="board-item"><i *ngIf="item.status === 'false'" class="fa fa-fw fa-star-o" title="Save to board"></i>
         <i *ngIf="item.status === 'true'" class="fa fa-fw fa-star"></i>

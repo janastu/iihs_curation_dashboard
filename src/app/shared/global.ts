@@ -11,7 +11,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Global {
 
-   boardfeeds:any=[];
+   boards:any=[];
+   categoryfeeds:any=[];
+   categoryupdated:any=[];
    boardfilter:any = 0;
   constructor(public http: Http) {
   

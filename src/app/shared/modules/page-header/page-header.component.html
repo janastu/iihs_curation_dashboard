@@ -38,36 +38,10 @@
                       
                     
                             <select #cat multiple="" class="form-control"
-                            [(ngModel)]="selectedVal">
+                            [(ngModel)]="selectedVal" >
                            
-                                <option> UrbanWater</option>
-                                <option> Urban Environment</option>
-                                <option> Urban Waste</option>
-                    
-                                <option> Urban Transportation and Mobility
-                                    </option>
-                            
-                                <option> Urban Infrastructure
-                                </option>
-                            
-                                    <option> Urban Economic Growth and Development
-                                    </option>
-                            
-                            <option> Urban Power
-                                    </option>
-                         <option>Urban Housing and Land    
-                                    </option>
-                    
-                                <option> Urban Heritage
-                                </option>
-                            
-                            <option> Urban Health
-                                    </option>
-                        <option> AMRUT Smart Cities Mission
-                                    </option>
-                            <option>
-                            Agriculture   
-                                </option>
+                                <option *ngFor="let disp of displaycategory">{{disp.category}}</option>
+                               
                             </select>
 
                

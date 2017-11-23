@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,Input,OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { BoardService } from '../../../services/board-service';
+import { CategoryService } from '../../../services/category-service';
 
 @Component({
     selector: 'app-sidebar',
@@ -10,11 +12,13 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./sidebar.component.scss']
 })
 
-export class SidebarComponent {
-    boardlabels:any=[];
-    categoryfeeds:any=[];
+export class SidebarComponent implements OnInit{
+
+    boards:any=[];
+    
     isActive = false;
     showMenu = '';
+
     eventCalled() {
         this.isActive = !this.isActive;
     }
@@ -32,23 +36,21 @@ export class SidebarComponent {
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig){
-        this.boardlabels.push({
-            label: 'tech'
-        }, {
-            label: 'science'
-            
-        });
-        this.categoryfeeds.push({
-            categoryname: 'UrbanWater'
-        }, {
-            categoryname: 'UrbanEnvironment'
-            
-        }, {
-            categoryname: 'UrbanWaste'
-        });
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardService:BoardService,public categoryService:CategoryService){
+   
+
+        
         config.placement = 'top-left';
         config.autoClose = false;
     }
+    ngOnInit(){
+        this.boardService.getAll().then((result)=>{
+            this.variab.boards=result;
+        });
+        /*this.categoryService.getAll().then((result)=>{
+            this.variab.categoryfeeds=result;
+        });*/
+    }
+    
     
 }

@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { Global } from './shared/global';
 import { JsonConvert } from './services/utilities';
-
+import { BoardService } from './services/board-service';
+import { CategoryService } from './services/category-service';
 
 
 
@@ -42,7 +43,7 @@ export function HttpLoaderFactory(http: Http) {
         })
         
     ],
-    providers: [AuthGuard,Global,JsonConvert],
+    providers: [AuthGuard,Global,JsonConvert,BoardService,CategoryService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
