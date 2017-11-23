@@ -10,13 +10,13 @@ import { BoardService } from '../../../services/board-service'
   styleUrls: ['./createboardcomponent.component.scss']
 })
 export class CreateboardcomponentComponent implements OnInit {
-boards:any=[];
+
 visible:boolean;
 invisible:boolean;
 staricon:boolean=false;
 boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardService:BoardService) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService) {
 
 
  
@@ -26,8 +26,8 @@ boardname = this.formBuilder.control('', [Validators.required]);
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-    this.boardService.getAll().then((result)=>{
-      this.variab.boards=result;
+    this.boardservice.getAll().then((result)=>{
+      this.variab.boardupdated=result;
     })
 
 
@@ -37,21 +37,22 @@ boardname = this.formBuilder.control('', [Validators.required]);
     
   }
   savetoboard(i){
-    if(this.variab.boards[i].title){
-      this.variab.boards[i].status = 'true';
+    if(this.variab.boardupdated[i].title){
+      this.variab.boardupdated[i].status = 'true';
     }
     
   }
   createboard(){
 
-    this.variab.boards.push(
+    this.variab.boardupdated.push(
       {title:this.boardname.value,
       status:'true'});
     this.visible=false;
+    console.log(this.variab.boardupdated);
   }
 
   removefromboard(i){
-    this.variab.boards[i].status = 'false';
+    this.variab.boardupdated[i].status = 'false';
   }
  
   

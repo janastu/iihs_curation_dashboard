@@ -38,8 +38,6 @@ export class SidebarComponent implements OnInit{
     }
     constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardService:BoardService,public categoryService:CategoryService){
    
-
-        
         config.placement = 'top-left';
         config.autoClose = false;
     }
@@ -50,6 +48,11 @@ export class SidebarComponent implements OnInit{
         /*this.categoryService.getAll().then((result)=>{
             this.variab.categoryfeeds=result;
         });*/
+    }
+    routeto(category){
+        console.log(category);
+        this.router.navigate(['/feeds',{category}])
+
     }
     
     
