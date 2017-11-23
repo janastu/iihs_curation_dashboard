@@ -26,8 +26,6 @@ export class SourcesComponent implements OnInit {
   addcontent(value){
     this.variab.categoryupdated.push({category:value})
     console.log(this.variab.categoryupdated);
-  	//this.componentService.filter('Register click');
-    //localStorage.setItem('name',value);
-   
+  	
   }
 }

@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 export class Global {
 
    boards:any=[];
+   boardupdated:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
    boardfilter:any = 0;

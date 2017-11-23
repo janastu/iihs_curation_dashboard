@@ -38,7 +38,7 @@ public getAll(){
 
 
   }
-convertTojson(){
+/*convertTojson(){
 
 let parseJSON = (text) => {
   console.log("text",text);
@@ -82,6 +82,6 @@ fetch('http://newsrack.in/stories/servelots/iihs_feeds/16.json')
   console.log("data",data);
   console.log("datavalue",data["_nr_stories"][0].title);
 });
-}
+}*/
  
 }
