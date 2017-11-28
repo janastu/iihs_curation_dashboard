@@ -121,6 +121,7 @@
   }
   .form-item{
       display: inherit;
+      font-size: 12px;
       margin-bottom: 46px;
   }
   .form-from{
@@ -128,7 +129,7 @@
        display: inherit;
    }
    .form-to{
-       margin-left: -216px;
+       margin-left: -226px;
        margin-bottom: -98px;
        display: inherit;
    }
@@ -139,6 +140,8 @@
       flex-direction: row;
       margin-bottom: 4px;
       margin-left: -12px;
+      display: -webkit-inline-box;
+      font-size: 12px;
       margin-top: 9px;
   }
   .placement-small-screen{
@@ -161,8 +164,9 @@
        display: inherit;
    }
    .form-to{
-       margin-left: -233px;
+       margin-left: 0px;
        margin-bottom: -98px;
+       margin-top: -98px;
        display: inherit;
    }
    .form-to button{
@@ -171,8 +175,42 @@
   .page-header-nav{
       flex-direction: row;
       margin-bottom: 4px;
-      margin-left: -12px;
-      margin-top: 9px;
+      margin-left: 23px;
+      font-size: 12px;
+      margin-top: -42px;
+      display: -webkit-box;
+  }
+}
+
+@media only screen and (min-width : 576px) {
+ .page-header{
+      margin-left: -9.5rem;
+      color: #4d4d4d;
+  }
+   .form-item{
+      display: inherit;
+      margin-bottom: 46px;
+      margin-left: -154px;
+  }
+  .form-from{
+       margin-left: 236px;
+       display: inherit;
+   }
+   .form-to{
+       margin-left: -13px;
+       margin-bottom: -98px;
+       margin-top: -98px;
+       display: inherit;
+   }
+   .form-to button{
+       margin-left: 11px;
+    }
+  .page-header-nav{
+      flex-direction: row;
+      display: -webkit-inline-box;
+      margin-bottom: 4px;
+      margin-left: -173px;
+      margin-top: 62px;
   }
 }
 
@@ -193,6 +231,7 @@
    .form-to{
        margin-left: -10px;
        margin-bottom: 0px;
+      margin-top: 0px;
        display: inherit;
    }
    .form-to button{
@@ -234,6 +273,7 @@
 .form-to{
         margin-left: -13px;
         margin-bottom: 2px;
+        margin-top: 0px;
         display: inherit;
         /*font-size: 16px;*/
       }
@@ -276,6 +316,7 @@
 .form-to{
         margin-left: -13px;
         margin-bottom: 2px;
+        margin-top: 0px;
         display: inherit;
         /*font-size: 16px;*/
       }
@@ -298,7 +339,7 @@
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
   .page-header{
-      margin-left: -12.5rem;
+      margin-left: -15rem;
       /*margin-top: 29px;*/
       color: #4d4d4d;
   }
@@ -308,13 +349,14 @@
    .form-item{
       display: inherit;
       margin-bottom: 46px;
-      margin-left: -14px;
+      margin-left: -54px;
   }
   .form-from{
        margin-left: 47px;
        display: inherit;
+       font-size: 18px;
        line-height: 0;
-       /*font-size: 16px;*/
+       
    }
 .form-from input{
         margin-left: -5px;
@@ -325,7 +367,9 @@
         margin-left: -13px;
         margin-bottom: 2px;
         display: inherit;
-        /*font-size: 16px;*/
+        margin-top: 0px;
+        font-size: 18px;
+        
       }
 .form-to input{
         margin-left: -5px;
