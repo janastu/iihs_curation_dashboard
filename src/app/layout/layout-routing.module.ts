@@ -19,7 +19,8 @@ const routes: Routes = [
             { path: 'boardfeeds', loadChildren: './boardfeeds/boardfeeds.module#BoardfeedsModule'},
             { path: 'sources', loadChildren: './sources/sources.module#SourcesModule'},
             { path: 'management', loadChildren: './views/management/management.module#ManagementModule'},
-            { path: 'profile', loadChildren: './views/profile/profile.module#ProfileModule'}
+            { path: 'profile', loadChildren: './views/profile/profile.module#ProfileModule'},
+            { path: 'preferences', loadChildren: './views/preferences/preferences.module#PreferencesModule'}
             //{ path: 'articleview', loadChildren: './feeds/articleview/articleview.module#ArticleviewModule' },
             //{ path: 'magazineview', loadChildren: './feeds/magazineview/magazineview.module#MagazineviewModule' },
             //{ path: 'title-view', loadChildren: './feeds/title-view/title-view.module#TitleViewModule' }, 

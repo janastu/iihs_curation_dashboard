@@ -1,0 +1,50 @@
+.prefer{
+	display: inherit;
+	margin-top: 7px;
+	margin-left: 150px;
+}
+.prefer button{
+	margin-left: 10px;
+}
+.upgrade{
+	font-size: 14px;
+	max-height: 38px;
+	border: 1px solid transparent;
+	background-color: #249540;
+	color: #fff;
+}
+.prefer-account{
+	background-color: transparent;
+	border-color: transparent;
+}
+.prefer-account:hover{
+	background-color: rgba(128, 128, 128, 0.13);
+}
+.del-account{
+	color: #ff0000b5;
+	margin-left: 10px;
+	cursor: pointer;
+}
+.header-list{
+	display: inherit;
+}
+.card div{
+	min-height: 125px;
+	text-align: center;
+	padding: 15px;
+	color: #000;
+	cursor: pointer;
+	display: flex;
+    height: 60px;
+    justify-content: space-between;
+    position: relative;
+}
+.prefer-card td{
+	width: 15%;
+}
+.card-label{
+	align-self: flex-end;
+	font-size: 1rem;
+	line-height: 1.5;
+	max-width: 120px;
+}
