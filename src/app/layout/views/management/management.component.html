@@ -8,7 +8,7 @@
 
               <div class="form-item" >
                 <input #name placeholder="name" />
-                <input #mail placeholder="mail">
+                <input #mail placeholder="email">
                   <select  #user class="form-type">
                     <option value=null disabled selected>Type</option>
                     <option *ngFor="let item of usertypes" [value]="item.name">{{item.name}}</option>
