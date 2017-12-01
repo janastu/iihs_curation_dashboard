@@ -43,7 +43,7 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
        
     ],
    
-    providers: [Service,DatePipe]
+    providers: [DatePipe,Service]
      
 })
 export class BoardfeedsModule { }

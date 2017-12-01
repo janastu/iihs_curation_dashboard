@@ -18,9 +18,12 @@
                         <!--Feed Date--> 
                              <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.date}}</small>
                              
-                            <app-modal #modal [item]="item"></app-modal>
                         <!--Feed Title--> 
+
+                            <app-modal #modal [item]="item" [metadata]=
+                      "incomingmetadata"></app-modal>
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.title.substring(0,60)}}</a>
+                              
                         <!--Feed description--> 
                             <div *ngIf="checkimg(item.desc)" class="list-group-item-text desc"></div>
                             <span *ngIf="!checkimg(item.desc)" class="list-group-item-text desc">{{item.desc.substring(0,10)}}</span>

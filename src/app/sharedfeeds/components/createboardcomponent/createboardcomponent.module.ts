@@ -6,6 +6,7 @@ import { CreateboardcomponentComponent } from './createboardcomponent.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BoardService } from '../../../services/board-service';
+import { CreateBoardStore } from '../../store/create-board-store';
 @NgModule({
     imports: [
         CommonModule,
@@ -16,6 +17,6 @@ import { BoardService } from '../../../services/board-service';
     ],
     declarations: [CreateboardcomponentComponent ],
     exports: [CreateboardcomponentComponent ],
-    providers: [BoardService]
+    providers: [BoardService,CreateBoardStore]
 })
 export class CreateboardcomponentModule { }

@@ -7,12 +7,12 @@
       </form>
       <div class="field" *ngFor="let item of variab.boardupdated;let i=index;">
 
-        <div class="board-item"><i *ngIf="item.status === 'false'" class="fa fa-fw fa-star-o" title="Save to board"></i>
-        <i *ngIf="item.status === 'true'" class="fa fa-fw fa-star"></i>
-          {{item.title}}
+        <div class="board-item"><i  *ngIf="staricon === false" class="fa fa-fw fa-star-o" title="Save to board"></i>
+        <i *ngIf="staricon === true" class="fa fa-fw fa-star"></i>
+          {{item.value.label}}
          
-            <button  *ngIf="item.status === 'false'" (click)="savetoboard(i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-            <button *ngIf="item.status === 'true'" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+            <button   (click)="savetoboard(i,item.value)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+           <!-- <button *ngIf="item.doc.status === 'true'" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>-->
          </div>
        
       </div>

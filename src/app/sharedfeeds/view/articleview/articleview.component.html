@@ -15,14 +15,13 @@
             <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
-                <app-modal #modal [item]="item"></app-modal>
+                <app-modal #modal [item]="item" [metadata]="metadata"></app-modal>
                <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
                
               </div>
               <!--Feed Category-->
               <div class="row">
-                <app-modal #modal></app-modal>
-              <a (click)="modal.openanother(desc)" class="metadata-article">
+              <a class="metadata-article">
                       {{metadata.category_name}}
               </a>
               <!--Feed Date-->

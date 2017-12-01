@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 
 @Component({
   selector: 'app-hover-toolbar',
@@ -6,14 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hover-toolbar.component.scss']
 })
 export class HoverToolbarComponent implements OnInit {
+  @Input('item') feeditem:any;
 icon:boolean=false;
-  constructor() { }
+  constructor() {
+    
+   }
 
   ngOnInit() {
-  	console.log("hover");
   }
-  change(){
-     this.icon=true;       
+  readlater(){
+     this.icon=true; 
+     console.log(this.feeditem);      
   }
 
 }

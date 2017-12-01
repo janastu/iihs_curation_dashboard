@@ -24,7 +24,11 @@ export class SourcesComponent implements OnInit {
   	this.catvalue=category;
   }
   addcontent(value){
-    this.variab.categoryupdated.push({category:value})
+    let doc={
+      category:value
+    }
+    this.categoryService.addcategory(doc);
+    this.variab.categoryupdated.push({doc:doc})
     console.log(this.variab.categoryupdated);
   	
   }

@@ -25,13 +25,12 @@ date:any;              //variable to store the state of dates to filters
   constructor(public service:Service,private datepipe:DatePipe) { }
   //On loading Component
   ngOnInit() {
-
+    
      //Fetch the data from service and store in global variable
      this.service.getAll().then(result=>{
        
        this.globalfeeds= result['_nr_stories'];
        this.metadata= result['_nr_metadata'];
-       console.log("display",this.globalfeeds)
        this.feeds = this.globalfeeds;
      });
   }
@@ -74,6 +73,7 @@ date:any;              //variable to store the state of dates to filters
 
     });
   }
+ 
 
 }
 

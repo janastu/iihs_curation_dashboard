@@ -44,7 +44,7 @@ confirmpassword = this.formBuilder.control('', [Validators.required]);
             };
             console.log("doc",doc);
             this.userService.adduser(doc).then(response=>{
-                console.log("response",response);
+                //console.log("response",response);
                 if(response){
                     this.router.navigate(['/dashboard']);
                 }

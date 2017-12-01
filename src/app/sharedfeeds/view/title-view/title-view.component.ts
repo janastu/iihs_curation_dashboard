@@ -18,11 +18,9 @@ mouseover:boolean = false;
     	 }
 
   ngOnInit() {
-  this.service.getAll().then(result=>{
-  	this.feeds= result;
-
-
-});
+    this.service.getAll().then(result=>{
+  	  this.feeds= result;
+    });
   }
   checkimg(feeds){
     return (/<img[\s\S]*>/i.test(feeds));

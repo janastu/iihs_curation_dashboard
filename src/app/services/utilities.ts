@@ -6,13 +6,14 @@ parseJSON = (text) => {
 
   let quoteKeysAndParse = (text) => {
            //Quote keys in objects
-     let quoted = text.replace(/([\{\[,]\s*)(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '$1"$3": ');
+     //let quoted = text.replace(/([\{\[,]\s*)(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '$1"$3": ');
+     let quoted = text.replace(/^\s*(\w+)\s*:/gm, '"$1":');
      //Remove the "last item" text
      quoted = quoted.replace(/,\s+'' \/\/ Last item[^\]^}]+([\]\}])/g, '$1');
      //Remove improperly escaping of apostrophes
      quoted = quoted.replace(/([^\\])\\'/g, '$1\'');
      //Parse the JSON
-     console.log(quoted);
+     //console.log(quoted);
 
      return JSON.parse(quoted);
   }

@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
         console.log("log",credentials);
         this.userService.login(credentials).then(response=>{
             console.log("response",response);
+            if(response){
+                this.router.navigate(['/dashboard']);
+            }
         })
 
         localStorage.setItem('isLoggedin', 'true');

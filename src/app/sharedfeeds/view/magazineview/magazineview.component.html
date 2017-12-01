@@ -19,7 +19,7 @@
               <div class="feeds-entries" *ngFor="let item of incomingfeeds">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
-              <app-hover-toolbar></app-hover-toolbar>
+              <app-hover-toolbar [item]='item'></app-hover-toolbar>
               </div>
 
                <div class="feed-entry">
