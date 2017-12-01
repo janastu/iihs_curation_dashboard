@@ -85,11 +85,13 @@
                    </fieldset>
                 </div>
             </div>
-                   
-            <div><app-modal #modal></app-modal>
-            <button (click)="modal.openshareteam(desc)" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button></div> 
-       
-           
+                <div><app-modal #modal></app-modal>
+                  <button (click)="modal.openshareteam(desc)" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button></div> 
+   
+            
+            </div>
+            <div class="nav navbar-nav navbar-right page-header-nav-sec">
+                
             <button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
             
             <button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
