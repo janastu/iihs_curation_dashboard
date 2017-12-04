@@ -10,6 +10,7 @@
             </form>
         </div>   
             <ul class="navbar-nav ml-auto mt-2 mt-md-0 header-list">
+
                 <!--<li class="nav-item hidden-lg-down">
                     <a href="https://github.com/start-angular/SB-Admin-BS4-Angular-2/archive/master.zip" class="nav-link btn mt-1" role="button" style="padding: .375rem 1rem !important; border-color: #999;">{{ 'Download Now' | translate }}</a>
                 </li> &nbsp;-->
@@ -66,13 +67,14 @@
                 </li>-->
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link header-text" ngbDropdownToggle>
-                        <i class="fa fa-user"></i> John Smith <b class="caret"></b>
+                        <i class="fa fa-user"></i> {{user}} <b class="caret"></b>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right menu-item">
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</a>
-                        <a class="dropdown-item"  [routerLink]="['/management']" (click)="onLoggedout()"><i class="fa fa-fw fa-users"></i> {{ 'Management' | translate }}</a>
+                        <a class="dropdown-item"  [routerLink]="['/profile']"><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
+                        <a class="dropdown-item"  [routerLink]="['/preferences']"><i class="fa fa-fw fa-user"></i> {{ 'Preferences' | translate }}</a>
+                        <!--a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</a-->
+                        <a class="dropdown-item"  [routerLink]="['/management']"><i class="fa fa-fw fa-users"></i> {{ 'Management' | translate }}</a>
                         <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()"><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
                     </div>
                 </li>

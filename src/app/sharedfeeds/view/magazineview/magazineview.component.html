@@ -16,19 +16,19 @@
             <div class="row centered magazine-list">
               
 
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds">
+              <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
-              <app-hover-toolbar [item]='item'></app-hover-toolbar>
+              <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
               </div>
 
                <div class="feed-entry">
                <!--Feed Image--> 
-                <div *ngIf="checkimg(item.desc)" class="desc-image">
-                 <img [src]="extracturl(item.desc)" class="magazine-image">
-                <!--<div [innerHtml]="extracturl(item.desc)" class="magazine-image"></div>-->
+                <div *ngIf="checkimg(item.doc.desc)" class="desc-image">
+                 <img [src]="extracturl(item.doc.desc)" class="magazine-image">
+                <!--<div [innerHtml]="extracturl(item.doc.desc)" class="magazine-image"></div>-->
                 </div>
-                <div *ngIf="!checkimg(item.desc)" class="desc-image">
+                <div *ngIf="!checkimg(item.doc.desc)" class="desc-image">
                  <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                
                 
@@ -38,20 +38,20 @@
                   <!--Feed Title-->
                       <app-modal #modal [item]="item" [metadata]=
                       "incomingmetadata"></app-modal>
-                     <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
+                     <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.doc.title}}</strong></h4></a>
                      <!--Feed Category-->
-                    <a href={{item.url}} class="metadata-magazine">
+                    <a href={{item.doc.url}} class="metadata-magazine">
                       {{incomingmetadata.category_name}}</a>
                     <!--Feed Date-->
-                    <a href={{item.url}} class="metadata-magazine">
-                      {{item.date}}
+                    <a href={{item.doc.url}} class="metadata-magazine">
+                      {{item.doc.date}}
                     </a>
                     <!--Feed Desc-->
-                    <div *ngIf="checkimg(item.desc)" class="feed-content">
+                    <div *ngIf="checkimg(item.doc.desc)" class="feed-content">
                         
                     </div>
-                    <div *ngIf="!checkimg(item.desc)" class="feed-content">
-                        {{item.desc.substring(0,80)}}
+                    <div *ngIf="!checkimg(item.doc.desc)" class="feed-content">
+                        {{item.doc.desc.substring(0,80)}}
                     </div>
                    
                 </div>

@@ -7,12 +7,13 @@
       </form>
       <div class="field" *ngFor="let item of variab.boardupdated;let i=index;">
 
-        <div class="board-item"><i  *ngIf="staricon === false" class="fa fa-fw fa-star-o" title="Save to board"></i>
-        <i *ngIf="staricon === true" class="fa fa-fw fa-star"></i>
+        <div class="board-item"><i class="fa" [ngClass]="{'fa-star-o': selectedIndex != 1, 'fa-star': selectedIndex == 1}" aria-hidden="true" title="Save to board"></i>
+          <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
+        
           {{item.value.label}}
          
-            <button   (click)="savetoboard(i,item.value)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-           <!-- <button *ngIf="item.doc.status === 'true'" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>-->
+            <button (click)="savetoboard(item.value,1,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+          <!-- <button *ngIf="item.value.status === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>-->
          </div>
        
       </div>

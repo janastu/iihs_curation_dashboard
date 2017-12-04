@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
 import { Service } from '../../services/services';
+import { Global } from '../../shared/global';
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 declare var require:any;
@@ -16,22 +17,20 @@ var moment = require('moment');
 
 export class FeedsComponent implements OnInit {
 
-globalfeeds:any=[];    //variable to store feeds globally
 feeds:any=[];          //variable to store feeds to display
 metadata:any=[];       //variable to store metadata of feeds
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 
-  constructor(public service:Service,private datepipe:DatePipe) { }
+  constructor(public service:Service,private datepipe:DatePipe,public variab:Global) { }
   //On loading Component
   ngOnInit() {
     
      //Fetch the data from service and store in global variable
-     this.service.getAll().then(result=>{
+     this.service.getfrompouch().then(result=>{
        
-       this.globalfeeds= result['_nr_stories'];
-       this.metadata= result['_nr_metadata'];
-       this.feeds = this.globalfeeds;
+       this.variab.globalfeeds= result;
+       this.feeds = this.variab.globalfeeds;
      });
   }
   
@@ -47,8 +46,7 @@ date:any;              //variable to store the state of dates to filters
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
-    console.log("global",this.globalfeeds,fromdate);
-    this.feeds =  this.globalfeeds.filter((res)=>{
+    this.feeds =  this.variab.globalfeeds.filter((res)=>{
       
       var chunks = res.date.split('.');
 
@@ -65,7 +63,7 @@ date:any;              //variable to store the state of dates to filters
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
 
-   this.feeds =  this.globalfeeds.filter((res)=>{
+   this.feeds =  this.variab.globalfeeds.filter((res)=>{
      console.log(childCategory,res.category);
        if(res.category === childCategory){
           return res;

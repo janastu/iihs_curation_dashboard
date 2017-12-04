@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+    user:any;
     pushRightClass: string = 'push-right';
     
     constructor(private translate: TranslateService, public router: Router) {
@@ -19,7 +19,11 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.user = localStorage.getItem('name');
+        console.log(this.user);    
+        
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -43,4 +47,5 @@ export class HeaderComponent implements OnInit {
     changeLang(language: string) {
         this.translate.use(language);
     }
+    
 }

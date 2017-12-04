@@ -2,16 +2,20 @@
 
         <div class="ago">
         <app-createboardcomponent [feeditem]='feeditem'></app-createboardcomponent>
-        <a class="nav-item" (click)="readlater()"><i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
-                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i></a>
-        <a class="nav-item" (click)="markasread()"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+        <a class="nav-item" (click)="readlater(1)">
+            <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
+            'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
+            <!--<i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
+                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i>--></a>
+        <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
         <!--<a class="nav-item" href="#"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>-->
         
 
         <!--a class="nav-item" href="#"><i class="fa fa-fw fa-twitter" title="Twitter"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-facebook" title="Facebook"></i></a-->
-        <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
+
+        <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close" title="Delete"></i></a>
         </div>
         
 

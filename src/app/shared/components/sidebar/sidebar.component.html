@@ -46,7 +46,7 @@
         </a>
         <div class="nested-menu">
             <a class="list-group-item" (click)="addFeedClass('feeds')">
-                <span>{{ 'Feeds' | translate }}</span>
+                <span><i class="fa fa-bars"></i>&nbsp;{{ 'Feeds' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'feeds'">
                 <ul class="submenu">
@@ -68,7 +68,7 @@
         
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
-                <span> {{ 'Boards' | translate }}</span>
+                <span> <i class="fa fa-star-o"></i>&nbsp;{{ 'Boards' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
@@ -81,6 +81,9 @@
         </div>
         <a [routerLink]="['/readlater']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-bookmark"></i>&nbsp;{{ 'Read Later' | translate }}
+        </a>
+        <a [routerLink]="['/recentlyread']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Recently Read' | translate }}
         </a>
         
 

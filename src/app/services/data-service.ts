@@ -16,6 +16,8 @@ constructor(private http: Http) {
 
 
   addtodatabase(payload){
+   
+    
         this.db.post(payload, function callback(err, result) {
           if (!err) {
             console.log('Successfully posted a todo!',result);
@@ -26,11 +28,12 @@ constructor(private http: Http) {
   }
   getfromdatabase(){
     function map(doc) {
-      if(doc.type === 'Annotation' && doc.motivation==='tagging')
+      if(doc.type === 'Annotation' && doc.label)
       emit(doc.label,doc);
     }
     return new Promise(resolve => {
       this.db.query(map).then(function (result) {
+         console.log(result);
         resolve(result.rows);
       }).catch(function (err) {
       console.log(err);
@@ -43,6 +46,42 @@ constructor(private http: Http) {
       this.db.query(function(doc, emit) {
         if (doc.label === board) {
           emit(doc.label,doc);
+        }
+      }).then(function (result) {
+        // handle result
+        console.log(result);
+        resolve(result.rows);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
+
+
+  }
+  getreadlater(usr){
+
+    return new Promise(resolve => {
+      this.db.query(function(doc, emit) {
+        if (doc.motivation === 'bookmarking' && doc.creator === usr) {
+          emit(doc.creator,doc);
+        }
+      }).then(function (result) {
+        // handle result
+        console.log(result);
+        resolve(result.rows);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
+
+
+  }
+  getrecentlyread(usr){
+
+    return new Promise(resolve => {
+      this.db.query(function(doc, emit) {
+        if (doc.motivation === 'tagging' && doc.creator === usr) {
+          emit(doc.creator,doc);
         }
       }).then(function (result) {
         // handle result

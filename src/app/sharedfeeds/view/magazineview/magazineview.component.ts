@@ -57,5 +57,6 @@ images:any=[];
     this.Dataglobal = childData;
    
   }
+ 
   
 }

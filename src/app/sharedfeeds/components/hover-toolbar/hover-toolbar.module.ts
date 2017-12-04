@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HoverToolbarComponent } from './hover-toolbar.component';
 import { CreateboardcomponentModule } from '../createboardcomponent/createboardcomponent.module';
-
+import { ReadlaterStore } from '../../store/readlater-store';
 @NgModule({
     imports: [
         CommonModule,
@@ -11,6 +11,7 @@ import { CreateboardcomponentModule } from '../createboardcomponent/createboardc
         CreateboardcomponentModule 
     ],
     declarations: [HoverToolbarComponent],
-    exports: [HoverToolbarComponent]
+    exports: [HoverToolbarComponent],
+    providers:[ReadlaterStore]
 })
 export class HoverToolbarModule { }

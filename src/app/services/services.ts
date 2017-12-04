@@ -42,13 +42,13 @@ public getAll(){
 
 
   }
- /*addtopouch(feed,metadata){
+ addtopouch(feed,metadata){
 
     var db = new PouchDB('allfeeds');
    
     feed.map(res=>{
       res.category = metadata.category_name;
-      console.log(res);
+      //console.log(res);
       db.post(res, function callback(err, result) {
           if (!err) {
             //console.log('Successfully posted a todo!',result);
@@ -74,15 +74,15 @@ public getAll(){
       });
     });
     
-  }*/
-  addtodatabase(payload){
-    this.db = new PouchDB('iihs_annoation');
+  }
+  /*addtodatabase(payload){
+    this.db = new PouchDB('feeds');
     this.db.post(payload, function callback(err, result) {
           if (!err) {
             console.log('Successfully posted a todo!',result);
           }
         });
 
-  }
+  }*/
  
 }

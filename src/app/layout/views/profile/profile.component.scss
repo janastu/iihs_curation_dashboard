@@ -1,0 +1,63 @@
+.picture{
+    background-position: center;
+    background-color: #f2f2f2;
+    height: 120px;
+    width: 120px;
+    border: 1px solid #CFCFCF;
+    float: left;
+    margin-right: 8px;
+    overflow: hidden;
+    padding: 3px;
+    border-radius: 4rem;
+    text-align: right;
+}
+.field-picture-upload{
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+}
+.image-upload-button input{
+  margin-top: 10px;
+}
+.user-profile{
+      display: inline-block;
+      font-size: 21px;
+}
+.user-profile input{
+      position: relative;
+      margin-bottom: 10px;
+      height: 2.5rem;
+      width: 30rem;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 0.25rem;
+      box-shadow: 0 0 0 0 transparent inset;
+}
+.user-profile h1{
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  font-weight: 700;
+}
+.user-name{
+    display: grid;
+    font-size: 15px;
+    margin: 0 0 8px;
+    margin-bottom: 10px;
+}
+.profile-button{
+      background-color: #249540;
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 1rem;
+      padding-top: 12px;
+      padding-bottom: 10px;
+      padding-left: 17px;
+      padding-right: 17px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+  
+}
