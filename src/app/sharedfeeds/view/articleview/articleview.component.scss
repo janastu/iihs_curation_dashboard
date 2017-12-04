@@ -134,9 +134,30 @@
 }
 
 
- 
+ @media only screen and (min-width : 320px) {
 
-@media  (max-width: 480px) {
+ .magazine-hover-control {
+     opacity: 0;
+     margin-left: 356px;
+   }
+   .feeds-entries{
+    padding-left: 10px;
+   }
+   .feed-heading{
+       width: 300px;
+    }
+   .article-image{
+    max-width: 300px;
+    max-height: 300px;
+    margin-bottom: 3rem;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+   }
+
+ }
+
+@media  (min-width: 480px) {
  .magazine-hover-control {
      opacity: 0;
      margin-left: 356px;
@@ -159,7 +180,7 @@
 
 
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
 .magazine-hover-control {
     opacity: 0;
     margin-left: 278px;
@@ -167,10 +188,25 @@
   .feed-heading{
       max-width: 500px;
    }
+.article-image{
+    max-width: 580px;
+    max-height: 397px;
+    margin-bottom: 3rem;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+   }
 }
 
-@media (max-width: 995px) {
-  
+@media (min-width: 995px) {
+  .article-image{
+    max-width: 539px;
+    max-height: 397px;
+    margin-bottom: 3rem;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+   }
 }
 
 @media (max-width: 1024px) {
@@ -181,7 +217,6 @@
    .feed-heading{
        max-width: 550px;
     }
-
 }
 @media (max-width: 1440px) {
   

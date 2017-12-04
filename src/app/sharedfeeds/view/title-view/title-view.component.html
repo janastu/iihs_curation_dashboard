@@ -14,13 +14,13 @@
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
                         <!--Feed Category-->     
-                             <a href={{item.doc.url}} class="feeds-data">{{incomingmetadata.category_name}}</a>
+                             <a href={{item.doc.url}} class="feeds-data">{{item.doc.category}}</a>
                         <!--Feed Date--> 
                              <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.doc.date}}</small>
                              
                         <!--Feed Title--> 
 
-                            <app-modal #modal [item]="item" [metadata]=
+                            <app-modal #modal [item]="item.doc" [metadata]=
                       "incomingmetadata"></app-modal>
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.doc.title.substring(0,60)}}</a>
                               

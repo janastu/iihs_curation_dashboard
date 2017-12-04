@@ -36,12 +36,12 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item" [metadata]=
+                      <app-modal #modal [item]="item.doc" [metadata]=
                       "incomingmetadata"></app-modal>
                      <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.doc.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.doc.url}} class="metadata-magazine">
-                      {{incomingmetadata.category_name}}</a>
+                      {{item.doc.category}}</a>
                     <!--Feed Date-->
                     <a href={{item.doc.url}} class="metadata-magazine">
                       {{item.doc.date}}
@@ -50,8 +50,10 @@
                     <div *ngIf="checkimg(item.doc.desc)" class="feed-content">
                         
                     </div>
+
                     <div *ngIf="!checkimg(item.doc.desc)" class="feed-content">
-                        {{item.doc.desc.substring(0,80)}}
+                        {{item.doc.desc.substring(0,20)}}
+
                     </div>
                    
                 </div>

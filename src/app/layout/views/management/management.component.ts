@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
-
+import { Userservice } from '../../../services/userservice';
 @Component({
   selector: 'app-management',
   templateUrl: './management.component.html',

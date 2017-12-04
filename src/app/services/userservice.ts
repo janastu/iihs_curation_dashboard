@@ -2,11 +2,13 @@ import { Injectable,ViewChild } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import superlogin from 'superlogin-client';
-//import PouchDB from 'pouchdb';
-//import Auth from 'pouchdb-auth';
+
+
 @Injectable()
 export class Userservice {
-db:any;
+  db:any;
+
+
 userservicedomain:any='http://192.168.1.15:3000';
 userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
@@ -37,12 +39,14 @@ constructor(private http: Http) {
     };
 
     superlogin.configure(config);
+
     /*PouchDB.plugin(Auth)
     this.db.useAsAuthenticationDB()
     .then(function () {
       
 
     });*/
+
   }
 
 

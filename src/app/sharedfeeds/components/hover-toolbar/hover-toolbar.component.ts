@@ -17,7 +17,7 @@ selectedIcon: number;
 user:any;
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
 
-    //this.selectedIndex = -1;
+    this.selectedIndex = -1;
     this.selectedIcon = -1;
    }
 
@@ -26,7 +26,7 @@ user:any;
     this.variab.globalfeeds.map(globalfeed=>{
       this.variab.readlaterfeeds.map(feed=>{
         if(globalfeed.doc._id === feed.doc._id){
-          this.selectedIndex = 1;
+          //this.selectedIndex = 1;
 
           console.log(feed.doc.title,this.selectedIndex)
         }

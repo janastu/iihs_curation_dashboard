@@ -26,7 +26,9 @@ public getAll(){
      
      
    return new Promise(resolve => {
+
     var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
+
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
