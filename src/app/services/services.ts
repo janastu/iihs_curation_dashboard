@@ -1,13 +1,14 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { Http }       from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-import * as _ from 'underscore';
 import { JsonConvert } from './utilities';
- declare var require: any;
-@Injectable()
-export class Service {
+import PouchDB from 'pouchdb';
 
+@Injectable()
+
+export class Service {
+  db:any;
 constructor(private http: Http, private jsonconvert:JsonConvert) { 
+
   }
 
 public getAll(){ 
@@ -25,63 +26,65 @@ public getAll(){
      
      
    return new Promise(resolve => {
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/33.json';
+
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
+
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
-     console.log(jsonobject)
+    
+    //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
      resolve(jsonobject);
      }, (err) => {
       console.log(err);
       });
   });
 
+   
+
 
   }
-/*convertTojson(){
+ addtopouch(feed,metadata){
 
-let parseJSON = (text) => {
-  console.log("text",text);
-  let quoteKeysAndParse = (text) => {
-     //Quote keys in objects
-     let quoted = text.replace(/([\{\[,]\s*)(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '$1"$3": ');
-     //Remove the "last item" text
-     quoted = quoted.replace(/,\s+'' \/\/ Last item[^\]^}]+([\]\}])/g, '$1');
-     //Remove improperly escaping of apostrophes
-     quoted = quoted.replace(/([^\\])\\'/g, '$1\'');
-     //Parse the JSON
-     return JSON.parse(quoted);
-  }
-  
-  //Find var declarations
-  let declarations = text.match(/var\s+_nr_[^\s]+\s+=\s+/ig), obj = {}, key = null, prevKey = null;
-  text = ['',text];
-  //For each variable...
-  for(let declaration of declarations){
-    key = declaration.match(/_nr_[^\s]+/)[0];
-    let currentText = text[1].split(declaration);
-    text = currentText;
-    if(prevKey){
-      //Parse the prior split section
-      obj[prevKey] = quoteKeysAndParse(text[0]);
-    }
-    prevKey = key;
-  }
-  
-  //Make sure we process the last section
-  if(prevKey){
-    obj[prevKey] = quoteKeysAndParse(text[1]);
-  }
-  return obj;
-}
+    var db = new PouchDB('allfeeds');
+   
+    feed.map(res=>{
+      res.category = metadata.category_name;
+      //console.log(res);
+      db.post(res, function callback(err, result) {
+          if (!err) {
+            //console.log('Successfully posted a todo!',result);
+          }
+        });
+    });
 
-fetch('http://newsrack.in/stories/servelots/iihs_feeds/16.json')
-.then(response => response.text())
-.then(parseJSON)
-.then(data => {
-  console.log("data",data);
-  console.log("datavalue",data["_nr_stories"][0].title);
-});
-}*/
+    
+     //this.getfrompouch();
+  }
+  getfrompouch(){
+    var db = new PouchDB('allfeeds');
+   return new Promise(resolve => {
+      db.allDocs({
+        include_docs: true
+      }).then(function (result) {
+        // handle result
+        console.log('Successfully posted a todo!',result);
+        console.log(result);
+          resolve(result.rows); 
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
+    
+  }
+  /*addtodatabase(payload){
+    this.db = new PouchDB('feeds');
+    this.db.post(payload, function callback(err, result) {
+          if (!err) {
+            console.log('Successfully posted a todo!',result);
+          }
+        });
+
+  }*/
  
 }

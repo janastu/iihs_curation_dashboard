@@ -2,36 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 //import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
-import { Global } from '../../shared';
 @Component({
-  selector: 'app-read-later',
-  templateUrl: './read-later.component.html',
-  styleUrls: ['./read-later.component.scss'],
+  selector: 'app-recently-read',
+  templateUrl: './recently-read.component.html',
+  styleUrls: ['./recently-read.component.scss'],
   animations: [routerTransition()]
 })
-export class ReadLaterComponent implements OnInit {
+export class RecentlyReadComponent implements OnInit {
 feeds:any=[];                //variable to store feeds to display
 metadata:any=[];             //variable to store metadata of feeds
 view:any;                    //variable to store the view state
 globalfeeds:any=[];          //variable to store feeds globally
 date:any;                    //variable to store the state of dates to filters
 user:any;
-  constructor(public dataservice:DataService,public variab:Global) {
+  constructor(public dataservice:DataService) {
    }
    
    //On loading Component
   ngOnInit() {
-   
-    //Fetch the data from service and store in global variable
-  	var doc:any=[];
-
+    var doc:any=[];
     this.user = localStorage.getItem('name');
-    this.dataservice.getreadlater(this.user).then(result=>{
-        
-       doc=result;
-       this.feeds = doc.map(feed=>{
-         return feed.value.target;
-       });
+    //Fetch the data from service and store in global variable
+  	this.dataservice.getrecentlyread(this.user).then(result=>{
+      
+     doc=result;
+     this.feeds = doc.map(feed=>{
+       return feed.value.target;
+     })
     });
   }
   //Function to handle view event from page-header component

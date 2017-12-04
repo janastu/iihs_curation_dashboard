@@ -3,7 +3,7 @@ import { routerTransition } from '../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Userservice } from '../services/userservice';
-
+import { ComponentsService } from '../services/components-service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     username=this.formBuilder.control('', [Validators.required]);
     password=this.formBuilder.control('', [Validators.required]);
 
-    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice) {
+    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public componentsService:ComponentsService) {
     }
 
     ngOnInit() {
@@ -34,11 +34,16 @@ export class LoginComponent implements OnInit {
             'password':this.password.value
         };
         console.log("log",credentials);
+
         this.userService.login(credentials).then(response=>{
             console.log("response",response);
+            if(response){
+               this.router.navigate(['/dashboard']);
+            }
         })
 
         localStorage.setItem('isLoggedin', 'true');
+        localStorage.setItem('name', this.username.value);
     }
 
 }

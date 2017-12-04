@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { ReadlaterStore } from '../../store/readlater-store';
+import { Global } from '../../../shared';
+import { DataService } from '../../../services/data-service';
 
 @Component({
   selector: 'app-hover-toolbar',
@@ -6,14 +9,79 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hover-toolbar.component.scss']
 })
 export class HoverToolbarComponent implements OnInit {
+  @Input('item') feeditem:any;
+  @Input('index') index:any;
 icon:boolean=false;
-  constructor() { }
+selectedIndex: any;
+selectedIcon: number;
+user:any;
+  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
+
+    this.selectedIndex = -1;
+    this.selectedIcon = -1;
+   }
 
   ngOnInit() {
-  	console.log("hover");
+    this.user = localStorage.getItem('name');
+    this.variab.globalfeeds.map(globalfeed=>{
+      this.variab.readlaterfeeds.map(feed=>{
+        if(globalfeed.doc._id === feed.doc._id){
+          //this.selectedIndex = 1;
+
+          console.log(feed.doc.title,this.selectedIndex)
+        }
+      })
+
+    })
+
   }
-  change(){
-     this.icon=true;       
+  readlater(index: number){
+     if(this.selectedIndex == index){
+       this.selectedIndex = -1;
+     }
+     else{
+       this.selectedIndex = index;
+     }
+     console.log(this.feeditem);  
+     let model = {
+       "@context": "http://www.w3.org/ns/anno.jsonld",
+       "type": "Annotation",
+       "creator": this.user,
+       "created": "2015-01-28T12:00:00Z",
+       "modified": "2015-01-29T09:00:00Z",
+       "generator": "mm_2017_v1",
+       "generated": "2015-02-04T12:00:00Z",
+       "target": this.feeditem,
+       "motivation":"bookmarking"
+     }   
+     this.readlaterstore.dispatch('ADD_ITEMS',model)
+  }
+  markasread(index:number){
+    if(this.selectedIcon == index){
+       this.selectedIcon = -1;
+     }
+     else{
+       this.selectedIcon = index;
+       let model = {
+         "@context": "http://www.w3.org/ns/anno.jsonld",
+         "type": "Annotation",
+         "creator": this.user,
+         "created": "2015-01-28T12:00:00Z",
+         "modified": "2015-01-29T09:00:00Z",
+         "generator": "mm_2017_v1",
+         "generated": "2015-02-04T12:00:00Z",
+         "target": this.feeditem,
+         "motivation":"tagging"
+       }   
+       this.readlaterstore.dispatch('ADD_ITEMS',model)
+     }
+    
+  }
+  hide(){
+   this.variab.globalfeeds.splice(this.index,1);
+
+   
+   console.log(this.index,this.variab.globalfeeds);
   }
 
 }

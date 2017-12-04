@@ -5,8 +5,8 @@ import {
     NgbAlertModule,
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
-import { BoardfeedsRoutingModule } from './boardfeeds-routing.module';
-import { BoardfeedsComponent } from './boardfeeds.component';
+import { RecentlyReadRoutingModule } from './recently-read-routing.module';
+import { RecentlyReadComponent } from './recently-read.component';
 import { PageHeaderModule } from '../../shared';
 import { StatModule } from '../../shared';
 import { Service } from '../../services/services';
@@ -19,13 +19,14 @@ import {
     CardViewModule
 } from '../../sharedfeeds/view';
 import { HoverToolbarModule } from '../../sharedfeeds/components';
+
 @NgModule({
     imports: [
         CommonModule,
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         NgbModule.forRoot(),
-        BoardfeedsRoutingModule,
+        RecentlyReadRoutingModule,
         StatModule,
         PageHeaderModule,
         FormsModule,
@@ -35,15 +36,14 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
         CardViewModule,
         ArticleviewModule,
         HoverToolbarModule
-      
     ],
     declarations: [
-        BoardfeedsComponent
-    
+        RecentlyReadComponent
+        
        
     ],
    
-    providers: [DatePipe,Service]
+    providers: [Service,DatePipe]
      
 })
-export class BoardfeedsModule { }
+export class RecentlyReadModule { }

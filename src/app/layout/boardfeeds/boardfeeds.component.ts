@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { ComponentsService } from '../../services/components-service';
 import { Service } from '../../services/services';
+import { DataService } from '../../services/data-service';
 @Component({
   selector: 'app-boardfeeds',
   templateUrl: './boardfeeds.component.html',
@@ -13,15 +15,19 @@ metadata:any=[];
 feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
-  constructor(public service:Service) { }
+boardname:any;
+  constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService) { }
   //On loading Component
   ngOnInit() {
-    //Fetch the data from service and store in global variable
-  	this.service.getAll().then(result=>{
+
+      this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
+
+    //Fetch the data from ComponentsService and store in global variable
+  	/*this.service.getAll().then(result=>{
       this.globalfeeds= result['_nr_stories'];
       this.metadata = result['_nr_metadata'];
       this.feeds = this.globalfeeds;
-    });
+    });*/
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){
@@ -59,6 +65,13 @@ date:any;              //variable to store the state of dates to filters
         }
 
     });
+  }
+
+  private alertReceived(data: any) {
+    console.log(data);
+    this.feeds=data.data;
+    this.boardname = data.type;
+    
   }
 
 

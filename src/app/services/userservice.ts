@@ -2,18 +2,20 @@ import { Injectable,ViewChild } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import superlogin from 'superlogin-client';
-import PouchDB from 'pouchdb';
+
 
 @Injectable()
 export class Userservice {
   db:any;
 
+
 userservicedomain:any='http://192.168.1.15:3000';
 userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http) {
-    var config:any = {
-      serverUrl: 'http://192.168.1.15:3000',
+  //this.db = new PouchDB('_users');
+   var config:any = {
+      serverUrl: 'http://localhost:3000',
       // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
       baseUrl: '/auth/',
       // A list of API endpoints to automatically add the Authorization header to
@@ -38,12 +40,24 @@ constructor(private http: Http) {
 
     superlogin.configure(config);
 
-    this.db = new PouchDB('mang_database');
+    /*PouchDB.plugin(Auth)
+    this.db.useAsAuthenticationDB()
+    .then(function () {
+      
+
+    });*/
+
   }
 
 
 public adduser(user){
 	console.log("usr",user);
+  /*return new Promise(resolve => {
+    this.db.signUp(user.username,'secret')
+    .then(function (response) {
+    resolve(response);
+    })
+  });*/
    return superlogin.register(user);
     /*let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
     let options = new RequestOptions({ headers: headers, method: "post"});
@@ -52,16 +66,14 @@ public adduser(user){
 }
 public login(credentials){
     console.log("usr",credentials);
-     return superlogin.login(credentials);
+  /*return new Promise(resolve => {  
+    this.db.logIn(credentials.username,'secret')
+    .then(function (response) {
+      resolve(response);
+    });
+  });*/
+   return superlogin.login(credentials);
 
-}
-private jwt() {
-    // create authorization header with jwt token
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser && currentUser.token) {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-        return new RequestOptions({ headers: headers });
-    }
 }
 
 
