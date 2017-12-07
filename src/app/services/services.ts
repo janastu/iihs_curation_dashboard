@@ -33,7 +33,7 @@ public getAll(){
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-    //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+    this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
      resolve(jsonobject);
      }, (err) => {
       console.log(err);
@@ -50,7 +50,7 @@ public getAll(){
    
     feed.map(res=>{
       res.category = metadata.category_name;
-      //console.log(res);
+      console.log(res);
       db.post(res, function callback(err, result) {
           if (!err) {
             //console.log('Successfully posted a todo!',result);

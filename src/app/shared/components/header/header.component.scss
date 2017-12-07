@@ -128,7 +128,7 @@ Bootstrap 3 Media Queries
     font-size: 13px;
     margin-left: -129px;
     margin-top: 46px;
-    width: 175px;
+    width: 133px;
 }
 .header-list li{
     display: block;
@@ -136,7 +136,8 @@ Bootstrap 3 Media Queries
 }
 .header-button{
     background: #efefef;
-    margin-top: 29px;
+    margin-top: 9px;
+    margin-right: 120px;
     font-size: 16px;
 }
 .menu-item{
@@ -172,8 +173,9 @@ Bootstrap 3 Media Queries
 }
 .header-button{
     background: #efefef;
-    margin-top: 36px;
+    margin-top: 9px;
     font-size: 16px;
+    margin-right: 126px;
 }
 .menu-item{
     font-size: 10px;
@@ -199,17 +201,19 @@ Bootstrap 3 Media Queries
 }
 .form-search .form-inline input{
     font-size: 13px;
-    margin-left: -95px;
+    margin-left: -129px;
     margin-top: 46px;
     width: 175px;
 }
   .header-list li{
     display: block;
     margin-right: 0px;
+    margin-top: -37px;
 }
 .header-button{
     background: #efefef;
-    margin-top: 29px;
+    margin-top: 9px;
+    margin-right: 131px;
     font-size: 16px;
 }
 .menu-item{
@@ -242,12 +246,10 @@ Bootstrap 3 Media Queries
   .header-list li{
     display: block;
     margin-right: 0px;
+    margin-left: -124px;
+    margin-top: auto;
 }
-.header-button{
-    background: #efefef;
-    margin-top: 29px;
-    font-size: 16px;
-}
+
 .menu-item{
     font-size: 10px;
     max-width: 100px;
@@ -269,7 +271,7 @@ Bootstrap 3 Media Queries
     margin-bottom: -47px;
 }
 .form-search .form-inline input{
-    margin-left: 199px;
+    margin-left: 200px;
     margin-top: -1px;
     width: 175px;
 }
@@ -277,15 +279,19 @@ Bootstrap 3 Media Queries
     display: block;
     margin-right: -19px;
     margin-top: 0px;
-    margin-left: -147px;
+    margin-left: -173px;
 }
 .menu-item{
     font-size: 1rem;
     max-width: 100px;
 }
 }
-@media only screen and (min-width : 1200px) {
-
+@media only screen and (min-width : 1440px) {
+.form-search .form-inline input{
+    margin-left: 254px;
+    margin-top: -1px;
+    width: 175px;
+}
 }
 
 

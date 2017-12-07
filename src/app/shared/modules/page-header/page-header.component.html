@@ -6,10 +6,10 @@
 <!--Date filter form-->
   <div class="col-sm-6 form-item">
     <form [formGroup]="loginForm" class="form-inline form-group">
-      <div class="form-group"><label class="page-header-form">From</label>
+      <div class="form-group form-from"><label class="page-header-form">From</label>
         <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
       </div>
-      <div class="form-group"><label class="page-header-form">To</label>
+      <div class="form-group form-to"><label class="page-header-form">To</label>
         <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
         <button type="button" class="btn btn-sm btn-success" (click)="datefilter()" >Filter</button>
       </div>
@@ -64,14 +64,14 @@
       </div>
       <!--Share with team mates-->
       <div><app-modal #modal></app-modal>
-        <div><button (click)="modal.openshareteam(desc)" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button></div>
+        <button (click)="modal.openshareteam(desc)" class="nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
       </div> 
         <!--Team Newsletter-->
-        <div><button (click)="newsletter" class="nav-item-filters" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button></div>
+        <button (click)="newsletter" class="nav-item-filters headerview" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>
         <!--Refresh button-->
-        <div><button (click)="refresh()" class="nav-item-filters" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button></div>
+        <button (click)="refresh()" class="nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
       <!--More Options-->         
-      <div ngbDropdown class="d-inline-block">
+      <div ngbDropdown class="d-inline-block headerview">
         <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
 
         <div ngbDropdownMenu dropdown-menu-left aria-labelledby="dropdownBasic1" class="form-group dropdown-width placement-small-screen">
