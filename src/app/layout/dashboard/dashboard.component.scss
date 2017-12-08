@@ -1,15 +1,15 @@
 .card div{
-	min-height: 125px;
 	text-align: center;
-	padding: 15px;
-	cursor: pointer;
 }
-.card-recent-feeds{
-	min-height: 0px !important;
+.card-category{
+	min-height: 125px !important;
+	padding: 15px !important;
+	cursor: pointer;
 }
 .recent-feeds{
 	min-height: 0px !important;
 }
 .recent-feeds h4{
 	font-size: 20px;
+	text-align: initial;
 }

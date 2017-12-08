@@ -72,6 +72,7 @@ public getAll(){
       res.category = metadata.category_name;
       //console.log(res);
       this.db.post(res, function callback(err, result) {
+
           if (!err) {
             //console.log('Successfully posted a todo!',result);
           }
