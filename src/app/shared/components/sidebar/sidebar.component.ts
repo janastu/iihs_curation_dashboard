@@ -2,9 +2,10 @@ import { Component,Input,OnInit,Output,EventEmitter } from '@angular/core';
 import { Router } from "@angular/router";
 import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from '../../../services/data-service';
+import { BoardService } from '../../../services/board-service';
 import { CategoryService } from '../../../services/category-service';
 import { ComponentsService } from '../../../services/components-service';
+import { DataService } from '../../../services/data-service';
 
 @Component({
     selector: 'app-sidebar',
@@ -37,14 +38,15 @@ export class SidebarComponent implements OnInit{
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public dataservice:DataService,public categoryService:CategoryService,public componentsService:ComponentsService){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public categoryService:CategoryService,public componentsService:ComponentsService,public dataservice:DataService){
    
         config.placement = 'top-left';
         config.autoClose = false;
 
     }
     ngOnInit(){
-        this.dataservice.getfromdatabase().then((result)=>{
+        this.boardservice.getboards().then((result)=>{
+                console.log(result);
                 this.variab.boardupdated=result;
         })
         this.categoryService.getfrompouch().then((result)=>{
@@ -57,13 +59,18 @@ export class SidebarComponent implements OnInit{
 
     }
     routetoboard(board){ 
-        
+        var boardfeeds:any=[];
+        var feedstodisplay:any=[];
         this.router.navigate(['/boardfeeds'],{ queryParams: { board } });
         //this.outgoing.emit(board);
-        this.dataservice.getboardfeeds(board).then(res=>{
-           console.log(res[0].value.target);
-            this.componentsService.alert(board, res[0].value.target);   
-     }); 
+       this.dataservice.getboardfeeds(board).then(res=>{
+              boardfeeds=res;
+              feedstodisplay = boardfeeds.map(feed=>{
+                  return feed.value;
+              })
+              this.componentsService.alert(board,feedstodisplay); 
+  
+     });
 
 
     }

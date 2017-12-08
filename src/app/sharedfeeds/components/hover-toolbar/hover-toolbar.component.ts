@@ -11,28 +11,35 @@ import { DataService } from '../../../services/data-service';
 export class HoverToolbarComponent implements OnInit {
   @Input('item') feeditem:any;
   @Input('index') index:any;
-icon:boolean=false;
 selectedIndex: any;
 selectedIcon: number;
 user:any;
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
 
     this.selectedIndex = -1;
-    this.selectedIcon = -1;
+    //this.variab.selectedIcon = -1;
+    //console.log(this.variab.selectedIcon)
    }
 
   ngOnInit() {
+
+    
     this.user = localStorage.getItem('name');
-    this.variab.globalfeeds.map(globalfeed=>{
-      this.variab.readlaterfeeds.map(feed=>{
-        if(globalfeed.doc._id === feed.doc._id){
-          //this.selectedIndex = 1;
-
-          console.log(feed.doc.title,this.selectedIndex)
+   
+      
+      this.variab.readlaterfeeds.filter(anno=>{
+        if(anno.value.target.id === this.feeditem.doc._id){
+          this.selectedIndex=1;
         }
-      })
+      });
 
-    })
+      this.variab.recentlyread.filter(anno=>{
+        if(anno.value.target.id === this.feeditem.doc._id){
+          this.selectedIcon=1;
+        }
+      });
+    
+
 
   }
   readlater(index: number){
@@ -54,6 +61,7 @@ user:any;
        "target": this.feeditem,
        "motivation":"bookmarking"
      }   
+     this.variab.readlaterfeeds.push({value:model});
      this.readlaterstore.dispatch('ADD_ITEMS',model)
   }
   markasread(index:number){
@@ -73,6 +81,7 @@ user:any;
          "target": this.feeditem,
          "motivation":"tagging"
        }   
+       this.variab.recentlyread.push({value:model});
        this.readlaterstore.dispatch('ADD_ITEMS',model)
      }
     

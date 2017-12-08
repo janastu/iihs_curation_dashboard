@@ -4,6 +4,7 @@ import { routerTransition } from '../../router.animations';
 import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
+import { ComponentsService } from '../../services/components-service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -13,26 +14,27 @@ import { Global } from '../../shared';
 export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
-    constructor(public service:Service,public dataservice:DataService,public variab:Global) {
+    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService) {
     }
 
     ngOnInit() {
-        var doc:any=[];
 
     this.user = localStorage.getItem('name');
-    	this.service.getAll().then(result=>{
-
-        this.feeds= result["_nr_stories"];
-        console.log("feeds",this.feeds);
-        })
         this.dataservice.getreadlater(this.user).then(result=>{
-            
-           doc=result;
-           this.variab.readlaterfeeds = doc.map(feed=>{
-             return feed.value.target;
-           });
+            this.variab.readlaterfeeds=result;
+           
+        });
+        this.dataservice.getrecentlyread(this.user).then(result=>{
+            this.variab.recentlyread=result;
+        });
+        this.service.getfrompouch().then(result=>{
+          
+          this.variab.globalfeeds= result;
+         this.feeds = this.variab.globalfeeds;
+          
         });
     }
+
     
 }
  

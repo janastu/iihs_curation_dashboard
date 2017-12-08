@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { Service } from '../../../services/services';
+import { Global } from '../../../shared';
 import * as _ from 'lodash'
 
 @Component({
@@ -13,15 +13,19 @@ import * as _ from 'lodash'
 
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
-@Input('metadata') incomingmetadata:any=[];
+
 itsimage:boolean=false;
 Dataglobal:any;
 images:any=[];
-
-  constructor(public service:Service) {
+annoforid:any=[];
+feedmark:number;
+  constructor(public variab:Global) {
    }
 
   ngOnInit() {
+    
+  
+
    
 	}
   checkimg(feeds){

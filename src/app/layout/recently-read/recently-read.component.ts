@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 //import { Service } from '../../services/services';
-import { DataService } from '../../services/data-service';
+import { Global } from '../../shared';
 @Component({
   selector: 'app-recently-read',
   templateUrl: './recently-read.component.html',
@@ -15,7 +15,7 @@ view:any;                    //variable to store the view state
 globalfeeds:any=[];          //variable to store feeds globally
 date:any;                    //variable to store the state of dates to filters
 user:any;
-  constructor(public dataservice:DataService) {
+  constructor(public variab:Global) {
    }
    
    //On loading Component
@@ -23,13 +23,12 @@ user:any;
     var doc:any=[];
     this.user = localStorage.getItem('name');
     //Fetch the data from service and store in global variable
-  	this.dataservice.getrecentlyread(this.user).then(result=>{
-      
-     doc=result;
-     this.feeds = doc.map(feed=>{
+  	
+     this.feeds = this.variab.recentlyread.map(feed=>{
        return feed.value.target;
-     })
-    });
+     });
+     
+
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){

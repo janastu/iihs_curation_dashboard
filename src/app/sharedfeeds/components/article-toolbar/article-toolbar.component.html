@@ -1,21 +1,22 @@
 <div class="navbar-nav article-tool-bar">
   <div ngbDropdown class="board" [autoClose]="false">
   <a class="save" ngbDropdownToggle aria-expanded="true">
-    <i class="fa fa-fw fa-star-o" title="Save to board"></i>
+    <i class="fa" [ngClass]="{'fa-star-o': selectedstar !== 1, 'fa-star': selectedstar == 1}" title="Save to board"></i>
   </a>
    <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
         <form class="form-inline form-group">
           <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
         </form>
-        <div class="field" *ngFor="let item of boards;let i = index;">
+        <div class="field" *ngFor="let item of variab.boardupdated;let i = index;">
 
-          <div class="board-item"><i *ngIf="item.status === 'false'"class="fa fa-fw fa-star-o" title="Save to board"></i>
-          <i *ngIf="item.status === 'true'" class="fa fa-fw fa-star"></i>
-
-            {{item.title}}
+         <div class="board-item"><i class="fa" [ngClass]="{'fa-star-o': htmlboardname !== item.value.label, 'fa-star': htmlboardname == item.value.label}" aria-hidden="true" title="Save to board"></i>
+          <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
+        
+          {{item.value.label}}
+         
            
-              <button *ngIf="item.status === 'false'" (click)="savetoboard(i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+              <button (click)="savetoboard(item.value,1)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
               <button *ngIf="item.status === 'true'" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
            </div>
          
@@ -32,7 +33,7 @@
 
           
           <div>
-            <button (click)="savetoboard()" class="btn btn-sm btn-success">Create a Board</button>
+            <button (click)="createboard()" class="btn btn-sm btn-success">Create a Board</button>
             <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
           </div>
 
@@ -43,13 +44,13 @@
   </div>
 
   
-  	<a class="nav-item" (click)="bookmarkicon = !bookmarkicon">
-       <i *ngIf="!bookmarkicon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
-       <i *ngIf="bookmarkicon" class="fa fa-fw fa-bookmark" title="Read Later"></i></a>
- 
-   	<a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
+  	<a class="nav-item" (click)="readlater(1)">
+        <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
+        'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
+        </a>
+    <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
-    <a class="nav-item" href="#"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
+    <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close" title="Remove"></i></a>
   
 </div>
                

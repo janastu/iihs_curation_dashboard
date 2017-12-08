@@ -14,7 +14,7 @@ constructor(private http: Http) {
   }
 
   alert(alertType: string, objData: any) {
-    //console.log(alertType,objData);
+    console.log(alertType,objData);
     this.subject.next({ type: alertType , data: objData});
   }
 

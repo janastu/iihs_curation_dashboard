@@ -11,7 +11,8 @@
         <div class="cardview col-sm-4" *ngFor="let item of incomingfeeds">
           <div class="visual mb-3">
           <!--Mouse over for each element-->
-            <div class="card-hover-control"><app-hover-toolbar></app-hover-toolbar></div>
+            <div class="card-hover-control">
+              <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar></div>
                 
                 <div *ngIf="checkimg(item.doc.desc)" class="card-view">
                   <!--<div [innerHtml]="extracturl(item.doc.desc)" class="card-view"></div>-->

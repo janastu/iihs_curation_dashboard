@@ -19,7 +19,6 @@ boardname:any;
   constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService) { }
   //On loading Component
   ngOnInit() {
-
       this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
 
     //Fetch the data from ComponentsService and store in global variable
@@ -68,12 +67,13 @@ boardname:any;
   }
 
   private alertReceived(data: any) {
-    console.log(data);
-    this.feeds=data.data;
+    
+
     this.boardname = data.type;
+    console.log(data.data)
+    this.feeds = data.data;
     
   }
-
 
 
 }

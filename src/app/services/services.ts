@@ -7,7 +7,27 @@ import PouchDB from 'pouchdb';
 
 export class Service {
   db:any;
-constructor(private http: Http, private jsonconvert:JsonConvert) { 
+  remote:any;
+  username:any;
+  password:any;
+constructor(private http: Http, private jsonconvert:JsonConvert) {
+  this.db = new PouchDB('feeds');
+
+  this.remote = 'http://localhost:5984/feeds';
+  this.username='admin';
+  this.password='admin';
+  
+     let options = {
+       live: true,
+       retry: true,
+       continuous: true,
+       auth: {
+          username: this.username,
+          password: this.password
+        }
+     };
+  
+     this.db.sync(this.remote, options);
 
   }
 
@@ -33,7 +53,7 @@ public getAll(){
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-    //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+    this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
      resolve(jsonobject);
      }, (err) => {
       console.log(err);
@@ -46,12 +66,12 @@ public getAll(){
   }
  addtopouch(feed,metadata){
 
-    var db = new PouchDB('allfeeds');
+    
    
     feed.map(res=>{
       res.category = metadata.category_name;
       //console.log(res);
-      db.post(res, function callback(err, result) {
+      this.db.post(res, function callback(err, result) {
           if (!err) {
             //console.log('Successfully posted a todo!',result);
           }
@@ -59,17 +79,16 @@ public getAll(){
     });
 
     
-     //this.getfrompouch();
   }
   getfrompouch(){
-    var db = new PouchDB('allfeeds');
+
    return new Promise(resolve => {
-      db.allDocs({
+      this.db.allDocs({
         include_docs: true
       }).then(function (result) {
         // handle result
-        console.log('Successfully posted a todo!',result);
-        console.log(result);
+      // console.log('Successfully posted a todo!',result);
+       
           resolve(result.rows); 
       }).catch(function (err) {
         console.log(err);
@@ -77,14 +96,5 @@ public getAll(){
     });
     
   }
-  /*addtodatabase(payload){
-    this.db = new PouchDB('feeds');
-    this.db.post(payload, function callback(err, result) {
-          if (!err) {
-            console.log('Successfully posted a todo!',result);
-          }
-        });
-
-  }*/
  
 }

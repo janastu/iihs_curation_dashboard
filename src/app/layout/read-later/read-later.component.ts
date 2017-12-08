@@ -26,13 +26,12 @@ user:any;
   	var doc:any=[];
 
     this.user = localStorage.getItem('name');
-    this.dataservice.getreadlater(this.user).then(result=>{
-        
-       doc=result;
-       this.feeds = doc.map(feed=>{
+   
+       this.feeds = this.variab.readlaterfeeds.map(feed=>{
          return feed.value.target;
        });
-    });
+   
+    
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){

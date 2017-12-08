@@ -18,10 +18,16 @@
     max-height:100px;
 }
 /*Styles for Feed Heading*/
-.feed-heading{
+.feed-heading-unmark{
     font-size:16px;
     font-family: sans-serif;
     color:#333333;
+    cursor:pointer;
+}
+.feed-heading-mark{
+    font-size:16px;
+    font-family: sans-serif;
+    color:#4d4d4d;
     cursor:pointer;
 }
 /*Styles for Feed Code*/

@@ -29,7 +29,7 @@
                             <span *ngIf="!checkimg(item.doc.desc)" class="list-group-item-text desc">{{item.doc.desc.substring(0,10)}}</span>
                            <!--Mouse over for each element-->
                            <div class="title-hover-control">
-                           <app-hover-toolbar></app-hover-toolbar>
+                            <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
                            </div> 
                         </div>
                 </div>

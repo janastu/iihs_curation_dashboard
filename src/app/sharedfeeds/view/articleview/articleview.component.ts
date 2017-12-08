@@ -11,7 +11,7 @@ import { fadeInAnimation } from '../../../fade-in.animation';
 })
 export class ArticleviewComponent implements OnInit {
   @Input('feeds') incomingfeeds:any=[];
-  @Input('metadata') metadata:any=[];
+ 
 
 boards:any=[];
 visible:boolean=false;
@@ -27,7 +27,7 @@ icon:boolean=false;
    }
 
   ngOnInit() {
-    console.log(this.metadata.category_name);
+ 
 	}
   oncreateboard(){
     this.visible=true;

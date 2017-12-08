@@ -36,7 +36,7 @@ export class CategoryService {
 		        include_docs: true
 		      }).then(function (result) {
 		        
-		        console.log(result);
+		        //console.log(result);
 		          resolve(result.rows);
 		      });
 			});

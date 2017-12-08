@@ -9,13 +9,13 @@ export class Userservice {
   db:any;
 
 
-userservicedomain:any='http://192.168.1.15:3000';
+userservicedomain:any='http://192.168.1.15:3001';
 userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http) {
   //this.db = new PouchDB('_users');
    var config:any = {
-      serverUrl: 'http://localhost:3000',
+      serverUrl: 'http://localhost:3001',
       // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
       baseUrl: '/auth/',
       // A list of API endpoints to automatically add the Authorization header to

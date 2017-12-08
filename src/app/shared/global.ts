@@ -11,13 +11,15 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Global {
 
-   boards:any=[];
+   
    globalfeeds:any=[];
    readlaterfeeds:any=[];
+   recentlyread:any=[];
    boardupdated:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
-   boardfilter:any = 0;
+   
+   
   constructor(public http: Http) {
   
 

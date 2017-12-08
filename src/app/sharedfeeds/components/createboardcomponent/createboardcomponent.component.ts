@@ -3,9 +3,9 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { Global } from '../../../shared/global';
-import { DataService } from '../../../services/data-service';
+import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
-
+import { DataService } from '../../../services/data-service';
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -13,48 +13,59 @@ import { CreateBoardStore } from '../../store/create-board-store';
 })
 export class CreateboardcomponentComponent implements OnInit {
   @Input('feeditem') feeditem:any;
-selectedIndex: number;
+selectedstar: number;
 visible:boolean;
 boardForm:FormGroup;
-
 boardname = this.formBuilder.control('', [Validators.required]);
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public dataservice:DataService,public createboardstore:CreateBoardStore) {
+annoforid:any=[];
+htmlboardname:any=[];
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
-    this.selectedIndex = -1;
+     
  
 }
 
   ngOnInit() {
+
+    var annos:any=[];
+   
+
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-  /* this.variab.boardupdated.map(board=>{
+   
+    this.dataservice.getannotations().then(res=>{
+        annos=res;
 
-     board.value.status=false;
-     
-     return board.value.target.map(feed=>{
-       this.variab.globalfeeds.map(globalfeed=>{
-         if(feed.doc._id === globalfeed.doc._id){
-           board.value.status=true;
-           console.log(feed.doc.title ,board.value.status);
-         }
-       })
+         annos.filter(anno=>{
+          if(anno.value.target.id === this.feeditem.doc._id){
 
-     })
-   });*/
+             this.selectedstar = 1;
 
+                this.htmlboardname = this.variab.boardupdated.map(boardname=>{
+                
+
+                    if(anno.key === boardname.value.label){
+                     return boardname.value.label;
+                     
+                    }
+                  
+                })
+                //console.log(this.htmlboardname)
+          }
+        });
+    });
   }
+
   cancelboard(){
     this.visible=false;
     
   }
   savetoboard(title,index: number,i){ 
-  
-    if(this.selectedIndex == index){
-      this.selectedIndex = -1;
-    }
-    else{
-      this.selectedIndex = index;
+   
+     
+      this.htmlboardname[i] = title.label;
+
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",
@@ -67,40 +78,13 @@ boardname = this.formBuilder.control('', [Validators.required]);
         "motivation":"tagging",
         "label":title.label
       }
-      this.createboardstore.dispatch('UPDATE_ITEM',update);
-    }
- 
+      this.createboardstore.dispatch('ADD_ITEMS',update);
 
-
-    
-    /*this.dataservice.getboardfeeds(title.label).then(result=>{
-      
-        boards=result;
-        boards.map(res=>{
-          res.value.target.map(feed=>{
-            console.log(feed);
-          this.variab.globalfeeds.map(globalfeed=>{
-
-               //console.log(feed.doc._id,globalfeed.doc._id); 
-               if(feed.doc._id === globalfeed.doc._id)
-               this.variab.boardupdated[i].value.status = true;
-             console.log(feed.doc.title,this.variab.boardupdated[i].value.status); 
-                 
-          }); 
-          })
-
-        })
-       
-    });*/
     
     
   }
   createboard(){
-    this.visible=false;
-    
-   
-
-     
+    this.visible=false;     
       let model={
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -110,16 +94,12 @@ boardname = this.formBuilder.control('', [Validators.required]);
          "modified": "2015-01-29T09:00:00Z",
          "generator": "mm_2017_v1",
          "generated": "2015-02-04T12:00:00Z",
-         "target": [this.feeditem],
-         "motivation":"tagging",
+         "motivation":"identifying",
          "label":this.boardname.value
 
        };
-       this.createboardstore.dispatch('ADD_ITEMS',model);
-        this.variab.boardupdated.push({value:model});
-        
-
-        
+       this.boardservice.addboard(model);
+       this.variab.boardupdated.push({value:model});  
      
   }
 

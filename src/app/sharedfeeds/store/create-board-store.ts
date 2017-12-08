@@ -9,20 +9,6 @@ export class CreateBoardStore{
       switch (type) {
         case 'ADD_ITEMS':
          return this.dataService.addtodatabase(payload);
-        case 'UPDATE_ITEM':  
-        var doc:any=[];
-        this.dataService.getfromdatabase().then(res=>{
-          doc =  res;
-            var doctoupdate = doc.filter(val=>{
-
-            if(val.value.label === payload.label ){
-            val.value.target.push(payload.target);
-            
-            return val.value;
-          }
-          });
-           return this.dataService.updatedoc(doctoupdate[0].value);
-        });
          //return this.dataService.updatedoc(doc[0].value);
       /*case 'DELETE_ITEM':
        console.log("state",...state);

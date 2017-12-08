@@ -36,9 +36,8 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item.doc" [metadata]=
-                      "incomingmetadata"></app-modal>
-                     <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.doc.title}}</strong></h4></a>
+                      <app-modal #modal [item]="item.doc"></app-modal>
+                     <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.doc.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.doc.url}} class="metadata-magazine">
                       {{item.doc.category}}</a>
