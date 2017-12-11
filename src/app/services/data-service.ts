@@ -14,7 +14,8 @@ export class DataService {
 constructor(private http: Http) { 
 
     this.db = new PouchDB('iihs_annotation');
-  this.remote = 'http://localhost:5984/iihs_annotation';
+   // this.remote = '192.168.1.30';
+  /*this.remote = 'http://localhost:5984/iihs_annotation';
     this.username='admin';
     this.password='admin';
     
@@ -28,7 +29,7 @@ constructor(private http: Http) {
           }
        };
     
-       this.db.sync(this.remote, options);
+       this.db.sync(this.remote, options);*/
 
   }
 
@@ -44,6 +45,7 @@ constructor(private http: Http) {
 
   }
   getannotations(){
+ 
     
     return new Promise(resolve => {
       this.db.query(function(doc, emit) {

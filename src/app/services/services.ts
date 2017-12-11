@@ -13,7 +13,7 @@ export class Service {
 constructor(private http: Http, private jsonconvert:JsonConvert) {
   this.db = new PouchDB('feeds');
 
-  this.remote = 'http://localhost:5984/feeds';
+  /*this.remote = 'http://localhost:5984/feeds';
   this.username='admin';
   this.password='admin';
   
@@ -27,7 +27,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
         }
      };
   
-     this.db.sync(this.remote, options);
+     this.db.sync(this.remote, options);*/
 
   }
 
@@ -43,8 +43,7 @@ public getAll(){
        });
       });
 */
-     
-     
+    
    return new Promise(resolve => {
 
     var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
@@ -70,7 +69,7 @@ public getAll(){
    
     feed.map(res=>{
       res.category = metadata.category_name;
-      //console.log(res);
+      console.log(res);
       this.db.post(res, function callback(err, result) {
 
           if (!err) {

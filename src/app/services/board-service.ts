@@ -12,7 +12,7 @@ export class BoardService {
 
 	constructor(private http: Http) { 
 		this.db = new PouchDB('boards');
-		this.remote = 'http://localhost:5984/boards';
+		/*this.remote = 'http://localhost:5984/boards';
 		  this.username='admin';
 		  this.password='admin';
 		  
@@ -26,7 +26,7 @@ export class BoardService {
 		        }
 		     };
 		  
-		     this.db.sync(this.remote, options);
+		     this.db.sync(this.remote, options);*/
 
 	  }
 

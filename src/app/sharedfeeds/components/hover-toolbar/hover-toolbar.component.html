@@ -1,7 +1,7 @@
 
 
         <div class="ago">
-        <app-createboardcomponent [feeditem]='feeditem'></app-createboardcomponent>
+        <app-createboardcomponent [feeditem]='feeditem' class="createboard"></app-createboardcomponent>
         <a class="nav-item" (click)="readlater(1)">
             <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
             'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>

@@ -21,7 +21,7 @@
     <!--Categories-->
       <div ngbDropdown class="d-inline-block" [autoClose]='false'>
         <input type="text" class="categories-input" placegolder="Selected Categories" value="{{selectedVal}}">
-        <button class="btn btn-outline-primary nav-item-filters categories" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
+        <button class="btn nav-item-filters categories" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
             <select #cat multiple="" class="form-control" [(ngModel)]="selectedVal" >
               <option *ngFor="let disp of displaycategory">{{disp.category}}</option>
@@ -30,7 +30,7 @@
       </div>
       <!--Four Views-->
       <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
+        <button class="btn nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
           <i *ngIf="!iconmagazine && !iconcard && !icontitle && !iconarticle" class="fa fa-fw fa-bars icon-header" ></i>
           <i *ngIf="iconmagazine" class="fa fa-fw fa-bars icon-header" ></i>
 
@@ -72,7 +72,7 @@
         <button (click)="refresh()" class="nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i></button>
       <!--More Options-->         
       <div ngbDropdown class="d-inline-block headerview">
-        <button class="btn btn-outline-primary nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
+        <button class="btn nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
 
         <div ngbDropdownMenu dropdown-menu-left aria-labelledby="dropdownBasic1" class="form-group dropdown-width placement-small-screen">
           <fieldset class="form-group field">

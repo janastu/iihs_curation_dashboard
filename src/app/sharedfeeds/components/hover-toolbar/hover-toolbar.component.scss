@@ -1,9 +1,10 @@
 /*Saas Variables*/
 $acolor:#a3a3a2;
 .ago{
-	font-size: 11px;
+	/*font-size: 11px;
+	margin-top: 4px;*/
+	display: inline-table;
 	position: absolute;
-	margin-top: 4px;
 	transition: opacity .35s ease;
 }
 
@@ -13,6 +14,11 @@ $acolor:#a3a3a2;
   	text-align: center; 
   	border: transparent;
   	z-index: 1;
+  	padding: 5px;
+  	cursor: pointer;
+}
+.createboard{
+	cursor: pointer;
 }
 
 
