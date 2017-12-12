@@ -65,7 +65,7 @@ htmlboardname:any=[];
    
      
       this.htmlboardname[i] = title.label;
-
+      this.selectedstar=1;
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",

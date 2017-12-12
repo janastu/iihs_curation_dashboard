@@ -41,9 +41,10 @@ feedmark:number;
      //var s = src[0].replace(/(height=")\d+("\W+width=")\d+/, '$1$2');
      //console.log("s",s);
      var tmp = document.createElement('div');
+     
      tmp.innerHTML = str;
      var src = tmp.querySelector('img').getAttribute('src');
-     //console.log(src)
+     
      return src;
      /*var div = document.createElement('div');
      div.innerHTML = src[0];
