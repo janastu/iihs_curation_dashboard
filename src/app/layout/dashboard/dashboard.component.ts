@@ -5,6 +5,7 @@ import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
 import { ComponentsService } from '../../services/components-service';
+import { CategoryService } from '../../services/category-service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -14,7 +15,7 @@ import { ComponentsService } from '../../services/components-service';
 export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
-    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService) {
+    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService) {
     }
 
     ngOnInit() {
@@ -32,6 +33,9 @@ export class DashboardComponent implements OnInit {
           this.variab.globalfeeds= result;
          this.feeds = this.variab.globalfeeds;
           
+        });
+        this.categoryService.getfrompouch().then((result)=>{
+            this.variab.categoryupdated=result;
         });
     }
 

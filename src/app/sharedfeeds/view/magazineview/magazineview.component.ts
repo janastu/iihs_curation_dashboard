@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { Global } from '../../../shared';
 import * as _ from 'lodash'
 
 @Component({
@@ -14,12 +13,7 @@ import * as _ from 'lodash'
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
 
-itsimage:boolean=false;
-Dataglobal:any;
-images:any=[];
-annoforid:any=[];
-feedmark:number;
-  constructor(public variab:Global) {
+  constructor() {
    }
 
   ngOnInit() {
@@ -58,10 +52,7 @@ feedmark:number;
      }*/
    
   }
-  public handleEvent(childData:any){
-    this.Dataglobal = childData;
-   
-  }
+
  
   
 }

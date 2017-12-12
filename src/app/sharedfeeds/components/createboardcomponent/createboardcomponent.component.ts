@@ -19,6 +19,7 @@ boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
 annoforid:any=[];
 htmlboardname:any=[];
+user:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
      
@@ -28,7 +29,7 @@ htmlboardname:any=[];
   ngOnInit() {
 
     var annos:any=[];
-   
+   this.user =localStorage.getItem('name');
 
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
@@ -89,7 +90,7 @@ htmlboardname:any=[];
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
-         "creator": "http://example.org/user1",
+         "creator": this.user,
          "created": "2015-01-28T12:00:00Z",
          "modified": "2015-01-29T09:00:00Z",
          "generator": "mm_2017_v1",
