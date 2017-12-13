@@ -15,8 +15,8 @@ import { DataService } from '../../../services/data-service';
 })
 
 export class SidebarComponent implements OnInit{
-    @Output('boardname') outgoing:any = new EventEmitter();
-    boards:any=[];
+  
+    
     
     isActive = false;
     showMenu = '';
@@ -40,8 +40,6 @@ export class SidebarComponent implements OnInit{
     }
     constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public categoryService:CategoryService,public componentsService:ComponentsService,public dataservice:DataService){
    
-        config.placement = 'top-left';
-        config.autoClose = false;
 
     }
     ngOnInit(){
@@ -54,16 +52,17 @@ export class SidebarComponent implements OnInit{
         });
     }
     routeto(category){
-        console.log(category);
+        
         this.router.navigate(['/feeds'],{ queryParams: { category } })
 
     }
     routetoboard(board){ 
         var boardfeeds:any=[];
         var feedstodisplay:any=[];
-        this.router.navigate(['/boardfeeds'],{ queryParams: { board } });
-        //this.outgoing.emit(board);
+       
+
        this.dataservice.getboardfeeds(board).then(res=>{
+
               boardfeeds=res;
               feedstodisplay = boardfeeds.map(feed=>{
                   return feed.value;
@@ -71,6 +70,7 @@ export class SidebarComponent implements OnInit{
               this.componentsService.alert(board,feedstodisplay); 
   
      });
+        this.router.navigate(['/boardfeeds'],{ queryParams: { board } });
 
 
     }
