@@ -14,7 +14,7 @@ import { BoardService } from './services/board-service';
 import { CategoryService } from './services/category-service';
 import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
-
+import { Service } from './services/services';
 
 
 
@@ -45,7 +45,7 @@ export function HttpLoaderFactory(http: Http) {
         })
         
     ],
-    providers: [AuthGuard,Global,JsonConvert,BoardService,CategoryService,DataService,ComponentsService],
+    providers: [AuthGuard,Global,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service],
     bootstrap: [AppComponent]
 })
 export class AppModule {

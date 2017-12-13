@@ -23,8 +23,9 @@
         <input type="text" class="categories-input" placegolder="Selected Categories" value="{{selectedVal}}">
         <button class="btn nav-item-filters categories" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group">
-            <select #cat multiple="" class="form-control" [(ngModel)]="selectedVal" >
-              <option *ngFor="let disp of displaycategory">{{disp.category}}</option>
+            <select #cat multiple="" class="form-control" [(ngModel)]="selectedVal" 
+            (change)="onCate(cat)" >
+              <option *ngFor="let disp of variab.categoryupdated">{{disp.doc.category}}</option>
             </select>
           </div>
       </div>

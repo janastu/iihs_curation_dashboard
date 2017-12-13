@@ -13,7 +13,7 @@ export class Service {
 constructor(private http: Http, private jsonconvert:JsonConvert) {
   this.db = new PouchDB('feeds');
 
-  /*this.remote = 'http://localhost:5984/feeds';
+  this.remote = 'http://localhost:5984/feeds';
   this.username='admin';
   this.password='admin';
   
@@ -27,7 +27,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
         }
      };
   
-     this.db.sync(this.remote, options);*/
+     this.db.sync(this.remote, options);
 
   }
 
@@ -46,7 +46,7 @@ public getAll(){
     
    return new Promise(resolve => {
 
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/33.json';
 
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
@@ -73,28 +73,49 @@ public getAll(){
       this.db.post(res, function callback(err, result) {
 
           if (!err) {
-            //console.log('Successfully posted a todo!',result);
+            console.log('Successfully posted a todo!',result);
           }
         });
     });
 
     
   }
-  getfrompouch(){
+  getcategoryfeeds(category){
 
    return new Promise(resolve => {
-      this.db.allDocs({
-        include_docs: true
-      }).then(function (result) {
-        // handle result
-      // console.log('Successfully posted a todo!',result);
-       
-          resolve(result.rows); 
-      }).catch(function (err) {
-        console.log(err);
-      });
-    });
+     this.db.query(function(doc, emit) {
+       if (doc.category === category) {
+         emit(doc.category,doc);
+       }
+     }).then(function (result) {
+       // handle result
+      // console.log(result);
+       resolve(result.rows);
+     }).catch(function (err) {
+       console.log(err);
+     });
+   });
+
     
   }
+  getrecentfeeds(){
+
+   return new Promise(resolve => {
+     this.db.query(function(doc, emit) {
+       if (doc.title) {
+         emit(doc.date,doc);
+       }
+     }).then(function (result) {
+       // handle result
+      // console.log(result);
+       resolve(result.rows);
+     }).catch(function (err) {
+       console.log(err);
+     });
+   });
+
+    
+  }
+ 
  
 }

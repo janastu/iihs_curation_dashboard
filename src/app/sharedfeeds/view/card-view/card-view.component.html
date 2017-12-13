@@ -14,24 +14,24 @@
             <div class="card-hover-control">
               <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar></div>
                 
-                <div *ngIf="checkimg(item.doc.desc)" class="card-view">
-                  <!--<div [innerHtml]="extracturl(item.doc.desc)" class="card-view"></div>-->
-                  <img [src]="extracturl(item.doc.desc)">
+                <div *ngIf="checkimg(item.value.desc)" class="card-view">
+                  <!--<div [innerHtml]="extracturl(item.value.desc)" class="card-view"></div>-->
+                  <img [src]="extracturl(item.value.desc)">
                 </div>
-                <div *ngIf="!checkimg(item.doc.desc)" class="card-view">
+                <div *ngIf="!checkimg(item.value.desc)" class="card-view">
                   <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
                 </div>
                     <div class="card-block card-text">
                       <!--Feed Title-->
-                      <app-modal #modal [item]="item.doc" [metadata]="metadata"></app-modal>
-                      <a (click)="modal.open(desc)"class="feed-title">{{item.doc.title.substring(0,60)}}</a>
+                      <app-modal #modal [item]="item.value" [metadata]="metadata"></app-modal>
+                      <a (click)="modal.open(desc)"class="feed-title">{{item.value.title.substring(0,60)}}</a>
                        <!--Feed Category-->
-                      <a href={{item.doc.url}} class="feeds-data">{{item.doc.category}}</a>
+                      <a href={{item.value.url}} class="feeds-data">{{item.value.category}}</a>
                       <!--Feed Date-->
-                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.doc.date}}</small>
+                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.date}}</small>
                       <!--Feed description--> 
-                      <p *ngIf="checkimg(item.doc.desc)" class="feed-desc"></p> 
-                      <p *ngIf="!checkimg(item.doc.desc)" class="feed-desc">{{item.doc.desc.substring(0,85)}}</p>
+                      <p *ngIf="checkimg(item.value.desc)" class="feed-desc"></p> 
+                      <p *ngIf="!checkimg(item.value.desc)" class="feed-desc">{{item.value.desc.substring(0,85)}}</p>
                     </div>
           </div>
         </div>

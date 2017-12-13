@@ -28,7 +28,7 @@ user:any;
        return feed.value.target;
      });
      
-
+console.log(this.feeds)
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){
