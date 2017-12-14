@@ -9,7 +9,7 @@ import { FeedsRoutingModule } from './feeds-routing.module';
 import { FeedsComponent } from './feeds.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
-import { Service } from '../../services/services';
+//import { Service } from '../../services/services';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {
@@ -45,7 +45,7 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
        
     ],
    
-    providers: [Service,DatePipe]
+    providers: [DatePipe]
      
 })
 export class FeedsModule { }

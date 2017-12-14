@@ -14,19 +14,19 @@
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
                         <!--Feed Category-->     
-                             <a href={{item.doc.url}} class="feeds-data">{{item.doc.category}}</a>
+                             <a href={{item.value.url}} class="feeds-data">{{item.value.category}}</a>
                         <!--Feed Date--> 
-                             <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.doc.date}}</small>
+                             <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.date}}</small>
                              
                         <!--Feed Title--> 
 
-                            <app-modal #modal [item]="item.doc" [metadata]=
+                            <app-modal #modal [item]="item.value" [metadata]=
                       "incomingmetadata"></app-modal>
-                             <a (click)="modal.open(desc)"class="feeds-list">{{item.doc.title.substring(0,60)}}</a>
+                             <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
                               
                         <!--Feed description--> 
-                            <div *ngIf="checkimg(item.doc.desc)" class="list-group-item-text desc"></div>
-                            <span *ngIf="!checkimg(item.doc.desc)" class="list-group-item-text desc">{{item.doc.desc.substring(0,10)}}</span>
+                            <div *ngIf="checkimg(item.value.desc)" class="list-group-item-text desc"></div>
+                            <span *ngIf="!checkimg(item.value.desc)" class="list-group-item-text desc">{{item.value.desc.substring(0,10)}}</span>
                            <!--Mouse over for each element-->
                            <div class="title-hover-control">
                             <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>

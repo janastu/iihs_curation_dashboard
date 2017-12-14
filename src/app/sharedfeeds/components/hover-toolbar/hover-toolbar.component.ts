@@ -28,13 +28,13 @@ user:any;
    
       
       this.variab.readlaterfeeds.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.doc._id){
+        if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIndex=1;
         }
       });
 
       this.variab.recentlyread.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.doc._id){
+        if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIcon=1;
         }
       });
@@ -87,6 +87,19 @@ user:any;
     
   }
   hide(){
+    let model = {
+      "@context": "http://www.w3.org/ns/anno.jsonld",
+      "type": "Annotation",
+      "creator": this.user,
+      "created": "2015-01-28T12:00:00Z",
+      "modified": "2015-01-29T09:00:00Z",
+      "generator": "mm_2017_v1",
+      "generated": "2015-02-04T12:00:00Z",
+      "target": this.feeditem,
+      "hidden":true
+    }   
+    this.variab.recentlyread.push({value:model});
+    this.readlaterstore.dispatch('ADD_ITEMS',model)
    this.variab.globalfeeds.splice(this.index,1);
 
    

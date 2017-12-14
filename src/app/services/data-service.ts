@@ -15,7 +15,7 @@ constructor(private http: Http) {
 
     this.db = new PouchDB('iihs_annotation');
    // this.remote = '192.168.1.30';
-  /*this.remote = 'http://localhost:5984/iihs_annotation';
+  this.remote = 'http://localhost:5984/iihs_annotation';
     this.username='admin';
     this.password='admin';
     
@@ -29,7 +29,7 @@ constructor(private http: Http) {
           }
        };
     
-       this.db.sync(this.remote, options);*/
+       this.db.sync(this.remote, options);
 
   }
 
@@ -45,7 +45,7 @@ constructor(private http: Http) {
 
   }
   getannotations(){
- 
+   
     
     return new Promise(resolve => {
       this.db.query(function(doc, emit) {
@@ -56,7 +56,7 @@ constructor(private http: Http) {
         }
       }).then(function (result) {
         // handle result
-        //console.log(result);
+       // console.log(result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
@@ -115,6 +115,7 @@ constructor(private http: Http) {
 
   }
   getrecentlyread(usr){
+    
 
 
 
@@ -142,6 +143,22 @@ constructor(private http: Http) {
      console.log(err);
    });
   }
+ 
+  getunhiddenfeeds(category){
+    return new Promise(resolve => {
+      this.db.query(function(doc, emit) {
+        if (doc.hidden === true && doc.target.key === category) {
+          emit(doc.creator,doc);
+        }
+      }).then(function (result) {
+        // handle result
+       console.log(result);
+        resolve(result.rows);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
 
+  }
  
 }

@@ -6,6 +6,7 @@ import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
 import { ComponentsService } from '../../services/components-service';
 import { CategoryService } from '../../services/category-service';
+import { Router } from "@angular/router";
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -15,7 +16,7 @@ import { CategoryService } from '../../services/category-service';
 export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
-    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService) {
+    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router) {
     }
 
     ngOnInit() {
@@ -28,14 +29,25 @@ export class DashboardComponent implements OnInit {
         this.dataservice.getrecentlyread(this.user).then(result=>{
             this.variab.recentlyread=result;
         });
-        this.service.getfrompouch().then(result=>{
+        this.service.getrecentfeeds().then(result=>{
           
-          this.variab.globalfeeds= result;
-         this.feeds = this.variab.globalfeeds;
+          //this.variab.globalfeeds= result;
+         this.feeds = result;
           
         });
+
         this.categoryService.getfrompouch().then((result)=>{
             this.variab.categoryupdated=result;
+        });
+    }
+    oncategory(category){
+        this.router.navigate(['/feeds'],{ queryParams: { category } })
+          this.service.getcategoryfeeds(category).then(res=>{
+              this.variab.globalfeeds=res;
+
+                     //console.log(res);
+                 this.componentsService.alert(category,res); 
+        
         });
     }
 

@@ -6,7 +6,8 @@ import { DataService } from '../../services/data-service';
 import { Global } from '../../shared/global';
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
-import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store'
+import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
+import { ComponentsService } from '../../services/components-service';
 declare var require:any;
 var moment = require('moment');
 @Component({
@@ -24,19 +25,15 @@ feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService) { }
+catname:any;
+  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
     
     this.user = localStorage.getItem('name');
-     //Fetch the data from service and store in global variable
 
-      this.service.getfrompouch().then(result=>{
-       
-       this.variab.globalfeeds= result;
-      
-       this.feeds=this.variab.globalfeeds;
-      });
+     //Fetch the data from service and store in global variable
+     this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
      
   }
   
@@ -68,14 +65,18 @@ user:any;
   }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
+    console.log("in feed",childCategory)
+      this.service.getcategoryfeeds(childCategory).then(result =>{
+        this.feeds = result
+      })
+  }
+  private alertReceived(data: any) {
+    this.catname = data.type
+    this.feeds = data.data
 
-   this.feeds =  this.variab.globalfeeds.filter((res)=>{
-     console.log(childCategory,res.category);
-       if(res.category === childCategory){
-          return res;
-        }
 
-    });
+
+    
   }
    
 

@@ -39,7 +39,7 @@ user:any;
         annos=res;
 
          annos.filter(anno=>{
-          if(anno.value.target.id === this.feeditem.doc._id){
+          if(anno.value.target.id === this.feeditem.value._id){
 
              this.selectedstar = 1;
 

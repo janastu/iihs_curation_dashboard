@@ -40,7 +40,7 @@ selectedstar:number;
         annos=res;
 
          annos.filter(anno=>{
-          if(anno.value.target.id === this.feeditem.doc._id){
+          if(anno.value.target.id === this.feeditem.value._id){
              this.annoforid.push(anno);
                this.selectedstar =1;
                 this.variab.boardupdated.map(boardname=>{
@@ -59,13 +59,13 @@ selectedstar:number;
     
       
       this.variab.readlaterfeeds.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.doc._id){
+        if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIndex=1;
         }
       });
 
       this.variab.recentlyread.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.doc._id){
+        if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIcon=1;
         }
       });

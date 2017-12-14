@@ -6,7 +6,7 @@ import { BoardService } from '../../../services/board-service';
 import { CategoryService } from '../../../services/category-service';
 import { ComponentsService } from '../../../services/components-service';
 import { DataService } from '../../../services/data-service';
-
+import { Service } from '../../../services/services';
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -38,36 +38,38 @@ export class SidebarComponent implements OnInit{
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public categoryService:CategoryService,public componentsService:ComponentsService,public dataservice:DataService){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public categoryService:CategoryService,public componentsService:ComponentsService,public dataservice:DataService,public service:Service){
    
 
     }
     ngOnInit(){
         this.boardservice.getboards().then((result)=>{
-                console.log(result);
+                
                 this.variab.boardupdated=result;
         })
         this.categoryService.getfrompouch().then((result)=>{
+            //console.log(result);
             this.variab.categoryupdated=result;
         });
     }
     routeto(category){
         
+        
         this.router.navigate(['/feeds'],{ queryParams: { category } })
+          this.service.getcategoryfeeds(category).then(res=>{
+
+                      this.variab.globalfeeds=res;
+                     //console.log(this.variab.globalfeeds);
+                 this.componentsService.alert(category,res); 
+        
+        });
 
     }
     routetoboard(board){ 
-        var boardfeeds:any=[];
-        var feedstodisplay:any=[];
-       
-
+      
        this.dataservice.getboardfeeds(board).then(res=>{
 
-              boardfeeds=res;
-              feedstodisplay = boardfeeds.map(feed=>{
-                  return feed.value;
-              })
-              this.componentsService.alert(board,feedstodisplay); 
+              this.componentsService.alert(board,res); 
   
      });
         this.router.navigate(['/boardfeeds'],{ queryParams: { board } });

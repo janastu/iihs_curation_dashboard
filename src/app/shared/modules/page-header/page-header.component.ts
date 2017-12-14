@@ -1,7 +1,7 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { CategoryService } from '../../../services/category-service';
+import { Global } from '../../global';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -22,9 +22,8 @@ loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 
-displaycategory:any=[];
 
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public categoryService:CategoryService) { }
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global) { }
 
   ngOnInit() {
 
@@ -33,9 +32,7 @@ displaycategory:any=[];
       fromdate: this.fromdate,
       todate: this.todate
     });
-    this.categoryService.getAll().then((result)=>{
-      this.displaycategory=result;
-    });
+    
   }
   //function to get input values annd emit to feed component
   datefilter(){
