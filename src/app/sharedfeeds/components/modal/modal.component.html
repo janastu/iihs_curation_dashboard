@@ -6,7 +6,7 @@
             <div class="card-block">-->
                 
                 <ng-template  #content let-c="close" let-d="dismiss">
-                    <div class="modal-header">
+                    <div class="modal-header header-tool">
                         <h4 class="modal-title">
                           <div class="row">
                              <div class="modal-tool-bar">
@@ -16,7 +16,7 @@
                                   <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i>
                                 </a>
                                 <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
-                                <a class="nav-item" (click)="d('Cross click')"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a>
+                                <!--a class="nav-item" (click)="d('Cross click')"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a-->
                                     
                               </div>
                             </div>

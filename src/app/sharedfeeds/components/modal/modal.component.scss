@@ -29,6 +29,30 @@ $buttonbackground:#fffl;
     margin-right: -14px;
     margin-left: 5px;
 }
+/*.modal-star .savetoboard{
+    position: absolute;
+    top: 22px;
+    left: -17px;
+    z-index: 1000;
+    display: block;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: $saveboardcolor;
+    text-align: left;
+    list-style: none;
+    background-color: $saveboardbackground;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}*/
+.header-tool{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0px;
+}
 
 /*Styles for Feed Content*/
 
