@@ -24,15 +24,13 @@ $saveboardbackground:#fff;
 }
 .save{
     font-size: 15px;
-    margin-left: -33px;
 }
 .field{
     margin-top: 0.5rem;
 }
 .board{
 
-    margin-bottom: -21px;
-    margin-left: 11px;
+    display: inline-block;
     color: $boardcolor;
 }
 .board-item{

@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit{
           this.service.getcategoryfeeds(category).then(res=>{
 
                       this.variab.globalfeeds=res;
-                     //console.log(this.variab.globalfeeds);
+                     console.log(this.variab.globalfeeds);
                  this.componentsService.alert(category,res); 
         
         });

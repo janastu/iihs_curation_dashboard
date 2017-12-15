@@ -13,7 +13,7 @@ export class Service {
 constructor(private http: Http, private jsonconvert:JsonConvert) {
   this.db = new PouchDB('feeds');
 
-  this.remote = 'http://localhost:5984/feeds';
+/*  this.remote = 'http://localhost:5984/feeds';
   this.username='admin';
   this.password='admin';
   
@@ -27,7 +27,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
         }
      };
   
-     this.db.sync(this.remote, options);
+     this.db.sync(this.remote, options);*/
 
   }
 
@@ -89,7 +89,7 @@ public getAll(){
        }
      }).then(function (result) {
        // handle result
-      // console.log(result);
+      console.log(result);
        resolve(result.rows);
      }).catch(function (err) {
        console.log(err);
