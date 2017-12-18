@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit{
         
         
         this.router.navigate(['/feeds'],{ queryParams: { category } })
-          this.service.getcategoryfeeds(category).then(res=>{
+          this.service.getrecentfeeds().then(res=>{
 
                       this.variab.globalfeeds=res;
                      console.log(this.variab.globalfeeds);
