@@ -13,7 +13,7 @@ export class Service {
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert) {
   this.db = new PouchDB('feeds');
-  this.database = new PouchDB('newfeeds');
+  //this.database = new PouchDB('newfeeds');
   /*this.remote = 'http://couchdb.test.openrun.net/feeds';
     this.username='admin';
     this.password='admin';
@@ -30,9 +30,8 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
        this.database.sync(this.remote, options);
        */
 
+  this.remote = 'http://localhost:5984/feeds';
 
-  
- this.remote = 'http://localhost:5984/feeds';
   this.username='admin';
   this.password='admin';
   
