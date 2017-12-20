@@ -15,7 +15,7 @@ constructor(private http: Http) {
 
     this.db = new PouchDB('iihs_annotation');
    // this.remote = '192.168.1.30';
-  this.remote = 'http://localhost:5984/iihs_annotation';
+  /*this.remote = 'http://localhost:5984/iihs_annotation';
     this.username='admin';
     this.password='admin';
     
@@ -29,7 +29,7 @@ constructor(private http: Http) {
           }
        };
     
-       this.db.sync(this.remote, options);
+       this.db.sync(this.remote, options);*/
 
   }
 
@@ -44,7 +44,9 @@ constructor(private http: Http) {
         });
 
   }
-  getannotations(){
+  getannotations(){ 
+ 
+
    
     
     return new Promise(resolve => {
@@ -56,7 +58,7 @@ constructor(private http: Http) {
         }
       }).then(function (result) {
         // handle result
-       // console.log(result);
+       //console.log(result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
@@ -82,12 +84,14 @@ constructor(private http: Http) {
 
     return new Promise(resolve => {
       this.db.query(function(doc, emit) {
-        if (doc.label === board) {
-          emit(doc.label,doc.target);
-        }
+        
+          if (doc.label === board) {
+            emit(doc.label,doc.target);
+          }
+ 
       }).then(function (result) {
         // handle result
-       // console.log(result);
+       //console.log(result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
@@ -144,7 +148,7 @@ constructor(private http: Http) {
    });
   }
  
-  getunhiddenfeeds(category){
+  gethiddenfeeds(category){
     return new Promise(resolve => {
       this.db.query(function(doc, emit) {
         if (doc.hidden === true && doc.target.key === category) {
@@ -152,7 +156,7 @@ constructor(private http: Http) {
         }
       }).then(function (result) {
         // handle result
-       console.log(result);
+       //console.log(result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
@@ -160,5 +164,22 @@ constructor(private http: Http) {
     });
 
   }
+  getdeletedfeeds(){
+    return new Promise(resolve => {
+      this.db.query(function(doc, emit) {
+        if (doc.hidden === true) {
+          emit(doc.creator,doc);
+        }
+      }).then(function (result) {
+        // handle result
+       //console.log(result);
+        resolve(result.rows);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
+
+  }
+
  
 }

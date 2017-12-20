@@ -2,18 +2,37 @@ import { Injectable,ViewChild } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import superlogin from 'superlogin-client';
-
-
+import PouchDB from 'pouchdb';
+declare function emit(key: any,value:any): void;
 @Injectable()
 export class Userservice {
   db:any;
-
+  remote:any;
+  username:any;
+  password:any;
 
 userservicedomain:any='http://192.168.1.15:3001';
 userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http) {
-  //this.db = new PouchDB('_users');
+  this.db = new PouchDB('sl-users');
+  this.remote = 'http://localhost:5984/sl-users';
+   this.username='admin';
+   this.password='admin';
+   
+      let options = {
+        live: true,
+        retry: true,
+        continuous: true,
+        auth:{
+          username:this.username,
+          password:this.password
+        }
+      };
+   
+      this.db.sync(this.remote, options);
+   
+
    var config:any = {
       serverUrl: 'http://localhost:3001',
       // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
@@ -75,6 +94,7 @@ public login(credentials){
    return superlogin.login(credentials);
 
 }
+
 
 
 }

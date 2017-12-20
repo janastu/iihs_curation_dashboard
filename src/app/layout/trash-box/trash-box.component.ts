@@ -12,13 +12,13 @@ declare var require:any;
 var moment = require('moment');
 @Component({
   
-  selector: 'app-feeds',
-  templateUrl: './feeds.component.html',
-  styleUrls: ['./feeds.component.scss'],
+  selector: 'app-trash-box',
+  templateUrl: './trash-box.component.html',
+  styleUrls: ['./trash-box.component.scss'],
   animations: [routerTransition()]
 })
 
-export class FeedsComponent implements OnInit {
+export class TrashBoxComponent implements OnInit {
 
 
 feeds:any=[];          //variable to store feeds to display
@@ -33,7 +33,12 @@ catname:any;
     this.user = localStorage.getItem('name');
 
      //Fetch the data from service and store in global variable
-     this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
+     this.dataservice.getdeletedfeeds().then(res=>{
+       this.variab.hiddenfeeds = res;
+       this.feeds =  this.variab.hiddenfeeds.map(hide=>{
+         return hide.value.target;
+       })
+     })
      
   }
   
@@ -70,31 +75,7 @@ catname:any;
         this.feeds = result
       })
   }
-  private alertReceived(data: any) {
-    this.catname = data.type;
-    this.feeds = data.data;
-    let hiddenfeeds:any=[];
-    console.log(this.variab.globalfeeds);
-    this.dataservice.gethiddenfeeds(this.catname).then(res=>{
-      hiddenfeeds=res;
-      this.variab.globalfeeds.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-          if(feed.value.target.id === globalfeed.id) {
-            // code...
-            
-           var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.variab.globalfeeds.splice(i,1);
-           console.log(globalfeed,i,this.variab.globalfeeds);
-          }
-        })
-      })
 
-    })
-
-
-
-    
-  }
    
 
 }

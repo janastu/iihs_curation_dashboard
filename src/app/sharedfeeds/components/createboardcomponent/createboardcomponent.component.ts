@@ -6,6 +6,7 @@ import { Global } from '../../../shared/global';
 import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
 import { DataService } from '../../../services/data-service';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -20,6 +21,9 @@ boardname = this.formBuilder.control('', [Validators.required]);
 annoforid:any=[];
 htmlboardname:any=[];
 user:any;
+status:any=[];
+trueIndices:any;
+labelForBoards:any=[];
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
      
@@ -36,27 +40,57 @@ user:any;
     });
    
     this.dataservice.getannotations().then(res=>{
+
         annos=res;
-
-         annos.filter(anno=>{
+       //console.log("board",annos,this.feeditem.value.title);
+       //Filter Feed with Annotations
+       //Returns Array of annotaion for each feed.value.id
+         var annotatedarray = annos.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
-
+            //State Variable to toggle the hover toolbar component star
              this.selectedstar = 1;
 
-                this.htmlboardname = this.variab.boardupdated.map(boardname=>{
+                 return anno;
+               
                 
-
-                    if(anno.key === boardname.value.label){
-                     return boardname.value.label;
-                     
-                    }
-                  
-                })
-                //console.log(this.htmlboardname)
           }
+          
+   
         });
+        //Map Annotations by its label value
+        //Returns array of annotations for each label
+         var annosForBoards = this.variab.boardupdated.map( (board, index) => {
+             //console.log("anoo",board,index)
+            return  _.filter(annotatedarray,function(o) { 
+              if(o.key[0]===board.key){
+              return o  ; 
+            }
+            });
+
+         })
+
+         //console.log("annoforboards",annosForBoards);
+         //Map Annos for Boards to return boolean array
+         //Returns example:[true,false,true] 
+         //Index of output == Index of label which means label[0] and label[1] 
+         //is active for above output
+        this.labelForBoards  =  annosForBoards.map(anno=>{
+             if(anno[0]){
+               
+                 return true;
+              }
+               else{
+                 return false;
+               
+             }
+         })
+         //console.log("true",this.labelForBoards)
+
     });
-  }
+   
+  } 
+
+
 
   cancelboard(){
     this.visible=false;
@@ -65,7 +99,7 @@ user:any;
   savetoboard(title,index: number,i){ 
    
      
-      this.htmlboardname[i] = title.label;
+      this.labelForBoards[i] = true;
       this.selectedstar=1;
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -77,7 +111,7 @@ user:any;
         "generated": "2015-02-04T12:00:00Z",
         "target": this.feeditem,
         "motivation":"tagging",
-        "label":title.label
+        "label":[title.label]
       }
       this.createboardstore.dispatch('ADD_ITEMS',update);
 

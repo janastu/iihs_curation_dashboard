@@ -18,8 +18,7 @@ export class Global {
    boardupdated:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
-   
-   
+   hiddenfeeds:any=[];   
   constructor(public http: Http) {
   
 

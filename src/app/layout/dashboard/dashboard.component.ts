@@ -5,6 +5,7 @@ import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
 import { ComponentsService } from '../../services/components-service';
+import { Userservice } from '../../services/userservice';
 import { CategoryService } from '../../services/category-service';
 import { Router } from "@angular/router";
 @Component({
@@ -16,7 +17,7 @@ import { Router } from "@angular/router";
 export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
-    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router) {
+    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
     }
 
     ngOnInit() {
@@ -35,6 +36,9 @@ export class DashboardComponent implements OnInit {
          this.feeds = result;
           
         });
+        this.service.getAll().then(res=>{
+            console.log(res);
+        })
 
         this.categoryService.getfrompouch().then((result)=>{
             this.variab.categoryupdated=result;
