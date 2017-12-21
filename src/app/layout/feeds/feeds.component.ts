@@ -89,7 +89,7 @@ usersview:any;
             // code...
             
            var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.feeds = this.variab.globalfeeds.splice(i,1);
+           this.variab.globalfeeds.splice(i,1);
           }
         })
       })
