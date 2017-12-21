@@ -1,5 +1,5 @@
 import { Injectable,ViewChild } from '@angular/core';
-import { Http }       from '@angular/http';
+import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 
@@ -7,13 +7,34 @@ import PouchDB from 'pouchdb';
 
 export class Service {
   db:any;
+  database:any;
   remote:any;
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert) {
   this.db = new PouchDB('feeds');
+  //this.database = new PouchDB('newfeeds');
+  /*this.remote = 'http://couchdb.test.openrun.net/feeds';
+    this.username='admin';
+    this.password='admin';
+    
+       let options = {
+         live: true,
+         retry: true,
+         continuous: true,
+         "Authorisation":"Basic YWRtaW46Y291Y2hmb3JyZWxheDEyMw==",
+         "Content-Type":"application/json"
+
+       };
+    
+       this.database.sync(this.remote, options);
+       */
+
+  //this.remote = 'http://localhost:5984/feeds';
 
  this.remote = 'http://192.168.1.30:5984/feeds';
+
+
   this.username='admin';
   this.password='admin';
   
@@ -21,10 +42,10 @@ constructor(private http: Http, private jsonconvert:JsonConvert) {
        live: true,
        retry: true,
        continuous: true,
-       auth: {
-          username: this.username,
-          password: this.password
-        }
+       auth:{
+         username:this.username,
+         password:this.password
+       }
      };
   
      this.db.sync(this.remote, options);
@@ -46,13 +67,14 @@ public getAll(){
     
    return new Promise(resolve => {
 
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/33.json';
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
 
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
    // this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+
      resolve(jsonobject);
      }, (err) => {
       console.log(err);
@@ -64,34 +86,39 @@ public getAll(){
 
   }
  addtopouch(feed,metadata){
-
-    
-   
-    feed.map(res=>{
-      res.category = metadata.category_name;
-      console.log(res);
-      this.db.post(res, function callback(err, result) {
+console.log("result",feed[0]);
+var f = feed[0];
+this.database.post(f, function callback(err, result) {
+  console.log(err);
+    console.log("dbre",result,err);
 
           if (!err) {
             console.log('Successfully posted a todo!',result);
           }
         });
-    });
+    
+   
+    /*feed.map(res=>{
+      res.category = metadata.category_name;
+      
+      this.db.post(res, function callback(err, result) {
+
+          if (!err) {
+            console.log('Successfully posted a todo!',result);
+          }
+        });  
+    });*/
 
     
   }
   getcategoryfeeds(category){
-
+  var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
+//console.log("cate in service",category)
    return new Promise(resolve => {
-     this.db.query(function(doc, emit) {
-       if (doc.category === category) {
-         emit(doc.category,doc);
-       }
-     }).then(function (result) {
-       // handle result
-      console.log(result);
+     this.http.get(url).map(res=>res.json()).subscribe(result=> {
+       //console.log(result);
        resolve(result.rows);
-     }).catch(function (err) {
+     }, (err) =>{
        console.log(err);
      });
    });

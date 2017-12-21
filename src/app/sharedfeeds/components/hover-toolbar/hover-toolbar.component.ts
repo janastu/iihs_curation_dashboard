@@ -43,13 +43,14 @@ user:any;
 
   }
   readlater(index: number){
+    console.log("called");
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
      }
      else{
        this.selectedIndex = index;
      }
-     console.log(this.feeditem);  
+       
      let model = {
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",

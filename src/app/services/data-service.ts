@@ -44,27 +44,21 @@ constructor(private http: Http) {
         });
 
   }
-  getannotations(){
+  getannotations(){ 
+    var url = 'http://localhost:5984/iihs_annotation/_design/annotations/_view/boardannotation';
    
     
-    return new Promise(resolve => {
-      this.db.query(function(doc, emit) {
-        
-        if (doc.label && doc.motivation ==='tagging') {
-         
-          emit(doc.label,doc);
-        }
-      }).then(function (result) {
-        // handle result
-       // console.log(result);
-        resolve(result.rows);
-      }).catch(function (err) {
-        console.log(err);
-      });
-    });
+   return new Promise(resolve => {
+     this.http.get(url).map(res=>res.json()).subscribe(result=> {
+       
+       resolve(result.rows);
+     }, (err) =>{
+       console.log(err);
+     });
+   });
 
   }
-  getboards(){
+ /* getboards(){
     function map(doc) {
       if(doc.label && doc.motivation === 'identifying')
       emit(doc.label,doc);
@@ -77,37 +71,30 @@ constructor(private http: Http) {
       console.log(err);
       });
     });
-  }
+  }*/
   getboardfeeds(board){
-
+    var url = 'http://localhost:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
     return new Promise(resolve => {
-      this.db.query(function(doc, emit) {
-        if (doc.label === board) {
-          emit(doc.label,doc.target);
-        }
-      }).then(function (result) {
-        // handle result
-       // console.log(result);
+      this.http.get(url).map(res=>res.json()).subscribe(result=> {
+        
         resolve(result.rows);
-      }).catch(function (err) {
+      }, (err) =>{
         console.log(err);
       });
     });
 
+  
+
 
   }
   getreadlater(usr){
+    var url = 'http://localhost:5984/iihs_annotation/_design/annotations/_view/readlater?key='+'"'+usr+'"';
 
     return new Promise(resolve => {
-      this.db.query(function(doc, emit) {
-        if (doc.motivation === 'bookmarking' && doc.creator === usr) {
-          emit(doc.creator,doc);
-        }
-      }).then(function (result) {
-        // handle result
-        //console.log(result);
+      this.http.get(url).map(res=>res.json()).subscribe(result=> {
+        
         resolve(result.rows);
-      }).catch(function (err) {
+      }, (err) =>{
         console.log(err);
       });
     });
@@ -115,50 +102,52 @@ constructor(private http: Http) {
 
   }
   getrecentlyread(usr){
-    
-
-
+    var url ='http://localhost:5984/iihs_annotation/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
 
     return new Promise(resolve => {
-      this.db.query(function(doc, emit) {
-        if (doc.motivation === 'tagging' && doc.creator === usr) {
-          emit(doc.creator,doc);
-        }
-      }).then(function (result) {
-        // handle result
-       
+      this.http.get(url).map(res=>res.json()).subscribe(result=> {
+        //console.log(result.rows)
         resolve(result.rows);
-      }).catch(function (err) {
+      }, (err) =>{
         console.log(err);
       });
     });
 
 
   }
-  updatedoc(doc){
+  /*updatedoc(doc){
    this.db.put(doc).then(function (response) {
      // handle response
      console.log(response)
    }).catch(function (err) {
      console.log(err);
    });
-  }
+  }*/
  
-  getunhiddenfeeds(category){
-    return new Promise(resolve => {
-      this.db.query(function(doc, emit) {
-        if (doc.hidden === true && doc.target.key === category) {
-          emit(doc.creator,doc);
-        }
-      }).then(function (result) {
-        // handle result
-       console.log(result);
+  getalldeletedfeeds(){
+    var url = 'http://localhost:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
+   return new Promise(resolve => {
+      this.http.get(url).map(res=>res.json()).subscribe(result=> {
+        //console.log(result.rows)
         resolve(result.rows);
-      }).catch(function (err) {
+      }, (err) =>{
         console.log(err);
       });
     });
 
   }
+  getdeletedfeeds(category){
+    var url = 'http://localhost:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
+    return new Promise(resolve => {
+      this.http.get(url).map(res=>res.json()).subscribe(result=> {
+        //console.log(result.rows)
+        resolve(result.rows);
+      }, (err) =>{
+        console.log(err);
+      });
+    });
+
+  }
+
  
 }

@@ -19,6 +19,7 @@ constructor(private http: Http) {
   }
 
   getMessage(): Observable<any> {
+  	console.log("calleds",this.subject);
     return this.subject.asObservable();
   }
 

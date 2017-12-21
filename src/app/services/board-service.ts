@@ -31,19 +31,16 @@ export class BoardService {
 	  }
 
 	getboards(){
-	
-	  function map(doc) {
-	    if(doc.label && doc.motivation === 'identifying')
-	    emit(doc.label,doc);
-	  }
-	  return new Promise(resolve => {
-	    this.db.query(map).then(function (result) {
-	       
-	      resolve(result.rows);
-	    }).catch(function (err) {
+	var url = 'http://localhost:5984/boards/_design/board/_view/boards';
+	return new Promise(resolve => {
+	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
+	    
+	    resolve(result.rows);
+	  }, (err) =>{
 	    console.log(err);
-	    });
 	  });
+	});
+	  
 	}
 	addboard(res){
 

@@ -46,7 +46,7 @@ confirmpassword = this.formBuilder.control('', [Validators.required]);
             this.userService.adduser(doc).then(response=>{
                 //console.log("response",response);
                 if(response){
-                    this.router.navigate(['/dashboard']);
+                    this.router.navigate(['/login']);
                 }
             });
     }

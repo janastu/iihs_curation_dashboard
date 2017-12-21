@@ -12,13 +12,13 @@ declare var require:any;
 var moment = require('moment');
 @Component({
   
-  selector: 'app-feeds',
-  templateUrl: './feeds.component.html',
-  styleUrls: ['./feeds.component.scss'],
+  selector: 'app-trash-box',
+  templateUrl: './trash-box.component.html',
+  styleUrls: ['./trash-box.component.scss'],
   animations: [routerTransition()]
 })
 
-export class FeedsComponent implements OnInit {
+export class TrashBoxComponent implements OnInit {
 
 
 feeds:any=[];          //variable to store feeds to display
@@ -26,19 +26,17 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
-usersview:any;
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
     
     this.user = localStorage.getItem('name');
-    this.usersview = localStorage.getItem('view');
- 
-    this.view = this.usersview;
-    //this.feeds = this.variab.globalfeeds;
-    //console.log(this.feeds);
+
      //Fetch the data from service and store in global variable
-    this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
+     this.dataservice.getalldeletedfeeds().then(res=>{
+       this.variab.hiddenfeeds = res;
+       this.feeds = this.variab.hiddenfeeds;
+     })
      
   }
   
@@ -72,38 +70,10 @@ usersview:any;
   public handleCategory(childCategory:any){
     console.log("in feed",childCategory)
       this.service.getcategoryfeeds(childCategory).then(result =>{
-        this.feeds = result;
-        this.catname = childCategory;
+        this.feeds = result
       })
   }
-  private alertReceived(data: any) {
 
-
-    this.catname = data.type;
-   // this.feeds = data.data;
-    this.feeds = this.variab.globalfeeds;
-    let hiddenfeeds:any=[];
-    
-    this.dataservice.getdeletedfeeds(this.catname).then(res=>{
-      hiddenfeeds=res;
-      this.variab.globalfeeds.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-          if(feed.value.id === globalfeed.id) {
-            // code...
-            
-           var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.feeds = this.variab.globalfeeds.splice(i,1);
-          }
-        })
-      })
-
-    })
-
-
-
-
-    
-  }
    
 
 }
