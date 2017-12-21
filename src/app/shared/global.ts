@@ -18,7 +18,10 @@ export class Global {
    boardupdated:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
-   hiddenfeeds:any=[];   
+   hiddenfeeds:any=[]; 
+   boardfeeds:any=[];
+   globalcatname:any;  
+   globalboardname:any;
   constructor(public http: Http) {
   
 

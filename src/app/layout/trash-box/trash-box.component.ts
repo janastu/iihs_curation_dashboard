@@ -33,11 +33,9 @@ catname:any;
     this.user = localStorage.getItem('name');
 
      //Fetch the data from service and store in global variable
-     this.dataservice.getdeletedfeeds().then(res=>{
+     this.dataservice.getalldeletedfeeds().then(res=>{
        this.variab.hiddenfeeds = res;
-       this.feeds =  this.variab.hiddenfeeds.map(hide=>{
-         return hide.value.target;
-       })
+       this.feeds = this.variab.hiddenfeeds;
      })
      
   }

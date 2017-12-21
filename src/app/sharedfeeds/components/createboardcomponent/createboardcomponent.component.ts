@@ -18,11 +18,7 @@ selectedstar: number;
 visible:boolean;
 boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
-annoforid:any=[];
-htmlboardname:any=[];
 user:any;
-status:any=[];
-trueIndices:any;
 labelForBoards:any=[];
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
@@ -60,9 +56,9 @@ labelForBoards:any=[];
         //Map Annotations by its label value
         //Returns array of annotations for each label
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
-             //console.log("anoo",board,index)
+            //console.log("anoo",board,annotatedarray)
             return  _.filter(annotatedarray,function(o) { 
-              if(o.key[0]===board.key){
+              if(o.key===board.key){
               return o  ; 
             }
             });
@@ -84,7 +80,7 @@ labelForBoards:any=[];
                
              }
          })
-         //console.log("true",this.labelForBoards)
+//console.log("true",this.labelForBoards)
 
     });
    
@@ -96,9 +92,9 @@ labelForBoards:any=[];
     this.visible=false;
     
   }
-  savetoboard(title,index: number,i){ 
+  savetoboard(title,i){ 
    
-     
+     console.log(this.feeditem.value)
       this.labelForBoards[i] = true;
       this.selectedstar=1;
       let update = {
@@ -139,9 +135,7 @@ labelForBoards:any=[];
   }
 
   removefromboard(i){
-
-    console.log(this.variab.boardupdated);
-    this.variab.boardupdated[i].value.status = false;
+    this.labelForBoards[i]=false;
   }
  
   

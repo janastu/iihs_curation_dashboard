@@ -64,13 +64,13 @@ public getAll(){
     
    return new Promise(resolve => {
 
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/33.json';
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
 
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-  //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+  this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
      resolve(jsonobject);
      }, (err) => {
       console.log(err);
@@ -108,18 +108,13 @@ this.database.post(f, function callback(err, result) {
     
   }
   getcategoryfeeds(category){
-  
-console.log("cate in service",category)
+  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
+//console.log("cate in service",category)
    return new Promise(resolve => {
-     this.db.query(function(doc, emit) {
-       if (doc.category === category) {
-         emit(doc.category,doc);
-       }
-     }).then(function (result) {
-       // handle result
-      console.log(result);
+     this.http.get(url).map(res=>res.json()).subscribe(result=> {
+       //console.log(result);
        resolve(result.rows);
-     }).catch(function (err) {
+     }, (err) =>{
        console.log(err);
      });
    });

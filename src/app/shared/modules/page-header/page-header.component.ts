@@ -32,7 +32,7 @@ todate = this.formBuilder.control('', [Validators.required]);
       fromdate: this.fromdate,
       todate: this.todate
     });
-    
+   
   }
   //function to get input values annd emit to feed component
   datefilter(){
@@ -47,7 +47,8 @@ todate = this.formBuilder.control('', [Validators.required]);
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {
     this.outgoing.emit(deviceValue.value);
-
+    //console.log(deviceValue.value);
+    localStorage.setItem('view',deviceValue.value)
     if(deviceValue.value === 'Article'){
       this.iconarticle=true;
       this.iconmagazine = false;

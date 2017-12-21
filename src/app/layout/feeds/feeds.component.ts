@@ -26,12 +26,15 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
+usersview:any;
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
     
     this.user = localStorage.getItem('name');
-
+    this.usersview = localStorage.getItem('view');
+ 
+    this.view = this.usersview;
      //Fetch the data from service and store in global variable
      this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
      
@@ -67,24 +70,26 @@ catname:any;
   public handleCategory(childCategory:any){
     console.log("in feed",childCategory)
       this.service.getcategoryfeeds(childCategory).then(result =>{
-        this.feeds = result
+        this.feeds = result;
+        this.catname = childCategory;
       })
   }
   private alertReceived(data: any) {
+
     this.catname = data.type;
     this.feeds = data.data;
+
     let hiddenfeeds:any=[];
-    console.log(this.variab.globalfeeds);
-    this.dataservice.gethiddenfeeds(this.catname).then(res=>{
+    
+    this.dataservice.getdeletedfeeds(this.catname).then(res=>{
       hiddenfeeds=res;
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-          if(feed.value.target.id === globalfeed.id) {
+          if(feed.value.id === globalfeed.id) {
             // code...
             
            var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.variab.globalfeeds.splice(i,1);
-           console.log(globalfeed,i,this.variab.globalfeeds);
+           this.feeds = this.variab.globalfeeds.splice(i,1);
           }
         })
       })
