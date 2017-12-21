@@ -72,7 +72,9 @@ catname:any;
   }
   private alertReceived(data: any) {
     this.catname = data.type
-    this.feeds = data.data
+    //this.feeds = data.data
+    this.feeds = this.variab.globalfeeds;
+    console.log("feeds",this.feeds)
 
 
 

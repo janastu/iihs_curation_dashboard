@@ -8,7 +8,7 @@
     </div>
 <!--Component to display if no view is selected-->
 <div *ngIf = "view === undefined" > 
-  <app-magazineview [feeds]='feeds'></app-magazineview>
+  <app-magazineview [feeds]='variab.globalfeeds'></app-magazineview>
 </div>
 <!--Component to display if Magazine view is selected-->
 <div *ngIf = "view === 'Magazine'" > 

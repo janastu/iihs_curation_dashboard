@@ -15,7 +15,7 @@ constructor(private http: Http) {
 
     this.db = new PouchDB('iihs_annotation');
    // this.remote = '192.168.1.30';
-  this.remote = 'http://localhost:5984/iihs_annotation';
+  this.remote = 'http://192.168.1.30:5984/iihs_annotation';
     this.username='admin';
     this.password='admin';
     
