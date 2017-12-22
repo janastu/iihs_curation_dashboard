@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash'
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-magazineview',
   templateUrl: './magazineview.component.html',

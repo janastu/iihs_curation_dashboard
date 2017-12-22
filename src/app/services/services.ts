@@ -67,13 +67,13 @@ public getAll(){
     
    return new Promise(resolve => {
 
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json';
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json?start=41';
 
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-  //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+  this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
 
      resolve(jsonobject);
      }, (err) => {
@@ -87,27 +87,24 @@ public getAll(){
   }
  addtopouch(feed,metadata){
 console.log("result",feed[0]);
-var f = feed[0];
-this.database.post(f, function callback(err, result) {
-  console.log(err);
-    console.log("dbre",result,err);
 
-          if (!err) {
-            console.log('Successfully posted a todo!',result);
-          }
-        });
-    
+
    
-    /*feed.map(res=>{
+    feed.map(res=>{
       res.category = metadata.category_name;
-      
+      var chunks = res.date.split('.');
+
+      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
+      var checkdate = Date.parse(formattedDate);
+      res.date = checkdate
+      console.log("dateche",res,res.date);
       this.db.post(res, function callback(err, result) {
 
           if (!err) {
             console.log('Successfully posted a todo!',result);
           }
-        });  
-    });*/
+        });
+    });
 
     
   }
@@ -127,19 +124,22 @@ this.database.post(f, function callback(err, result) {
   }
   getrecentfeeds(){
     var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
-    var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+    var d = new Date();
+    var date = d.getTime();
+    //console.log(date.getTime())
+    var check = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds?descending=true&limit=10&include_docs=true&startkey='+'"'+date+'"';
   return new Promise(resolve => {
     this.http.get(check).map(res=>res.json()).subscribe(result=> {
-      //console.log(result.results)
+      console.log(result)
 
-      var changesdoc = result.results.map(res=>{
+     /* var changesdoc = result.results.map(res=>{
         if(res.doc.title){
           return res.doc;
         }
       })
       console.log(_.compact(changesdoc));
-      var recentDocs = _.compact(changesdoc)
-      resolve(recentDocs);
+      var recentDocs = _.compact(changesdoc)*/
+      resolve(result.rows);
     }, (err) =>{
       console.log(err);
     });

@@ -90,15 +90,7 @@ todate = this.formBuilder.control('', [Validators.required]);
     var recentFeed:any=[];
     this.service.getrecentfeeds().then(res=>{
     
-    console.log(res ,"refreshed");
-    storeResult = res;
-     storeResult.map(feed=>{
-      
-       recentFeed.push({value:feed})
-
-     })
-     console.log(recentFeed);
-    this.componentsService.alert('refresh',recentFeed); 
+    this.componentsService.alert('refresh',res); 
         
         });
    //this.service.getrecentfeeds()

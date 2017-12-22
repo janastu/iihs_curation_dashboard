@@ -43,7 +43,7 @@
                       {{item.value.category}}</a>
                     <!--Feed Date-->
                     <a href={{item.value.url}} class="metadata-magazine">
-                      {{item.value.date}}
+                      {{item.value.date | date}}
                     </a>
                     <!--Feed Desc-->
                     <div *ngIf="checkimg(item.value.desc)" class="feed-content">
