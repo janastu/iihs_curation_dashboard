@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-preferences',
@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./preferences.component.scss']
 })
 export class PreferencesComponent implements OnInit {
+	
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -20,7 +20,9 @@ boardname:any;
   constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService,public variab:Global) { }
   //On loading Component
   ngOnInit() {
-    this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
+    this.boardname = this.variab.globalboardname;
+    this.feeds = this.variab.boardfeeds;
+    this.componentsService.getBoards().subscribe(data => this.alertReceived(data));
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){

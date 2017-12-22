@@ -23,5 +23,15 @@ constructor(private http: Http) {
     return this.subject.asObservable();
   }
 
+  alertboards(alertType: string, objData: any) {
+    console.log(alertType,objData);
+    this.subject.next({ type: alertType , data: objData});
+  }
+
+  getBoards(): Observable<any> {
+    console.log("calleds",this.subject);
+    return this.subject.asObservable();
+  }
+
  
 }

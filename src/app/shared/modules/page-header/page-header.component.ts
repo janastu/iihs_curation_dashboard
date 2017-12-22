@@ -1,7 +1,9 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Service } from '../../../services/services';
 import { Global } from '../../global';
+import { ComponentsService } from '../../../services/components-service';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -23,7 +25,7 @@ fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 
 
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global) { }
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public componentsService:ComponentsService,public variab:Global,public service:Service) { }
 
   ngOnInit() {
 
@@ -84,8 +86,25 @@ todate = this.formBuilder.control('', [Validators.required]);
 
  //function to reload the page
  refresh(): void{
-   window.location.reload();
-   //this.globalfeeds = setInterval(() =>{},30000);
+   var storeResult:any=[]; 
+    var recentFeed:any=[];
+    this.service.getrecentfeeds().then(res=>{
+    
+    console.log(res ,"refreshed");
+    storeResult = res;
+     storeResult.map(feed=>{
+      
+       recentFeed.push({value:feed})
+
+     })
+     console.log(recentFeed);
+    this.componentsService.alert('refresh',recentFeed); 
+        
+        });
+   //this.service.getrecentfeeds()
+   //$route.reload();
+   //window.location.reload();
+  
  }
  //function to share with teammates
  shareteam(event){

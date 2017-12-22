@@ -8,12 +8,12 @@
       <div class="field" *ngFor="let item of variab.boardupdated;let i=index;">
       
         <div class="board-item">
-        <div *ngIf="labelForBoards.length>0">
-          <i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] == false, 'fa-star': labelForBoards[i] == true}" aria-hidden="true" title="Save to board"></i>
+          <i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] === false||labelForBoards[i] === undefined, 'fa-star': labelForBoards[i] === true}" aria-hidden="true" title="Save to board"></i>
           {{item.value.label}}
           <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+          <button *ngIf="labelForBoards[i] === undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
           <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
-        </div>
+        
           <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
         
           
@@ -29,19 +29,20 @@
       </div>
      
 
+     <div *ngIf="visible" class="form-group savetoboard">
+       <form [formGroup]="boardForm" class="form-inline form-group">
+         <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Create a board">
+       </form>
+
+       
+       <div>
+         <button (click)="createboard()" class="btn btn-sm btn-success">Create a Board</button>
+         <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
+       </div>
+
+     </div>
+
     </div>
    
-</div>
 
-<div *ngIf="visible" class="form-group savetoboard">
-  <form [formGroup]="boardForm" class="form-inline form-group">
-    <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Create a board">
-  </form>
 
-  
-  <div>
-    <button (click)="createboard()" class="btn btn-sm btn-success">Create a Board</button>
-    <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
-  </div>
-
-</div>

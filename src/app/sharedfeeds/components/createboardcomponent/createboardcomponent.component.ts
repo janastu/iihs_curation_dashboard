@@ -80,7 +80,6 @@ labelForBoards:any=[];
                
              }
          })
-//console.log("true",this.labelForBoards)
 
     });
    
@@ -115,7 +114,9 @@ labelForBoards:any=[];
     
   }
   createboard(){
-    this.visible=false;     
+    this.visible=false; 
+
+console.log("true",this.labelForBoards[0]) 
       let model={
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
