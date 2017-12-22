@@ -104,7 +104,7 @@ user:any;
       "hidden":true
     }   
     this.variab.recentlyread.push({value:model});
-    //this.readlaterstore.dispatch('ADD_ITEMS',model)
+    this.readlaterstore.dispatch('ADD_ITEMS',model)
    this.variab.globalfeeds.splice(this.index,1);
 
    
