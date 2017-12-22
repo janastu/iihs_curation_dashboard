@@ -13,7 +13,7 @@ constructor(private http: Http) {
 
   }
 
-  alert(alertType: string, objData: any) {
+  alert(alertType: any, objData: any) {
     console.log(alertType,objData);
     this.subject.next({ type: alertType , data: objData});
   }

@@ -10,13 +10,20 @@
                         <h4 class="modal-title">
                           <div class="row">
                              <div class="modal-tool-bar">
-                                <app-createboardcomponent class="modal-star" [feeditem]='item'></app-createboardcomponent>
-                                    
-                                <a class="nav-item" (click)="change()"><i *ngIf="!icon" class="fa fa-fw fa-bookmark-o" title="Read Later"></i>
-                                  <i *ngIf="icon" class="fa fa-fw fa-bookmark" title="Read Later"></i>
-                                </a>
-                                <a class="nav-item" href="#"><i class="fa fa-fw fa-check" title="Mark as read"></i></a>
-                                <!--a class="nav-item" (click)="d('Cross click')"><i class="fa fa-fw fa-close" title="Mark as read and hide"></i></a-->
+                                <app-createboardcomponent class="modal-star" [feeditem]='feed[0]'></app-createboardcomponent>
+                                <a class="nav-item" (click)="readlater(1)">
+                                    <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
+                                    'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
+                                    </a>
+                                <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
+
+                                <!--<a class="nav-item" href="#"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>-->
+                                
+
+                                <!--a class="nav-item" href="#"><i class="fa fa-fw fa-twitter" title="Twitter"></i></a>
+                                <a class="nav-item" href="#"><i class="fa fa-fw fa-facebook" title="Facebook"></i></a-->
+
+                                <a class="nav-item" (click)="hide()"><i class="fa fa-close" title="Remove"></i></a>
                                     
                               </div>
                             </div>
@@ -35,31 +42,31 @@
                                   
                     
                                     <div class="row">
-                                     <a><h4 class="feed-heading"><strong>{{item.title}}</strong></h4></a>
+                                     <a><h4 class="feed[0]-heading"><strong>{{feed[0].value.title}}</strong></h4></a>
 
                                     </div>
                                     
                                     <div class="row">
                                     <a class="metadata-modal">
-                                       {{item.category}}     
+                                       {{feed[0].value.category}}     
                                     </a>
                                     <a class="metadata-modal">
-                                       {{item.date}}      
+                                       {{feed[0].value.date | date}}      
                                     </a>
                                     </div>
                                     
-                                    <div *ngIf="checkimg(item.desc)"  class="row">
-                                      <img data-external="yes" [src]="extracturl(item.desc)" data-image-enhancer="larger than 578" class="modal-image">
+                                    <div *ngIf="checkimg(feed[0].value.desc)"  class="row">
+                                      <img data-external="yes" [src]="extracturl(feed[0].value.desc)" data-image-enhancer="larger than 578" class="modal-image">
                                     </div>
-                                    <div *ngIf="!checkimg(item.desc)"  class="row">
+                                    <div *ngIf="!checkimg(feed[0].value.desc)"  class="row">
                                       <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="modal-image">
                                     </div>
-                                    <div *ngIf="checkimg(item.desc)"  class="row">
+                                    <div *ngIf="checkimg(feed[0].value.desc)"  class="row">
                                       
                                     </div>
-                                    <div *ngIf="!checkimg(item.desc)"  class="row">
-                                      <div class="modal-feed-content">
-                                             {{item.desc}}
+                                    <div *ngIf="!checkimg(feed[0].value.desc)"  class="row">
+                                      <div class="modal-feed[0]-content">
+                                             {{feed[0].value.desc}}
                                           </div>
                                     </div>
                                     
@@ -72,7 +79,7 @@
                              
                           </div>
                         <div class="row">
-                          <button type="button" class="btn btn-secondary visit-website"><a href="{{item.url}}">Visit Website</a></button>
+                          <button type="button" class="btn btn-secondary visit-website"><a href="{{feed[0].value.url}}">Visit Website</a></button>
                         </div>
 
                          
@@ -142,8 +149,8 @@
                       </div>
 
 
-                      <!--Modal for share feeds-->
-                      <ng-template  #sharefeeds let-c="close" let-d="dismiss">
+                      <!--Modal for share feed[0]s-->
+                      <ng-template  #sharefeed[0]s let-c="close" let-d="dismiss">
                           <div class="modal-header">
                               <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                                   <span aria-hidden="true">&times;</span>

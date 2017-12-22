@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
-
+alert:boolean=false;
   constructor() {
    }
 
@@ -51,6 +51,14 @@ export class MagazineviewComponent implements OnInit {
        return null;
      }*/
    
+  }
+  handleAlert(sendAlert:any){
+    if(sendAlert){
+      this.alert=true;
+    }
+  }
+  public closeAlert(alert: any) {
+      this.alert=false;
   }
 
  

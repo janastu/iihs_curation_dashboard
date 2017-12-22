@@ -1,6 +1,9 @@
 import { Component,Input,ViewChild,ElementRef} from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
+import { DatePipe } from '@angular/common';
+import { ReadlaterStore } from '../../store/readlater-store';
+import { Global } from '../../../shared/global';
+import { DataService } from '../../../services/data-service';
 @Component({
     selector: 'app-modal',
     templateUrl: './modal.component.html',
@@ -8,7 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent {
     @Input() item: any;
-    @Input() metadata: any;
+    @Input() index: any;
     closeResult: string;
     @ViewChild('content') modal:any;
     @ViewChild('sharewithteam') teammodal:any;
@@ -16,7 +19,12 @@ export class ModalComponent {
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
     val:boolean=false;
-    constructor(private modalService: NgbModal,public elementRef:ElementRef) { }
+    feed:any=[];
+    selectedIndex: any;
+    selectedIcon: number;
+    user:any;
+    constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
+     }
 
     open(content) {
        this.modalService.open(this.modal).result.then((result) => {
@@ -24,6 +32,24 @@ export class ModalComponent {
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
+        
+        this.feed.push({value:this.item})
+        
+
+        this.user = localStorage.getItem('name');
+        
+          
+          this.variab.readlaterfeeds.filter(anno=>{
+            if(anno.value.target.id === this.feed[0].value._id){
+              this.selectedIndex=1;
+            }
+          });
+
+          this.variab.recentlyread.filter(anno=>{
+            if(anno.value.target.id === this.feed[0].value._id){
+              this.selectedIcon=1;
+            }
+          });
         
     }
 
@@ -87,5 +113,69 @@ export class ModalComponent {
            return null;
          }*/
        
+      }
+      readlater(index: number){
+        console.log("called");
+         if(this.selectedIndex == index){
+           this.selectedIndex = -1;
+         }
+         else{
+           this.selectedIndex = index;
+         }
+           
+         let model = {
+           "@context": "http://www.w3.org/ns/anno.jsonld",
+           "type": "Annotation",
+           "creator": this.user,
+           "created": "2015-01-28T12:00:00Z",
+           "modified": "2015-01-29T09:00:00Z",
+           "generator": "mm_2017_v1",
+           "generated": "2015-02-04T12:00:00Z",
+           "target": this.item,
+           "motivation":"bookmarking"
+         }   
+         this.variab.readlaterfeeds.push({value:model});
+         this.readlaterstore.dispatch('ADD_ITEMS',model)
+      }
+      markasread(index:number){
+        if(this.selectedIcon == index){
+           this.selectedIcon = -1;
+         }
+         else{
+           this.selectedIcon = index;
+           let model = {
+             "@context": "http://www.w3.org/ns/anno.jsonld",
+             "type": "Annotation",
+             "creator": this.user,
+             "created": "2015-01-28T12:00:00Z",
+             "modified": "2015-01-29T09:00:00Z",
+             "generator": "mm_2017_v1",
+             "generated": "2015-02-04T12:00:00Z",
+             "target": this.item,
+             "motivation":"tagging"
+           }   
+           this.variab.recentlyread.push({value:model});
+           this.readlaterstore.dispatch('ADD_ITEMS',model)
+         }
+        
+      }
+      hide(){
+        let model = {
+          "@context": "http://www.w3.org/ns/anno.jsonld",
+          "type": "Annotation",
+          "creator": this.user,
+          "created": "2015-01-28T12:00:00Z",
+          "modified": "2015-01-29T09:00:00Z",
+          "generator": "mm_2017_v1",
+          "generated": "2015-02-04T12:00:00Z",
+          "target": this.item,
+          "hidden":true
+        }   
+        this.variab.recentlyread.push({value:model});
+        this.readlaterstore.dispatch('ADD_ITEMS',model)
+       this.variab.globalfeeds.splice(this.index,1);
+
+       
+       console.log(this.index,this.variab.globalfeeds);
       }
 }

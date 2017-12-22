@@ -14,13 +14,14 @@
     
           <div class="card-blocks">
             <div class="row centered magazine-list">
-              
+              <div *ngIf="alert"><ngb-alert  (close)="closeAlert(alert)">Feed is hidden</ngb-alert></div>
 
               <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
-              <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
+              <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)"></app-hover-toolbar>
               </div>
+              
 
                <div class="feed-entry">
                <!--Feed Image--> 
@@ -36,7 +37,7 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item.value"></app-modal>
+                      <app-modal #modal [item]="item.value" [index]='i'></app-modal>
                      <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.value.url}} class="metadata-magazine">

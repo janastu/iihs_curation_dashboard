@@ -109,7 +109,7 @@ console.log("result",feed[0]);
     
   }
   getcategoryfeeds(category){
-  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
+  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
 //console.log("cate in service",category)
    return new Promise(resolve => {
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
@@ -122,7 +122,7 @@ console.log("result",feed[0]);
 
     
   }
-  getrecentfeeds(){
+  getrecentfeedsoncategory(){
     var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
     var d = new Date();
     var date = d.getTime();
@@ -147,6 +147,27 @@ console.log("result",feed[0]);
 
     
   }
+ getrecentfeeds(){
+     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
+     var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+   return new Promise(resolve => {
+     this.http.get(check).map(res=>res.json()).subscribe(result=> {
+       //console.log(result.results)
+       var changesdoc = result.results.map(res=>{
+         if(res.doc.title){
+           return res.doc;
+         }
+       })
+       console.log(_.compact(changesdoc));
+       var recentDocs = _.compact(changesdoc)
+       resolve(recentDocs);
+     }, (err) =>{
+       console.log(err);
+     });
+   });
+
+     
+   }
  
  
 }

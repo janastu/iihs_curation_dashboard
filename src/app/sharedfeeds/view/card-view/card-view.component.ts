@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-card-view',

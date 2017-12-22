@@ -41,9 +41,11 @@ labelForBoards:any=[];
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
+
          var annotatedarray = annos.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
+
              this.selectedstar = 1;
 
                  return anno;

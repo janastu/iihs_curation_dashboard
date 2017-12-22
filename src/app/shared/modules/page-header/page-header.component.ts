@@ -24,6 +24,7 @@ loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 
+loading: boolean = false;
 
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public componentsService:ComponentsService,public variab:Global,public service:Service) { }
 
@@ -86,11 +87,20 @@ todate = this.formBuilder.control('', [Validators.required]);
 
  //function to reload the page
  refresh(): void{
-   var storeResult:any=[]; 
-    var recentFeed:any=[];
+   var recentdocs:any=[];
+   var refreshedDocs:any=[];
+   console.log("called");
+    this.loading = true;
     this.service.getrecentfeeds().then(res=>{
-    
-    this.componentsService.alert('refresh',res); 
+    //this.variab.globalfeeds=res;
+    console.log(res,"refreshed");
+    recentdocs=res;
+    recentdocs.map(val=>{
+    refreshedDocs.push({value:val});
+});
+    this.componentsService.alert(this.loading,refreshedDocs); 
+   this.loading = false;
+
         
         });
    //this.service.getrecentfeeds()

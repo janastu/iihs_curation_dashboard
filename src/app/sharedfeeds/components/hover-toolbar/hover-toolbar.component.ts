@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared';
 import { DataService } from '../../../services/data-service';
@@ -11,6 +11,7 @@ import { DataService } from '../../../services/data-service';
 export class HoverToolbarComponent implements OnInit {
   @Input('item') feeditem:any;
   @Input('index') index:any;
+  @Output('sendAlert') outgoing:any = new EventEmitter();
 selectedIndex: any;
 selectedIcon: number;
 user:any;
@@ -88,6 +89,9 @@ user:any;
     
   }
   hide(){
+
+    console.log("hidden");
+    this.outgoing.emit('hidden');
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -100,7 +104,7 @@ user:any;
       "hidden":true
     }   
     this.variab.recentlyread.push({value:model});
-    this.readlaterstore.dispatch('ADD_ITEMS',model)
+    //this.readlaterstore.dispatch('ADD_ITEMS',model)
    this.variab.globalfeeds.splice(this.index,1);
 
    

@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { HoverToolbarModule,ModalModule } from '../../components';
 //import { CreateboardcomponentModule } from '../../components';
 import { MagazineviewComponent } from './magazineview.component';
-
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         HoverToolbarModule,
-        ModalModule
+        ModalModule,
+        NgbModule.forRoot()
     ],
     declarations: [MagazineviewComponent],
     exports: [MagazineviewComponent]

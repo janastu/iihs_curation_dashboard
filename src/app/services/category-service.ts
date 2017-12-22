@@ -24,6 +24,7 @@ export class CategoryService {
 		
 	}
 	getfrompouch(){
+
 			return new Promise(resolve => {
 				    /*this.http.get(msgurl).map(res => res.json()).subscribe(data => {
 				     

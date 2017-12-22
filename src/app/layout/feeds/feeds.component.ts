@@ -27,6 +27,7 @@ date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
 usersview:any;
+loading: boolean = false;
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
@@ -72,13 +73,9 @@ usersview:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-      console.log(res);
-      var chunks = res.value.date.split('.');
-
-      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
-      var checkdate = Date.parse(formattedDate);
-     
-       if(fromdate<=checkdate && todate>=checkdate){
+    
+       if(fromdate<=res.value.date && todate>=res.value.date){
+        
           return res;
         }
 
@@ -94,11 +91,13 @@ usersview:any;
       })
   }
   private alertReceived(data: any) {
-    console.log("data",data)
 
+
+    if(data.type != true){
     this.catname = data.type;
+  }
    this.feeds = data.data;
-    //this.feeds = this.variab.globalfeeds;
+   // this.feeds = this.variab.globalfeeds;
     let hiddenfeeds:any=[];
     
     this.dataservice.getdeletedfeeds(this.catname).then(res=>{

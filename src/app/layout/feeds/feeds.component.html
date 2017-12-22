@@ -6,6 +6,9 @@
             <app-page-header [heading]="catname" (childView)='handleView($event)' (childDates)='handleDate($event)' (childCategory)='handleCategory($event)'></app-page-header>
         </div>
     </div>
+
+<!--Progress-Spinner-->
+<img *ngIf="loading" src="assets/images/loading.gif"  />
 <!--Component to display if no view is selected-->
 
 <div *ngIf = "view === null" > 

@@ -3,6 +3,7 @@ import { routerTransition } from '../../../router.animations';
 import { Service } from '../../../services/services';
 import { fadeInAnimation } from '../../../fade-in.animation';
 //import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-articleview',
   templateUrl: './articleview.component.html',

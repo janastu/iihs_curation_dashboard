@@ -15,7 +15,7 @@
             <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
-                <app-modal #modal [item]="item.value" [metadata]="metadata"></app-modal>
+                <app-modal #modal [item]="item.value" [index]='i'></app-modal>
                <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                
               </div>
@@ -26,7 +26,7 @@
               </a>
               <!--Feed Date-->
               <a href={{item.value.url}} class="metadata-article">
-                      {{item.value.date}}
+                      {{item.value.date | date}}
               </a>
               </div>
               <!--Feed Toolbar-->
