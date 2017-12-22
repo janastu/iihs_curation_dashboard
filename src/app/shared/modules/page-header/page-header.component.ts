@@ -87,6 +87,7 @@ loading: boolean = false;
 
  //function to reload the page
  refresh(): void{
+
    console.log("called");
     this.loading = true;
     this.service.getrecentfeeds().then(res=>{

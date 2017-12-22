@@ -36,8 +36,25 @@ loading: boolean = false;
     this.usersview = localStorage.getItem('view');
  
     this.view = this.usersview;
-    //this.feeds = this.variab.globalfeeds;
-    //console.log(this.feeds);
+    this.catname = this.variab.globalcatname;
+    this.feeds = this.variab.globalfeeds;
+    let hiddenfeeds:any=[];
+    
+    this.dataservice.getdeletedfeeds(this.catname).then(res=>{
+      hiddenfeeds=res;
+      this.variab.globalfeeds.map(globalfeed=>{
+        hiddenfeeds.map(feed=>{
+          if(feed.value.id === globalfeed.id) {
+            // code...
+            
+           var i = _.indexOf(this.variab.globalfeeds,globalfeed);
+           this.variab.globalfeeds.splice(i,1);
+          }
+        })
+      })
+
+    })
+    console.log(this.feeds);
      //Fetch the data from service and store in global variable
     this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
      
@@ -79,6 +96,7 @@ loading: boolean = false;
   }
   private alertReceived(data: any) {
 
+
 console.log(data.type,data.data);
 if(data.type == true){
   this.loading=data.type;
@@ -99,7 +117,7 @@ if(data.data){
             // code...
             
            var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.feeds = this.variab.globalfeeds.splice(i,1);
+           this.variab.globalfeeds.splice(i,1);
           }
         })
       })

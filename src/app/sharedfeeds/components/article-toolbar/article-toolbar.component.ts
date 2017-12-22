@@ -59,7 +59,7 @@ selectedstar:number;
             var annosForBoards = this.variab.boardupdated.map( (board, index) => {
                // console.log("anoo",board,annotatedarray)
                return  _.filter(annotatedarray,function(o) { 
-                 if(o.key[0]===board.key){
+                 if(o.key===board.key){
                  return o  ; 
                }
                });
@@ -81,7 +81,7 @@ selectedstar:number;
                   
                 }
             })
-   //         console.log("true",this.labelForBoards)
+    console.log("true",this.labelForBoards)
 
        });
    
@@ -129,6 +129,7 @@ selectedstar:number;
   }
   createboard(){
     this.visible=false;     
+    console.log("jb",this.boardname)
       let model={
        
          "@context": "http://www.w3.org/ns/anno.jsonld",

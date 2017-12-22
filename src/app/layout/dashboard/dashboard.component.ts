@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
             this.variab.recentlyread=result;
         });
         this.service.getrecentfeeds().then(result=>{    
-         this.feeds = result;
+         //this.feeds = result;
           
         });
         this.service.getAll().then(res=>{
@@ -48,9 +48,9 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['/feeds'],{ queryParams: { category } })
           this.service.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
-
+              this.variab.globalcatname = category;
                      console.log(res);
-                // this.componentsService.alert(category,res); 
+               //this.componentsService.alert(category,res); 
         
         });
     }

@@ -2,7 +2,7 @@ import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
-
+import * as _ from 'lodash';
 @Injectable()
 
 export class Service {
@@ -73,7 +73,7 @@ public getAll(){
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-   // this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+  //this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
 
      resolve(jsonobject);
      }, (err) => {
@@ -112,7 +112,7 @@ this.database.post(f, function callback(err, result) {
     
   }
   getcategoryfeeds(category){
-  var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
+  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
 //console.log("cate in service",category)
    return new Promise(resolve => {
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
@@ -126,20 +126,24 @@ this.database.post(f, function callback(err, result) {
     
   }
   getrecentfeeds(){
+    var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
+    var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+  return new Promise(resolve => {
+    this.http.get(check).map(res=>res.json()).subscribe(result=> {
+      //console.log(result.results)
 
-   return new Promise(resolve => {
-     this.db.query(function(doc, emit) {
-       if (doc.title) {
-         emit(doc.date,doc);
-       }
-     }).then(function (result) {
-       // handle result
-      console.log(result);
-       resolve(result.rows);
-     }).catch(function (err) {
-       console.log(err);
-     });
-   });
+      var changesdoc = result.results.map(res=>{
+        if(res.doc.title){
+          return res.doc;
+        }
+      })
+      console.log(_.compact(changesdoc));
+      var recentDocs = _.compact(changesdoc)
+      resolve(recentDocs);
+    }, (err) =>{
+      console.log(err);
+    });
+  });
 
     
   }
