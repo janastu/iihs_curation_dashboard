@@ -67,7 +67,7 @@ public getAll(){
     
    return new Promise(resolve => {
 
-    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/3.json?start=41';
+    var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/1.json';
 
     this.http.get(newsrack).subscribe((response)=> {
     var res = response.text();
@@ -123,13 +123,13 @@ console.log("result",feed[0]);
     
   }
   getrecentfeedsoncategory(){
-    var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
+   
     var d = new Date();
     var date = d.getTime();
-    //console.log(date.getTime())
-    var check = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds?descending=true&limit=10&include_docs=true&startkey='+'"'+date+'"';
+    console.log(date)
+    var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds?descending=true&limit=10&include_docs=true&startkey='+'"'+date+'"';
   return new Promise(resolve => {
-    this.http.get(check).map(res=>res.json()).subscribe(result=> {
+    this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
 
      /* var changesdoc = result.results.map(res=>{

@@ -90,6 +90,7 @@ loading: boolean = false;
         this.catname = childCategory;
       })
   }
+  //Function to handle Feeds from sidebar component
   private alertReceived(data: any) {
 
 
@@ -119,6 +120,21 @@ loading: boolean = false;
 
 
     
+  }
+  //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
+  handleSort(childSortLabel:any){
+    var checkForCategory:any=[];
+    if(childSortLabel === 'Latest'){
+     this.service.getrecentfeedsoncategory().then(result=>{
+       checkForCategory=result;
+       
+       this.feeds =checkForCategory.map(feed=>{
+         if(feed.value.category === this.catname){
+           return feed;
+         }
+       })
+     })
+    }
   }
    
 

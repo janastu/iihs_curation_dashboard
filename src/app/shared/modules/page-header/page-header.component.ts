@@ -15,6 +15,7 @@ export class PageHeaderComponent implements OnInit{
     @Output('childView') outgoing:any = new EventEmitter();
     @Output('childDates') Dates:any = new EventEmitter();
     @Output('childCategory') Category:any = new EventEmitter();
+    @Output('childSortLabel') Sortlabel:any = new EventEmitter();
 iconarticle:boolean=false;
 iconmagazine:boolean=false;
 iconcard:boolean=false;
@@ -112,5 +113,8 @@ loading: boolean = false;
  shareteam(event){
    
    console.log("share with team");
+ }
+ onSortlabel(val){
+   this.Sortlabel.emit(val);
  }
 }

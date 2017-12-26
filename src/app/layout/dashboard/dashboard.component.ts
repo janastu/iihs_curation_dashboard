@@ -33,11 +33,8 @@ export class DashboardComponent implements OnInit {
             this.variab.recentlyread=result;
         });
         this.service.getrecentfeeds().then(res=>{
-            var recentdocs:any=[];
-            //this.variab.globalfeeds=res;
-            console.log(res,"refreshed");
-            recentdocs=res;
-            recentdocs.map(val=>{
+            this.variab.recentdocs=res;
+            this.variab.recentdocs.map(val=>{
             this.feeds.push({value:val});
             });
          });

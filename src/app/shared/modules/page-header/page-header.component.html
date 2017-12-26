@@ -78,16 +78,16 @@
         <div ngbDropdownMenu dropdown-menu-left aria-labelledby="dropdownBasic1" class="form-group dropdown-width placement-small-screen">
           <fieldset class="form-group field">
             <div class="radio">
-              <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onChange('Article')"> Most Popular</label>
+              <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onSortlabel('Most Popular')"> Most Popular</label>
             </div>
             <div class="radio">
-              <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onChange('Magazine')"> Latest</label>
+              <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onSortlabel('Latest')"> Latest</label>
             </div>
             <div class="radio">
-              <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Title')"> Latest & Oldest</label>
+              <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onSortlabel('Latest & Oldest')"> Latest & Oldest</label>
             </div>
             <div class="radio">
-              <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onChange('Card')"> Oldest</label>
+              <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" (click)="onSortlabel('Oldest')"> Oldest</label>
             </div>
           </fieldset>
 
