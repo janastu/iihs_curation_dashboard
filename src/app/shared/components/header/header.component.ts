@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
 
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
-        localStorage.removeItem('view');
+        //localStorage.removeItem('view');
     }
 
     changeLang(language: string) {

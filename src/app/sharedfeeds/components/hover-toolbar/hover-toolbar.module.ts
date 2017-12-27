@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 import { HoverToolbarComponent } from './hover-toolbar.component';
 import { CreateboardcomponentModule } from '../createboardcomponent/createboardcomponent.module';
 import { ReadlaterStore } from '../../store/readlater-store';
+import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         CreateboardcomponentModule 
     ],
-    declarations: [HoverToolbarComponent],
+    declarations: [HoverToolbarComponent,
+        DialogComponentComponent],
     exports: [HoverToolbarComponent],
     providers:[ReadlaterStore]
 })

@@ -54,7 +54,6 @@ loading: boolean = false;
       })
 
     })
-    console.log(this.feeds);
      //Fetch the data from service and store in global variable
     this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
      
@@ -97,10 +96,8 @@ loading: boolean = false;
     if(data.type != true){
     this.catname = data.type;
   }
-   this.feeds = data.data;
-   // this.feeds = this.variab.globalfeeds;
     let hiddenfeeds:any=[];
-    
+  
     this.dataservice.getdeletedfeeds(this.catname).then(res=>{
       hiddenfeeds=res;
       this.variab.globalfeeds.map(globalfeed=>{
@@ -113,7 +110,7 @@ loading: boolean = false;
           }
         })
       })
-
+      this.feeds=this.variab.globalfeeds;
     })
 
 
@@ -125,14 +122,16 @@ loading: boolean = false;
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-     this.service.getrecentfeedsoncategory().then(result=>{
-       checkForCategory=result;
-       
-       this.feeds =checkForCategory.map(feed=>{
-         if(feed.value.category === this.catname){
-           return feed;
-         }
-       })
+     this.service.getlatestfeeds(this.catname).then(result=>{
+       this.feeds=result;
+       console.log(this.feeds)
+     })
+    }
+    if(childSortLabel === 'Oldest'){
+      
+     this.service.getoldestfeeds(this.catname).then(result=>{
+       this.feeds=result;
+       console.log(this.feeds)
      })
     }
   }

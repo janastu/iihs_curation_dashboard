@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter,Inject } from '@angular/core';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared';
 import { DataService } from '../../../services/data-service';
@@ -15,6 +15,7 @@ export class HoverToolbarComponent implements OnInit {
 selectedIndex: any;
 selectedIcon: number;
 user:any;
+showDialog:boolean;
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
 
     this.selectedIndex = -1;
@@ -88,10 +89,10 @@ user:any;
      }
     
   }
+ 
   hide(){
 
-    console.log("hidden");
-    this.outgoing.emit('hidden');
+    
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -109,6 +110,7 @@ user:any;
 
    
    console.log(this.index,this.variab.globalfeeds);
+   this.showDialog = false;
   }
 
 }

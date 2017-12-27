@@ -15,8 +15,10 @@
         <!--a class="nav-item" href="#"><i class="fa fa-fw fa-twitter" title="Twitter"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-facebook" title="Facebook"></i></a-->
 
-        <a class="nav-item" (click)="hide()"><i class="fa fa-close" title="Remove"></i></a>
+        <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-close" title="Remove"></i></a>
         </div>
-        
-
-      
+        <app-dialog [visible]="showDialog">
+            <h1>Do you Confirm to delete the feed</h1>
+            <button (click)="showDialog = !showDialog" class="btn">Cancel</button>
+            <button (click)="hide()" class="btn">Ok</button>
+        </app-dialog>

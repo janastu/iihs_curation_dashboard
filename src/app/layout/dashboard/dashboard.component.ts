@@ -38,6 +38,9 @@ export class DashboardComponent implements OnInit {
             this.feeds.push({value:val});
             });
          });
+        /*this.service.getlatestfeeds().then(res=>{
+            this.feeds=res;
+        });*/
 
         this.service.getAll().then(res=>{
             console.log(res);
