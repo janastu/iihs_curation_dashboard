@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/filter';
 import { ComponentsService } from '../../services/components-service';
 import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
@@ -17,12 +19,21 @@ feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 boardname:any;
-  constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService,public variab:Global) { }
+  constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService,public variab:Global,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
-    this.boardname = this.variab.globalboardname;
-    this.feeds = this.variab.boardfeeds;
-    this.componentsService.getBoards().subscribe(data => this.alertReceived(data));
+    //
+    //this.feeds = this.variab.boardfeeds;
+    this.route.queryParams
+         .filter(params => params.board)
+         .subscribe(params => {
+           this.boardname = params.board;
+           this.dataService.getboardfeeds(params.board).then(res=>{
+               this.feeds = res;
+             
+                });
+    });
+    //this.componentsService.getBoards().subscribe(data => this.alertReceived(data));
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){

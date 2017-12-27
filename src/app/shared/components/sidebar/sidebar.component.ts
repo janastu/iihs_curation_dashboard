@@ -57,23 +57,23 @@ export class SidebarComponent implements OnInit{
         
         this.router.navigate(['/feeds'],{ queryParams: { category } })
        // console.log(category);
-          this.service.getcategoryfeeds(category).then(res=>{
+          /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;
                    this.variab.globalfeeds=res;
                      //console.log(this.variab.globalfeeds);
                  this.componentsService.alert(category,res); 
         
-        });
+        });*/
 
     }
     routetoboard(board){ 
       
-       this.dataservice.getboardfeeds(board).then(res=>{
+       /*this.dataservice.getboardfeeds(board).then(res=>{
            this.variab.boardfeeds = res;
            this.variab.globalboardname = board;
              this.componentsService.alertboards(board,res); 
   
-     });
+     });*/
         this.router.navigate(['/boardfeeds'],{ queryParams: { board } });
 
 

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/filter';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
 import { Service } from '../../services/services';
@@ -28,7 +30,7 @@ user:any;
 catname:any;
 usersview:any;
 loading: boolean = false;
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
+  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
     
@@ -36,26 +38,38 @@ loading: boolean = false;
     this.usersview = localStorage.getItem('view');
  
     this.view = this.usersview;
-    this.catname = this.variab.globalcatname;
-    this.feeds = this.variab.globalfeeds;
-    let hiddenfeeds:any=[];
+    //this.catname = this.variab.globalcatname;
+    //this.feeds = this.variab.globalfeeds; 
     
-    this.dataservice.getdeletedfeeds(this.catname).then(res=>{
-      hiddenfeeds=res;
-      this.variab.globalfeeds.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-          if(feed.value.id === globalfeed.id) {
-            // code...
-            
-           var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.variab.globalfeeds.splice(i,1);
-          }
-        })
-      })
-
-    })
      //Fetch the data from service and store in global variable
-    this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
+      this.route.queryParams
+           .filter(params => params.category)
+           .subscribe(params => {
+             this.catname = params.category;
+               this.service.getcategoryfeeds(params.category).then(res=>{
+                     this.variab.globalfeeds = res;
+                       let hiddenfeeds:any=[];
+                       
+                        this.dataservice.getdeletedfeeds(this.catname).then(res=>{
+                         hiddenfeeds=res;
+                         this.variab.globalfeeds.map(globalfeed=>{
+                           hiddenfeeds.map(feed=>{
+                             if(feed.value.id === globalfeed.id) {
+                               // code...
+                               
+                              var i = _.indexOf(this.variab.globalfeeds,globalfeed);
+                              this.variab.globalfeeds.splice(i,1);
+                              this.feeds = this.variab.globalfeeds
+              
+                             }
+                           })
+                         })
+
+                        })
+             });
+      });
+
+    //this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
      
   }
   
