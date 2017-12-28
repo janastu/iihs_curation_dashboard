@@ -55,7 +55,7 @@ export class SidebarComponent implements OnInit{
     routeto(category){
         
         
-        this.router.navigate(['/feeds'],{ queryParams: { category } })
+        this.router.navigate(['/feeds',category] )
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;
@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit{
              this.componentsService.alertboards(board,res); 
   
      });*/
-        this.router.navigate(['/boardfeeds'],{ queryParams: { board } });
+        this.router.navigate(['/boardfeeds', board ]);
 
 
     }

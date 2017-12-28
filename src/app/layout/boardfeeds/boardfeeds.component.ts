@@ -24,11 +24,11 @@ boardname:any;
   ngOnInit() {
     //
     //this.feeds = this.variab.boardfeeds;
-    this.route.queryParams
-         .filter(params => params.board)
+    //this.route.params.subscribe( params => console.log(params));
+    this.route.params
          .subscribe(params => {
-           this.boardname = params.board;
-           this.dataService.getboardfeeds(params.board).then(res=>{
+           this.boardname = params.id;
+           this.dataService.getboardfeeds(params.id).then(res=>{
                this.feeds = res;
              
                 });
@@ -72,16 +72,5 @@ boardname:any;
 
     });
   }
-
-  private alertReceived(data: any) {
-    
-    this.boardname = data.type;
-    this.feeds = data.data;
-    console.log(data.data)
-
-
-    
-  }
-
 
 }

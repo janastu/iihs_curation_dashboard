@@ -73,7 +73,7 @@ public getAll(){
     var res = response.text();
    var jsonobject = this.jsonconvert.parseJSON(res);
     
-  this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
+//  this.addtopouch(jsonobject['_nr_stories'],jsonobject['_nr_metadata']);
 
      resolve(jsonobject);
      }, (err) => {
