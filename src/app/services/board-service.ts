@@ -12,7 +12,7 @@ export class BoardService {
 
 	constructor(private http: Http) { 
 		this.db = new PouchDB('boards');
-		this.remote = 'http://localhost:5984/boards';
+		this.remote = 'http://192.168.1.30:5984/boards';
 		  this.username='admin';
 		  this.password='admin';
 		  
@@ -31,7 +31,7 @@ export class BoardService {
 	  }
 
 	getboards(){
-	var url = 'http://localhost:5984/boards/_design/board/_view/boards';
+		var url = 'http://192.168.1.30:5984/boards/_design/board/_view/boards';
 	return new Promise(resolve => {
 	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
 	    
