@@ -25,14 +25,6 @@
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
 }
 
-@media (min-width: 768px) {
-  .dialog {
-    top: 10rem;
-    left: 13rem;
-    min-height: 0px;
-    border-radius: 0.2rem;
-  }
-}
 
 .dialog__close-btn {
   border: 0;
@@ -43,4 +35,54 @@
   right: 8px;
   cursor: pointer;
   font-size: 1.2em;
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+  .dialog {
+    top: 10rem;
+    left: 0rem;
+    min-height: 0px;
+    border-radius: 0.2rem;
+  }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  .dialog {
+    top: 10rem;
+    left: 0rem;
+    min-height: 0px;
+    border-radius: 0.2rem;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .dialog {
+    top: 10rem;
+    left: 0rem;
+    min-height: 0px;
+    border-radius: 0.2rem;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .dialog {
+    top: 10rem;
+    left: 13rem;
+    min-height: 0px;
+    border-radius: 0.2rem;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  .dialog {
+    top: 10rem;
+    left: 13rem;
+    min-height: 0px;
+    border-radius: 0.2rem;
+  }
 }
