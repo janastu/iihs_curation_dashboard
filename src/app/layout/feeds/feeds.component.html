@@ -19,6 +19,9 @@
 
 <!--Component to display if Magazine view is selected-->
 <div *ngIf = "view === 'Magazine'" > 
+  <!--div id="loading">
+    <img src="assets/images/loading.gif">
+  </div-->
   <app-magazineview [feeds]='feeds'></app-magazineview>
 </div>
 <!--Component to display if Article view is selected-->

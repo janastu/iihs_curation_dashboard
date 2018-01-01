@@ -15,20 +15,35 @@ export class MagazineviewComponent implements OnInit {
 alert:boolean=false;
 imgstatus:number=0;
   constructor() {
-   if(this.incomingfeeds.length == 0) {
+   /*if(this.incomingfeeds.length == 0) {
       // code...
-      console.log("len em",this.incomingfeeds.length);
+      //document.getElementById('loading').style.display = 'block';
+      //setTimeout(5000);
+      //console.log("load spinner");
+     // console.log("mang",this.incomingfeeds.length);
       this.imgstatus == 1;
     }
     else {
       console.log("nt em",this.incomingfeeds.length);
 
-    }
+    }*/
    }
 
   ngOnInit() {
-    
-  
+    /*if(this.incomingfeeds.length == 0) {
+       // code...
+       document.getElementById('loading').style.display = 'block';
+       setTimeout(5000);
+       console.log("load spinner");
+       console.log("mang loading",this.incomingfeeds.length);
+       this.imgstatus == 1;
+     }
+     else {
+       document.getElementById('loading').style.display = 'none';
+       console.log("mang loaded",this.incomingfeeds.length);
+
+     }
+  */
 
    
 	}

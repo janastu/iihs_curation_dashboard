@@ -37,16 +37,19 @@ export class DashboardComponent implements OnInit {
         this.service.getrecentfeeds().then(res=>{
             //document.getElementById('loading').style.display = 'none';
             this.variab.recentdocs=res;
-            this.variab.recentdocs.length = 0
+            //this.variab.recentdocs.length = 0
             if(this.variab.recentdocs.length == 0) {
                // code...
                /*console.log("len em",this.variab.recentdocs.length);
                //this.spinnerService.show('mySpinner');
                this.imgstatus == 1;*/
-               document.getElementById('loading').style.display = 'none';
+               document.getElementById('loading').style.display = 'block';
+               setTimeout(5000);
+               console.log("load spinner");
              }
              else {
                //this.spinnerService.hide('mySpinner');
+               document.getElementById('loading').style.display = 'none';
                console.log("nt em",this.variab.recentdocs.length);
                this.variab.recentdocs.map(val=>{
                this.feeds.push({value:val});
@@ -74,7 +77,7 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['/feeds',category] )
           this.service.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
-                     console.log(res);
+                  console.log(res);
         
         });
     }

@@ -21,6 +21,7 @@ export class Global {
    hiddenfeeds:any=[]; 
    boardfeeds:any=[];
    recentdocs:any=[];
+   annotations:any=[];
    globalcatname:any;  
    globalboardname:any;
   constructor(public http: Http) {
