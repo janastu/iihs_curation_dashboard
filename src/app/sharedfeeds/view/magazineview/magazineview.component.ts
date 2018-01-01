@@ -13,7 +13,17 @@ import { DatePipe } from '@angular/common';
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
 alert:boolean=false;
+imgstatus:number=0;
   constructor() {
+   if(this.incomingfeeds.length == 0) {
+      // code...
+      console.log("len em",this.incomingfeeds.length);
+      this.imgstatus == 1;
+    }
+    else {
+      console.log("nt em",this.incomingfeeds.length);
+
+    }
    }
 
   ngOnInit() {

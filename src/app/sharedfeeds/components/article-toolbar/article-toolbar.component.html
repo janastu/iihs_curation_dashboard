@@ -1,5 +1,5 @@
 <div class="navbar-nav article-tool-bar">
-  <div ngbDropdown class="board" [autoClose]="false">
+  <div ngbDropdown class="board">
   <a class="save" ngbDropdownToggle aria-expanded="true">
     <i class="fa" [ngClass]="{'fa-star-o': selectedstar !== 1, 'fa-star': selectedstar == 1}" title="Save to board"></i>
   </a>
@@ -41,9 +41,6 @@
         </div>
 
       </div>
-     
-  </div>
-
   
   	<a class="nav-item" (click)="readlater(1)">
         <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
@@ -51,7 +48,7 @@
         </a>
     <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
-    <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close" title="Remove"></i></a>
+    <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close remove" title="Remove"></i></a>
   
 </div>
                

@@ -7,13 +7,14 @@ $saveboardbackground:#fff;
 /*Styles for tool-bar*/
 .article-tool-bar{
     margin-top: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     display: inline-block;
-    margin-left: 21px;
+    margin-left: 2px;
 
 }
 .article-tool-bar a{
     color: $articletoolbarcolor;
+    margin-left: 10px;
 }
 
 .article-tool-bar .savetoboard{
@@ -49,13 +50,20 @@ $saveboardbackground:#fff;
     font-size: 15px;
     margin-left: -33px;
 }
+.save i{
+    margin-top: 5px;
+}
+.remove{
+    width: 0px;
+}
 .field{
     margin-top: 0.5rem;
 }
 .board{
 
     margin-bottom: -24px;
-    margin-left: 11px;
+    margin-left: -7px;
+    display: inline-flex;
     color: $boardcolor;
 }
 .board-item{

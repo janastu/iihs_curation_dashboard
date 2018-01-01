@@ -29,6 +29,7 @@ labelForBoards:any=[];
   ngOnInit() {
 
     var annos:any=[];
+    this.ngconfig.autoClose='outside';
    this.user =localStorage.getItem('name');
 
     this.boardForm = this.formBuilder.group({

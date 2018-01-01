@@ -4,6 +4,7 @@ import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { DataService } from '../../../services/data-service';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
 @Component({
@@ -22,12 +23,13 @@ boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
 selectedIcon: number;
 selectedstar:number;
-  constructor(public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
+  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
      this.selectedIndex = -1;
  
 }
 
   ngOnInit() {
+    this.ngconfig.autoClose='outside';
      this.user = localStorage.getItem('name');
     var annos:any=[];
    

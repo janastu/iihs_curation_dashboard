@@ -128,7 +128,7 @@ console.log("result",feed[0]);
     var date = d.getTime();
     console.log(date)
    
-    var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
   return new Promise(resolve => {
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
@@ -153,7 +153,7 @@ console.log("result",feed[0]);
     var d = new Date();
     var date = d.getTime();
     console.log(date)
-    var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
   return new Promise(resolve => {
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
@@ -176,7 +176,7 @@ console.log("result",feed[0]);
 
  getrecentfeeds(){
      //var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
-     var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+     var check = 'http://192.168.1.30:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
    return new Promise(resolve => {
      this.http.get(check).map(res=>res.json()).subscribe(result=> {
        //console.log(result.results)

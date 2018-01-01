@@ -15,6 +15,7 @@ import { CategoryService } from './services/category-service';
 import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
 import { Service } from './services/services';
+//import { SpinnerModule } from 'angular-spinners';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         HttpModule,
         AppRoutingModule,
+        //SpinnerModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
