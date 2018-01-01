@@ -47,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         })
         
     ],
-    providers: [AuthGuard,Global,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service],
+    providers: [AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service],
     bootstrap: [AppComponent]
 })
 export class AppModule {
