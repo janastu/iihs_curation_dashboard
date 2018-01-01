@@ -25,6 +25,8 @@ iconreadlater:boolean=false;
 loginForm:FormGroup;
 fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
+selectedVal:any;
+desc:any;
 
 loading: boolean = false;
 
