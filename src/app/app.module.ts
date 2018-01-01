@@ -15,13 +15,13 @@ import { CategoryService } from './services/category-service';
 import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
 import { Service } from './services/services';
-
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 
 
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: Http) {
+export function HttpLoaderFactory(http: HttpClient) {
     // for development
     // return new TranslateHttpLoader(http, '/start-angular/SB-Admin-BS4-Angular-4/master/dist/assets/i18n/', '.json');
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -35,13 +35,14 @@ export function HttpLoaderFactory(http: Http) {
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
+        HttpClientModule,
         HttpModule,
         AppRoutingModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
-                deps: [Http]
+                deps: [HttpClient]
             }
         })
         
