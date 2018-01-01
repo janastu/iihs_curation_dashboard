@@ -16,6 +16,7 @@ export class PageHeaderComponent implements OnInit{
     @Output('childDates') Dates:any = new EventEmitter();
     @Output('childCategory') Category:any = new EventEmitter();
     @Output('childSortLabel') Sortlabel:any = new EventEmitter();
+    @Output('childrefresh') Refresh:any = new EventEmitter();
 iconarticle:boolean=false;
 iconmagazine:boolean=false;
 iconcard:boolean=false;
@@ -93,17 +94,13 @@ loading: boolean = false;
    console.log("called");
     this.loading = true;
     this.service.getrecentfeeds().then(res=>{
-    //this.variab.globalfeeds=res;
-    console.log(res,"refreshed");
-    recentdocs=res;
-    recentdocs.map(val=>{
-    refreshedDocs.push({value:val});
-});
-    this.componentsService.alert(this.loading,refreshedDocs); 
-   this.loading = false;
+      recentdocs=res;
+        recentdocs.map(val=>{
+          refreshedDocs.push({value:val});
+          this.Refresh.emit(refreshedDocs);
+        });  
+      });
 
-        
-        });
    //this.service.getrecentfeeds()
    //$route.reload();
    //window.location.reload();

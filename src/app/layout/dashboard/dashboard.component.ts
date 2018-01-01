@@ -60,19 +60,21 @@ export class DashboardComponent implements OnInit {
 
         this.service.getAll().then(res=>{
             console.log(res);
-        })
+        });
+        this.dataservice.getannotations().then(res=>{
+
+            this.variab.annotations=res;
+        });
 
         this.categoryService.getfrompouch().then((result)=>{
             this.variab.categoryupdated=result;
         });
     }
     oncategory(category){
-        this.router.navigate(['/feeds'],{ queryParams: { category } })
+        this.router.navigate(['/feeds',category] )
           this.service.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
-              this.variab.globalcatname = category;
                      console.log(res);
-               //this.componentsService.alert(category,res); 
         
         });
     }
