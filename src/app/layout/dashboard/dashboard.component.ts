@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
         });
     }
     oncategory(category){
-        this.router.navigate(['/feeds'],{ queryParams: { category } })
+        this.router.navigate(['/feeds',category] )
           this.service.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
                      console.log(res);

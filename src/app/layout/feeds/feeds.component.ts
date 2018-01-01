@@ -30,6 +30,7 @@ user:any;
 catname:any;
 usersview:any;
 loading: boolean = false;
+
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
@@ -38,39 +39,42 @@ loading: boolean = false;
     this.usersview = localStorage.getItem('view');
  
     this.view = this.usersview;
-    //this.catname = this.variab.globalcatname;
-    //this.feeds = this.variab.globalfeeds; 
-    
-     //Fetch the data from service and store in global variable
-      this.route.queryParams
-           .filter(params => params.category)
-           .subscribe(params => {
-             this.catname = params.category;
-               this.service.getcategoryfeeds(params.category).then(res=>{
+    console.log("feeds",this.feeds,this.loading);
+ //Access the query parameter and filter the feeds according to category
+
+
+           this.route.params
+            .subscribe(params => {
+              this.catname = params.id;
+               this.service.getcategoryfeeds(this.catname).then(res=>{
                      this.variab.globalfeeds = res;
+
+                     //After filtering the feeds according to category remove the hidden feeds 
+                     //and display the rest feeds
                        let hiddenfeeds:any=[];
                        
                         this.dataservice.getdeletedfeeds(this.catname).then(res=>{
                          hiddenfeeds=res;
-                         this.variab.globalfeeds.map(globalfeed=>{
-                           hiddenfeeds.map(feed=>{
-                             if(feed.value.id === globalfeed.id) {
-                               // code...
-                               
-                              var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-                              this.variab.globalfeeds.splice(i,1);
-                              this.feeds = this.variab.globalfeeds
-              
-                             }
-                           })
+                          this.variab.globalfeeds.map(globalfeed=>{
+                            hiddenfeeds.map(feed=>{
+                               if(feed.value.id === globalfeed.id) {
+                                var i = _.indexOf(this.variab.globalfeeds,globalfeed);
+                                this.variab.globalfeeds.splice(i,1);
+                                this.feeds = this.variab.globalfeeds;
+                                   if(this.feeds.length == 0){
+                                      this.loading = true;
+                                   }
+                                   else{
+                                       this.loading = false;
+                                   }
+                               }
+                            })
                          })
 
                         })
              });
-      });
-
-    //this.componentsService.getMessage().subscribe(data => this.alertReceived(data));
-     
+           });
+   
   }
   
 
@@ -103,35 +107,6 @@ loading: boolean = false;
         this.catname = childCategory;
       })
   }
-  //Function to handle Feeds from sidebar component
-  private alertReceived(data: any) {
-
-
-    if(data.type != true){
-    this.catname = data.type;
-  }
-    let hiddenfeeds:any=[];
-  
-    this.dataservice.getdeletedfeeds(this.catname).then(res=>{
-      hiddenfeeds=res;
-      this.variab.globalfeeds.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-          if(feed.value.id === globalfeed.id) {
-            // code...
-            
-           var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-           this.variab.globalfeeds.splice(i,1);
-          }
-        })
-      })
-      this.feeds=this.variab.globalfeeds;
-    })
-
-
-
-
-    
-  }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
@@ -148,6 +123,10 @@ loading: boolean = false;
        console.log(this.feeds)
      })
     }
+  }
+  //Function to handle refreshed feeds when clicked from page-header component
+  handleRefresh(childrefresh:any){
+    this.feeds = childrefresh
   }
    
 
