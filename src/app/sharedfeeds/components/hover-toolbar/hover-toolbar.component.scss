@@ -20,5 +20,20 @@ $acolor:#a3a3a2;
 .createboard{
 	cursor: pointer;
 }
-
+.alert-dialogbox h1{
+	font-size: 28px;
+	margin-top: 30px;
+	text-align: center;
+}
+.dialog-buttons{
+	display: block;
+	margin-top: 30px;
+	margin-left: 27px;
+}
+.dialog-buttons button{
+	width: 5rem;
+}
+.dialog-ok{
+	margin-left: 17.5rem
+}
 

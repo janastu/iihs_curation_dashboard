@@ -17,8 +17,10 @@
 
         <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-close" title="Remove"></i></a>
         </div>
-        <app-dialog [visible]="showDialog">
+        <app-dialog class="alert-dialogbox" [visible]="showDialog">
             <h1>Do you Confirm to delete the feed</h1>
-            <button (click)="showDialog = !showDialog" class="btn">Cancel</button>
-            <button (click)="hide()" class="btn">Ok</button>
+            <div class="dialog-buttons">
+                <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
+                <button (click)="hide()" class="btn btn-sm btn-success dialog-ok">Ok</button>
+            </div>
         </app-dialog>
