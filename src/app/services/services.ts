@@ -109,7 +109,7 @@ console.log("result",feed[0]);
     
   }
   getcategoryfeeds(category){
-  var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
 //console.log("cate in service",category)
    return new Promise(resolve => {
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
