@@ -20,6 +20,7 @@ boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
 user:any;
 labelForBoards:any=[];
+outside:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
      
@@ -29,20 +30,19 @@ labelForBoards:any=[];
   ngOnInit() {
 
     var annos:any=[];
+    this.ngconfig.autoClose='outside';
    this.user =localStorage.getItem('name');
 
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
    
-    this.dataservice.getannotations().then(res=>{
 
-        annos=res;
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
 
-         var annotatedarray = annos.filter(anno=>{
+         var annotatedarray = this.variab.annotations.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
 
@@ -83,7 +83,7 @@ labelForBoards:any=[];
              }
          })
 
-    });
+
    
   } 
 
