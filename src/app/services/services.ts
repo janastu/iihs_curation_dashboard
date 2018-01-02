@@ -130,8 +130,10 @@ console.log("result",feed[0]);
     var d = new Date();
     var date = d.getTime();
     console.log(date)
+
    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
   return new Promise(resolve => {
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result.rows)
@@ -157,8 +159,10 @@ console.log("result",feed[0]);
     var d = new Date();
     var date = d.getTime();
     console.log(date)
+
     var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
   return new Promise(resolve => {
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
@@ -180,8 +184,10 @@ console.log("result",feed[0]);
   }
 
  getrecentfeeds(){
+
      var check = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
      //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+
    return new Promise(resolve => {
      this.http.get(check).map(res=>res.json()).subscribe(result=> {
        //console.log(result.results)

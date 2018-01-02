@@ -8,6 +8,7 @@ import { ComponentsService } from '../../services/components-service';
 import { Userservice } from '../../services/userservice';
 import { CategoryService } from '../../services/category-service';
 import { Router } from "@angular/router";
+//import { SpinnerService } from 'angular-spinners';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -17,7 +18,8 @@ import { Router } from "@angular/router";
 export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
-    constructor(public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
+    imgstatus:number=0;
+    constructor(/*public spinnerService: SpinnerService,*/public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
     }
 
     ngOnInit() {
@@ -33,10 +35,27 @@ export class DashboardComponent implements OnInit {
             this.variab.recentlyread=result;
         });
         this.service.getrecentfeeds().then(res=>{
+            //document.getElementById('loading').style.display = 'none';
             this.variab.recentdocs=res;
-            this.variab.recentdocs.map(val=>{
-            this.feeds.push({value:val});
-            });
+            //this.variab.recentdocs.length = 0
+            if(this.variab.recentdocs.length == 0) {
+               // code...
+               /*console.log("len em",this.variab.recentdocs.length);
+               //this.spinnerService.show('mySpinner');
+               this.imgstatus == 1;*/
+               document.getElementById('loading').style.display = 'block';
+               setTimeout(5000);
+               console.log("load spinner");
+             }
+             else {
+               //this.spinnerService.hide('mySpinner');
+               document.getElementById('loading').style.display = 'none';
+               console.log("nt em",this.variab.recentdocs.length);
+               this.variab.recentdocs.map(val=>{
+               this.feeds.push({value:val});
+               });
+             }
+            
          });
         /*this.service.getlatestfeeds().then(res=>{
             this.feeds=res;
@@ -58,7 +77,7 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['/feeds',category] )
           this.service.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
-                     console.log(res);
+                  console.log(res);
         
         });
     }
