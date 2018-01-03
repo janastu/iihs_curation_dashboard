@@ -38,7 +38,7 @@ loading: boolean = false;
     this.user = localStorage.getItem('name');
     this.usersview = localStorage.getItem('view');
  
-    this.view = this.usersview;);
+    this.view = this.usersview;
  //Access the query parameter and filter the feeds according to category
 
 
