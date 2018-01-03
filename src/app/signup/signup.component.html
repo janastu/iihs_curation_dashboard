@@ -3,6 +3,8 @@
         <div class="col-md-4 push-md-4">
 
             <img class="user-avatar  img-log" src="assets/images/radio.png"/>
+            <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Registration Successful</ngb-alert>
+            <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <h1>Media Monitor</h1>
             <form role="form" [formGroup]="registerForm">
                 <div class="form-content">
@@ -24,9 +26,16 @@
                         <input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password" formControlName="confirmpassword">
                     </div>
                 </div>
-                <a class="btn rounded-btn" (click)="onregister()"> Register </a>&nbsp;
+                <button class="btn rounded-btn" (click)="onregister()" [disabled]="!registerForm.valid"> Register </button>&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </form>
+            <div *ngIf="username.hasError('required')" class="error-box">* Username is required!</div>
+            <div *ngIf="password.hasError('required')" class="error-box">* Password is required!</div>
+            <div *ngIf="email.hasError('email')" class="error-box">* Please Enter a valid email!</div>
+            <div *ngIf="confirmpassword.hasError('required')" class="error-box">* Repeat Password is required!</div>
+            <div *ngIf="username.hasError('minlength')" class="error-box">* Minimum username length is 6!</div>
+             <div *ngIf="password.hasError('minlength')" class="error-box">* Minimum password length is 6!</div>
+            <div *ngIf="!username.valid" class="error-box">*Username should only have characters </div>
         </div>
     </div>
 </div>

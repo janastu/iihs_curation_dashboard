@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
-
-import { Userservice } from '../services/userservice';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -12,10 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommonModule,
         LoginRoutingModule,
     	FormsModule,
-    	ReactiveFormsModule
+    	ReactiveFormsModule,
+    	NgbModule.forRoot()
     ],
-    declarations: [LoginComponent],
-  	providers:[Userservice]
+    declarations: [LoginComponent]
 })
 export class LoginModule {
 }
