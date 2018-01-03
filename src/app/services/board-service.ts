@@ -1,6 +1,7 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import PouchDB from 'pouchdb';
+import { Settings }from './settings';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -10,19 +11,18 @@ export class BoardService {
 	username:any;
 	password:any;
 
-	constructor(private http: Http) { 
+	constructor(private http: Http,private settings:Settings) { 
 		this.db = new PouchDB('boards');
-		this.remote = 'http://192.168.1.30:5984/boards';
-		  this.username='admin';
-		  this.password='admin';
+		this.remote = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbboards;
+		
 		  
 		     let options = {
 		       live: true,
 		       retry: true,
 		       continuous: true,
 		       auth: {
-		          username: this.username,
-		          password: this.password
+		          username: this.settings.couchdbusername,
+		          password: this.settings.couchdbpassword
 		        }
 		     };
 		  
@@ -31,7 +31,7 @@ export class BoardService {
 	  }
 
 	getboards(){
-		var url = 'http://192.168.1.30:5984/boards/_design/board/_view/boards';
+		var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbboards+'/_design/board/_view/boards';
 	return new Promise(resolve => {
 	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
 	    

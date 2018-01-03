@@ -1,7 +1,7 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { Http }       from '@angular/http';
 import PouchDB from 'pouchdb';
-
+import { Settings } from './settings'
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -11,21 +11,21 @@ export class DataService {
   remote:any;
   username:any;
   password:any;
-constructor(private http: Http) { 
+constructor(private http: Http,private settings:Settings) { 
 
     this.db = new PouchDB('iihs_annotation');
-   // this.remote = '192.168.1.30';
-  this.remote = 'http://192.168.1.30:5984/iihs_annotation';
-    this.username='admin';
-    this.password='admin';
+   
+  //this.remote = 'http://192.168.1.30:5984/iihs_annotation';
+  this.remote = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations;
+    
     
        let options = {
          live: true,
          retry: true,
          continuous: true,
          auth: {
-            username: this.username,
-            password: this.password
+            username: this.settings.couchdbusername,
+            password: this.settings.couchdbpassword
           }
        };
     
@@ -45,9 +45,11 @@ constructor(private http: Http) {
 
   }
   getannotations(){ 
-    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/boardannotation';
+    console.log("amn",this.settings.dbannotations)
+    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/boardannotation'
+    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/boardannotation';
    
-    
+    console.log(url);
    return new Promise(resolve => {
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
        
@@ -73,7 +75,10 @@ constructor(private http: Http) {
     });
   }*/
   getboardfeeds(board){
-    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
+
+
+    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
+    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
         
@@ -88,8 +93,9 @@ constructor(private http: Http) {
 
   }
   getreadlater(usr){
-    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/readlater?key='+'"'+usr+'"';
-
+     var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/readlater?key='+'"'+usr+'"';
+    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/readlater?key='+'"'+usr+'"';
+    console.log(url)
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
         
@@ -102,7 +108,8 @@ constructor(private http: Http) {
 
   }
   getrecentlyread(usr){
-    var url ='http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
+   // var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
+  var url ='http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
 
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
@@ -125,7 +132,8 @@ constructor(private http: Http) {
   }*/
  
   getalldeletedfeeds(){
-    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
+    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/alldeletedfeeds'
+   // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
    return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
         //console.log(result.rows)
@@ -136,8 +144,9 @@ constructor(private http: Http) {
     });
 
   }
-  getdeletedfeeds(category){
-    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
+  getdeletedfeeds(category){4
+    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
+    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
         //console.log(result.rows)
