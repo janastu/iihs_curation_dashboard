@@ -5,7 +5,9 @@
 
             <img src="assets/images/radio.png" class="user-avatar img-log" />
             <h1>Media Monitor</h1>
-            
+            <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Success</ngb-alert>
+            <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
+            <ngb-alert *ngIf="alertmissing" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <form role="form" [formGroup]="loginForm">
         
                 <div class="form-content">
