@@ -25,15 +25,9 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
 
     this.user = localStorage.getItem('name');
-        this.dataservice.getreadlater(this.user).then(result=>{
-
-            this.variab.readlaterfeeds=result;
-           
-        });
-        this.dataservice.getrecentlyread(this.user).then(result=>{
-            //console.log(result);
-            this.variab.recentlyread=result;
-        });
+   
+       
+       //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
             //document.getElementById('loading').style.display = 'none';
             this.variab.recentdocs=res;
@@ -64,15 +58,15 @@ export class DashboardComponent implements OnInit {
         this.service.getAll().then(res=>{
             console.log(res);
         });
-        this.dataservice.getannotations().then(res=>{
-
-            this.variab.annotations=res;
+       //Get user subscribed feed names
+        this.userService.getUserSubscriptions().then(res=>{
+          this.variab.categoryupdated=res;
+          console.log(this.variab.categoryupdated)
+          
         });
-
-        this.categoryService.getfrompouch().then((result)=>{
-            this.variab.categoryupdated=result;
-        });
+  
     }
+    //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked
     oncategory(category){
         this.router.navigate(['/feeds',category] )
           this.service.getcategoryfeeds(category).then(res=>{

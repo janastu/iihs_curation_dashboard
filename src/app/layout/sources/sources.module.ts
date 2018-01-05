@@ -12,6 +12,9 @@ import { StatModule } from '../../shared';
 import { Service } from '../../services/services';
 import { SidebarComponent } from '../../shared'
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateFeedModule } from '../../sharedfeeds/components';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -19,8 +22,11 @@ import { SidebarComponent } from '../../shared'
         NgbAlertModule.forRoot(),
         NgbModule.forRoot(),
         SourcesRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CreateFeedModule
         
-      
+          
     ],
     declarations: [
         SourcesComponent

@@ -144,8 +144,9 @@ constructor(private http: Http,private settings:Settings) {
     });
 
   }
-  getdeletedfeeds(category){4
+  getdeletedfeeds(category){
     var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
+    console.log(url)
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {

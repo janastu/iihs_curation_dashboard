@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../../../services/board-service';
-import { CategoryService } from '../../../services/category-service';
+import { Userservice } from '../../../services/userservice';
 import { ComponentsService } from '../../../services/components-service';
 import { DataService } from '../../../services/data-service';
 import { Service } from '../../../services/services';
@@ -16,7 +16,7 @@ import { Service } from '../../../services/services';
 
 export class SidebarComponent implements OnInit{
   
-    
+    user:any;
     
     isActive = false;
     showMenu = '';
@@ -38,20 +38,45 @@ export class SidebarComponent implements OnInit{
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public categoryService:CategoryService,public componentsService:ComponentsService,public dataservice:DataService,public service:Service){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public componentsService:ComponentsService,public dataservice:DataService,public service:Service){
    
 
     }
     ngOnInit(){
+      this.user = localStorage.getItem('name');
+        //Get board annotations
+                   this.dataservice.getannotations().then(res=>{
+                     //Set result to global variable as it can be accessed outdside the component
+                    this.variab.annotations=res;
+                    
+                    });
+             //Get readlater annotations
+
+                   this.dataservice.getreadlater(this.user).then(result=>{
+                     //Set result to global variable as it can be accessed outdside the component
+                       this.variab.readlaterfeeds=result;
+                      
+                   });
+              //Get recently read annotaions
+                   this.dataservice.getrecentlyread(this.user).then(result=>{
+                       //Set result to global variable as it can be accessed outdside the component
+                       this.variab.recentlyread=result;
+                   });
+          //Get the board names to display in the sidebar and createboard component
         this.boardservice.getboards().then((result)=>{
-                
-                this.variab.boardupdated=result;
+                //Set result to global variable as it can be accessed outdside the component
+                this.variab.boardupdated=result; 
         })
-        this.categoryService.getfrompouch().then((result)=>{
-            //console.log(result);
-            this.variab.categoryupdated=result;
+        //Get the feed names to display in the sidebar and other components
+        this.userservice.getUserSubscriptions().then(res=>{
+           //Set result to global variable as it can be accessed outdside the component
+          this.variab.categoryupdated=res;
+        //  console.log(this.variab.categoryupdated)
+          
         });
+       
     }
+    //Function called from html to navigate to feeds component with category name variable
     routeto(category){
         
         
@@ -66,6 +91,7 @@ export class SidebarComponent implements OnInit{
         });*/
 
     }
+    //Function called from html to navigate to boardfeeds component with boardname name variable
     routetoboard(board){ 
       
        /*this.dataservice.getboardfeeds(board).then(res=>{

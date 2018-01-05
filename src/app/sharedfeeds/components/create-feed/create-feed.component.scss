@@ -1,0 +1,88 @@
+/*saas variables*/
+$boardcolor:#a3a3a2;
+$hoveronaboard:#f8f8f8;
+$saveboardcolor:#292b2c;
+$saveboardbackground:#fff;
+/*board elements*/
+.border-board{
+    border-top: solid 1px rgba(0, 0, 0, 0.15);
+    margin-left: 0.5rem;
+    margin-top:  0.5rem;
+    cursor:pointer;
+}
+.save-board{
+    height: 24px;
+    padding: 0;
+    width: 51px;
+    opacity:0;
+}
+.remove-board{
+    height: 24px;
+    padding: 0;
+    width: 100px;
+    opacity:0;
+}
+.save{
+    font-size: 15px;
+}
+.field{
+    margin-top: 0.5rem;
+}
+.board{
+
+    display: inline-block;
+    color: $boardcolor;
+}
+.board-item{
+    display:block;
+}
+.board-item:hover .save-board{
+    opacity:1;
+}
+.board-item:hover{
+    background-color:$hoveronaboard;
+}
+.board-item:hover .remove-board{
+    opacity:1;
+}
+.board-field{
+    height: 0px;
+}
+.board-field a{
+    color: $boardcolor;
+}
+.create-board button{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.create-board input{
+    margin-left: 8px;
+}
+
+.board-list {
+    margin-left: 15px;
+}
+.savetoboard{
+    position: absolute;
+    top: -3px;
+    left: -1px;
+    z-index: 1000;
+    display: block;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: $saveboardcolor;
+    text-align: left;
+    list-style: none;
+    background-color: $saveboardbackground;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+/*Display toggle*/
+
+.dropdown-toggle::after {
+   display:none ! important;
+}

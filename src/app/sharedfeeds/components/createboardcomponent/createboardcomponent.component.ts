@@ -41,7 +41,7 @@ outside:any;
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-
+         
          var annotatedarray = this.variab.annotations.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star

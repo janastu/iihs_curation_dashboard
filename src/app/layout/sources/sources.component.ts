@@ -1,16 +1,20 @@
 import { Component, OnInit} from '@angular/core';
 import { Global } from '../../shared/global';
 import { CategoryService } from '../../services/category-service';
+import { FeedService } from '../../services/feed-service';
+import { routerTransition } from '../../router.animations';
 @Component({
   selector: 'app-sources',
   templateUrl: './sources.component.html',
-  styleUrls: ['./sources.component.scss']
+  styleUrls: ['./sources.component.scss'],
+  animations: [routerTransition()]
 })
 export class SourcesComponent implements OnInit {
   catvalue;
-
-
-  constructor(public categoryService:CategoryService,public variab:Global) { 
+  metadata:any=[];
+  feedname:any;
+  createfeed:boolean=false;
+  constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService) { 
     
   }
 
@@ -23,13 +27,19 @@ export class SourcesComponent implements OnInit {
   	
   	this.catvalue=category;
   }
-  addcontent(value){
-    let doc={
+  addcontent(){
+   /* let doc={
       category:value
     }
     this.categoryService.addcategory(doc);
-    this.variab.categoryupdated.push({doc:doc})
-    console.log(this.variab.categoryupdated);
+    this.variab.categoryupdated.push({doc:doc})*/
+    console.log(this.feedname);
+    this.feedService.getAllFeeds(this.feedname).then(res=>{
+      this.metadata = res;
+      
+      this.createfeed = true;
+      console.log("value",this.metadata,this.createfeed);
+    })
   	
   }
 }

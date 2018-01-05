@@ -1,0 +1,52 @@
+<div ngbDropdown class="d-inline-block" autoClose='outside'>
+      <button *ngIf="!followstatus" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Follow</button>
+      <button *ngIf="followstatus"  class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Following</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+           <form class="form-inline form-group">
+             <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
+           </form>
+           <div class="field" *ngFor="let feed of feedsnames;let i =index;">
+           
+
+            <div class="board-item">
+              <i class="fa fa-rss" aria-hidden="true" title="Save to board"></i>
+                    {{feed.doc.feedname}}
+                   <!-- <button   (click)="addtofeed(feed.doc.feedname,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>Add</button>-->
+              <div *ngIf="labelForFeeds">
+                    
+                      <button  *ngIf="labelForFeeds[i] === false" (click)="addtofeed(feed.doc.feedname,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>Add</button>
+                      <button  *ngIf="labelForFeeds[i] === undefined" (click)="addtofeed(feed.doc.feedname,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>Add</button>
+                      <button  *ngIf="labelForFeeds[i] === true" (click)="addtofeed(feed.doc.feedname,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-sm btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+                </div>
+              </div>
+             <!--<div class="board-item">
+               <i class="fa fa-rss" aria-hidden="true" title="Save to board"></i>
+              
+               <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+               <button *ngIf="labelForBoards[i] === undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
+               <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+             
+               <i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>
+              </div>-->
+           
+           </div>
+           
+           <div class="border-board" >
+             <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Feed</a>
+           </div>
+          
+
+          <div *ngIf="visible" class="form-group savetoboard">
+            <form [formGroup]="feedForm" class="form-inline form-group">
+              <input class="form-control mr-sm-2" type="text" formControlName="feedname" placeholder="Enter Feed Name">
+            </form>
+
+            
+            <div>
+              <button (click)="createfeed()" class="btn btn-sm btn-success">Create a Feed</button>
+              <button (click)="cancelfeed()" class="btn btn-sm btn-success">Cancel</button>
+            </div>
+
+          </div>
+      </div>
+</div>
