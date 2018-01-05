@@ -16,7 +16,7 @@ import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
 import { Service } from './services/services';
 
-//import { FeedService } from './services/feed-service';
+import { FeedService } from './services/feed-service';
 
 import { Userservice } from './services/userservice';
 
@@ -55,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         
     ],
 
-    providers: [AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service,Settings,Userservice],
+    providers: [AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service,Settings,Userservice,FeedService],
 
     bootstrap: [AppComponent]
 })
