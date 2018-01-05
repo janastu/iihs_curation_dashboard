@@ -39,6 +39,8 @@ loading: boolean = false;
  
     this.view = this.usersview;
 
+
+
  //Access the query parameter and filter the feeds according to category
            this.route.params
             .subscribe(params => {
@@ -65,12 +67,15 @@ loading: boolean = false;
                                 this.variab.globalfeeds.splice(i,1);
 
                                 this.feeds = this.variab.globalfeeds;
-                                
+
                                    if(this.feeds.length == 0){
-                                      this.loading = true;
+                                      //this.loading = true;
+                                      console.log("feed spiiner");
+                                      document.getElementById('loading').style.display = 'block';
                                    }
                                    else{
-                                       this.loading = false;
+                                       //this.loading = false;
+                                       document.getElementById('loading').style.display = 'none';
                                    }
                                }
                             })

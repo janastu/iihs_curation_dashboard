@@ -6,7 +6,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
 .sidebar{
     border-radius: 0;
     position: fixed;
-    z-index: 1000;
+    /*z-index: 1000;*/
     top: 0px;
     left: 235px;
     width: 226px;
@@ -142,11 +142,11 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     color: $sidebutton;
 }
 .side-content{
-    position:absolute;
+    position:fixed;
     bottom:0;
 }
 .side-content button{
-    width: 267px;
+    width: 224px;
     border: 0px;
     color: $sidebutton;
     background-color: $topnav-background-color;
