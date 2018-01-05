@@ -77,8 +77,8 @@ constructor(private http: Http,private settings:Settings) {
   getboardfeeds(board){
 
 
-    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
-    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
+    //var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
+    var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
         

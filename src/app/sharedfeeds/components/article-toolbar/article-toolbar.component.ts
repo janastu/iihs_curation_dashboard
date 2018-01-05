@@ -199,14 +199,14 @@ showDialog:boolean;
      }
     
   }
-  hide(){
+  /*hide(){
    this.variab.globalfeeds.splice(this.index,1);
 
    
    console.log(this.index,this.variab.globalfeeds);
-  }
+  }*/
 
-  /*hide(){
+  hide(){
 
     
     let model = {
@@ -228,5 +228,5 @@ showDialog:boolean;
    console.log(this.index,this.variab.globalfeeds);
    this.showDialog = false;
   }
- */
+ 
 }

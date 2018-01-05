@@ -12,13 +12,13 @@ import 'rxjs/add/operator/map';
 export class Settings{
 	protocol:any='http://';
 	port:any=5984;
-	host:any='localhost';
+	host:any='192.168.1.30';
 	dbfeed:any='/feeds';
 	dbannotations:any='/iihs_annotation';
 	dbboards:any='/boards';
 	couchdbusername:any='admin';
 	couchdbpassword:any='admin';
-	superloginserverUrl:any='http://localhost:3001'
+	superloginserverUrl:any='http://192.168.1.30:3001'
 
 
 	

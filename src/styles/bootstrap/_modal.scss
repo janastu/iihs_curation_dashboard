@@ -32,7 +32,7 @@
     transform: translate(0, -25%);
   }
   &.show .modal-dialog { transform: translate(0, 0); max-width: 65%;
-    float: right;}
+    float: right; max-height: 10px;}
 }
 .modal-open .modal {
   overflow-x: hidden;
