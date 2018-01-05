@@ -29,6 +29,7 @@ boardname:any;
          .subscribe(params => {
            this.boardname = params.id;
            this.dataService.getboardfeeds(params.id).then(res=>{
+               console.log(res);
                this.feeds = res;
              
                 });

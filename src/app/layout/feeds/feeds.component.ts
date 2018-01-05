@@ -26,7 +26,6 @@ export class FeedsComponent implements OnInit {
 feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
-user:any;
 catname:any;
 usersview:any;
 loading: boolean = false;
@@ -35,13 +34,14 @@ loading: boolean = false;
   //On loading Component
   ngOnInit() {
     
-    this.user = localStorage.getItem('name');
+    
     this.usersview = localStorage.getItem('view');
  
     this.view = this.usersview;
+
+
+
  //Access the query parameter and filter the feeds according to category
-
-
            this.route.params
             .subscribe(params => {
               this.catname = params.id;
@@ -52,16 +52,22 @@ loading: boolean = false;
                      //and display the rest feeds
                        let hiddenfeeds:any=[];
                        
+                       
+                      
                         this.dataservice.getdeletedfeeds(this.catname).then(res=>{
                          hiddenfeeds=res;
+                         console.log("hideen",hiddenfeeds)
+                         if(hiddenfeeds.length == 0){
+                         this.feeds = this.variab.globalfeeds
+                         }
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
                                if(feed.value.id === globalfeed.id) {
                                 var i = _.indexOf(this.variab.globalfeeds,globalfeed);
                                 this.variab.globalfeeds.splice(i,1);
+
                                 this.feeds = this.variab.globalfeeds;
 
-                                  console.log("feeds",this.feeds,this.loading)
                                    if(this.feeds.length == 0){
                                       //this.loading = true;
                                       console.log("feed spiiner");
@@ -77,6 +83,7 @@ loading: boolean = false;
 
                         })
              });
+
            });
    
   }
@@ -117,7 +124,7 @@ loading: boolean = false;
     if(childSortLabel === 'Latest'){
      this.service.getlatestfeeds(this.catname).then(result=>{
        this.feeds=result;
-       console.log(this.feeds)
+       this.feeds.reverse();
      })
     }
     if(childSortLabel === 'Oldest'){

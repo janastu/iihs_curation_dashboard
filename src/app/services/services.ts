@@ -14,7 +14,7 @@ export class Service {
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
   this.db = new PouchDB('feeds');
-  console.log("setting",this.settings)
+  //console.log("setting",this.settings)
   //this.database = new PouchDB('newfeeds');
   /*this.remote = 'http://couchdb.test.openrun.net/feeds';
     this.username='admin';
