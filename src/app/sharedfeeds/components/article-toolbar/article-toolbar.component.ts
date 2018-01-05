@@ -131,7 +131,7 @@ showDialog:boolean;
     
   }
   createboard(){
-    this.visible=false;     
+    this.visible=true;     
     console.log("jb",this.boardname)
       let model={
        

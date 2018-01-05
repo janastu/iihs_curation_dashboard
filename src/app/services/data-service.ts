@@ -108,7 +108,7 @@ constructor(private http: Http,private settings:Settings) {
 
   }
   getrecentlyread(usr){
-   // var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
+   //var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
   var url ='http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
 
     return new Promise(resolve => {
