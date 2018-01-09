@@ -109,7 +109,7 @@ constructor(private http: Http,private settings:Settings) {
   }
   getrecentlyread(usr){
    // var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
-  var url ='http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
+  var url =this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
 
     return new Promise(resolve => {
       this.http.get(url).map(res=>res.json()).subscribe(result=> {
@@ -145,7 +145,7 @@ constructor(private http: Http,private settings:Settings) {
 
   }
   getdeletedfeeds(category){
-    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
+    var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
     console.log(url)
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
@@ -155,6 +155,16 @@ constructor(private http: Http,private settings:Settings) {
       }, (err) =>{
         console.log(err);
       });
+    });
+
+  }
+  //Update database for deleted and modidifed
+  updatedatabase(doc){
+    this.db.put(doc).then(function (response) {
+      // handle response
+      console.log(response)
+    }).catch(function (err) {
+      console.log(err);
     });
 
   }

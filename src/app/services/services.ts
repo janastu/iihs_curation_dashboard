@@ -13,27 +13,9 @@ export class Service {
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
-  this.db = new PouchDB('feeds');
-  //console.log("setting",this.settings)
-  //this.database = new PouchDB('newfeeds');
-  /*this.remote = 'http://couchdb.test.openrun.net/feeds';
-    this.username='admin';
-    this.password='admin';
-    
-       let options = {
-         live: true,
-         retry: true,
-         continuous: true,
-         "Authorisation":"Basic YWRtaW46Y291Y2hmb3JyZWxheDEyMw==",
-         "Content-Type":"application/json"
+  this.db = new PouchDB('feeds'); //create a pouchdb 
 
-       };
-    
-       this.database.sync(this.remote, options);
-       */
-
-  //this.remote = 'http://localhost:5984/feeds';
-
+//remote couchdb url to sync with couchdb
  this.remote = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed;
 
 
@@ -48,10 +30,10 @@ constructor(private http: Http, private jsonconvert:JsonConvert,private settings
        }
      };
   
-     this.db.sync(this.remote, options);
+     this.db.sync(this.remote, options);//sync pouchdb to couchdb with the options
 
   }
-
+//Function to get data from newsrack
 public getAll(){ 
     var msgurl = 'assets/example.json';
   /*  return new Promise(resolve => {
@@ -85,9 +67,8 @@ public getAll(){
 
 
   }
+//Function adds the newsrack feeds to couchdb
  addtopouch(feed,metadata){
-console.log("result",feed[0]);
-
 
    
     feed.map(res=>{
@@ -108,15 +89,17 @@ console.log("result",feed[0]);
 
     
   }
+  //Function to get the feeds based on category by making a get request to the respective design view end point
   getcategoryfeeds(category){
 
-  var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
   console.log("url",url)
   //var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
 //console.log("cate in service",category)
+//var check = this.settings.protocol+this.settings.host+'/feeds/_all_docs?include_docs=true';
    return new Promise(resolve => {
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-       //console.log(result);
+       console.log("result",result);
        resolve(result.rows);
      }, (err) =>{
        console.log(err);
@@ -125,6 +108,7 @@ console.log("result",feed[0]);
 
     
   }
+   //Function to get the latest feeds by making a get request to the design view end point
   getlatestfeeds(category){
    
     var d = new Date();
@@ -154,6 +138,7 @@ console.log("result",feed[0]);
 
     
   }
+   //Function to get the oldest feeds by making a get request to the design view end point
   getoldestfeeds(category){
    
     var d = new Date();

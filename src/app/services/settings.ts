@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class Settings{
 	protocol:any='http://';
 	port:any=5984;
-	host:any='localhost';
+	host:any='login.test.openrun.net'; 
 	dbfeed:any='/feeds';
 	dbannotations:any='/iihs_annotation';
 	dbboards:any='/boards';
