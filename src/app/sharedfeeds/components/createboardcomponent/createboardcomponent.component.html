@@ -1,4 +1,4 @@
-<div ngbDropdown class="board">
+<div ngbDropdown class="board" autoClose="outside">
 <a class="save" ngbDropdownToggle aria-expanded="true"><i class="fa" [ngClass]="{'fa-star-o': selectedstar !== 1, 'fa-star': selectedstar == 1}" title="Save to board"></i></a>
  <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
@@ -12,7 +12,7 @@
           {{item.value.label}}
           <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
           <button *ngIf="labelForBoards[i] === undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-          <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+          <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
         
           <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
         
@@ -25,7 +25,7 @@
       </div>
       
       <div class="border-board" >
-        <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+        <a (click)="opencreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
       </div>
      
 
@@ -43,6 +43,4 @@
      </div>
 
     </div>
-   
-
-
+</div>

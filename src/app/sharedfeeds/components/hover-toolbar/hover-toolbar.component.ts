@@ -12,10 +12,12 @@ export class HoverToolbarComponent implements OnInit {
   @Input('item') feeditem:any;
   @Input('index') index:any;
   @Output('sendAlert') outgoing:any = new EventEmitter();
+   @Output('sendIconState') iconState:any = new EventEmitter();
 selectedIndex: any;
 selectedIcon: number;
 user:any;
 showDialog:boolean;
+date:Date;
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
 
     this.selectedIndex = -1;
@@ -24,7 +26,7 @@ showDialog:boolean;
    }
 
   ngOnInit() {
-
+this.date = new Date();
     
     this.user = localStorage.getItem('name');
    
@@ -38,6 +40,8 @@ showDialog:boolean;
       this.variab.recentlyread.filter(anno=>{
         if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIcon=1;
+          this.iconState.emit(this.selectedIcon);
+
         }
       });
     
@@ -57,10 +61,10 @@ showDialog:boolean;
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
        "creator": this.user,
-       "created": "2015-01-28T12:00:00Z",
-       "modified": "2015-01-29T09:00:00Z",
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
        "generator": "mm_2017_v1",
-       "generated": "2015-02-04T12:00:00Z",
+       "generated": this.date.getTime(),
        "target": this.feeditem,
        "motivation":"bookmarking"
      }   
@@ -77,10 +81,10 @@ showDialog:boolean;
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
          "creator": this.user,
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "target": this.feeditem,
          "motivation":"tagging"
        }   
@@ -97,10 +101,10 @@ showDialog:boolean;
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
       "creator": this.user,
-      "created": "2015-01-28T12:00:00Z",
-      "modified": "2015-01-29T09:00:00Z",
+      "created": this.date.getTime(),
+      "modified": this.date.getTime(),
       "generator": "mm_2017_v1",
-      "generated": "2015-02-04T12:00:00Z",
+      "generated": this.date.getTime(),
       "target": this.feeditem,
       "hidden":true
     }   

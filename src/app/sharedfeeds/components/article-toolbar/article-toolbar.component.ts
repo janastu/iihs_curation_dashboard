@@ -24,12 +24,14 @@ boardname = this.formBuilder.control('', [Validators.required]);
 selectedIcon: number;
 selectedstar:number;
 showDialog:boolean;
+date:Date;
   constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
      this.selectedIndex = -1;
  
 }
 
   ngOnInit() {
+    this.date = new Date();
     this.ngconfig.autoClose='outside';
      this.user = localStorage.getItem('name');
     var annos:any=[];
@@ -116,11 +118,11 @@ showDialog:boolean;
      let update = {
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
-       "creator": "http://example.org/user1",
-       "created": "2015-01-28T12:00:00Z",
-       "modified": "2015-01-29T09:00:00Z",
+       "creator": this.user,
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
        "generator": "mm_2017_v1",
-       "generated": "2015-02-04T12:00:00Z",
+       "generated": this.date.getTime(),
        "target": this.feeditem,
        "motivation":"tagging",
        "label":title.label
@@ -137,11 +139,11 @@ showDialog:boolean;
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
-         "creator": "http://example.org/user1",
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "motivation":"identifying",
          "label":this.boardname.value
 
@@ -167,10 +169,10 @@ showDialog:boolean;
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
        "creator": this.user,
-       "created": "2015-01-28T12:00:00Z",
-       "modified": "2015-01-29T09:00:00Z",
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
        "generator": "mm_2017_v1",
-       "generated": "2015-02-04T12:00:00Z",
+       "generated": this.date.getTime(),
        "target": this.feeditem,
        "motivation":"bookmarking"
      }   
@@ -187,10 +189,10 @@ showDialog:boolean;
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
          "creator": this.user,
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "target": this.feeditem,
          "motivation":"tagging"
        }   

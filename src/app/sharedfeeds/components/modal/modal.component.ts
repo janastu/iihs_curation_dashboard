@@ -23,7 +23,9 @@ export class ModalComponent {
     selectedIndex: any;
     selectedIcon: number;
     user:any;
+    date:Date;
     constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
+      this.date = new Date();
      }
 
     open(content) {
@@ -127,10 +129,10 @@ export class ModalComponent {
            "@context": "http://www.w3.org/ns/anno.jsonld",
            "type": "Annotation",
            "creator": this.user,
-           "created": "2015-01-28T12:00:00Z",
-           "modified": "2015-01-29T09:00:00Z",
+           "created": this.date.getTime(),
+           "modified": this.date.getTime(),
            "generator": "mm_2017_v1",
-           "generated": "2015-02-04T12:00:00Z",
+           "generated": this.date.getTime(),
            "target": this.item,
            "motivation":"bookmarking"
          }   
@@ -147,10 +149,10 @@ export class ModalComponent {
              "@context": "http://www.w3.org/ns/anno.jsonld",
              "type": "Annotation",
              "creator": this.user,
-             "created": "2015-01-28T12:00:00Z",
-             "modified": "2015-01-29T09:00:00Z",
+             "created": this.date.getTime(),
+             "modified": this.date.getTime(),
              "generator": "mm_2017_v1",
-             "generated": "2015-02-04T12:00:00Z",
+             "generated": this.date.getTime(),
              "target": this.item,
              "motivation":"tagging"
            }   
@@ -164,10 +166,10 @@ export class ModalComponent {
           "@context": "http://www.w3.org/ns/anno.jsonld",
           "type": "Annotation",
           "creator": this.user,
-          "created": "2015-01-28T12:00:00Z",
-          "modified": "2015-01-29T09:00:00Z",
+          "created": this.date.getTime(),
+          "modified": this.date.getTime(),
           "generator": "mm_2017_v1",
-          "generated": "2015-02-04T12:00:00Z",
+          "generated": this.date.getTime(),
           "target": this.item,
           "hidden":true
         }   
