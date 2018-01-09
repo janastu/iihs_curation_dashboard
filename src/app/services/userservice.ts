@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import superlogin from 'superlogin-client';
 import PouchDB from 'pouchdb';
+import {Settings} from './settings'
 declare function emit(key: any,value:any): void;
 @Injectable()
 export class Userservice {
@@ -10,12 +11,12 @@ export class Userservice {
   remote:any;
   username:any;
   password:any;
+  user:any;
+//userservicedomain:any='http://192.168.1.15:3001';
+//userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
-userservicedomain:any='http://192.168.1.15:3001';
-userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
-
-constructor(private http: Http) {
-  this.db = new PouchDB('sl-users');
+constructor(private http: Http,private settings:Settings) {
+  /*this.db = new PouchDB('sl-users');
   this.remote = 'http://localhost:5984/sl-users';
    this.username='admin';
    this.password='admin';
@@ -30,11 +31,11 @@ constructor(private http: Http) {
         }
       };
    
-      this.db.sync(this.remote, options);
+      this.db.sync(this.remote, options);*/
    
 
    var config:any = {
-      serverUrl: 'http://localhost:3001',
+      serverUrl: this.settings.superloginserverUrl,
       // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
       baseUrl: '/auth/',
       // A list of API endpoints to automatically add the Authorization header to
@@ -58,7 +59,8 @@ constructor(private http: Http) {
     };
 
     superlogin.configure(config);
-
+    this.user = localStorage.getItem("name");
+  
     /*PouchDB.plugin(Auth)
     this.db.useAsAuthenticationDB()
     .then(function () {
@@ -71,16 +73,16 @@ constructor(private http: Http) {
 
 public adduser(user){
 	console.log("usr",user);
-  /*return new Promise(resolve => {
-    this.db.signUp(user.username,'secret')
-    .then(function (response) {
+  return new Promise(resolve => {
+    superlogin.register(user).then(function (response) {
+      console.log(response);
     resolve(response);
-    })
-  });*/
-   return superlogin.register(user);
-    /*let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({ headers: headers, method: "post"});
-	return this.http.post(this.userservicedomain+this.userserviceendpoints.register, user,options).map((response: Response) => response.json());*/
+    },(err)=>{
+      resolve(err);
+    });
+  });
+  
+   
    
 }
 public login(credentials){
@@ -91,9 +93,39 @@ public login(credentials){
       resolve(response);
     });
   });*/
-   return superlogin.login(credentials);
+return new Promise(resolve => { 
+  superlogin.login(credentials).then((response)=>{
+    console.log(response);
+    resolve(response);
+  },(err)=>{
+   resolve(err);
+    console.log(err);
+  });
+});
 
 }
+getUserSubscriptions(){
+  var usersession = localStorage.getItem("superlogin.session")
+  var jsonusersession = JSON.parse(usersession);
+  console.log(jsonusersession)
+  let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
+
+  let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46YWRtaW4=' }); // ... Set content type to JSON
+  let options = new RequestOptions({ headers: headers });
+  return new Promise(resolve => {
+        this.http.get(url,options).map(res=>res.json()).subscribe((response)=> {
+          
+          console.log("user",response);
+          resolve(response.rows);
+        }, (err) => {
+          console.log(err);
+        }); 
+
+  });
+
+}
+ 
+
 
 
 

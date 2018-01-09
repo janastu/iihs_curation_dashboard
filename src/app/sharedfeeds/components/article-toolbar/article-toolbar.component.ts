@@ -23,6 +23,7 @@ boardForm:FormGroup;
 boardname = this.formBuilder.control('', [Validators.required]);
 selectedIcon: number;
 selectedstar:number;
+showDialog:boolean;
   constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
      this.selectedIndex = -1;
  
@@ -130,7 +131,7 @@ selectedstar:number;
     
   }
   createboard(){
-    this.visible=false;     
+    this.visible=true;     
     console.log("jb",this.boardname)
       let model={
        
@@ -198,12 +199,34 @@ selectedstar:number;
      }
     
   }
-  hide(){
+  /*hide(){
    this.variab.globalfeeds.splice(this.index,1);
 
    
    console.log(this.index,this.variab.globalfeeds);
-  }
+  }*/
 
+  hide(){
+
+    
+    let model = {
+      "@context": "http://www.w3.org/ns/anno.jsonld",
+      "type": "Annotation",
+      "creator": this.user,
+      "created": "2015-01-28T12:00:00Z",
+      "modified": "2015-01-29T09:00:00Z",
+      "generator": "mm_2017_v1",
+      "generated": "2015-02-04T12:00:00Z",
+      "target": this.feeditem,
+      "hidden":true
+    }   
+    this.variab.recentlyread.push({value:model});
+    this.readlaterstore.dispatch('ADD_ITEMS',model)
+   this.variab.globalfeeds.splice(this.index,1);
+
+   
+   console.log(this.index,this.variab.globalfeeds);
+   this.showDialog = false;
+  }
  
 }

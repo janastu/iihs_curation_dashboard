@@ -6,11 +6,7 @@
             <app-page-header [heading]="catname" (childView)='handleView($event)' (childDates)='handleDate($event)' (childCategory)='handleCategory($event)' (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)'></app-page-header>
         </div>
     </div>
-    <!--Progress-Spinner-->
-    <div class= "col-sm-6 offset-sm-3">
-      <img *ngIf="loading" class=" spinner-image" src="assets/images/spinner.gif"  />
-    </div>
-
+    
 <!--Component to display if no view is selected-->
 
 <div *ngIf = "view === null" > 
@@ -39,4 +35,11 @@
 <!--<div>
   <button (click)="markallasread()">Mark all as read</button>
 </div>-->
+
+<!--Progress-Spinner-->
+<div id="loading" class= "col-sm-6 offset-sm-3">
+  <!--img *ngIf="loading" class=" spinner-image" src="assets/images/spinner.gif"  /-->
+  <img src="assets/images/loading_spinner.gif">
+</div>
+
 </div>  

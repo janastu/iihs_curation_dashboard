@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal.component';
+import { DialogComponentModule } from '../dialog-component/dialog-component.module';
 import { CreateboardcomponentModule } from '../createboardcomponent/createboardcomponent.module';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        CreateboardcomponentModule
+        CreateboardcomponentModule,
+        DialogComponentModule
     ],
     declarations: [ModalComponent],
     exports: [ModalComponent]

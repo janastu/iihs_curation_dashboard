@@ -3,6 +3,39 @@ $modaltoolbar:#a3a3a2;
 $buttonbackground:#fffl;
 /*Styles for tool bar*/
 
+
+@media  (max-width: 480px) {
+    .modal-image{
+        max-width: 270px;
+    }
+    .feed-heading{
+        max-width: 300px;
+    }
+    .metadata-modal{
+        margin-top: 65px;
+    }
+}
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+  .alert-dialogbox h1{
+    font-size: 22px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 4rem;
+}
+.dialog-ok{
+    margin-left: 1.5rem;
+}
+
 .modal-tool-bar{
     margin-top: 0.5rem;
     margin-bottom: 2rem;
@@ -15,6 +48,7 @@ $buttonbackground:#fffl;
         text-align: center; 
         border: transparent;
         z-index: 1;
+        margin-left: 7px;
         cursor:pointer
 }
 
@@ -34,7 +68,13 @@ $buttonbackground:#fffl;
     margin-right: 15px;
     padding: 0px;
 }
-
+.remove{
+   margin-left: -5px;
+}
+.close-modal{
+    margin-right: 40px;
+    margin-top: -15px;
+}
 /*Styles for Feed Content*/
 
 .modal-feed-content{
@@ -48,7 +88,7 @@ $buttonbackground:#fffl;
 
 /*Styles for Feed Image*/
 .modal-image{
-    max-width: 580px;
+    max-width: 222px;
     width: 578px;
     margin-top: 3rem;
     margin-bottom: 3rem; 
@@ -86,6 +126,186 @@ $buttonbackground:#fffl;
     margin-top: 28px;
     margin-left: 15px;
     margin-bottom: 11px;
+}
+.card-blocks h4{
+   font-size: 18px; 
+   margin-right: 4rem;
+}
+/*Styles for share with teams*/
+.team-heading{
+    font-size:2.125rem;
+    margin-bottom: 0.5rem;
+    /*font-family: sans-serif;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-right: -40.5rem;*/
+    color:#333333;
+    cursor:pointer;   
+}
+.heading-sub{
+    /*margin-top: 2.5rem;*/
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: -4px;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: #757575;
+}
+/*Style for form*/
+.company-name{
+    color: #333333;
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    line-height: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+.text-field input{
+    border-radius: 0.25rem;
+    /*border-color: #2bb24c;*/
+    width: 37rem;
+}
+.hint{
+    font-size: 10px;
+    color: #757575;
+}
+.user-list label{
+    margin-left: 10px;
+}
+.team-info div{
+    margin-bottom: 1.5rem;
+}
+.visit-website{
+    margin-left: 75px;
+    margin-top: 15px;
+}
+
+/*Styles for Next Button*/
+.next-buttton{
+    width: 126px;
+    height: 36px;
+    background-color: #2bb24c;
+    color: #fff;
+}
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 8.5rem;
+}
+
+.modal-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 30px;
+}
+.modal-tool-bar a{
+        color: $modaltoolbar; 
+        font-size: 15px;
+        text-align: center; 
+        border: transparent;
+        z-index: 1;
+        margin-left: 7px;
+        cursor:pointer
+}
+
+.modal-tool-bar button {
+    color: $modaltoolbar;
+    background-color: $buttonbackground;
+    border-color: white;
+}
+.modal-star{
+    display: inline-flex;
+    /*margin-right: -14px;*/
+    margin-left: 5px;
+}
+
+.header-tool{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0px;
+}
+.remove{
+   margin-left: -5px;
+}
+.close-modal{
+    margin-right: 0px;
+    margin-top: 0px;
+}
+/*Styles for Feed Content*/
+
+.modal-feed-content{
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*Styles for Feed Image*/
+.modal-image{
+    max-width: 300px;
+    width: 578px;
+    margin-top: 3rem;
+    margin-bottom: 3rem; 
+    margin-left: 14px;
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239); 
+    max-height: 397px;
+    height: 310px;
+    
+}
+/*Styles for Feed Heading*/
+.feed-heading{
+    font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;
+}
+
+
+/*Styles for Feed Heading*/
+.metadata-modal{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+    margin-top: 28px;
+    margin-left: 15px;
+    margin-bottom: 11px;
+}
+.card-blocks h4{
+   font-size: 1.5rem; 
+   margin-right: 0rem;
+   margin-left: 12px;
 }
 
 /*Styles for share with teams*/
@@ -134,8 +354,10 @@ $buttonbackground:#fffl;
     margin-bottom: 1.5rem;
 }
 .visit-website{
-    margin-left: 138px;
+    margin-left: 10px;
+    margin-top: 15px;
 }
+
 /*Styles for Next Button*/
 .next-buttton{
     width: 126px;
@@ -144,14 +366,535 @@ $buttonbackground:#fffl;
     color: #fff;
 }
 
-@media  (max-width: 480px) {
-    .modal-image{
-        max-width: 270px;
-    }
-    .feed-heading{
-        max-width: 300px;
-    }
-    .metadata-modal{
-        margin-top: 65px;
-    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 14.5rem;
+}
+
+.modal-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 30px;
+}
+.modal-tool-bar a{
+        color: $modaltoolbar; 
+        font-size: 15px;
+        text-align: center; 
+        border: transparent;
+        z-index: 1;
+        margin-left: 7px;
+        cursor:pointer
+}
+
+.modal-tool-bar button {
+    color: $modaltoolbar;
+    background-color: $buttonbackground;
+    border-color: white;
+}
+.modal-star{
+    display: inline-flex;
+    /*margin-right: -14px;*/
+    margin-left: 5px;
+}
+
+.header-tool{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0px;
+}
+.remove{
+   margin-left: -5px;
+}
+.close-modal{
+    margin-right: 0px;
+    margin-top: 0px;
+}
+/*Styles for Feed Content*/
+
+.modal-feed-content{
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*Styles for Feed Image*/
+.modal-image{
+    max-width: 407px;
+    width: 578px;
+    margin-top: 3rem;
+    margin-left: 0px;
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239); 
+    max-height: 397px;
+    height: 310px;
+    
+}
+/*Styles for Feed Heading*/
+.feed-heading{
+    font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;
+}
+
+
+/*Styles for Feed Heading*/
+.metadata-modal{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+    margin-top: 28px;
+    margin-left: 15px;
+    margin-bottom: 11px;
+}
+.card-blocks h4{
+   font-size: 1.5rem; 
+   margin-right: 0rem;
+   margin-left: 0px;
+}
+
+/*Styles for share with teams*/
+.team-heading{
+    font-size:2.125rem;
+    margin-bottom: 0.5rem;
+    /*font-family: sans-serif;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-right: -40.5rem;*/
+    color:#333333;
+    cursor:pointer;   
+}
+.heading-sub{
+    /*margin-top: 2.5rem;*/
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: -4px;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: #757575;
+}
+/*Style for form*/
+.company-name{
+    color: #333333;
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    line-height: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+.text-field input{
+    border-radius: 0.25rem;
+    /*border-color: #2bb24c;*/
+    width: 37rem;
+}
+.hint{
+    font-size: 10px;
+    color: #757575;
+}
+.user-list label{
+    margin-left: 10px;
+}
+.team-info div{
+    margin-bottom: 1.5rem;
+}
+.visit-website{
+    margin-left: 75px;
+    margin-top: 15px;
+}
+
+/*Styles for Next Button*/
+.next-buttton{
+    width: 126px;
+    height: 36px;
+    background-color: #2bb24c;
+    color: #fff;
+}
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 17.5rem;
+}
+
+.modal-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 30px;
+}
+.modal-tool-bar a{
+        color: $modaltoolbar; 
+        font-size: 15px;
+        text-align: center; 
+        border: transparent;
+        z-index: 1;
+        margin-left: 7px;
+        cursor:pointer
+}
+
+.modal-tool-bar button {
+    color: $modaltoolbar;
+    background-color: $buttonbackground;
+    border-color: white;
+}
+.modal-star{
+    display: inline-flex;
+    /*margin-right: -14px;*/
+    margin-left: 5px;
+}
+
+.header-tool{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0px;
+}
+.remove{
+   margin-left: -5px;
+}
+.close-modal{
+    margin-right: 0px;
+    margin-top: 0px;
+}
+/*Styles for Feed Content*/
+
+.modal-feed-content{
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*Styles for Feed Image*/
+.modal-image{
+    max-width: 528px;
+    width: 578px;
+    margin-top: 3rem;
+    margin-left: 0px;
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239); 
+    max-height: 397px;
+    height: 310px;
+    
+}
+/*Styles for Feed Heading*/
+.feed-heading{
+    font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;
+}
+
+
+/*Styles for Feed Heading*/
+.metadata-modal{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+    margin-top: 28px;
+    margin-left: 15px;
+    margin-bottom: 11px;
+}
+.card-blocks h4{
+   font-size: 1.5rem; 
+   margin-right: 0rem;
+   margin-left: 0px;
+}
+
+/*Styles for share with teams*/
+.team-heading{
+    font-size:2.125rem;
+    margin-bottom: 0.5rem;
+    /*font-family: sans-serif;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-right: -40.5rem;*/
+    color:#333333;
+    cursor:pointer;   
+}
+.heading-sub{
+    /*margin-top: 2.5rem;*/
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: -4px;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: #757575;
+}
+/*Style for form*/
+.company-name{
+    color: #333333;
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    line-height: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+.text-field input{
+    border-radius: 0.25rem;
+    /*border-color: #2bb24c;*/
+    width: 37rem;
+}
+.hint{
+    font-size: 10px;
+    color: #757575;
+}
+.user-list label{
+    margin-left: 10px;
+}
+.team-info div{
+    margin-bottom: 1.5rem;
+}
+.visit-website{
+    margin-left: 112px;
+    margin-top: 15px;
+}
+
+/*Styles for Next Button*/
+.next-buttton{
+    width: 126px;
+    height: 36px;
+    background-color: #2bb24c;
+    color: #fff;
+}
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 17.5rem
+}
+
+.modal-tool-bar{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    margin-left: 30px;
+}
+.modal-tool-bar a{
+        color: $modaltoolbar; 
+        font-size: 15px;
+        text-align: center; 
+        border: transparent;
+        z-index: 1;
+        margin-left: 7px;
+        cursor:pointer
+}
+
+.modal-tool-bar button {
+    color: $modaltoolbar;
+    background-color: $buttonbackground;
+    border-color: white;
+}
+.modal-star{
+    display: inline-flex;
+    /*margin-right: -14px;*/
+    margin-left: 5px;
+}
+
+.header-tool{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0px;
+}
+.remove{
+   margin-left: -5px;
+}
+.close-modal{
+    margin-right: 0px;
+    margin-top: 0px;
+}
+/*Styles for Feed Content*/
+
+.modal-feed-content{
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*Styles for Feed Image*/
+.modal-image{
+    max-width: 580px;
+    width: 578px;
+    margin-top: 3rem;
+    margin-left: 0px;
+    margin-bottom: 3rem; 
+    display: block; 
+    border-radius: 3px; 
+    border: 1px solid rgb(239, 239, 239); 
+    max-height: 397px;
+    height: 310px;
+    
+}
+/*Styles for Feed Heading*/
+.feed-heading{
+    font-size:16px;
+    font-family: sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7rem;
+    text-transform: none;
+    clear: both;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-right: -40.5rem;
+    color:#333333;
+    cursor:pointer;
+}
+
+
+/*Styles for Feed Heading*/
+.metadata-modal{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+    margin-top: 28px;
+    margin-left: 15px;
+    margin-bottom: 11px;
+}
+.card-blocks h4{
+   font-size: 1.5rem; 
+   margin-right: 0rem;
+   margin-left: 0px;
+}
+
+/*Styles for share with teams*/
+.team-heading{
+    font-size:2.125rem;
+    margin-bottom: 0.5rem;
+    /*font-family: sans-serif;
+    letter-spacing: -0.04em;
+    margin-top: 0;
+    margin-right: -40.5rem;*/
+    color:#333333;
+    cursor:pointer;   
+}
+.heading-sub{
+    /*margin-top: 2.5rem;*/
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: -4px;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: #757575;
+}
+/*Style for form*/
+.company-name{
+    color: #333333;
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    line-height: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+.text-field input{
+    border-radius: 0.25rem;
+    /*border-color: #2bb24c;*/
+    width: 37rem;
+}
+.hint{
+    font-size: 10px;
+    color: #757575;
+}
+.user-list label{
+    margin-left: 10px;
+}
+.team-info div{
+    margin-bottom: 1.5rem;
+}
+.visit-website{
+    margin-left: 132px;
+    margin-top: 15px;
+}
+
+/*Styles for Next Button*/
+.next-buttton{
+    width: 126px;
+    height: 36px;
+    background-color: #2bb24c;
+    color: #fff;
+}
+
 }

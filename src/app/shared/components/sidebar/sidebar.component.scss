@@ -142,11 +142,11 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     color: $sidebutton;
 }
 .side-content{
-    position:absolute;
+    position:fixed;
     bottom:0;
 }
 .side-content button{
-    width: 267px;
+    width: 224px;
     border: 0px;
     color: $sidebutton;
     background-color: $topnav-background-color;

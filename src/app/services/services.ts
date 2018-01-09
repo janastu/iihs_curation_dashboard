@@ -3,6 +3,7 @@ import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
+import { Settings } from './settings';
 @Injectable()
 
 export class Service {
@@ -11,40 +12,20 @@ export class Service {
   remote:any;
   username:any;
   password:any;
-constructor(private http: Http, private jsonconvert:JsonConvert) {
+constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
   this.db = new PouchDB('feeds');
-  //this.database = new PouchDB('newfeeds');
-  /*this.remote = 'http://couchdb.test.openrun.net/feeds';
-    this.username='admin';
-    this.password='admin';
-    
-       let options = {
-         live: true,
-         retry: true,
-         continuous: true,
-         "Authorisation":"Basic YWRtaW46Y291Y2hmb3JyZWxheDEyMw==",
-         "Content-Type":"application/json"
-
-       };
-    
-       this.database.sync(this.remote, options);
-       */
-
-  //this.remote = 'http://localhost:5984/feeds';
-
- this.remote = 'http://192.168.1.30:5984/feeds';
+  
+ this.remote = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed;
 
 
-  this.username='admin';
-  this.password='admin';
   
      let options = {
        live: true,
        retry: true,
        continuous: true,
        auth:{
-         username:this.username,
-         password:this.password
+         username:this.settings.couchdbusername,
+         password:this.settings.couchdbpassword
        }
      };
   
@@ -109,10 +90,14 @@ console.log("result",feed[0]);
     
   }
   getcategoryfeeds(category){
-  var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+    let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers });
+    
+
+  var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
 //console.log("cate in service",category)
    return new Promise(resolve => {
-     this.http.get(url).map(res=>res.json()).subscribe(result=> {
+     this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
        //console.log(result);
        resolve(result.rows);
      }, (err) =>{
@@ -124,14 +109,19 @@ console.log("result",feed[0]);
   }
   getlatestfeeds(category){
    
+   let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
+   let options = new RequestOptions({ headers: headers });
+   
     var d = new Date();
     var date = d.getTime();
     console.log(date)
-   
-    var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+   var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
   return new Promise(resolve => {
-    this.http.get(url).map(res=>res.json()).subscribe(result=> {
-      console.log(result)
+    this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
+      console.log(result.rows)
 
      /* var changesdoc = result.results.map(res=>{
         if(res.doc.title){
@@ -140,7 +130,8 @@ console.log("result",feed[0]);
       })
       console.log(_.compact(changesdoc));
       var recentDocs = _.compact(changesdoc)*/
-      resolve(_.reverse(result.rows));
+
+      resolve(result.rows);
     }, (err) =>{
       console.log(err);
     });
@@ -149,13 +140,19 @@ console.log("result",feed[0]);
     
   }
   getoldestfeeds(category){
+let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
+let options = new RequestOptions({ headers: headers });
+   
    
     var d = new Date();
     var date = d.getTime();
     console.log(date)
-    var url = 'http://192.168.1.30:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+    var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
   return new Promise(resolve => {
-    this.http.get(url).map(res=>res.json()).subscribe(result=> {
+    this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
       console.log(result)
 
      /* var changesdoc = result.results.map(res=>{
@@ -175,10 +172,14 @@ console.log("result",feed[0]);
   }
 
  getrecentfeeds(){
-     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/recentfeeds';
-     var check = 'http://192.168.1.30:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+
+   let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
+   let options = new RequestOptions({ headers: headers });
+     var check = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+     //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
+
    return new Promise(resolve => {
-     this.http.get(check).map(res=>res.json()).subscribe(result=> {
+     this.http.get(check,options).map(res=>res.json()).subscribe(result=> {
        //console.log(result.results)
        var changesdoc = result.results.map(res=>{
          if(res.doc.title){
