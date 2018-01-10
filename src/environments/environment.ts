@@ -4,5 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  username: 'admin', //couchdb username
+  password: 'admin', //couchdb password
+  host: 'localhost:5984', //couchdb host
+  superLoginServerUrl: 'http://localhost:3001' //Super login server url(UI url)
 };

@@ -13,10 +13,11 @@ export class Service {
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
+
   this.db = new PouchDB('feeds'); //create a pouchdb 
 
 //remote couchdb url to sync with couchdb
- this.remote = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed;
+ this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
 
 
   
@@ -115,7 +116,7 @@ public getAll(){
     var date = d.getTime();
     console.log(date)
 
-   var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+   var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
@@ -145,7 +146,7 @@ public getAll(){
     var date = d.getTime();
     console.log(date)
 
-    var url = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
@@ -169,8 +170,7 @@ public getAll(){
   }
 
  getrecentfeeds(){
-
-     var check = this.settings.protocol+this.settings.host+':'+this.settings.port+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+     var check = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
      //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
 
    return new Promise(resolve => {

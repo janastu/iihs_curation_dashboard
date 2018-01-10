@@ -26,11 +26,13 @@ export class DashboardComponent implements OnInit {
 
     this.user = localStorage.getItem('name');
    
-       
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
+          
+       console.log("recent",this.variab.recentdocs)
             //document.getElementById('loading').style.display = 'none';
             this.variab.recentdocs=res;
+
             //this.variab.recentdocs.length = 0
             if(this.variab.recentdocs.length == 0) {
                // code...

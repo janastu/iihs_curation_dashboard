@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { environment } from '../../environments/environment';
 
 /*
   Generated class for the Varglobal provider.
@@ -10,17 +11,19 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Settings{
+	constructor(){
+		
+	}
 	protocol:any='http://'; 
-	port:any=5984;//couchdb port
 
 	//host:any='login.test.openrun.net'; 
-	host:any = 'localhost:5984';	//couchdb host
+	host:any = environment.host;	//couchdb host
 	dbfeed:any='/feeds'; //feeds database
 	dbannotations:any='/iihs_annotation'; //annotations database
 	dbboards:any='/boards';	//boards database
-	couchdbusername:any='admin'; //couchdb username
-	couchdbpassword:any='admin';	//couchdb password
-	superloginserverUrl:any='http://192.168.1.30:3001' // super login server url
+	couchdbusername:any=environment.username; //couchdb username
+	couchdbpassword:any=environment.password;	//couchdb password
+	superloginserverUrl:any=environment.superLoginServerUrl // super login server url
 
 
 	
