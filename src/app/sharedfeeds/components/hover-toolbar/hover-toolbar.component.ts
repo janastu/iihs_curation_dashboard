@@ -52,31 +52,60 @@ this.date = new Date();
     console.log("called");
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
+       
+       this.variab.readlaterfeeds.map(anno=>{
+         if(anno.value.target.id === this.feeditem.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hidereadlateranno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.readlaterfeeds.splice(this.index,1)
+       console.log(this.variab.readlaterfeeds);
      }
      else{
        this.selectedIndex = index;
+       
+       let model = {
+         "@context": "http://www.w3.org/ns/anno.jsonld",
+         "type": "Annotation",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
+         "generator": "mm_2017_v1",
+         "generated": this.date.getTime(),
+         "target": this.feeditem,
+         "motivation":"bookmarking"
+       }   
+       this.variab.readlaterfeeds.push({value:model});
+
+       this.readlaterstore.dispatch('ADD_ITEMS',model)
      }
        
-     let model = {
-       "@context": "http://www.w3.org/ns/anno.jsonld",
-       "type": "Annotation",
-       "creator": this.user,
-       "created": this.date.getTime(),
-       "modified": this.date.getTime(),
-       "generator": "mm_2017_v1",
-       "generated": this.date.getTime(),
-       "target": this.feeditem,
-       "motivation":"bookmarking"
-     }   
-     this.variab.readlaterfeeds.push({value:model});
-     this.readlaterstore.dispatch('ADD_ITEMS',model)
+     
   }
   markasread(index:number){
     if(this.selectedIcon == index){
        this.selectedIcon = -1;
+       console.log("recentlyread")
+       this.variab.recentlyread.map(anno=>{
+         if(anno.value.target.id === this.feeditem.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hiderecenltyreadanno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.recentlyread.splice(this.index,1)
      }
      else{
        this.selectedIcon = index;
+        console.log("notrecentlyread")
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",

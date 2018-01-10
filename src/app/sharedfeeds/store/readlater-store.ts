@@ -8,7 +8,11 @@ export class ReadlaterStore{
     dispatch(type,payload){
       switch (type) {
         case 'ADD_ITEMS':
+        console.log(payload);
          return this.dataService.addtodatabase(payload);
+        case 'MODIFY_DELETED':
+           console.log("pay",payload)
+            return this.dataService.updatedatabase(payload);
        
          //return this.dataService.updatedoc(doc[0].value);
       /*case 'DELETE_ITEM':

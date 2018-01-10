@@ -120,3 +120,108 @@ $saveboardbackground:#fff;
 .dropdown-toggle::after {
    display:none ! important;
 }
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 4.5rem;
+}
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 11.5rem;
+}
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 17.5rem
+}
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 17.5rem
+}
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  .alert-dialogbox h1{
+    font-size: 28px;
+    margin-top: 30px;
+    text-align: center;
+}
+.dialog-buttons{
+    display: block;
+    margin-top: 30px;
+    margin-left: 27px;
+}
+.dialog-buttons button{
+    width: 5rem;
+}
+.dialog-ok{
+    margin-left: 17.5rem
+}
+
+}

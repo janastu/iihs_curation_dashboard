@@ -18,7 +18,7 @@
            
               <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
               <button *ngIf="labelForBoards[i]== undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-              <button *ngIf="labelForBoards[i] === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+              <button *ngIf="labelForBoards[i] === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
            </div>
          
         </div>
@@ -27,7 +27,7 @@
           <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
         </div>
        
-        <div *ngIf="visible" class="form-group savetoboard">
+        <div *ngIf="visible" class="form-group savetoboard" ng-hide="checked">
           <form [formGroup]="boardForm" class="form-inline form-group">
             <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Create a board">
           </form>
@@ -48,15 +48,15 @@
         </a>
     <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
-    <a class="nav-item" (click)="hide()"><i class="fa fa-fw fa-close remove" title="Remove"></i></a>
+    <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-fw fa-close" title="Remove"></i></a>
   
 </div>
                
-<!--app-dialog class="alert-dialogbox" [visible]="showDialog">
+<app-dialog class="alert-dialogbox" [visible]="showDialog">
     <h1>Do you confirm to delete the feed</h1>
     <div class="dialog-buttons">
         <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
         <button (click)="hide()" class="btn btn-sm btn-success dialog-ok">Ok</button>
     </div>
-</app-dialog-->
+</app-dialog>
 

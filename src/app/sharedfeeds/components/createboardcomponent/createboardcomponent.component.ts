@@ -32,7 +32,8 @@ date:Date;
     this.date = new Date();
 
     var annos:any=[];
-   // this.ngconfig.autoClose='outside';
+
+    //this.ngconfig.autoClose='outside';
 
    this.user =localStorage.getItem('name');
 
@@ -44,7 +45,7 @@ date:Date;
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-         
+        
          var annotatedarray = this.variab.annotations.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
@@ -91,14 +92,16 @@ date:Date;
   } 
 
 
-
+//Function called from Create new board block to remove the block
   cancelboard(){
     this.visible=false;
     
   }
+ //Function called from Create board division to open a new createboard block
   opencreateboard(){
     this.visible=true;
   }
+  //Function called from Create board block to save the feed to the board
   savetoboard(title,i){ 
    
       this.labelForBoards[i] = true;
@@ -120,6 +123,8 @@ date:Date;
     
     
   }
+
+  //Function called from Create new board block to create new board by giving a board name 
   createboard(){
     this.visible=false; 
 
@@ -141,14 +146,15 @@ date:Date;
      
   }
 
+  //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
     this.labelForBoards[i]=false;
+    this.selectedstar = 0;
     this.variab.annotations.map(anno=>{
       if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
            
            anno.value.modified = this.date.getTime();
-           anno.value.hideboardanno = true;
-console.log(anno.value);  
+           anno.value.hideboardanno = true; 
            this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
             
       }

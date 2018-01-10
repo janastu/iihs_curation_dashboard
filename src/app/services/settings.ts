@@ -10,15 +10,17 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Settings{
-	protocol:any='http://';
-	port:any=5984;
-	host:any='login.test.openrun.net'; 
-	dbfeed:any='/feeds';
-	dbannotations:any='/iihs_annotation';
-	dbboards:any='/boards';
-	couchdbusername:any='admin';
-	couchdbpassword:any='admin';
-	superloginserverUrl:any='http://localhost:3001'
+	protocol:any='http://'; 
+	port:any=5984;//couchdb port
+
+	//host:any='login.test.openrun.net'; 
+	host:any = 'localhost:5984';	//couchdb host
+	dbfeed:any='/feeds'; //feeds database
+	dbannotations:any='/iihs_annotation'; //annotations database
+	dbboards:any='/boards';	//boards database
+	couchdbusername:any='admin'; //couchdb username
+	couchdbpassword:any='admin';	//couchdb password
+	superloginserverUrl:any='http://192.168.1.30:3001' // super login server url
 
 
 	

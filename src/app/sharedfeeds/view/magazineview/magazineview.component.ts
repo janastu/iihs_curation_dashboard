@@ -14,6 +14,7 @@ export class MagazineviewComponent implements OnInit {
 @Input('feeds') incomingfeeds:any=[];
 alert:boolean=false;
 imgstatus:number=0;
+feedmark:number =0;
   constructor() {
    /*if(this.incomingfeeds.length == 0) {
       // code...
@@ -44,6 +45,7 @@ imgstatus:number=0;
 
      }
   */
+  console.log(this.incomingfeeds)
 
    
 	}
@@ -85,7 +87,11 @@ imgstatus:number=0;
   public closeAlert(alert: any) {
       this.alert=false;
   }
-
+  handleIcon(sendIcon:any){
+    
+    //this.feedmark = sendIcon;
+    console.log("icon",this.feedmark)
+  }
  
   
 }
