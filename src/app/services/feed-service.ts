@@ -38,7 +38,9 @@ export class FeedService {
 
 		let url = jsonusersession.userDBs.supertest;
 		//console.log(url)
-		let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46YWRtaW4=' }); // ... Set content type to JSON
+		let headers = new Headers();
+		 headers.append( 'Content-Type', 'application/json')
+		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
 			
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
@@ -53,10 +55,12 @@ export class FeedService {
 	update(id,metadata){
 		var usersession = localStorage.getItem("superlogin.session")
 		var jsonusersession = JSON.parse(usersession);
-		//console.log(jsonusersession)
+
 		let url = jsonusersession.userDBs.supertest;
-		//console.log(url)
-		let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46YWRtaW4=' }); // ... Set content type to JSON
+
+		let headers = new Headers();
+		 headers.append( 'Content-Type', 'application/json')
+		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
 			
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {

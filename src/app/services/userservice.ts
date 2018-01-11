@@ -16,22 +16,6 @@ export class Userservice {
 //userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http,private settings:Settings) {
-  /*this.db = new PouchDB('sl-users');
-  this.remote = 'http://localhost:5984/sl-users';
-   this.username='admin';
-   this.password='admin';
-   
-      let options = {
-        live: true,
-        retry: true,
-        continuous: true,
-        auth:{
-          username:this.username,
-          password:this.password
-        }
-      };
-   
-      this.db.sync(this.remote, options);*/
    
 
    var config:any = {
@@ -61,12 +45,7 @@ constructor(private http: Http,private settings:Settings) {
     superlogin.configure(config);
     this.user = localStorage.getItem("name");
   
-    /*PouchDB.plugin(Auth)
-    this.db.useAsAuthenticationDB()
-    .then(function () {
-      
 
-    });*/
 
   }
 
@@ -86,13 +65,7 @@ public adduser(user){
    
 }
 public login(credentials){
-    console.log("usr",credentials);
-  /*return new Promise(resolve => {  
-    this.db.logIn(credentials.username,'secret')
-    .then(function (response) {
-      resolve(response);
-    });
-  });*/
+
 return new Promise(resolve => { 
   superlogin.login(credentials).then((response)=>{
     console.log(response);
@@ -107,10 +80,11 @@ return new Promise(resolve => {
 getUserSubscriptions(){
   var usersession = localStorage.getItem("superlogin.session")
   var jsonusersession = JSON.parse(usersession);
-  console.log(jsonusersession)
+  //console.log(jsonusersession)
   let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
-
-  let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46YWRtaW4=' }); // ... Set content type to JSON
+  let headers = new Headers();
+  headers.append( 'Content-Type', 'application/json')
+  headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers });
   return new Promise(resolve => {
         this.http.get(url,options).map(res=>res.json()).subscribe((response)=> {
