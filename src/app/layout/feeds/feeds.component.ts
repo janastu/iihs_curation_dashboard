@@ -28,7 +28,7 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 catname:any;
 usersview:any;
-loading: boolean = false;
+
 
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService,private route: ActivatedRoute) { }
   //On loading Component
@@ -47,27 +47,31 @@ loading: boolean = false;
               this.catname = params.id;
                this.service.getcategoryfeeds(this.catname).then(res=>{
                      this.variab.globalfeeds = res;
-
+                     //console.log(this.variab.globalfeeds);
                      //After filtering the feeds according to category remove the hidden feeds 
                      //and display the rest feeds
                        let hiddenfeeds:any=[];
-                       
-                       
                       
+                       
+                       
+                       
                         this.dataservice.getdeletedfeeds(this.catname).then(res=>{
                          hiddenfeeds=res;
-                         console.log("hideen",hiddenfeeds)
                          if(hiddenfeeds.length == 0){
-                         this.feeds = this.variab.globalfeeds
-                         }
+                           this.feeds = this.variab.globalfeeds;
+                           document.getElementById('loading').style.display = 'none';
+                           }
+                          console.log("feedsrender",this.feeds)
+                         
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
+                              //console.log("hiddem",this.feeds)
                                if(feed.value.id === globalfeed.id) {
                                 var i = _.indexOf(this.variab.globalfeeds,globalfeed);
                                 this.variab.globalfeeds.splice(i,1);
 
                                 this.feeds = this.variab.globalfeeds;
-
+                                 //console.log("feedis",this.feeds,this.variab.globalfeeds)
                                    if(this.feeds.length == 0){
                                       //this.loading = true;
                                       console.log("feed spiiner");
@@ -76,10 +80,12 @@ loading: boolean = false;
                                    else{
                                        //this.loading = false;
                                        document.getElementById('loading').style.display = 'none';
+
                                    }
                                }
                             })
                          })
+                         
 
                         })
              });

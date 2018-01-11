@@ -18,7 +18,7 @@
            
               <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
               <button *ngIf="labelForBoards[i]== undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-              <button *ngIf="labelForBoards[i] === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+              <button *ngIf="labelForBoards[i] === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
            </div>
          
         </div>

@@ -13,7 +13,9 @@ export class BoardService {
 
 	constructor(private http: Http,private settings:Settings) { 
 		this.db = new PouchDB('boards');
-		this.remote = this.settings.protocol+this.settings.host+':'+this.settings.dbboards;
+
+		this.remote = this.settings.protocol+this.settings.host+this.settings.dbboards;
+
 		
 		  
 		     let options = {
@@ -31,7 +33,9 @@ export class BoardService {
 	  }
 
 	getboards(){
-		var url = this.settings.protocol+this.settings.host+':'+this.settings.dbboards+'/_design/board/_view/boards';
+
+		var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
+
 	return new Promise(resolve => {
 	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
 	    

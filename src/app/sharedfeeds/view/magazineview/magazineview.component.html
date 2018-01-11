@@ -21,7 +21,7 @@
               <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
-              <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)"></app-hover-toolbar>
+              <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
               </div>
               
 

@@ -24,12 +24,14 @@ boardname = this.formBuilder.control('', [Validators.required]);
 selectedIcon: number;
 selectedstar:number;
 showDialog:boolean;
+date:Date;
   constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
      this.selectedIndex = -1;
  
 }
 
   ngOnInit() {
+    this.date = new Date();
     this.ngconfig.autoClose='outside';
      this.user = localStorage.getItem('name');
     var annos:any=[];
@@ -116,11 +118,11 @@ showDialog:boolean;
      let update = {
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
-       "creator": "http://example.org/user1",
-       "created": "2015-01-28T12:00:00Z",
-       "modified": "2015-01-29T09:00:00Z",
+       "creator": this.user,
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
        "generator": "mm_2017_v1",
-       "generated": "2015-02-04T12:00:00Z",
+       "generated": this.date.getTime(),
        "target": this.feeditem,
        "motivation":"tagging",
        "label":title.label
@@ -137,11 +139,11 @@ showDialog:boolean;
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
-         "creator": "http://example.org/user1",
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "motivation":"identifying",
          "label":this.boardname.value
 
@@ -151,35 +153,68 @@ showDialog:boolean;
      
   }
 
-  removefromboard(i){
+  removefromboard(title,i){
     this.labelForBoards[i]=false;
+    this.selectedstar = 0;
+    this.variab.annotations.map(anno=>{
+      if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
+           
+           anno.value.modified = this.date.getTime();
+           anno.value.hideboardanno = true; 
+           this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
+            
+      }
+    })
     
   }
   readlater(index: number){
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
+       this.variab.readlaterfeeds.map(anno=>{
+         if(anno.value.target.id === this.feeditem.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hidereadlateranno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.readlaterfeeds.splice(this.index,1)
      }
      else{
        this.selectedIndex = index;
+       console.log(this.feeditem);  
+       let model = {
+         "@context": "http://www.w3.org/ns/anno.jsonld",
+         "type": "Annotation",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
+         "generator": "mm_2017_v1",
+         "generated": this.date.getTime(),
+         "target": this.feeditem,
+         "motivation":"bookmarking"
+       }   
+       this.variab.readlaterfeeds.push({value:model});
+       this.readlaterstore.dispatch('ADD_ITEMS',model)
      }
-     console.log(this.feeditem);  
-     let model = {
-       "@context": "http://www.w3.org/ns/anno.jsonld",
-       "type": "Annotation",
-       "creator": this.user,
-       "created": "2015-01-28T12:00:00Z",
-       "modified": "2015-01-29T09:00:00Z",
-       "generator": "mm_2017_v1",
-       "generated": "2015-02-04T12:00:00Z",
-       "target": this.feeditem,
-       "motivation":"bookmarking"
-     }   
-     this.variab.readlaterfeeds.push({value:model});
-     this.readlaterstore.dispatch('ADD_ITEMS',model)
+     
   }
   markasread(index:number){
     if(this.selectedIcon == index){
        this.selectedIcon = -1;
+       this.variab.recentlyread.map(anno=>{
+         if(anno.value.target.id === this.feeditem.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hiderecenltyreadanno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.recentlyread.splice(this.index,1)
      }
      else{
        this.selectedIcon = index;
@@ -187,10 +222,10 @@ showDialog:boolean;
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
          "creator": this.user,
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "target": this.feeditem,
          "motivation":"tagging"
        }   

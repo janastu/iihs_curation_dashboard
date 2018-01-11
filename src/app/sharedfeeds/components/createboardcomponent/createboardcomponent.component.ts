@@ -21,6 +21,7 @@ boardname = this.formBuilder.control('', [Validators.required]);
 user:any;
 labelForBoards:any=[];
 outside:any;
+date:Date;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService) {
 
      
@@ -28,9 +29,12 @@ outside:any;
 }
 
   ngOnInit() {
+    this.date = new Date();
 
     var annos:any=[];
+
     //this.ngconfig.autoClose='outside';
+
    this.user =localStorage.getItem('name');
 
     this.boardForm = this.formBuilder.group({
@@ -41,7 +45,7 @@ outside:any;
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-         
+        
          var annotatedarray = this.variab.annotations.filter(anno=>{
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
@@ -88,24 +92,28 @@ outside:any;
   } 
 
 
-
+//Function called from Create new board block to remove the block
   cancelboard(){
     this.visible=false;
     
   }
+ //Function called from Create board division to open a new createboard block
+  opencreateboard(){
+    this.visible=true;
+  }
+  //Function called from Create board block to save the feed to the board
   savetoboard(title,i){ 
    
-     console.log(this.feeditem.value)
       this.labelForBoards[i] = true;
       this.selectedstar=1;
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",
-        "creator": "http://example.org/user1",
-        "created": "2015-01-28T12:00:00Z",
-        "modified": "2015-01-29T09:00:00Z",
+        "creator": this.user,
+        "created": this.date.getTime(),
+        "modified": this.date.getTime(),
         "generator": "mm_2017_v1",
-        "generated": "2015-02-04T12:00:00Z",
+        "generated": this.date.getTime(),
         "target": this.feeditem,
         "motivation":"tagging",
         "label":[title.label]
@@ -115,19 +123,20 @@ outside:any;
     
     
   }
+
+  //Function called from Create new board block to create new board by giving a board name 
   createboard(){
     this.visible=false; 
 
-console.log("true",this.labelForBoards[0]) 
       let model={
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
          "creator": this.user,
-         "created": "2015-01-28T12:00:00Z",
-         "modified": "2015-01-29T09:00:00Z",
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
          "generator": "mm_2017_v1",
-         "generated": "2015-02-04T12:00:00Z",
+         "generated": this.date.getTime(),
          "motivation":"identifying",
          "label":this.boardname.value
 
@@ -137,9 +146,21 @@ console.log("true",this.labelForBoards[0])
      
   }
 
-  removefromboard(i){
+  //Function called from Create board block to remove the feed from the board
+  removefromboard(title,i){
     this.labelForBoards[i]=false;
+    this.selectedstar = 0;
+    this.variab.annotations.map(anno=>{
+      if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
+           
+           anno.value.modified = this.date.getTime();
+           anno.value.hideboardanno = true; 
+           this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
+            
+      }
+    })
+    
   }
  
-  
+        
 }

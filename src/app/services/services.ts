@@ -13,9 +13,13 @@ export class Service {
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
-  this.db = new PouchDB('feeds');
-  
- this.remote = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed;
+
+
+  this.db = new PouchDB('feeds'); //create a pouchdb 
+
+//remote couchdb url to sync with couchdb
+ this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
+
 
 
   
@@ -29,10 +33,10 @@ constructor(private http: Http, private jsonconvert:JsonConvert,private settings
        }
      };
   
-     this.db.sync(this.remote, options);
+     this.db.sync(this.remote, options);//sync pouchdb to couchdb with the options
 
   }
-
+//Function to get data from newsrack
 public getAll(){ 
     var msgurl = 'assets/example.json';
   /*  return new Promise(resolve => {
@@ -66,9 +70,8 @@ public getAll(){
 
 
   }
+//Function adds the newsrack feeds to couchdb
  addtopouch(feed,metadata){
-console.log("result",feed[0]);
-
 
    
     feed.map(res=>{
@@ -89,16 +92,21 @@ console.log("result",feed[0]);
 
     
   }
+  //Function to get the feeds based on category by making a get request to the respective design view end point
   getcategoryfeeds(category){
-    let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
-    let options = new RequestOptions({ headers: headers });
     
 
-  var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+
+  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+  console.log("url",url)
+
 //console.log("cate in service",category)
+//var check = this.settings.protocol+this.settings.host+'/feeds/_all_docs?include_docs=true';
    return new Promise(resolve => {
-     this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
-       //console.log(result);
+
+     this.http.get(url).map(res=>res.json()).subscribe(result=> {
+       console.log("result",result);
+
        resolve(result.rows);
      }, (err) =>{
        console.log(err);
@@ -107,20 +115,20 @@ console.log("result",feed[0]);
 
     
   }
+   //Function to get the latest feeds by making a get request to the design view end point
   getlatestfeeds(category){
    
-   let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
-   let options = new RequestOptions({ headers: headers });
    
     var d = new Date();
     var date = d.getTime();
     console.log(date)
 
-   var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+   var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
-    this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
+    this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result.rows)
 
      /* var changesdoc = result.results.map(res=>{
@@ -139,20 +147,21 @@ console.log("result",feed[0]);
 
     
   }
+   //Function to get the oldest feeds by making a get request to the design view end point
   getoldestfeeds(category){
-let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
-let options = new RequestOptions({ headers: headers });
    
    
     var d = new Date();
     var date = d.getTime();
     console.log(date)
 
-    var url = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+    var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
-    this.http.get(url,options).map(res=>res.json()).subscribe(result=> {
+    this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
 
      /* var changesdoc = result.results.map(res=>{
@@ -173,13 +182,14 @@ let options = new RequestOptions({ headers: headers });
 
  getrecentfeeds(){
 
-   let headers = new Headers({ 'Content-Type': 'application/json','Authorization':'Basic YWRtaW46ISFoczIwMTg=' }); // ... Set content type to JSON
-   let options = new RequestOptions({ headers: headers });
-     var check = this.settings.protocol+this.settings.host+':'+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+
+   
+     var check = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+
      //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
 
    return new Promise(resolve => {
-     this.http.get(check,options).map(res=>res.json()).subscribe(result=> {
+     this.http.get(check).map(res=>res.json()).subscribe(result=> {
        //console.log(result.results)
        var changesdoc = result.results.map(res=>{
          if(res.doc.title){

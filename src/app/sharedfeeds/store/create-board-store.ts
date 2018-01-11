@@ -10,15 +10,11 @@ export class CreateBoardStore{
         case 'ADD_ITEMS':
          return this.dataService.addtodatabase(payload);
          //return this.dataService.updatedoc(doc[0].value);
-      /*case 'DELETE_ITEM':
-       console.log("state",...state);
-        return state.filter(item => {
-          console.log("item",item,"pay",payload);
-          return item.id !== payload.id;
-        });
+      case 'MODIFY_DELETED':
+        console.log("pay",payload)
+         return this.dataService.updatedatabase(payload);
       default:
-       console.log("state",...state);
-        return state;*/
+      
       }
     }
   

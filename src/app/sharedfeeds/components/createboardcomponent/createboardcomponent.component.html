@@ -1,6 +1,9 @@
+<!--Create board dropdown -->
 <div ngbDropdown class="board" autoClose="outside">
+  <!--Toggle star icon if the feed is annotated to any board-->
 <a class="save" ngbDropdownToggle aria-expanded="true"><i class="fa" [ngClass]="{'fa-star-o': selectedstar !== 1, 'fa-star': selectedstar == 1}" title="Save to board"></i></a>
- <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
+
+  <!--Display list of boards to save to a board-->
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
       <form class="form-inline form-group">
         <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
@@ -8,26 +11,23 @@
       <div class="field" *ngFor="let item of variab.boardupdated;let i=index;">
       
         <div class="board-item">
+          <!--Star icon on board name which will toggle if the feed is annotated to a paricular board-->
           <i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] === false||labelForBoards[i] === undefined, 'fa-star': labelForBoards[i] === true}" aria-hidden="true" title="Save to board"></i>
           {{item.value.label}}
+          <!--Save button and remove button ,toggle on hover if the feed is annotated to board-->
           <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
           <button *ngIf="labelForBoards[i] === undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
-          <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
-        
-          <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
-        
-          
-         
-            
-          <!-- -->
+          <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
+
          </div>
       
       </div>
-      
+      <!-- button to toogle create new board block-->
       <div class="border-board" >
-        <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+        <a (click)="opencreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
       </div>
-     
+      <!-- /button to toogle create new board block-->
+     <!--Create a new board BLock-->
 
      <div *ngIf="visible" class="form-group savetoboard">
        <form [formGroup]="boardForm" class="form-inline form-group">
@@ -41,8 +41,7 @@
        </div>
 
      </div>
-
+     <!--/Create a new board block-->
     </div>
-   
-
-
+</div>
+<!--/Create board dropdown-->

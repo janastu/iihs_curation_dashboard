@@ -30,7 +30,7 @@ user:any;
        this.feeds = this.variab.readlaterfeeds.map(feed=>{
          return feed.value.target;
        });
-   
+     console.log("readlater",this.feeds);
     
   }
   //Function to handle view event from page-header component
