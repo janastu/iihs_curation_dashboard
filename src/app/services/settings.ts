@@ -21,6 +21,8 @@ export class Settings{
 	dbfeed:any='/feeds'; //feeds database
 	dbannotations:any='/iihs_annotation'; //annotations database
 	dbboards:any='/boards';	//boards database
+	dbgroups:any='/groups';	//groups database
+	dbusers:any='/sl-users';//users database
 	couchdbusername:any=environment.username; //couchdb username
 	couchdbpassword:any=environment.password;	//couchdb password
 	superloginserverUrl:any=environment.superLoginServerUrl // super login server url

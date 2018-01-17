@@ -3,7 +3,7 @@ import { routerTransition } from '../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Userservice } from '../services/userservice';
-import { ComponentsService } from '../services/components-service';
+import { GroupService } from '../services/group-service';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     alertauth:boolean= false;
     alertmissing:boolean=false;
     errormessage:any;
-    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public componentsService:ComponentsService,public ngAlert:NgbAlertConfig) {
+    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
               
 
             }
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
             password:this.password
 
         });
-       
+      
     }
 
     onLoggedin() {
@@ -42,6 +42,18 @@ export class LoginComponent implements OnInit {
             'password':this.password.value
         };
         //console.log("log",credentials);
+        this.groupService.getgroups().then(res=>{
+            var groups:any=[];
+            groups =res;
+            groups.map(checkgroup=>{
+              checkgroup.value.members.map(member=>{
+                  if(member === this.username.value){
+                      console.log("boards",checkgroup.value.boards)
+
+                  }
+              })
+            });
+        })
 
         this.userService.login(credentials).then(response=>{
             

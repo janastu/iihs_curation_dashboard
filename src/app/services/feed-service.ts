@@ -63,7 +63,7 @@ export class FeedService {
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
 			
-		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
+		      this.http.put(url+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
 		       // resolve(response.rows);
