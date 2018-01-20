@@ -16,8 +16,23 @@ export class Userservice {
 //userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http,private settings:Settings) {
+  this.db = new PouchDB('sl_users');
+  this.remote = this.settings.protocol+this.settings.host+this.settings.dbusers;
+  
+    
+       let options = {
+         live: true,
+         retry: true,
+         continuous: true,
+         auth: {
+            username: this.settings.couchdbusername,
+            password: this.settings.couchdbpassword
+          }
+       };
+    
+       this.db.sync(this.remote, options);
    
-
+//Configurations for user registration and login
    var config:any = {
       serverUrl: this.settings.superloginserverUrl,
       // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
@@ -82,6 +97,7 @@ getUserSubscriptions(){
   var jsonusersession = JSON.parse(usersession);
   //console.log(jsonusersession)
   let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
+  
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -96,6 +112,39 @@ getUserSubscriptions(){
         }); 
 
   });
+
+}
+getusers(){
+  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/_design/user/_view/user';
+   //console.log(url);
+  return new Promise(resolve => {
+        this.http.get(url).map(res=>res.json()).subscribe((response)=> {
+          
+          //console.log("users",response);
+          resolve(response.rows);
+        }, (err) => {
+          console.log(err);
+        }); 
+
+  });
+
+
+}
+updateAuser(user){
+  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user.name;
+  console.log(url)
+  let headers = new Headers();
+   headers.append( 'Content-Type', 'application/json')
+   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
+  let options = new RequestOptions({ headers: headers });
+    
+        this.http.put(url,user,options).map(res=>res.json()).subscribe((response)=> {
+          
+          console.log("user",response);
+         // resolve(response.rows);
+        }, (err) => {
+          console.log(err);
+        }); 
 
 }
  
