@@ -16,6 +16,7 @@ export class Global {
    readlaterfeeds:any=[];
    recentlyread:any=[];
    boardupdated:any=[];
+   displayUserBoards:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
    hiddenfeeds:any=[]; 
@@ -24,6 +25,7 @@ export class Global {
    annotations:any=[];
    globalcatname:any;  
    globalboardname:any;
+   userDoc:any;
   constructor(public http: Http) {
   
 

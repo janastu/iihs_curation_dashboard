@@ -4,9 +4,10 @@ import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../../../services/board-service';
 import { Userservice } from '../../../services/userservice';
-import { ComponentsService } from '../../../services/components-service';
+import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
 import { Service } from '../../../services/services';
+import * as _ from 'lodash';
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -38,12 +39,13 @@ export class SidebarComponent implements OnInit{
             this.showMenu = element;
         }
     }
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public componentsService:ComponentsService,public dataservice:DataService,public service:Service){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public service:Service,public groupService:GroupService){
    
 
     }
     ngOnInit(){
       this.user = localStorage.getItem('name');
+
         //Get board annotations
                    this.dataservice.getannotations().then(res=>{
                      //Set result to global variable as it can be accessed outdside the component
@@ -62,11 +64,40 @@ export class SidebarComponent implements OnInit{
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
                    });
+          
+        //Get the boards from the group the registered user belongs to
+        this.groupService.getgroups().then(res=>{
+            var groups:any=[];
+            groups =res;
+            groups.map(checkgroup=>{
+              checkgroup.value.members.map(member=>{
+                  if(member === this.user){
+                      //console.log("boards",checkgroup.value.boards)
+                      this.variab.displayUserBoards = checkgroup.value.boards;
+                  }
+              })
+            });
+        })
           //Get the board names to display in the sidebar and createboard component
+
         this.boardservice.getboards().then((result)=>{
                 //Set result to global variable as it can be accessed outdside the component
-                this.variab.boardupdated=result; 
-        })
+                var allBoards:any=[];
+                allBoards=result;
+                
+                this.variab.displayUserBoards.map(userboard=>{
+                var boardsOfusers = allBoards.map(allboard=>{
+                 
+                    if(allboard.key == userboard){
+                      return allboard;
+                    }
+                  })
+                  
+                  this.variab.boardupdated = _.compact(boardsOfusers);
+                  console.log("boards",this.variab.boardupdated);
+                })
+
+        });
         //Get the feed names to display in the sidebar and other components
         this.userservice.getUserSubscriptions().then(res=>{
            //Set result to global variable as it can be accessed outdside the component
@@ -74,6 +105,7 @@ export class SidebarComponent implements OnInit{
         //  console.log(this.variab.categoryupdated)
           
         });
+
        
     }
     //Function called from html to navigate to feeds component with category name variable

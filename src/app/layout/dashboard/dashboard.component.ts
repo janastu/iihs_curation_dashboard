@@ -57,15 +57,20 @@ export class DashboardComponent implements OnInit {
             this.feeds=res;
         });*/
 
-        this.service.getAll().then(res=>{
+        /*this.service.getAll().then(res=>{
             console.log(res);
-        });
+        });*/
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
           console.log(this.variab.categoryupdated)
           
         });
+        //Get user document of the logged in user
+        this.userService.getAuser(this.user).then(res=>{
+            this.variab.userDoc = res;
+        })
+        
   
     }
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked

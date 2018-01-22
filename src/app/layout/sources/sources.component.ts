@@ -12,6 +12,7 @@ import { routerTransition } from '../../router.animations';
 export class SourcesComponent implements OnInit {
   catvalue;
   metadata:any=[];
+  category:any;
   feedname:any;
   createfeed:boolean=false;
   constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService) { 
@@ -36,7 +37,7 @@ export class SourcesComponent implements OnInit {
     console.log(this.feedname);
     this.feedService.getAllFeeds(this.feedname).then(res=>{
       this.metadata = res;
-      
+      this.category = this.metadata.categories[0];
       this.createfeed = true;
       console.log("value",this.metadata,this.createfeed);
     })

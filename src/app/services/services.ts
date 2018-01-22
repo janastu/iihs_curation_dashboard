@@ -4,15 +4,18 @@ import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
+
 @Injectable()
 
 export class Service {
+  
   db:any;
   database:any;
   remote:any;
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
+ 
 
   this.db = new PouchDB('feeds'); //create a pouchdb 
 
