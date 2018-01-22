@@ -1,25 +1,130 @@
+/*User Management*/
+.user-management{
+	margin-top: -1.5rem;
+}
+.management div{
+	display: block;
+	margin-top: 2rem;
+}
+
+/*User Management input field*/
+.form-item{
+	display: grid;
+	width: 20px;
+}
 .form-item input{
-	font-size: 18px;
+	font-size: 1.2rem;
+	padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    line-height: initial;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+/*User Management Dropdown*/
+.type-group{
+	margin-left: 3rem;
 }
 .form-item button{
 	margin-left: 2px;
 	font-size: 15px;
 	background-color: #249540;
     color: #fff;
-    cursor: pointer;
     border: 1px solid transparent;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+.mang-mail{
+	margin-top: 2rem;
 }
 .form-type{
-	font-size: 18px;
+	font-size: 0.875rem;
 	height: 28px;
-	background-color: #249540;
+	background-color: rgba(0, 0, 0, 0.63);
     color: #fff;
+    cursor: pointer;
     border: 1px solid transparent;
+    border-radius: 0.2rem;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
-.userinfo{
-	margin-top: 20px;
+.add-user button{
+	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+.add-user span{
+	padding: 5px;
+	display: block;
+}
+.user-mang{
+	margin-top: 5rem;
+	margin-left: 0rem;
+	margin-right: 5rem;
+	border: 0px;
+}
+
+.user-create-group{
+    margin-top: 0.5rem;
+}
+.create-group{
+	display:flex;
+	margin-top: 0.28rem;
+}
+.create-group input{
+	    width: 45%;
+	    margin-top: 1.5rem;
+	    font-size: 1.2rem;
+	    padding: 0.5rem 0.75rem;
+	    border: 1px solid rgba(0, 0, 0, 0.15);
+	    border-radius: 0.25rem
+}
+.create-group-button{
+	font-size: 0.875rem;
+	margin-top: 2rem;
+	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+	transition: all .15s ease;
+}
+.create-group-button span{
+	padding: 5px;
+	display: block;
+}
+
+/*Table Style*/
+.userinfo td{
+	/*border: 2px solid #eceeef;*/
+	max-width: 100%;
+	text-align: left;
+	width: 50%;
 }
 .userinfo button{
 	font-size: 13px;
 	cursor: pointer;
+}
+.table-header{
+	width: 101%;
+    margin-bottom: 1.5rem;
+}
+.border{
+	border: 0.5px solid rgba(0, 0, 0, 0.125);
+	margin-top: 1rem;
+}
+.remove-user{
+	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+	transition: all .15s ease;
+	cursor: pointer;
+}
+.remove-user span{
+	padding: 5px;
+	display: block;
+	cursor: pointer;
+}
+/*hover style*/
+.create-group-button:hover{
+	transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+}
+.add-user button:hover{
+	transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+}
+.remove-user:hover{
+	transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
 }

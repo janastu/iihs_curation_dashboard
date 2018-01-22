@@ -1,44 +1,70 @@
 <div [@routerTransition]>
-      <div class="row">
-            <div class="usermang">
-                  <div class="col">
-                  <h4>Create Group</h4>
-                  </div>
-                  <div>
-                      <input type="text" class="form-control" placeholder="Group name" value="{{catvalue}}" [(ngModel)]="groupname">
-                      <button (click)="addGroup()">Add Group</button>
-                  </div>
-      
-          </div>  
-      </div> 
-      <div class="row">
-            <div class="usermang">
-                  <div class="col">
-                  <h4>User Management</h4>
-                  </div>
-              
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!--User Management-->
+      <div class="container user-management">
+        <div class="row">
+          <div class="col management">
+            <!--Heading-->
+            <div><h4>User Management</h4>
+              <!--Inputfied for name and email-->
               <div class="form-item" >
                 <input #name placeholder="name" />
-                <input #mail placeholder="email">
-                  <select  #user class="form-type">
-                    <option value=null disabled selected>Type</option>
-                    <option *ngFor="let item of usertypes" [value]="item.name">{{item.name}}</option>
-                  </select>
-                  <select  #group class="form-type">
-                    <option value=null disabled selected>Group</option>
-                    <option *ngFor="let group of groups" [value]="group.value.groupname">{{group.value.groupname}}</option>
-                  </select>
-                <button (click)="addContact(name.value,mail.value,user.value,group.value)">Add User</button>
-
+                <input #mail placeholder="email" class="mang-mail" />
               </div>
+            </div>
+            <!--Dropdown for user type and group-->
+              <div class="form-dropdown">
+                <select  #user class="form-type">
+                  <option value=null disabled selected>TYPE</option>
+                  <option *ngFor="let item of usertypes" [value]="item.name">{{item.name}}</option>
+                </select>
+                <select  #group class="form-type type-group">
+                  <option value=null disabled selected>GROUP</option>
+                  <option *ngFor="let group of groups" [value]="group.value.groupname">{{group.value.groupname}}</option>
+                </select>
+              </div>
+            <!--Add user-->
+              <div class="add-user"><button (click)="addContact(name.value,mail.value,user.value,group.value)" class="btn btn-sm btn-success"><span>ADD USER</span></button></div>
+          </div>
+        <!--Display user info in a table-->
+          <div class="row">
+            <div class="col">
+              <div class="user-mang">
+                <table class="userinfo table table-bordered table-hover">
+                  <tr scope="row" *ngFor="let contact of contacts">
+                    <!--td>{{contact.descr}}</td-->
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.mail}}</td>
+                    <td>{{contact.user}}</td>
+                    <td>{{contact.group}}</td>
+                     <td><button (click)="removeContact(contact)" class="btn btn-sm btn-success remove-user"><span>Remove</span></button></td>
+                    </tr>        
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-              <table class="userinfo">
-              <tr *ngFor="let contact of contacts" style="margin-bottom: 10px;">
-              <td>{{contact.descr}}</td> <td><button (click)="removeContact(contact)">Remove</button></td>
-              </tr>
-            </table>
-          </div>  
-      </div> 
-      
+
+      <div class="col-md-6">
+        <div class="container user-create-group">
+          <div class="row">
+            <div class="col">
+              <div><h4>Create Group</h4></div>
+                <div class="create-group">
+                  <input type="text" class="form-control" placeholder="Group name" value="{{catvalue}}" [(ngModel)]="groupname"/>
+                </div>
+                <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>ADD GROUP</span></button>
+            </div>
+          </div> 
+        </div>
+      </div>
+  </div>
+</div>
+<!--Border line>
+  <div class="border"></div-->
 </div>
