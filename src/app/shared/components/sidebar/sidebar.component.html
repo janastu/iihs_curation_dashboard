@@ -73,9 +73,9 @@
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
-                    <li *ngFor="let item of variab.boardupdated">
-                      <a (click)="routetoboard(item.value.label)" class="onmenu">
-                        <span><i class="fa fa-star-o"></i>&nbsp;{{ item.value.label| translate }}</span></a>
+                    <li *ngFor="let item of variab.displayUserBoards">
+                      <a (click)="routetoboard(item)" class="onmenu">
+                        <span><i class="fa fa-star-o"></i>&nbsp;{{ item| translate }}</span></a>
                     </li>
                 </ul>
             </li>

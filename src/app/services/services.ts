@@ -4,20 +4,25 @@ import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
+
 @Injectable()
 
 export class Service {
+  
   db:any;
   database:any;
   remote:any;
   username:any;
   password:any;
 constructor(private http: Http, private jsonconvert:JsonConvert,private settings:Settings) {
+ 
+
 
   this.db = new PouchDB('feeds'); //create a pouchdb 
 
 //remote couchdb url to sync with couchdb
  this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
+
 
 
   
@@ -92,15 +97,19 @@ public getAll(){
   }
   //Function to get the feeds based on category by making a get request to the respective design view end point
   getcategoryfeeds(category){
+    
+
 
   var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
   console.log("url",url)
-  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+
 //console.log("cate in service",category)
 //var check = this.settings.protocol+this.settings.host+'/feeds/_all_docs?include_docs=true';
    return new Promise(resolve => {
+
      this.http.get(url).map(res=>res.json()).subscribe(result=> {
        console.log("result",result);
+
        resolve(result.rows);
      }, (err) =>{
        console.log(err);
@@ -112,11 +121,13 @@ public getAll(){
    //Function to get the latest feeds by making a get request to the design view end point
   getlatestfeeds(category){
    
+   
     var d = new Date();
     var date = d.getTime();
     console.log(date)
 
    var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
@@ -142,11 +153,14 @@ public getAll(){
    //Function to get the oldest feeds by making a get request to the design view end point
   getoldestfeeds(category){
    
+   
     var d = new Date();
     var date = d.getTime();
     console.log(date)
 
+
     var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
   return new Promise(resolve => {
@@ -170,7 +184,11 @@ public getAll(){
   }
 
  getrecentfeeds(){
+
+
+   
      var check = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+
      //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
 
    return new Promise(resolve => {

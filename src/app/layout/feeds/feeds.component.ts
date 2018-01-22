@@ -61,7 +61,7 @@ usersview:any;
                            this.feeds = this.variab.globalfeeds;
                            document.getElementById('loading').style.display = 'none';
                            }
-                          console.log("feedsrender",this.feeds)
+                          console.log("feedsrender",this.feeds,hiddenfeeds)
                          
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{

@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 */
 @Injectable()
 export class Settings{
+
 	constructor(){
 		
 	}
@@ -28,5 +29,4 @@ export class Settings{
 	superloginserverUrl:any=environment.superLoginServerUrl // super login server url
 
 
-	
 }
