@@ -113,9 +113,11 @@ ngOnChanges(){
    this.variab.categoryupdated.push({doc:doc});
    this.visible = false;
    this.followstatus = true;
+   
  }
  //Save the feed metadata and link  to a already feed name 
  addtofeed(feed,i){
+
  	var update:any;//update status variable
 
 //Check if the feedname already exists in the database
@@ -133,8 +135,8 @@ ngOnChanges(){
    
      if(update == 1){
          
-            name.doc.metadata.feedlink.push(this.url);
-          this.feedService.update(name.id,name.doc)
+         name.doc.metadata.feedlink.push(this.url);
+         this.feedService.update(name.id,name.doc)
          this.labelForFeeds[i]=true;
         }
 

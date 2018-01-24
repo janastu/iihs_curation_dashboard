@@ -4,6 +4,7 @@ import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
+declare function emit(key: any,value:any): void;
 @Injectable()
 export class GroupService {
 	db:any;
@@ -13,6 +14,8 @@ export class GroupService {
 
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings) { 
 		this.db = new PouchDB('groups');
+		//function call to create design docs
+		this.createDesignDocs();
 		this.remote = this.settings.protocol+this.settings.host+this.settings.dbgroups;
 		
 		  
@@ -29,6 +32,37 @@ export class GroupService {
 		 this.db.sync(this.remote, options);
 		//this.db = new PouchDB('categories');
 	  }
+
+	createDesignDocs(){
+	
+	
+
+		var ddoc = {
+		  _id: '_design/groups',
+		  views: {
+		    groups: {
+		      map: function (doc) {
+		        if(doc.groupname){
+		        	emit(doc.groupname,doc)
+		        }
+		      }.toString()
+		    }
+		  }
+		}
+
+		// save the design doc
+		this.db.put(ddoc).catch(function (err) {
+		  if (err.name !== 'conflict') {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+		
+		
+	
+
+	}
+
 
 	addGroupDb(metadata){
 		
@@ -51,15 +85,19 @@ export class GroupService {
 
 	}
 	getgroups(){
-		var url = this.settings.protocol+this.settings.host+this.settings.dbgroups+'/_design/groups/_view/allgroups';
+		//var url = this.settings.protocol+this.settings.host+this.settings.dbgroups+'/_design/groups/_view/allgroups';
 		return new Promise(resolve => {
-		  this.http.get(url).map(res=>res.json()).subscribe(result=> {
-		   // console.log(result);
+		  this.db.query('groups/groups', {
+		      
+		      
+		    }).then(function (result) {
+		   // console.log("res",result);
 		    resolve(result.rows);
-		  }, (err) =>{
+		  }).catch(function (err) {
 		    console.log(err);
 		  });
 		});
 	}
+
 
 }

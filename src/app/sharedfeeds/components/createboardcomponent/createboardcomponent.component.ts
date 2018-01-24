@@ -42,13 +42,16 @@ date:Date;
       boardname: this.boardname
     });
 
+
+
       
 
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-        
+        // console.log("annotations",this.variab.annotations);
          var annotatedarray = this.variab.annotations.filter(anno=>{
+
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
 
@@ -74,7 +77,7 @@ date:Date;
 
          })
 
-         //console.log("annoforboards",annosForBoards);
+         console.log("annoforboards",annosForBoards);
          //Map Annos for Boards to return boolean array
          //Returns example:[true,false,true] 
          //Index of output == Index of label which means label[0] and label[1] 
@@ -90,7 +93,7 @@ date:Date;
              }
          })
 
-        //console.log(this.labelForBoards);
+        console.log(this.labelForBoards);
    
   } 
 
@@ -122,7 +125,7 @@ date:Date;
         "label":[title.label]
       }
       this.createboardstore.dispatch('ADD_ITEMS',update);
-
+    
     
     
   }
@@ -146,21 +149,37 @@ date:Date;
        };
        this.boardservice.addboard(model);
        this.variab.boardupdated.push({value:model});  
-       this.variab.displayUserBoards.push(this.boardname.value);  
+      //this.variab.displayUserBoards.push(this.boardname.value);  
     //Update the group database with board idboardupdated:any=[];
+
 
     this.groupService.getgroups().then(res=>{
       var groups:any=[];
       groups=res;
-      this.variab.userDoc.group.map(usergroup=>{
-        groups.map(group=>{
-          if(usergroup === group.key){
-            console.log("group",group)
-            group.value.boards.push(this.boardname.value)
+      
+      groups.map(group=>{
+        //Check if the logged member is part of any group
+        var checkmemberof = group.value.members.map(member=>{
+          if(member == this.user){
+            return group.value.groupname;
+          }
+        })
+        
+        //get the group name and update the group with the board
+        checkmemberof.map(value=>{
+          if(group.value.groupname === value){
+            
+              group.value.boards.push(this.boardname.value);
+           
+            console.log("checkmember",group.value);
             this.groupService.update(group.value);
           }
         })
+
       })
+      
+
+
     })
 
      

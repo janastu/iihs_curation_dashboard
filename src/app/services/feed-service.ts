@@ -4,7 +4,8 @@ import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
-
+import {Global} from '../shared'
+declare function emit(key: any,value:any): void;
 
 @Injectable()
 export class FeedService {
@@ -13,8 +14,13 @@ export class FeedService {
 	username:any;
 	password:any;
 	feedNewsrack:any=[];
-	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings) { 
+	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
+		  
 		  this.db = new PouchDB('feeds'); //create a pouchdb 
+
+		  //function call to create design docs
+		  this.createDesignDocs();
+
 
 		//remote couchdb url to sync with couchdb
 		 this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
@@ -73,6 +79,144 @@ export class FeedService {
 		this.addtopouch(this.feedNewsrack,metadata.feedname);
 
 	}
+	createDesignDocs(){
+	
+	
+
+		var ddoc = {
+		  _id: '_design/feeds',
+		  views: {
+		    categoryfeeds: {
+		      map: function (doc) {
+		        if (doc.feednme) {
+		          emit(doc.feednme,doc);
+		        }
+		      }.toString()
+		    },
+		    metacategories: {
+		      map: function (doc) {
+		        if (doc.meta) {
+		          emit(doc.meta.categories,doc);
+		        }
+		      }.toString()
+		    }
+		  }
+		}
+
+		// save the design doc
+		this.db.put(ddoc).catch(function (err) {
+		  if (err.name !== 'conflict') {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+		
+		
+	
+
+	}
+	  //Function to get the feeds based on category by making a get request to the respective design view end point
+	  getcategoryfeeds(category){
+
+	   return new Promise(resolve => {
+	   	this.db.query('feeds/categoryfeeds', {
+	   		limit:20,
+	   	    key:category,
+	   	    
+	   	  }).then(function (result) {
+	   	 // console.log("res",result);
+	   	  resolve(result.rows);
+	   	}).catch(function (err) {
+	   	  console.log(err);
+	   	});
+
+	   });
+
+	    
+	  }
+	  //Function to get the feeds based on category by making a get request to the respective design view end point
+	  getmetacategories(category){
+
+	   return new Promise(resolve => {
+	   	this.db.query('feeds/metacategories', {
+	   	    key:category,
+	   	    include_docs: true
+	   	  }).then(function (result) {
+	   	 // console.log("res",result);
+	   	  resolve(result.rows);
+	   	}).catch(function (err) {
+	   	  console.log(err);
+	   	});
+
+	   });
+
+	    
+	  }
+
+	 //Function to get the latest feeds by making a get request to the design view end point
+	getlatestfeeds(category){
+	 
+	 
+	  var d = new Date();
+	  var date = d.getTime();
+	  console.log(date)
+
+	 var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+	return new Promise(resolve => {
+	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
+	    console.log(result.rows)
+
+	   /* var changesdoc = result.results.map(res=>{
+	      if(res.doc.title){
+	        return res.doc;
+	      }
+	    })
+	    console.log(_.compact(changesdoc));
+	    var recentDocs = _.compact(changesdoc)*/
+
+	    resolve(result.rows);
+	  }, (err) =>{
+	    console.log(err);
+	  });
+	});
+
+	  
+	}
+	 //Function to get the oldest feeds by making a get request to the design view end point
+	getoldestfeeds(category){
+	 
+	 
+	  var d = new Date();
+	  var date = d.getTime();
+	  console.log(date)
+
+
+	  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+	return new Promise(resolve => {
+	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
+	    console.log(result)
+
+	   /* var changesdoc = result.results.map(res=>{
+	      if(res.doc.title){
+	        return res.doc;
+	      }
+	    })
+	    console.log(_.compact(changesdoc));
+	    var recentDocs = _.compact(changesdoc)*/
+	    resolve(result.rows);
+	  }, (err) =>{
+	    console.log(err);
+	  });
+	});
+
+	  
+	}
 	//Function adds the newsrack feeds to couchdb
 	 addtopouch(feed,feedname){
 
@@ -84,7 +228,9 @@ export class FeedService {
 	      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
 	      var checkdate = Date.parse(formattedDate);
 	      res.date = checkdate*/
-	      console.log("dateche",res,res.date);
+	     // console.log("dateche",res,res.date);
+	      //this.variab.globalfeeds.push({value:res});
+	      console.log("pouchdb",this.db);
 	      this.db.post(res, function callback(err, result) {
 
 	          if (!err) {

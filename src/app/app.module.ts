@@ -15,12 +15,8 @@ import { CategoryService } from './services/category-service';
 import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
 import { Service } from './services/services';
-
-
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { GroupService } from './services/group-service';
-
-
 import { FeedService } from './services/feed-service';
 import { Userservice } from './services/userservice';
 

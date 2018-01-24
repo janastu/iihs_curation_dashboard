@@ -28,9 +28,9 @@ export class ManagementComponent implements OnInit {
     })
   }
   //Function to add user to a group
-   addContact(name,mail,user,group){
+   addContact(name,mail,u,group){
      var slusers:any=[];
-      let contact = new Contact(name,mail,user,group);
+      let contact = new Contact(name,mail,u,group);
       console.log(contact);
       this.userService.getusers().then(res=>{
         slusers=res;
@@ -38,12 +38,13 @@ export class ManagementComponent implements OnInit {
           if(user.key === name){
             //check if the user is already a part of some group
             //if yes the push the group else make a property with group array
-            if(user.value.group === undefined){
-              user.value.group=[group];
+            if(user.value.memberof === undefined){
+              user.value.memberof=[group];
+              user.value.type=u;
               this.userService.updateAuser(user.value);
             }
             else{
-              user.value.group.push(group);
+              user.value.memberof.push(group);
               this.userService.updateAuser(user.value);
             }
           console.log(user.value);
@@ -73,11 +74,11 @@ export class ManagementComponent implements OnInit {
    let doc={
      'groupname':this.groupname,
      'owner':this.user,
-     'members':[],
+     'members':[this.user],
      'boards':[]
 
    }
-   console.log("dov",doc);
+   //console.log("dov",doc);
    this.groups.push({value:doc});
    this.groupService.addGroupDb(doc);
   }

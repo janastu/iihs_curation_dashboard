@@ -9,7 +9,7 @@ import { Global } from '../../shared/global';
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
-import { ComponentsService } from '../../services/components-service';
+import { FeedService } from '../../services/feed-service';
 declare var require:any;
 var moment = require('moment');
 @Component({
@@ -30,7 +30,7 @@ catname:any;
 usersview:any;
 
 
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService,private route: ActivatedRoute) { }
+  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
     
@@ -45,9 +45,11 @@ usersview:any;
            this.route.params
             .subscribe(params => {
               this.catname = params.id;
-               this.service.getcategoryfeeds(this.catname).then(res=>{
-                     this.variab.globalfeeds = res;
-                     //console.log(this.variab.globalfeeds);
+               this.feedService.getcategoryfeeds(this.catname).then(res=>{
+                
+                 
+                    this.variab.globalfeeds = res;
+                     console.log(this.variab.globalfeeds);
                      //After filtering the feeds according to category remove the hidden feeds 
                      //and display the rest feeds
                        let hiddenfeeds:any=[];
@@ -61,7 +63,7 @@ usersview:any;
                            this.feeds = this.variab.globalfeeds;
                            document.getElementById('loading').style.display = 'none';
                            }
-                          console.log("feedsrender",this.feeds,hiddenfeeds)
+                          
                          
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
@@ -74,7 +76,7 @@ usersview:any;
                                  //console.log("feedis",this.feeds,this.variab.globalfeeds)
                                    if(this.feeds.length == 0){
                                       //this.loading = true;
-                                      console.log("feed spiiner");
+                                      
                                       document.getElementById('loading').style.display = 'block';
                                    }
                                    else{
@@ -88,6 +90,7 @@ usersview:any;
                          
 
                         })
+                   
              });
 
            });

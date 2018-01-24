@@ -19,6 +19,7 @@ export class Global {
    displayUserBoards:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
+   metacategories:any=[];
    hiddenfeeds:any=[]; 
    boardfeeds:any=[];
    recentdocs:any=[];

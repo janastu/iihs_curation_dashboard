@@ -18,25 +18,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert,private settings
  
 
 
-  this.db = new PouchDB('feeds'); //create a pouchdb 
-
-//remote couchdb url to sync with couchdb
- this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
-
-
-
-  
-     let options = {
-       live: true,
-       retry: true,
-       continuous: true,
-       auth:{
-         username:this.settings.couchdbusername,
-         password:this.settings.couchdbpassword
-       }
-     };
-  
-     this.db.sync(this.remote, options);//sync pouchdb to couchdb with the options
+ 
 
   }
 //Function to get data from newsrack
@@ -100,7 +82,7 @@ public getAll(){
     
 
 
-  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?limit=20&key='+'"'+category+'"';
+  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
   console.log("url",url)
 
 //console.log("cate in service",category)

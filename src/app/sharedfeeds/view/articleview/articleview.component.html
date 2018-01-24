@@ -26,7 +26,7 @@
               </a>
               <!--Feed Date-->
               <a href={{item.value.url}} class="metadata-article">
-                      {{item.value.date | date}}
+                      {{item.value.pubDate | date}}
               </a>
               </div>
               <!--Feed Toolbar-->
@@ -36,24 +36,28 @@
               
 
               </div>
+              <div *ngIf="item.value.description != null">
               <!--Feed Image-->
-              <div *ngIf="checkimg(item.value.desc)" class="row">
+              <div *ngIf="checkimg(item.value.description)" class="row">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="article-image"></div>-->
-                <img [src]="extracturl(item.value.desc)" data-image-enhancer="larger than 578" class="article-image">
+                <img [src]="extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
               </div>
-              <div *ngIf="!checkimg(item.value.desc)" class="row">
+              <div *ngIf="!checkimg(item.value.description)" class="row">
                 <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
                 
               </div>
               <!--Feed Desc-->
               <div class="row">
-                <div *ngIf="checkimg(item.value.desc)" class="feed-content article-feed-content">
+                <div *ngIf="checkimg(item.value.description)" class="feed-content article-feed-content">
                       
                 </div>
-                <div *ngIf="!checkimg(item.value.desc)" class="feed-content article-feed-content">
-                        {{item.value.desc.substring(0,250)}}
+                <div *ngIf="!checkimg(item.value.description)" class="feed-content article-feed-content">
+                        {{item.value.description.substring(0,250)}}
                 </div>
               </div>
+              </div>
+              
+
             </div>
 
         </div>

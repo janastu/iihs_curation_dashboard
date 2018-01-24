@@ -14,6 +14,9 @@ export class BoardService {
 	constructor(private http: Http,private settings:Settings) { 
 		this.db = new PouchDB('boards');
 
+		//function call to create design docs
+		this.createDesignDocs();
+
 		this.remote = this.settings.protocol+this.settings.host+this.settings.dbboards;
 
 		
@@ -31,16 +34,48 @@ export class BoardService {
 		     this.db.sync(this.remote, options);
 
 	  }
+	createDesignDocs(){
+	
+	
 
-	getboards(){
+		var ddoc = {
+		  _id: '_design/board',
+		  views: {
+		    boards: {
+		      map: function (doc) {
+		        if(doc.label && doc.motivation === 'identifying'){
+		           emit(doc.label,doc);  
+		       }
+		      }.toString()
+		    }
+		  }
+		}
+
+		// save the design doc
+		this.db.put(ddoc).catch(function (err) {
+		  if (err.name !== 'conflict') {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+		
+		
+	
+
+	}
+
+	getboards(board){
 
 		var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
 
 	return new Promise(resolve => {
-	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
-	    
+	  this.db.query('board/boards', {
+	      key:board
+	      
+	    }).then(function (result) {
+	  // console.log("res",result.rows);
 	    resolve(result.rows);
-	  }, (err) =>{
+	  }).catch(function (err) {
 	    console.log(err);
 	  });
 	});

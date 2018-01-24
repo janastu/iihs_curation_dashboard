@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
+     
 
     this.user = localStorage.getItem('name');
    
@@ -66,10 +67,7 @@ export class DashboardComponent implements OnInit {
           console.log(this.variab.categoryupdated)
           
         });
-        //Get user document of the logged in user
-        this.userService.getAuser(this.user).then(res=>{
-            this.variab.userDoc = res;
-        })
+        
         
   
     }
