@@ -8,16 +8,17 @@
 
   <div class="row">
    
-        <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-6 offset-sm-3">
     
     	<div class="card-blocks">
-          <div class="row">
+          
+        <div class="row">
             <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
                 <app-modal #modal [item]="item.value" [index]='i'></app-modal>
                <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
-               
+              
               </div>
               <!--Feed Category-->
               <div class="row">
@@ -36,8 +37,9 @@
               
 
               </div>
-              <div *ngIf="item.value.description != null">
+             
               <!--Feed Image-->
+              <div *ngIf="item.value.description != null">
               <div *ngIf="checkimg(item.value.description)" class="row">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="article-image"></div>-->
                 <img [src]="extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
@@ -58,14 +60,14 @@
               </div>
               
 
-            </div>
-
         </div>
+
+      </div>
     
     </div>
 
-      </div> 
+  </div> 
        
-    </div>
-</div>	
+</div>
+
 

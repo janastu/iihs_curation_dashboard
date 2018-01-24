@@ -43,7 +43,7 @@
                      <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.value.url}} class="metadata-magazine">
-                      {{item.value.categories}}</a>
+                      {{item.value.feedname}}</a>
                     <!--Feed Date-->
                     <a href={{item.value.url}} class="metadata-magazine">
                       {{item.value.pubDate | date}}
@@ -54,7 +54,7 @@
                     </div>
 
                     <div *ngIf="!checkimg(item.value.description)" class="feed-content">
-                        {{item.value.description.substring(0,20)}}
+                        {{item.value.description.substring(0,250)}}
 
                     </div>
                    
