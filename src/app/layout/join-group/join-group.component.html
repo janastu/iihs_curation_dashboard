@@ -1,0 +1,35 @@
+<div [@routerTransition]>
+      <div class="row">
+            <div class="usermang">
+                  <div class="col">
+                  <h4>Create Group</h4>
+                  </div>
+                  <div>
+                      <input type="text" class="form-control" placeholder="Group name" value="{{catvalue}}" [(ngModel)]="groupname">
+                      <button (click)="addGroup()">Add Group</button>
+                  </div>
+      
+          </div>  
+      </div> 
+      <div class="row">
+            <div class="usermang">
+                  <div class="col">
+                  <h4>Join Group</h4>
+                  </div>
+              
+
+              <div class="form-item" >
+                
+                  <select  #group class="form-type">
+                    <option value=null disabled selected>Group</option>
+                    <option *ngFor="let group of groups" [value]="group.value.groupname">{{group.value.groupname}}</option>
+                  </select>
+                <button (click)="joinGroup(group.value.groupname)">JOIN</button>
+
+              </div>
+
+
+          </div>  
+      </div> 
+      
+</div>
