@@ -99,6 +99,13 @@ export class FeedService {
 		          emit(doc.meta.categories,doc);
 		        }
 		      }.toString()
+		    },
+		    latestoldestcategory: {
+		    	map: function (doc) {
+		    	  if (doc.meta) {
+		    	    emit([doc.feednme,doc.pubDate],doc);
+		    	  }
+		    	}.toString()
 		    }
 		  }
 		}
@@ -164,21 +171,15 @@ export class FeedService {
 	 var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
-
+	  console.log(category)
 	return new Promise(resolve => {
-	  this.http.get(url).map(res=>res.json()).subscribe(result=> {
-	    console.log(result.rows)
-
-	   /* var changesdoc = result.results.map(res=>{
-	      if(res.doc.title){
-	        return res.doc;
-	      }
-	    })
-	    console.log(_.compact(changesdoc));
-	    var recentDocs = _.compact(changesdoc)*/
-
+	  this.db.query('feeds/latestoldestcategory', {
+	      startkey: [category],
+	      endkey: [category, {}]
+	    }).then(function (result) {
+	   console.log("res",result);
 	    resolve(result.rows);
-	  }, (err) =>{
+	  }).catch(function (err) {
 	    console.log(err);
 	  });
 	});
@@ -186,7 +187,7 @@ export class FeedService {
 	  
 	}
 	 //Function to get the oldest feeds by making a get request to the design view end point
-	getoldestfeeds(category){
+	/*getoldestfeeds(category){
 	 
 	 
 	  var d = new Date();
@@ -208,7 +209,7 @@ export class FeedService {
 	      }
 	    })
 	    console.log(_.compact(changesdoc));
-	    var recentDocs = _.compact(changesdoc)*/
+	    var recentDocs = _.compact(changesdoc)
 	    resolve(result.rows);
 	  }, (err) =>{
 	    console.log(err);
@@ -216,7 +217,7 @@ export class FeedService {
 	});
 
 	  
-	}
+	}*/
 	//Function adds the newsrack feeds to couchdb
 	 addtopouch(feed,feedname){
 

@@ -28,12 +28,12 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 catname:any;
 usersview:any;
-
+user:any;
 
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
-    
+    this.user =localStorage.getItem('name');
     
     this.usersview = localStorage.getItem('view');
  
@@ -57,8 +57,9 @@ usersview:any;
                        
                        
                        
-                        this.dataservice.getdeletedfeeds(this.catname).then(res=>{
+                        this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
                          hiddenfeeds=res;
+                         console.log(hiddenfeeds)
                          if(hiddenfeeds.length == 0){
                            this.feeds = this.variab.globalfeeds;
                            document.getElementById('loading').style.display = 'none';
@@ -67,8 +68,8 @@ usersview:any;
                          
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
-                              //console.log("hiddem",this.feeds)
-                               if(feed.value.id === globalfeed.id) {
+                              console.log("hiddem",feed.value._id,globalfeed.id)
+                               if(feed.value._id === globalfeed.id) {
                                 var i = _.indexOf(this.variab.globalfeeds,globalfeed);
                                 this.variab.globalfeeds.splice(i,1);
 
@@ -109,9 +110,10 @@ usersview:any;
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
+
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-    
-       if(fromdate<=res.value.date && todate>=res.value.date){
+        console.log("date",Date.parse(res.value.date));
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
         }
@@ -131,15 +133,17 @@ usersview:any;
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-     this.service.getlatestfeeds(this.catname).then(result=>{
+     this.feedService.getlatestfeeds(this.catname).then(result=>{
        this.feeds=result;
        this.feeds.reverse();
+       
      })
     }
     if(childSortLabel === 'Oldest'){
       
-     this.service.getoldestfeeds(this.catname).then(result=>{
+     this.feedService.getlatestfeeds(this.catname).then(result=>{
        this.feeds=result;
+       
        console.log(this.feeds)
      })
     }

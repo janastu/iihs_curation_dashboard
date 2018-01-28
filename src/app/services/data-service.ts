@@ -110,7 +110,7 @@ constructor(private http: Http,private settings:Settings) {
         deletedfeeds: {
           map: function (doc) {
             if (doc.hidden === true) {
-                  emit([doc.creator,doc.target.key],doc.target);
+                  emit([doc.creator,doc.target.value.feednme],doc.target);
                    }
           }.toString()
         },
@@ -259,7 +259,7 @@ constructor(private http: Http,private settings:Settings) {
     });
 
   }
-  getdeletedfeeds(category){
+  getdeletedfeeds(usr,category){
 
     var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
 
@@ -267,10 +267,10 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
       this.db.query('annotatedfeeds/deletedfeeds', {
-          key:category,
+          key:[usr,category]
           
         }).then(function (result) {
-       // console.log("res",result);
+       console.log("res",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
