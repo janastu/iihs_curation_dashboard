@@ -27,6 +27,7 @@ export class Settings{
 	couchdbusername:any=environment.username; //couchdb username
 	couchdbpassword:any=environment.password;	//couchdb password
 	superloginserverUrl:any=environment.superLoginServerUrl // super login server url
+	feedparserUrl:any=environment.feedParserServiceUrl // feed Parser server url
 
 
 }

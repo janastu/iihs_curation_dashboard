@@ -95,7 +95,7 @@ return new Promise(resolve => {
 getUserSubscriptions(){
   var usersession = localStorage.getItem("superlogin.session")
   var jsonusersession = JSON.parse(usersession);
-  //console.log(jsonusersession)
+  console.log(jsonusersession)
   let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
   
   let headers = new Headers();

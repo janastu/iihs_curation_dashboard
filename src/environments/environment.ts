@@ -9,5 +9,7 @@ export const environment = {
   password: 'admin', //couchdb password
   host: 'localhost:5984', //couchdb host
   //host: '192.168.1.30:5984',
-  superLoginServerUrl: 'http://localhost:3001' //Super login server url(UI url)
+  superLoginServerUrl: 'http://localhost:3001', //Super login server url(UI url)
+  feedParserServiceUrl: 'http://localhost:3000' 
+
 };

@@ -45,7 +45,7 @@ export class FeedService {
 	public getAllFeeds(url){ 
 
 	return new Promise(resolve => {
-	    var newsrack = 'http://localhost:3000/?id='+url;
+	    var newsrack = this.settings.feedparserUrl+'/?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
 	  //  console.log(response.json())
