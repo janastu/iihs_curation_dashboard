@@ -68,7 +68,7 @@ user:any;
                          
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
-                              console.log("hiddem",feed.value._id,globalfeed.id)
+                             // console.log("hiddem",feed.value._id,globalfeed.id)
                                if(feed.value._id === globalfeed.id) {
                                 var i = _.indexOf(this.variab.globalfeeds,globalfeed);
                                 this.variab.globalfeeds.splice(i,1);

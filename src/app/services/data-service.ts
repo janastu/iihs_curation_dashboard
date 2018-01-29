@@ -151,7 +151,7 @@ constructor(private http: Http,private settings:Settings) {
      this.db.query('annotations/boardannotation', {
            
          }).then(function (result) {
-        // console.log("res",result);
+          console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);

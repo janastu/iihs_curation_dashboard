@@ -41,17 +41,23 @@ date:Date;
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-
-
-
       
 
+
+        //Get board annotations
+                   this.dataservice.getannotations().then(res=>{
+                     //Set result to global variable as it can be accessed outdside the component
+                    this.variab.annotations=res;
+                    
+                   
+
+      
        //console.log("board",annos,this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-        // console.log("annotations",this.variab.annotations);
+        
          var annotatedarray = this.variab.annotations.filter(anno=>{
-
+          // console.log("target",anno.value.target.id);  
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
 
@@ -64,18 +70,19 @@ date:Date;
           
    
         });
+         console.log("annotations",annotatedarray,this.variab.boardupdated);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.variab.boardupdated)
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
             
             return  _.filter(annotatedarray,function(o) { 
-              if(o.key===board.key){
+              if(o.key===board.value.label){
               return o  ; 
             }
             });
 
-         })
+         });
 
          console.log("annoforboards",annosForBoards);
          //Map Annos for Boards to return boolean array
@@ -93,7 +100,8 @@ date:Date;
              }
          })
 
-        console.log(this.labelForBoards);
+      });
+       // console.log(this.labelForBoards);
    
   } 
 
