@@ -4,6 +4,7 @@ import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { DataService } from '../../../services/data-service';
+import { GroupService } from '../../../services/group-service';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
@@ -25,7 +26,7 @@ selectedIcon: number;
 selectedstar:number;
 showDialog:boolean;
 date:Date;
-  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,) { 
+  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService) { 
      this.selectedIndex = -1;
  
 }
@@ -149,7 +150,38 @@ date:Date;
 
        };
        this.boardservice.addboard(model);
-       this.variab.boardupdated.push({value:model});  
+       this.variab.boardupdated.push({value:model}); 
+       //Update the group database with board idboardupdated:any=[];
+
+
+       this.groupService.getgroups().then(res=>{
+         var groups:any=[];
+         groups=res;
+         
+         groups.map(group=>{
+           //Check if the logged member is part of any group
+           var checkmemberof = group.value.members.map(member=>{
+             if(member == this.user){
+               return group.value.groupname;
+             }
+           })
+           
+           //get the group name and update the group with the board
+           checkmemberof.map(value=>{
+             if(group.value.groupname === value){
+               
+                 group.value.boards.push(this.boardname.value);
+              
+               console.log("checkmember",group.value);
+               this.groupService.update(group.value);
+             }
+           })
+
+         })
+         
+
+
+       }) 
      
   }
 

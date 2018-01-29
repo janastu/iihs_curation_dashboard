@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../../../router.animations';
+import { routerTransition } from '../../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
-import { GroupService } from '../../../services/group-service';
-import { Userservice } from '../../../services/userservice';
+import { GroupService } from '../../services/group-service';
+import { Userservice } from '../../services/userservice';
 @Component({
-  selector: 'app-management',
-  templateUrl: './management.component.html',
-  styleUrls: ['./management.component.scss'],
+  selector: 'app-join-group',
+  templateUrl: './join-group.component.html',
+  styleUrls: ['./join-group.component.scss'],
   animations: [routerTransition()]
 })
-export class ManagementComponent implements OnInit {
+export class JoinGroupComponent implements OnInit {
   contacts:any=[];
   usertypes:any=[{name:'admin'},{name:'student'}];
   groupname:any;
@@ -28,23 +28,21 @@ export class ManagementComponent implements OnInit {
     })
   }
   //Function to add user to a group
-   addContact(name,mail,u,group){
+   addContact(name,mail,user,group){
      var slusers:any=[];
-      let contact = new Contact(name,mail,u,group);
-      console.log(contact);
+
       this.userService.getusers().then(res=>{
         slusers=res;
         slusers.map(user=>{
           if(user.key === name){
             //check if the user is already a part of some group
             //if yes the push the group else make a property with group array
-            if(user.value.memberof === undefined){
-              user.value.memberof=[group];
-              user.value.type=u;
+            if(user.value.group === undefined){
+              user.value.group=[group];
               this.userService.updateAuser(user.value);
             }
             else{
-              user.value.memberof.push(group);
+              user.value.group.push(group);
               this.userService.updateAuser(user.value);
             }
           console.log(user.value);
@@ -61,14 +59,14 @@ export class ManagementComponent implements OnInit {
           }
         })
       });
-      this.contacts.push(contact);
+   
   }
    removeContact(contact){
       let index = this.contacts.indexOf(contact);
       this.contacts.splice(index,1);
   }
-  //Function to add group 
-  addGroup(){
+ 
+ addGroup(){
    var members:any=[];
    var boards:any=[];
    let doc={
@@ -78,24 +76,19 @@ export class ManagementComponent implements OnInit {
      'boards':[]
 
    }
-   //console.log("dov",doc);
+  // console.log("dov",doc);
    this.groups.push({value:doc});
    this.groupService.addGroupDb(doc);
-  }
+ }
+ //Join to a Particular group
+ joinGroup(groupname){
+   this.groups.map(group=>{
+     if(group.value.groupname === groupname){
+       group.value.members.push(this.user);
+       this.groupService.update(group);
+     }
+   })
+ }
 
 }
-class Contact{
-    name:string;
-    mail:string;
-    user:string;
-    descr:string;
-    group:any=[];
 
-    constructor(name,mail,user,group){
-        this.name=name;
-        this.mail=mail;
-        this.user=user;
-        this.group=group
-        this.descr=this.name+'   '+this.mail+'   '+this.user+'   '+this.group;
-    }
-}

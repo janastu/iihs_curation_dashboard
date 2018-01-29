@@ -25,13 +25,13 @@
               </div>
               
 
-               <div class="feed-entry">
+               <div class="feed-entry" *ngIf="item.value.description != null">
                <!--Feed Image--> 
-                <div *ngIf="checkimg(item.value.desc)" class="desc-image">
-                 <img [src]="extracturl(item.value.desc)" class="magazine-image">
+                <div *ngIf="checkimg(item.value.description)" class="desc-image">
+                 <img [src]="extracturl(item.value.description)" class="magazine-image">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="magazine-image"></div>-->
                 </div>
-                <div *ngIf="!checkimg(item.value.desc)" class="desc-image">
+                <div *ngIf="!checkimg(item.value.description)" class="desc-image">
                  <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                
                 
@@ -43,18 +43,18 @@
                      <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.value.url}} class="metadata-magazine">
-                      {{item.value.category}}</a>
+                      {{item.value.feedname}}</a>
                     <!--Feed Date-->
                     <a href={{item.value.url}} class="metadata-magazine">
-                      {{item.value.date | date}}
+                      {{item.value.pubDate | date}}
                     </a>
                     <!--Feed Desc-->
-                    <div *ngIf="checkimg(item.value.desc)" class="feed-content">
+                    <div *ngIf="checkimg(item.value.description)" class="feed-content">
                         
                     </div>
 
-                    <div *ngIf="!checkimg(item.value.desc)" class="feed-content">
-                        {{item.value.desc.substring(0,20)}}
+                    <div *ngIf="!checkimg(item.value.description)" class="feed-content">
+                        {{item.value.description.substring(0,250)}}
 
                     </div>
                    

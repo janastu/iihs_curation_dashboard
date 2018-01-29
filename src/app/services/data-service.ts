@@ -15,7 +15,8 @@ constructor(private http: Http,private settings:Settings) {
 
     this.db = new PouchDB('iihs_annotation');
    
-  //this.remote = 'http://192.168.1.30:5984/iihs_annotation';
+  //function call to create design docs
+  this.createDesignDocs();
 
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
  this.remote  = this.settings.protocol+this.settings.host+this.settings.dbannotations;
@@ -47,21 +48,114 @@ constructor(private http: Http,private settings:Settings) {
         });
 
   }
+  //Design Docs
+  createDesignDocs(){
+  
+  
+
+    var ddoc = {
+      _id: '_design/annotations',
+      views: {
+        boardannotation: {
+          map: function (doc) {
+            if (doc.label && doc.motivation ==='tagging' && !doc.hideboardanno) {
+                     
+                      emit(doc.label[0],doc);
+                    }
+          }.toString()
+        },
+        readlater: {
+          map: function (doc) {
+            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno) {
+                    emit(doc.creator,doc);
+                         }
+          }.toString()
+        },
+        recentlyread: {
+          map: function (doc) {
+            if (doc.motivation === 'tagging' && !doc.label && !doc.hiderecenltyreadanno) {
+                     emit(doc.creator,doc);
+                       }
+          }.toString()
+        },
+        hidden: {
+          map: function (doc) {
+            if (doc.hidden === true && doc.target.key) {
+                    emit(doc.creator,doc);
+                           }
+          }.toString()
+        },
+        boardhidden: {
+          map: function (doc) {
+            if(doc.hideboardanno == true){
+              emit(doc.label,doc);
+            }
+          }.toString()
+        }
+
+      }
+
+
+    }
+    var feedsdoc = {
+      _id: '_design/annotatedfeeds',
+      views: {
+        boardfeeds: {
+          map: function (doc) {
+            if (doc.label && !doc.hideboardanno) {
+                     emit(doc.label,doc.target.value);
+             }
+          }.toString()
+        },
+        deletedfeeds: {
+          map: function (doc) {
+            if (doc.hidden === true) {
+                  emit([doc.creator,doc.target.value.feednme],doc.target);
+                   }
+          }.toString()
+        },
+        alldeletedfeeds: {
+          map: function (doc) {
+            if(doc.hidden == true){
+              emit(doc.creator,doc.target.value);
+            }
+          }.toString()
+        }
+
+      }
+    }
+
+    // save the design doc
+    this.db.put(ddoc).catch(function (err) {
+      if (err.name !== 'conflict') {
+        throw err;
+      }
+      // ignore if doc already exists
+    })
+    // save the design doc
+    this.db.put(feedsdoc).catch(function (err) {
+      if (err.name !== 'conflict') {
+        throw err;
+      }
+      // ignore if doc already exists
+    })
+    
+    
+  
+
+  }
   getannotations(){ 
-    console.log("amn",this.settings.dbannotations)
+    
 
-    var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/boardannotation'
-
-    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/boardannotation';
-   
-    console.log(url);
    return new Promise(resolve => {
-     this.http.get(url).map(res=>res.json()).subscribe(result=> {
-       
-       resolve(result.rows);
-     }, (err) =>{
-       console.log(err);
-     });
+     this.db.query('annotations/boardannotation', {
+           
+         }).then(function (result) {
+          console.log("res",result);
+         resolve(result.rows);
+       }).catch(function (err) {
+         console.log(err);
+       });
    });
 
   }
@@ -87,12 +181,14 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
-      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-        
-        resolve(result.rows);
-      }, (err) =>{
-        console.log(err);
-      });
+      this.db.query('annotatedfeeds/boardfeeds', {
+           key:[board]
+         }).then(function (result) {
+         console.log("res",result);
+         resolve(result.rows);
+       }).catch(function (err) {
+         console.log(err);
+       });
     });
 
   
@@ -106,10 +202,12 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/readlater?key='+'"'+usr+'"';
     console.log(url)
     return new Promise(resolve => {
-      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-        
+      this.db.query('annotations/readlater', {
+          key:usr
+        }).then(function (result) {
+       // console.log("res",result);
         resolve(result.rows);
-      }, (err) =>{
+      }).catch(function (err) {
         console.log(err);
       });
     });
@@ -123,10 +221,12 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-        //console.log(result.rows)
+      this.db.query('annotations/recentlyread', {
+          key:usr
+        }).then(function (result) {
+       // console.log("res",result);
         resolve(result.rows);
-      }, (err) =>{
+      }).catch(function (err) {
         console.log(err);
       });
     });
@@ -148,26 +248,31 @@ constructor(private http: Http,private settings:Settings) {
 
    // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
    return new Promise(resolve => {
-      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-        //console.log(result.rows)
+      this.db.query('annotatedfeeds/alldeletedfeeds', {
+          
+        }).then(function (result) {
+       // console.log("res",result);
         resolve(result.rows);
-      }, (err) =>{
+      }).catch(function (err) {
         console.log(err);
       });
     });
 
   }
-  getdeletedfeeds(category){
+  getdeletedfeeds(usr,category){
 
     var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
 
     console.log(url)
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
-      this.http.get(url).map(res=>res.json()).subscribe(result=> {
-        //console.log(result.rows)
+      this.db.query('annotatedfeeds/deletedfeeds', {
+          key:[usr,category]
+          
+        }).then(function (result) {
+       console.log("res",result);
         resolve(result.rows);
-      }, (err) =>{
+      }).catch(function (err) {
         console.log(err);
       });
     });

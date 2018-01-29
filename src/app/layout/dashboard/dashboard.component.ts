@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
+     
 
     this.user = localStorage.getItem('name');
    
@@ -57,15 +58,17 @@ export class DashboardComponent implements OnInit {
             this.feeds=res;
         });*/
 
-        this.service.getAll().then(res=>{
+        /*this.service.getAll().then(res=>{
             console.log(res);
-        });
+        });*/
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
           console.log(this.variab.categoryupdated)
           
         });
+        
+        
   
     }
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked

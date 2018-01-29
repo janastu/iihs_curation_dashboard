@@ -12,13 +12,15 @@ import { routerTransition } from '../../router.animations';
 export class SourcesComponent implements OnInit {
   catvalue;
   metadata:any=[];
-  feedname:any;
+  category:any;
+  feedlink:any;
   createfeed:boolean=false;
   constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService) { 
     
   }
 
   ngOnInit() {
+    //this.feedService.getfrompouchdb();
     this.categoryService.getAll().then((result)=>{
       this.variab.categoryfeeds=result;
     })
@@ -33,13 +35,13 @@ export class SourcesComponent implements OnInit {
     }
     this.categoryService.addcategory(doc);
     this.variab.categoryupdated.push({doc:doc})*/
-    console.log(this.feedname);
-    this.feedService.getAllFeeds(this.feedname).then(res=>{
+    console.log(this.feedlink);
+    this.feedService.getAllFeeds(this.feedlink).then(res=>{
       this.metadata = res;
-      
+      this.category = this.metadata.categories[0];
       this.createfeed = true;
       console.log("value",this.metadata,this.createfeed);
-    })
+    });
   	
   }
 }

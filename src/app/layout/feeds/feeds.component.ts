@@ -9,7 +9,7 @@ import { Global } from '../../shared/global';
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
-import { ComponentsService } from '../../services/components-service';
+import { FeedService } from '../../services/feed-service';
 declare var require:any;
 var moment = require('moment');
 @Component({
@@ -28,12 +28,12 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 catname:any;
 usersview:any;
+user:any;
 
-
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService,private route: ActivatedRoute) { }
+  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
-    
+    this.user =localStorage.getItem('name');
     
     this.usersview = localStorage.getItem('view');
  
@@ -45,9 +45,11 @@ usersview:any;
            this.route.params
             .subscribe(params => {
               this.catname = params.id;
-               this.service.getcategoryfeeds(this.catname).then(res=>{
-                     this.variab.globalfeeds = res;
-                     //console.log(this.variab.globalfeeds);
+               this.feedService.getcategoryfeeds(this.catname).then(res=>{
+                
+                 
+                    this.variab.globalfeeds = res;
+                     console.log(this.variab.globalfeeds);
                      //After filtering the feeds according to category remove the hidden feeds 
                      //and display the rest feeds
                        let hiddenfeeds:any=[];
@@ -55,18 +57,19 @@ usersview:any;
                        
                        
                        
-                        this.dataservice.getdeletedfeeds(this.catname).then(res=>{
+                        this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
                          hiddenfeeds=res;
+                         console.log(hiddenfeeds)
                          if(hiddenfeeds.length == 0){
                            this.feeds = this.variab.globalfeeds;
                            document.getElementById('loading').style.display = 'none';
                            }
-                          console.log("feedsrender",this.feeds)
+                          
                          
                           this.variab.globalfeeds.map(globalfeed=>{
                             hiddenfeeds.map(feed=>{
-                              //console.log("hiddem",this.feeds)
-                               if(feed.value.id === globalfeed.id) {
+                             // console.log("hiddem",feed.value._id,globalfeed.id)
+                               if(feed.value._id === globalfeed.id) {
                                 var i = _.indexOf(this.variab.globalfeeds,globalfeed);
                                 this.variab.globalfeeds.splice(i,1);
 
@@ -74,7 +77,7 @@ usersview:any;
                                  //console.log("feedis",this.feeds,this.variab.globalfeeds)
                                    if(this.feeds.length == 0){
                                       //this.loading = true;
-                                      console.log("feed spiiner");
+                                      
                                       document.getElementById('loading').style.display = 'block';
                                    }
                                    else{
@@ -88,6 +91,7 @@ usersview:any;
                          
 
                         })
+                   
              });
 
            });
@@ -106,9 +110,10 @@ usersview:any;
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
+
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-    
-       if(fromdate<=res.value.date && todate>=res.value.date){
+        console.log("date",Date.parse(res.value.date));
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
         }
@@ -128,15 +133,17 @@ usersview:any;
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-     this.service.getlatestfeeds(this.catname).then(result=>{
+     this.feedService.getlatestfeeds(this.catname).then(result=>{
        this.feeds=result;
        this.feeds.reverse();
+       
      })
     }
     if(childSortLabel === 'Oldest'){
       
-     this.service.getoldestfeeds(this.catname).then(result=>{
+     this.feedService.getlatestfeeds(this.catname).then(result=>{
        this.feeds=result;
+       
        console.log(this.feeds)
      })
     }

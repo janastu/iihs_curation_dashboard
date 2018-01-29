@@ -8,16 +8,17 @@
 
   <div class="row">
    
-        <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-6 offset-sm-3">
     
     	<div class="card-blocks">
-          <div class="row">
+          
+        <div class="row">
             <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
               <!--Feed Title-->
               <div class="row">
                 <app-modal #modal [item]="item.value" [index]='i'></app-modal>
                <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
-               
+              
               </div>
               <!--Feed Category-->
               <div class="row">
@@ -26,7 +27,7 @@
               </a>
               <!--Feed Date-->
               <a href={{item.value.url}} class="metadata-article">
-                      {{item.value.date | date}}
+                      {{item.value.pubDate | date}}
               </a>
               </div>
               <!--Feed Toolbar-->
@@ -36,32 +37,37 @@
               
 
               </div>
+             
               <!--Feed Image-->
-              <div *ngIf="checkimg(item.value.desc)" class="row">
+              <div *ngIf="item.value.description != null">
+              <div *ngIf="checkimg(item.value.description)" class="row">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="article-image"></div>-->
-                <img [src]="extracturl(item.value.desc)" data-image-enhancer="larger than 578" class="article-image">
+                <img [src]="extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
               </div>
-              <div *ngIf="!checkimg(item.value.desc)" class="row">
+              <div *ngIf="!checkimg(item.value.description)" class="row">
                 <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
                 
               </div>
               <!--Feed Desc-->
               <div class="row">
-                <div *ngIf="checkimg(item.value.desc)" class="feed-content article-feed-content">
+                <div *ngIf="checkimg(item.value.description)" class="feed-content article-feed-content">
                       
                 </div>
-                <div *ngIf="!checkimg(item.value.desc)" class="feed-content article-feed-content">
-                        {{item.value.desc.substring(0,250)}}
+                <div *ngIf="!checkimg(item.value.description)" class="feed-content article-feed-content">
+                        {{item.value.description.substring(0,250)}}
                 </div>
               </div>
-            </div>
+              </div>
+              
 
         </div>
+
+      </div>
     
     </div>
 
-      </div> 
+  </div> 
        
-    </div>
-</div>	
+</div>
+
 

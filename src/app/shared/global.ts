@@ -16,14 +16,17 @@ export class Global {
    readlaterfeeds:any=[];
    recentlyread:any=[];
    boardupdated:any=[];
+   displayUserBoards:any=[];
    categoryfeeds:any=[];
    categoryupdated:any=[];
+   metacategories:any=[];
    hiddenfeeds:any=[]; 
    boardfeeds:any=[];
    recentdocs:any=[];
    annotations:any=[];
    globalcatname:any;  
    globalboardname:any;
+   userDoc:any;
   constructor(public http: Http) {
   
 

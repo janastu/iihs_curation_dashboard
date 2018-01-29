@@ -16,7 +16,7 @@
                         <!--Feed Category-->     
                              <a href={{item.value.url}} class="feeds-data">{{item.value.category}}</a>
                         <!--Feed Date--> 
-                             <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.date | date}}</small>
+                             <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                              
                         <!--Feed Title--> 
 
@@ -24,11 +24,13 @@
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
                               
                         <!--Feed description--> 
-                            <div *ngIf="checkimg(item.value.desc)" class="list-group-item-text desc"></div>
-                            <span *ngIf="!checkimg(item.value.desc)" class="list-group-item-text desc">{{item.value.desc.substring(0,10)}}</span>
+                        <div *ngIf="item.value.description != null">
+                            <div *ngIf="checkimg(item.value.description)" class="list-group-item-text desc"></div>
+                            <span *ngIf="!checkimg(item.value.description)" class="list-group-item-text desc">{{item.value.description.substring(0,10)}}</span>
                            <!--Mouse over for each element-->
                            <div class="title-hover-control">
                             <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
+                           </div>
                            </div> 
                         </div>
                 </div>

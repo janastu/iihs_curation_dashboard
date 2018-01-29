@@ -45,21 +45,19 @@
         
             <img src="assets/images/radio.png" class="user-avatar img-log" />&nbsp;{{ 'IIHS-MM' | translate }}
         </a>
+       
         <div class="nested-menu">
             <a class="list-group-item" (click)="addFeedClass('feeds')">
                 <span><i class="fa fa-bars"></i>&nbsp;{{ 'Feeds' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'feeds'">
                 <ul class="submenu">
-                <li>
-                     <a (click)="routeto('All-Channels')" class="list-group-item">
-                      <i class="fa fa-bars"></i>&nbsp;{{ 'All-channels' | translate }}
-                     </a>
-                 </li>
+                
                
                  <li *ngFor="let item of variab.categoryupdated">
-                      <a  (click)="routeto(item.doc.feedname)" class="onmenu">
+                        <a  (click)="routeto(item.doc.feedname)" class="onmenu">
                         <span><i class="fa fa-chevron-right"></i>&nbsp;{{ item.doc.feedname | translate }}</span></a>
+                        
                  </li>
                 
                  </ul>
@@ -75,7 +73,7 @@
                 <ul class="submenu">
                     <li *ngFor="let item of variab.boardupdated">
                       <a (click)="routetoboard(item.value.label)" class="onmenu">
-                        <span><i class="fa fa-star-o"></i>&nbsp;{{ item.value.label| translate }}</span></a>
+                        <span><i class="fa fa-star-o"></i>&nbsp;{{ item.value.label | translate }}</span></a>
                     </li>
                 </ul>
             </li>

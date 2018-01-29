@@ -13,12 +13,12 @@
           <!--Mouse over for each element-->
             <div class="card-hover-control">
               <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar></div>
-                
-                <div *ngIf="checkimg(item.value.desc)" class="card-view">
-                  <!--<div [innerHtml]="extracturl(item.value.desc)" class="card-view"></div>-->
-                  <img [src]="extracturl(item.value.desc)">
+                <div *ngIf="item.value.description != null">
+                <div *ngIf="checkimg(item.value.description)" class="card-view">
+                  <!--<div [innerHtml]="extracturl(item.value.description)" class="card-view"></div>-->
+                  <img [src]="extracturl(item.value.description)">
                 </div>
-                <div *ngIf="!checkimg(item.value.desc)" class="card-view">
+                <div *ngIf="!checkimg(item.value.description)" class="card-view">
                   <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png">
                 </div>
                     <div class="card-block card-text">
@@ -28,11 +28,12 @@
                        <!--Feed Category-->
                       <a href={{item.value.url}} class="feeds-data">{{item.value.category}}</a>
                       <!--Feed Date-->
-                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.date | date}}</small>
+                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                       <!--Feed description--> 
-                      <p *ngIf="checkimg(item.value.desc)" class="feed-desc"></p> 
-                      <p *ngIf="!checkimg(item.value.desc)" class="feed-desc">{{item.value.desc.substring(0,85)}}</p>
+                      <p *ngIf="checkimg(item.value.description)" class="feed-desc"></p> 
+                      <p *ngIf="!checkimg(item.value.description)" class="feed-desc">{{item.value.description.substring(0,85)}}</p>
                     </div>
+                </div>    
           </div>
         </div>
       </div>

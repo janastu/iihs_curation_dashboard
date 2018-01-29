@@ -130,6 +130,22 @@ getusers(){
 
 
 }
+getAuser(user){
+  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user;
+   //console.log(url);
+  return new Promise(resolve => {
+        this.http.get(url).map(res=>res.json()).subscribe((response)=> {
+          
+          console.log("users",response);
+          resolve(response);
+        }, (err) => {
+          console.log(err);
+        }); 
+
+  });
+
+
+}
 updateAuser(user){
   var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user.name;
   console.log(url)
@@ -148,6 +164,7 @@ updateAuser(user){
 
 }
  
+
 
 
 
