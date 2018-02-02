@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-     
+     this.userService.checkExpired();
 
     this.user = localStorage.getItem('name');
    
@@ -64,8 +64,8 @@ export class DashboardComponent implements OnInit {
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
-          console.log(this.variab.categoryupdated)
-          
+          //console.log(this.variab.categoryupdated)
+            
         });
         
         

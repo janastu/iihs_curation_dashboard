@@ -18,10 +18,9 @@ import * as _ from 'lodash';
 export class SidebarComponent implements OnInit{
   
     user:any;
-    
     isActive = false;
     showMenu = '';
-
+    selected:any;
     eventCalled() {
         this.isActive = !this.isActive;
     }
@@ -33,12 +32,25 @@ export class SidebarComponent implements OnInit{
         }
     }
     addFeedClass(element: any) {
+        
         if (element === this.showMenu) {
-            this.showMenu = '0';
+          
+            this.showMenu = '0';  
         } else {
+            
             this.showMenu = element;
+
         }
     }
+   
+   select(item){
+        this.selected = (this.selected === item ? null : item);
+     }
+     isactive(item){
+       return this.selected === item;
+     }
+
+
     
     constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public service:Service,public groupService:GroupService){
    
@@ -148,6 +160,8 @@ export class SidebarComponent implements OnInit{
         //  console.log(this.variab.categoryupdated)
           
         });
+
+
         
 
 
@@ -158,6 +172,21 @@ export class SidebarComponent implements OnInit{
         
         
         this.router.navigate(['/feeds',category] )
+       // console.log(category);
+          /*this.service.getcategoryfeeds(category).then(res=>{
+                 this.variab.globalcatname = category;
+                   this.variab.globalfeeds=res;
+                     //console.log(this.variab.globalfeeds);
+                 this.componentsService.alert(category,res); 
+        
+        });*/
+
+    }
+    //Function called from html to navigate to feeds component with category name in the meta data
+    routetometa(category,meta){
+        
+        
+        this.router.navigate(['/feeds',category,{subcategory:meta}])
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;

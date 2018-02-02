@@ -96,7 +96,7 @@ export class FeedService {
 		    metacategories: {
 		      map: function (doc) {
 		        if (doc.meta) {
-		          emit(doc.meta.categories,doc);
+		          emit(doc.meta.categories[0],doc);
 		        }
 		      }.toString()
 		    },
@@ -247,13 +247,13 @@ export class FeedService {
 		var jsonusersession = JSON.parse(usersession);
 
 		let url = jsonusersession.userDBs.supertest;
-
+		console.log(id,metadata)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
 			
-		      this.http.put(url+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
+		      this.http.put(url+'/'+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
 		       // resolve(response.rows);

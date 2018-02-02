@@ -105,7 +105,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     }
     ul.submenu {
         display: none;
-        height: 0;
+        
     }
     & .expand {
         ul.submenu {
@@ -163,4 +163,22 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
 }
 .onmenu{
     cursor:pointer;
+}
+ul li{
+cursor:pointer;
+}
+.active ul{
+display:block !important;
+}
+.feed-list-item{
+    background: $topnav-background-color;
+    border: 0;
+    border-radius: 0;
+    color: $topnav-color;
+    text-decoration: none;
+    
+}
+.feed-list-item:hover{
+    background: darken($topnav-background-color, 5%);
+            color: $onhover;   
 }

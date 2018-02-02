@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
-import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
-import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { CategoryService } from '../../../services/category-service';
 import { FeedService } from '../../../services/feed-service';
@@ -39,9 +39,9 @@ ngOnChanges(){
     //Check for link is added to a feedname and user subscriptions
     var linkExists = this.variab.categoryupdated.map(link=>{
       
-      var checkForLink = link.doc.metadata.feedlink.map(everylink=>{
+      var checkForLink = link.doc.metadata.map(everylink=>{
 
-        if(everylink === this.url){
+        if(everylink.link === this.url){
           this.followstatus=true;
           console.log("folloew",this.followstatus)
           return true;
@@ -101,14 +101,14 @@ ngOnChanges(){
   //Create a new feed name and add the feed name and metadata to user subscriptions
  createfeed(i){
 
-   this.data.feedlink = [this.url];
+   //this.data.feedlink = [this.url];
 
  	    let doc={
          "feedname":this.feedname.value,
-         "metadata":this.data
+         "metadata":[this.data]
         }
     
-    console.log(doc)
+    console.log(doc);
    this.feedService.addFeed(doc);
    this.variab.categoryupdated.push({doc:doc});
    this.visible = false;
@@ -134,8 +134,9 @@ ngOnChanges(){
      //If the feedname exists then update the already existing doc with the new feed link 
    
      if(update == 1){
-         
-         name.doc.metadata.feedlink.push(this.url);
+         console.log("doc",name.doc.metadata);
+         name.doc.metadata.push(this.data);
+
          this.feedService.update(name.id,name.doc)
          this.labelForFeeds[i]=true;
         }

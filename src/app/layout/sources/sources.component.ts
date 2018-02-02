@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Global } from '../../shared/global';
 import { CategoryService } from '../../services/category-service';
 import { FeedService } from '../../services/feed-service';
+import { Userservice } from '../../services/userservice';
 import { routerTransition } from '../../router.animations';
 @Component({
   selector: 'app-sources',
@@ -15,7 +16,7 @@ export class SourcesComponent implements OnInit {
   category:any;
   feedlink:any;
   createfeed:boolean=false;
-  constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService) { 
+  constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService,public userService:Userservice) { 
     
   }
 
@@ -35,8 +36,8 @@ export class SourcesComponent implements OnInit {
     }
     this.categoryService.addcategory(doc);
     this.variab.categoryupdated.push({doc:doc})*/
-    console.log(this.feedlink);
-    this.feedService.getAllFeeds(this.feedlink).then(res=>{
+
+      this.feedService.getAllFeeds(this.feedlink).then(res=>{
       this.metadata = res;
       this.category = this.metadata.categories[0];
       this.createfeed = true;

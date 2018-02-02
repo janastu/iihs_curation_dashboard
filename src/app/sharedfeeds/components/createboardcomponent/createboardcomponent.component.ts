@@ -70,7 +70,7 @@ date:Date;
           
    
         });
-         console.log("annotations",annotatedarray,this.variab.boardupdated);
+        // console.log("annotations",annotatedarray,this.variab.boardupdated);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.variab.boardupdated)
@@ -84,7 +84,7 @@ date:Date;
 
          });
 
-         console.log("annoforboards",annosForBoards);
+         //console.log("annoforboards",annosForBoards);
          //Map Annos for Boards to return boolean array
          //Returns example:[true,false,true] 
          //Index of output == Index of label which means label[0] and label[1] 
@@ -196,7 +196,7 @@ date:Date;
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
     this.labelForBoards[i]=false;
-    this.selectedstar = 0;
+    //this.selectedstar = 0;
     this.variab.annotations.map(anno=>{
       if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
            

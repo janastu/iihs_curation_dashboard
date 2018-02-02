@@ -6,7 +6,7 @@ import PouchDB from 'pouchdb';
 import {Settings} from './settings'
 declare function emit(key: any,value:any): void;
 @Injectable()
-export class Userservice {
+export class Userservice {  
   db:any;
   remote:any;
   username:any;
@@ -93,9 +93,10 @@ return new Promise(resolve => {
 
 }
 getUserSubscriptions(){
+
   var usersession = localStorage.getItem("superlogin.session")
   var jsonusersession = JSON.parse(usersession);
-  console.log(jsonusersession)
+  
   let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
   
   let headers = new Headers();
@@ -104,8 +105,6 @@ getUserSubscriptions(){
   let options = new RequestOptions({ headers: headers });
   return new Promise(resolve => {
         this.http.get(url,options).map(res=>res.json()).subscribe((response)=> {
-          
-          console.log("user",response);
           resolve(response.rows);
         }, (err) => {
           console.log(err);
@@ -164,7 +163,15 @@ updateAuser(user){
 
 }
  
-
+checkExpired(){
+  console.log("sesssion",superlogin.getSession());
+  //superlogin.checkExpired()
+}
+logout(){
+  superlogin.logout('message').then(res=>{
+    console.log(res);
+  })
+}
 
 
 

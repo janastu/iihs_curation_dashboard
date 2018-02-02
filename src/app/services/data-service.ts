@@ -103,7 +103,7 @@ constructor(private http: Http,private settings:Settings) {
         boardfeeds: {
           map: function (doc) {
             if (doc.label && !doc.hideboardanno) {
-                     emit(doc.label,doc.target.value);
+                     emit(doc.label[0],doc.target.value);
              }
           }.toString()
         },
@@ -151,7 +151,7 @@ constructor(private http: Http,private settings:Settings) {
      this.db.query('annotations/boardannotation', {
            
          }).then(function (result) {
-          console.log("res",result);
+         // console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -182,7 +182,7 @@ constructor(private http: Http,private settings:Settings) {
 
     return new Promise(resolve => {
       this.db.query('annotatedfeeds/boardfeeds', {
-           key:[board]
+           key:board
          }).then(function (result) {
          console.log("res",result);
          resolve(result.rows);

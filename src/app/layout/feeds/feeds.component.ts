@@ -44,8 +44,19 @@ user:any;
  //Access the query parameter and filter the feeds according to category
            this.route.params
             .subscribe(params => {
-              this.catname = params.id;
-               this.feedService.getcategoryfeeds(this.catname).then(res=>{
+              console.log(params);
+              
+              if(params.subcategory){
+                
+              this.catname = params.subcategory;
+              this.feedService.getmetacategories(this.catname).then(res=>{
+                console.log(res);
+                this.feeds = res;
+              })
+            }
+            else{
+              this.catname = params.id
+               this.feedService.getcategoryfeeds(params.id).then(res=>{
                 
                  
                     this.variab.globalfeeds = res;
@@ -93,6 +104,7 @@ user:any;
                         })
                    
              });
+            }
 
            });
    
