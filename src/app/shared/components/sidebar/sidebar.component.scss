@@ -105,6 +105,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     }
     ul.submenu {
         display: none;
+        margin-left: 20px;
         
     }
     & .expand {
@@ -176,6 +177,7 @@ display:block !important;
     border-radius: 0;
     color: $topnav-color;
     text-decoration: none;
+    margin-left: 19px;
     
 }
 .feed-list-item:hover{
