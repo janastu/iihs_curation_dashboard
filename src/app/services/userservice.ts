@@ -162,9 +162,24 @@ updateAuser(user){
         }); 
 
 }
+pullnewFeeds(doc){
+  
+  doc.metadata.map(url=>{
+    //console.log(doc);
+    var newsrack = this.settings.feedparserUrl+'/?url='+url.link+'&feedname='+doc.feedname;
+    //console.log(newsrack);
+    this.http.get(newsrack).subscribe((response)=> {
+      //console.log("va;",response);
+    })
+  })
+  
+}
  
 checkExpired(){
   console.log("sesssion",superlogin.getSession());
+  if(superlogin.getSession() === null){
+    localStorage.removeItem('isLoggedin');
+  }
   //superlogin.checkExpired()
 }
 logout(){

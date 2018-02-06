@@ -115,7 +115,9 @@ export class SidebarComponent implements OnInit{
                     //get the boards belong to a group
                     checkmemberof.map(value=>{
                       if(group.value.groupname === value){
+
                         this.variab.displayUserBoards = group.value.boards;
+                        
                       }
                      
                       

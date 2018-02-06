@@ -13,21 +13,23 @@ import { environment } from '../../environments/environment';
 export class Settings{
 
 	constructor(){
-		
+	
+	console.log("ENv files",environment.couchdbusername);
+	
+
 	}
-	protocol:any='http://'; 
+	protocol: any = environment.protocol;
 
-	//host:any='login.test.openrun.net'; 
+	//host:any='login.test.openrun.net';
 	host:any = environment.host;	//couchdb host
-	dbfeed:any='/feeds'; //feeds database
-	dbannotations:any='/iihs_annotation'; //annotations database
-	dbboards:any='/boards';	//boards database
-	dbgroups:any='/groups';	//groups database
-	dbusers:any='/sl-users';//users database
-	couchdbusername:any=environment.username; //couchdb username
-	couchdbpassword:any=environment.password;	//couchdb password
-	superloginserverUrl:any=environment.superLoginServerUrl // super login server url
-	feedparserUrl:any=environment.feedParserServiceUrl // feed Parser server url
-
+	dbfeed:any=':'+environment.couchdbport+'/feeds'; //feeds database
+	dbannotations: any = ':'+environment.couchdbport+'/iihs_annotation'; //annotations database
+	dbboards: any = ':'+environment.couchdbport+'/boards';	//boards database
+	dbgroups: any = ':'+environment.couchdbport+'/groups';	//groups database
+	dbusers: any = ':'+environment.couchdbport+'/sl-users';//users database
+	couchdbusername: any =environment.couchdbusername; //couchdb username
+	couchdbpassword:any=environment.couchdbpassword;	//couchdb password
+	superloginserverUrl: any = environment.protocol+environment.host+':'+environment.superloginport; // super login server url
+	feedparserUrl: any = environment.protocol+environment.host+':'+environment.feedParserport; // super login server url
 
 }

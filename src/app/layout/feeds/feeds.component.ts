@@ -51,7 +51,9 @@ user:any;
               this.catname = params.subcategory;
               this.feedService.getmetacategories(this.catname).then(res=>{
                 console.log(res);
-                this.feeds = res;
+                this.variab.globalfeeds = res;
+               
+                 this.checkForDeletedFeeds(); 
               })
             }
             else{
@@ -60,48 +62,15 @@ user:any;
                 
                  
                     this.variab.globalfeeds = res;
-                     console.log(this.variab.globalfeeds);
+                     
                      //After filtering the feeds according to category remove the hidden feeds 
                      //and display the rest feeds
-                       let hiddenfeeds:any=[];
+                       
                       
                        
+                    this.checkForDeletedFeeds();   
                        
-                       
-                        this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
-                         hiddenfeeds=res;
-                         console.log(hiddenfeeds)
-                         if(hiddenfeeds.length == 0){
-                           this.feeds = this.variab.globalfeeds;
-                           document.getElementById('loading').style.display = 'none';
-                           }
-                          
-                         
-                          this.variab.globalfeeds.map(globalfeed=>{
-                            hiddenfeeds.map(feed=>{
-                             // console.log("hiddem",feed.value._id,globalfeed.id)
-                               if(feed.value._id === globalfeed.id) {
-                                var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-                                this.variab.globalfeeds.splice(i,1);
-
-                                this.feeds = this.variab.globalfeeds;
-                                 //console.log("feedis",this.feeds,this.variab.globalfeeds)
-                                   if(this.feeds.length == 0){
-                                      //this.loading = true;
-                                      
-                                      document.getElementById('loading').style.display = 'block';
-                                   }
-                                   else{
-                                       //this.loading = false;
-                                       document.getElementById('loading').style.display = 'none';
-
-                                   }
-                               }
-                            })
-                         })
-                         
-
-                        })
+                        
                    
              });
             }
@@ -109,7 +78,47 @@ user:any;
            });
    
   }
-  
+  //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
+  // and display the rest of the feeds
+  checkForDeletedFeeds(){
+    console.log("check",this.variab.globalfeeds);
+    let hiddenfeeds:any=[];
+    this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
+     hiddenfeeds=res;
+     console.log(hiddenfeeds)
+     if(hiddenfeeds.length == 0){
+       this.feeds = this.variab.globalfeeds;
+       document.getElementById('loading').style.display = 'none';
+       }
+      
+     
+      this.variab.globalfeeds.map(globalfeed=>{
+        hiddenfeeds.map(feed=>{
+         // console.log("hiddem",feed.value._id,globalfeed.id)
+           if(feed.value._id === globalfeed.id) {
+            var i = _.indexOf(this.variab.globalfeeds,globalfeed);
+            this.variab.globalfeeds.splice(i,1);
+
+            this.feeds = this.variab.globalfeeds;
+             //console.log("feedis",this.feeds,this.variab.globalfeeds)
+               if(this.feeds.length == 0){
+                  //this.loading = true;
+                  
+                  document.getElementById('loading').style.display = 'block';
+               }
+               else{
+                   //this.loading = false;
+                   document.getElementById('loading').style.display = 'none';
+
+               }
+           }
+        })
+     })
+     
+
+    })
+
+  }
 
   //Function to handle view event from page-header component
   public handleView(childView:any){

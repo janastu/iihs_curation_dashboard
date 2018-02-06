@@ -59,6 +59,7 @@
                   <input type="text" class="form-control" placeholder="Group name" value="{{catvalue}}" [(ngModel)]="groupname"/>
                 </div>
                 <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>ADD GROUP</span></button>
+                <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Group Added Successfully</ngb-alert>
             </div>
           </div> 
         </div>

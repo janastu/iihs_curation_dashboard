@@ -65,8 +65,13 @@ export class DashboardComponent implements OnInit {
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
           //console.log(this.variab.categoryupdated)
+          this.variab.categoryupdated.map(user=>{
+            console.log("use",user)
+            this.userService.pullnewFeeds(user.doc);
+          })
             
         });
+
         
         
   

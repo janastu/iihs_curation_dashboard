@@ -25,7 +25,7 @@
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group categories">
             <select #cat multiple="" class="form-control" [(ngModel)]="selectedVal" 
             (change)="onCate(cat)" >
-              <option *ngFor="let disp of variab.categoryupdated">{{disp.doc.category}}</option>
+              <option *ngFor="let disp of variab.categoryupdated">{{disp.doc.feedname}}</option>
             </select>
           </div>
       </div>
