@@ -15,12 +15,12 @@
                             	    <input type="text" class="form-control" placeholder="Search by title,url or #topic" value="{{catvalue}}" [(ngModel)]="feedlink">
                             	    <span class="input-group-btn">
                             	    
-                            	    <button class="btn btn-primary dropdown-toggle-split" (click)="addcontent()">Add</button>
+                            	    <button class="btn btn-success dropdown-toggle-split" (click)="addcontent()">Add</button>
                             	    </span>
                             	</div>
 
                             </div>
-                            <div class="row source-row-margin">
+                            <div class="row source-follow">
                                 <div>&nbsp; &nbsp; {{category}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{metadata.title}}</div>
                                 <div *ngIf="createfeed" class="follow-component">
                                 <app-create-feed [data]="metadata" [url]="feedlink"></app-create-feed>
