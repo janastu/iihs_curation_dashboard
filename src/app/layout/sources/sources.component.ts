@@ -41,6 +41,7 @@ export class SourcesComponent implements OnInit {
       this.metadata = res;
       this.category = this.metadata.categories[0];
       this.createfeed = true;
+      this.feedlink='';
       console.log("value",this.metadata,this.createfeed);
     });
   	

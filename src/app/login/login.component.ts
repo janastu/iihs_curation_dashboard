@@ -3,7 +3,6 @@ import { routerTransition } from '../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Userservice } from '../services/userservice';
-import { GroupService } from '../services/group-service';
 import { Global } from '../shared';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
     alertauth:boolean= false;
     alertmissing:boolean=false;
     errormessage:any;
-    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public groupService:GroupService,public ngAlert:NgbAlertConfig,public variab:Global) {
+    constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global) {
               
 
             }

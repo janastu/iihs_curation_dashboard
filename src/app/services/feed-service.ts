@@ -45,7 +45,7 @@ export class FeedService {
 	public getAllFeeds(url){ 
 
 	return new Promise(resolve => {
-	    var newsrack = this.settings.feedparserUrl+'/?id='+url;
+	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
 	  //  console.log(response.json())
@@ -109,9 +109,31 @@ export class FeedService {
 		    }
 		  }
 		}
+		var linkdoc = {
+			_id: '_design/links',
+			views: {
+				link: {
+				  map: function (doc) {
+				    emit(doc.meta.link, doc.title);
+				  }.toString(),
+				  reduce: function (doc) {
+				    return null;
+				  }.toString()
+				}
+
+			}
+
+		}
 
 		// save the design doc
 		this.db.put(ddoc).catch(function (err) {
+		  if (err.name !== 'conflict') {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+		// save the design doc
+		this.db.put(linkdoc).catch(function (err) {
 		  if (err.name !== 'conflict') {
 		    throw err;
 		  }
@@ -147,7 +169,7 @@ export class FeedService {
 	   return new Promise(resolve => {
 	   	this.db.query('feeds/metacategories', {
 	   	    key:category,
-	   	    include_docs: true
+	   	    limit:20
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);

@@ -24,15 +24,16 @@
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
                               
                         <!--Feed description--> 
-                        <div *ngIf="item.value.description != null">
+                       <div *ngIf="item.value.description != null">
                             <div *ngIf="checkimg(item.value.description)" class="list-group-item-text desc"></div>
                             <span *ngIf="!checkimg(item.value.description)" class="list-group-item-text desc">{{item.value.description.substring(0,10)}}</span>
+                            </div>
                            <!--Mouse over for each element-->
                            <div class="title-hover-control">
                             <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
                            </div>
                            </div> 
-                        </div>
+                       
                 </div>
             </div> 
         </div>    

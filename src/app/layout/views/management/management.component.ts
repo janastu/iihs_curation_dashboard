@@ -3,6 +3,7 @@ import { routerTransition } from '../../../router.animations';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { GroupService } from '../../../services/group-service';
 import { Userservice } from '../../../services/userservice';
+import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-management',
   templateUrl: './management.component.html',
@@ -11,15 +12,16 @@ import { Userservice } from '../../../services/userservice';
 })
 export class ManagementComponent implements OnInit {
   contacts:any=[];
-  usertypes:any=[{name:'admin'},{name:'student'}];
+  usertypes:any=[{name:'admin'},{name:'collaborator'},{name:'other'}];
   groupname:any;
   user:any;
   groups:any=[];
+  alertsuccess
   //loginForm:FormGroup;
   //name = this.formBuilder.control('', [Validators.required]);
   //mail = this.formBuilder.control('', [Validators.required]);
  //usertype = this.formBuilder.control('', [Validators.required]);
-  constructor(public formBuilder:FormBuilder,public groupService:GroupService,public userService:Userservice) { }
+  constructor(public formBuilder:FormBuilder,public groupService:GroupService,public userService:Userservice,public ngAlert:NgbAlertConfig) { }
 
   ngOnInit() {
     this.user = localStorage.getItem('name');
@@ -41,7 +43,7 @@ export class ManagementComponent implements OnInit {
             if(user.value.memberof === undefined){
               user.value.memberof=[group];
               user.value.type=u;
-              this.userService.updateAuser(user.value);
+             this.userService.updateAuser(user.value);
             }
             else{
               user.value.memberof.push(group);
@@ -62,6 +64,7 @@ export class ManagementComponent implements OnInit {
         })
       });
       this.contacts.push(contact);
+      
   }
    removeContact(contact){
       let index = this.contacts.indexOf(contact);
@@ -80,7 +83,14 @@ export class ManagementComponent implements OnInit {
    }
    //console.log("dov",doc);
    this.groups.push({value:doc});
+   this.alertsuccess=true;
+   this.ngAlert.type = 'success';
+   this.groupname='';
    this.groupService.addGroupDb(doc);
+  }
+  public closeAlert() {
+      this.alertsuccess=false;
+      
   }
 
 }
