@@ -23,6 +23,7 @@ export class FeedService {
 
 
 		//remote couchdb url to sync with couchdb
+		
 		 this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
 
 

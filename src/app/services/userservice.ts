@@ -17,6 +17,7 @@ export class Userservice {
 
 constructor(private http: Http,private settings:Settings) {
   this.db = new PouchDB('sl_users');
+ 
   this.remote = this.settings.protocol+this.settings.host+this.settings.dbusers;
   
     
@@ -58,6 +59,7 @@ constructor(private http: Http,private settings:Settings) {
     };
 
     superlogin.configure(config);
+
     this.user = localStorage.getItem("name");
   
 
