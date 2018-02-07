@@ -178,11 +178,16 @@ pullnewFeeds(doc){
 }
  
 checkExpired(){
-  console.log("sesssion",superlogin.getSession());
+ 
+ console.log(superlogin.getSession());
   if(superlogin.getSession() === null){
+    superlogin.refresh();
+    superlogin.on('refresh', function(newSession) { 
+      console.log(newSession);
+     })
     localStorage.removeItem('isLoggedin');
   }
-  //superlogin.checkExpired()
+
 }
 logout(){
   superlogin.logout('message').then(res=>{

@@ -64,13 +64,13 @@ export class BoardService {
 
 	}
 
-	getboards(board){
+	getboards(){
 
 		var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
 
 	return new Promise(resolve => {
 	  this.db.query('board/boards', {
-	      key:board
+	     
 	      
 	    }).then(function (result) {
 	  // console.log("res",result.rows);

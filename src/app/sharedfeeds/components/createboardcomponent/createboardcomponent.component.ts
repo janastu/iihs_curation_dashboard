@@ -161,7 +161,7 @@ date:Date;
     //Update the group database with board idboardupdated:any=[];
 
 
-    this.groupService.getgroups().then(res=>{
+  /*  this.groupService.getgroups().then(res=>{
       var groups:any=[];
       groups=res;
       
@@ -188,7 +188,7 @@ date:Date;
       
 
 
-    })
+    })*/
 
      
   }

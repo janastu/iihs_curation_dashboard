@@ -152,7 +152,7 @@ export class FeedService {
 	   	this.db.query('feeds/categoryfeeds', {
 	   		limit:20,
 	   	    key:category,
-	   	    
+	   	    descending:true
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -198,7 +198,8 @@ export class FeedService {
 	return new Promise(resolve => {
 	  this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
-	      endkey: [category, {}]
+	      endkey: [category, {}],
+	      limit:20
 	    }).then(function (result) {
 	   console.log("res",result);
 	    resolve(result.rows);

@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-     this.userService.checkExpired();
+     
 
     this.user = localStorage.getItem('name');
    
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
           this.variab.categoryupdated=res;
           //console.log(this.variab.categoryupdated)
           this.variab.categoryupdated.map(user=>{
-            console.log("use",user)
+            
             this.userService.pullnewFeeds(user.doc);
           })
             

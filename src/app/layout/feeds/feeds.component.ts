@@ -58,7 +58,7 @@ user:any;
             }
             else{
               this.catname = params.id
-               this.feedService.getcategoryfeeds(params.id).then(res=>{
+               this.feedService.getlatestfeeds(params.id).then(res=>{
                 
                  
                     this.variab.globalfeeds = res;

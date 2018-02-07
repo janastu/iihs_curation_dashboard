@@ -20,16 +20,16 @@ export class Settings{
 	}
 	protocol: any = environment.protocol;
 
-	//host:any='login.test.openrun.net';
-	host:any = environment.couchdbport;	//couchdb host
-	dbfeed:any='/feeds'; //feeds database
-	dbannotations: any = '/iihs_annotation'; //annotations database
-	dbboards: any = '/boards';	//boards database
-	dbgroups: any = '/groups';	//groups database
-	dbusers: any = '/sl-users';//users database
+	host:any = environment.host;	//couchdb host
+	dbfeed:any=':'+environment.couchdbport+'/feeds'; //feeds database
+	dbannotations: any = ':'+environment.couchdbport+'/iihs_annotation'; //annotations database
+	dbboards: any = ':'+environment.couchdbport+'/boards';	//boards database
+	dbgroups: any = ':'+environment.couchdbport+'/groups';	//groups database
+	dbusers: any = ':'+environment.couchdbport+'/sl-users';//users database
 	couchdbusername: any =environment.couchdbusername; //couchdb username
 	couchdbpassword:any=environment.couchdbpassword;	//couchdb password
-	superloginserverUrl: any = environment.superloginport; // super login server url
-	feedparserUrl: any = environment.feedParserport; // super login server url
+	superloginserverUrl: any = environment.protocol+environment.host+':'+environment.superloginport; // super login server url
+	feedparserUrl: any = environment.protocol+environment.host+':'+environment.feedParserport; // super login server url
+
 
 }
