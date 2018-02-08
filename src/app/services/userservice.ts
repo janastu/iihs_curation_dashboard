@@ -18,7 +18,7 @@ export class Userservice {
 constructor(private http: Http,private settings:Settings) {
   this.db = new PouchDB('sl_users');
  
-  this.remote = this.settings.protocol+this.settings.host+this.settings.dbusers;
+  this.remote = this.settings.protocol+this.settings.dbusers;
   
     
        let options = {
@@ -32,7 +32,7 @@ constructor(private http: Http,private settings:Settings) {
        };
     
        this.db.sync(this.remote, options);
-   
+     console.log('ad', this.settings.superloginserverUrl);
 //Configurations for user registration and login
    var config:any = {
       serverUrl: this.settings.superloginserverUrl,
@@ -116,7 +116,7 @@ getUserSubscriptions(){
 
 }
 getusers(){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/_design/user/_view/user';
+  var url = this.settings.protocol+this.settings.dbusers+'/_design/user/_view/user';
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
@@ -132,7 +132,7 @@ getusers(){
 
 }
 getAuser(user){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user;
+  var url = this.settings.protocol+this.settings.dbusers+'/'+user;
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
@@ -148,7 +148,7 @@ getAuser(user){
 
 }
 updateAuser(user){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user.name;
+  var url = this.settings.protocol+this.settings.dbusers+'/'+user.name;
   console.log(url)
   let headers = new Headers();
    headers.append( 'Content-Type', 'application/json')

@@ -17,7 +17,7 @@ export class BoardService {
 		//function call to create design docs
 		this.createDesignDocs();
 
-		this.remote = this.settings.protocol+this.settings.host+this.settings.dbboards;
+		this.remote = this.settings.protocol+this.settings.dbboards;
 
 		
 		  
@@ -66,7 +66,7 @@ export class BoardService {
 
 	getboards(){
 
-		var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
+		//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
 
 	return new Promise(resolve => {
 	  this.db.query('board/boards', {

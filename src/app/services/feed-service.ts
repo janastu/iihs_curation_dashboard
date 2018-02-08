@@ -24,7 +24,7 @@ export class FeedService {
 
 		//remote couchdb url to sync with couchdb
 		
-		 this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
+		 this.remote = this.settings.protocol+this.settings.dbfeed;
 
 
 		  
@@ -191,7 +191,7 @@ export class FeedService {
 	  var date = d.getTime();
 	  console.log(date)
 
-	 var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)

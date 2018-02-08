@@ -1,10 +1,13 @@
 export const environment = {
-  production: true,
-  protocol:'http://',
-  host:'localhost',
-  couchdbusername: 'admin', //couchdb username
-  couchdbpassword: 'admin', //couchdb password
-  couchdbport: '5984', //couchdb host
-  superloginport: '3000', //Super login server url(UI url)
-  feedParserport: '3500', //Feed Parser Service URL
+   production: true,
+   dbprotocol:'http://',
+   dbhost:'192.168.99.100',
+   dbPort:'5984',
+   dbuser:'admin',
+   dbpassword:'couchforrelax123',
+   authHost:'192.168.99.100',
+   authPort:'3000',
+   feedParserHost:'192.168.99.100',
+   feedParserPort:'3500',
+
 };
