@@ -51,7 +51,7 @@ export class FeedService {
 	    this.http.get(newsrack).subscribe((response)=> {
 	  //  console.log(response.json())
 		this.feedNewsrack = response.json();
-
+    
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });

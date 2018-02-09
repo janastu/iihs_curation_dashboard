@@ -9,21 +9,21 @@
             <form role="form" [formGroup]="registerForm">
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name" formControlName="name">
+                        <input type="text" class="form-control input-underline input-lg"  placeholder="Full Name" formControlName="name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="User Name" formControlName="username">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email" formControlName="email">
+                        <input type="text" class="form-control input-underline input-lg"  placeholder="User Name" formControlName="username">
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password" formControlName="password">
+                        <input type="text" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" placeholder="Password" formControlName="password">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password" formControlName="confirmpassword">
+                        <input type="password" class="form-control input-underline input-lg"  placeholder="Repeat Password" formControlName="confirmpassword">
                     </div>
                 </div>
                 <button class="btn rounded-btn" (click)="onregister()" [disabled]="!registerForm.valid"> Register </button>&nbsp;
