@@ -25,12 +25,11 @@ export class FeedService {
 		//remote couchdb url to sync with couchdb
 		
 
-		 /*this.remote = this.settings.protocol+this.settings.dbfeed;
+		 //this.remote = this.settings.protocol+this.settings.dbfeed;
 
 		 this.remote = this.settings.protocol+this.settings.dbfeed;
 
-
-
+		 console.log(this.remote);
 		  
 		     let options = {
 		       live: true,
@@ -42,13 +41,10 @@ export class FeedService {
 		       }
 		     };
 		  
-		     this.db.sync(this.remote, options).on('complete',function (info) {
-		     	// body...
-		     	console.log("infor",info);
-		     });//sync pouchdb to couchdb with the options
-		//this.db = new PouchDB('categories')*/
-		var sync = PouchDB.sync('feeds', 'http://localhost:5984/feeds', {
-		  live: true,
+			 this.db.sync(this.remote, options);
+		//this.db = new PouchDB('categories')
+		 /* var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+			  live: true,
 		  retry: true
 		}).on('change', function (info) {
 		  // handle change
@@ -70,7 +66,7 @@ export class FeedService {
 		}).on('error', function (err) {
 		  // handle error
 		  console.log("error",err)
-		});
+		});*/
 		
 	}
 
