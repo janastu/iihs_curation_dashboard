@@ -32,7 +32,7 @@ constructor(private http: Http,private settings:Settings) {
        };
     
        this.db.sync(this.remote, options);
-  console.log("feeds,se",this.settings.feedparserUrl,this.settings.superloginserverUrl)
+
 //Configurations for user registration and login
    var config:any = {
       serverUrl: this.settings.superloginserverUrl,
