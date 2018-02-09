@@ -24,7 +24,7 @@ constructor(private http: Http, private jsonconvert:JsonConvert,private settings
 //Function to get data from newsrack
 public getAll(){ 
     var msgurl = 'assets/example.json';
-  /*  return new Promise(resolve => {
+    return new Promise(resolve => {
      this.http.get(msgurl).map(res => res.json()).subscribe(data => {
      
       console.log("Value is",data);
@@ -32,10 +32,8 @@ public getAll(){
       }, (err) => {
        console.log(err);
        });
-      });
-*/
-    
-   return new Promise(resolve => {
+      });   
+   /*return new Promise(resolve => {
 
     var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/1.json';
 
@@ -49,7 +47,7 @@ public getAll(){
      }, (err) => {
       console.log(err);
       });
-  });
+  });*/
 
    
 
@@ -82,8 +80,8 @@ public getAll(){
     
 
 
-  var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
-  console.log("url",url)
+  var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/categoryfeeds?key='+'"'+category+'"';
+  //console.log("url",url)
 
 //console.log("cate in service",category)
 //var check = this.settings.protocol+this.settings.host+'/feeds/_all_docs?include_docs=true';
@@ -108,7 +106,7 @@ public getAll(){
     var date = d.getTime();
     console.log(date)
 
-   var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+   var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
@@ -116,13 +114,13 @@ public getAll(){
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result.rows)
 
-     /* var changesdoc = result.results.map(res=>{
+      var changesdoc = result.results.map(res=>{
         if(res.doc.title){
           return res.doc;
         }
       })
       console.log(_.compact(changesdoc));
-      var recentDocs = _.compact(changesdoc)*/
+      var recentDocs = _.compact(changesdoc)
 
       resolve(result.rows);
     }, (err) =>{
@@ -141,7 +139,7 @@ public getAll(){
     console.log(date)
 
 
-    var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+    var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 
@@ -149,13 +147,13 @@ public getAll(){
     this.http.get(url).map(res=>res.json()).subscribe(result=> {
       console.log(result)
 
-     /* var changesdoc = result.results.map(res=>{
+      var changesdoc = result.results.map(res=>{
         if(res.doc.title){
           return res.doc;
         }
       })
       console.log(_.compact(changesdoc));
-      var recentDocs = _.compact(changesdoc)*/
+      var recentDocs = _.compact(changesdoc)
       resolve(result.rows);
     }, (err) =>{
       console.log(err);
@@ -169,7 +167,7 @@ public getAll(){
 
 
    
-     var check = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
+     var check = this.settings.protocol+this.settings.dbfeed+'/_changes?descending=true&limit=10&include_docs=true'
 
      //var check = 'http://localhost:5984/feeds/_changes?descending=true&limit=10&include_docs=true';
 

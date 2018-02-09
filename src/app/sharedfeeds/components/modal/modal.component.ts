@@ -30,6 +30,7 @@ export class ModalComponent {
 
     constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
       this.date = new Date();
+     
      }
 
     open(content) {

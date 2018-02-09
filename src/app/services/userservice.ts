@@ -18,8 +18,8 @@ export class Userservice {
 constructor(private http: Http,private settings:Settings) {
   this.db = new PouchDB('sl_users');
  
-  this.remote = this.settings.protocol+this.settings.host+this.settings.dbusers;
-  
+  this.remote = this.settings.protocol+this.settings.dbusers;
+
     
        let options = {
          live: true,
@@ -32,7 +32,7 @@ constructor(private http: Http,private settings:Settings) {
        };
     
        this.db.sync(this.remote, options);
-   
+  console.log("feeds,se",this.settings.feedparserUrl,this.settings.superloginserverUrl)
 //Configurations for user registration and login
    var config:any = {
       serverUrl: this.settings.superloginserverUrl,
@@ -50,7 +50,7 @@ constructor(private http: Http,private settings:Settings) {
       // Sets when to check if the session is expired. 'stateChange', 'startup' or nothing.
       // 'stateChange' checks every time $stateChangeStart or $routeChangeStart is fired
       // 'startup' checks just on app startup. If this is blank it will never check.
-      checkExpired: 'stateChange',
+      checkExpired: 'startup',
       // A float that determines the percentage of a session duration, after which SuperLogin will automatically refresh the
       // token. For example if a token was issued at 1pm and expires at 2pm, and the threshold is 0.5, the token will
       // automatically refresh after 1:30pm. When authenticated, the token expiration is automatically checked on every
@@ -96,11 +96,7 @@ return new Promise(resolve => {
 }
 getUserSubscriptions(){
 
-  var usersession = localStorage.getItem("superlogin.session")
-  var jsonusersession = JSON.parse(usersession);
-  
-  let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
-  
+  let url = localStorage.getItem('url');
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -116,7 +112,7 @@ getUserSubscriptions(){
 
 }
 getusers(){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/_design/user/_view/user';
+  var url = this.settings.protocol+this.settings.dbusers+'/_design/user/_view/user';
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
@@ -132,7 +128,7 @@ getusers(){
 
 }
 getAuser(user){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user;
+  var url = this.settings.protocol+this.settings.dbusers+'/'+user;
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
@@ -148,7 +144,7 @@ getAuser(user){
 
 }
 updateAuser(user){
-  var url = this.settings.protocol+this.settings.host+this.settings.dbusers+'/'+user.name;
+  var url = this.settings.protocol+this.settings.dbusers+'/'+user.name;
   console.log(url)
   let headers = new Headers();
    headers.append( 'Content-Type', 'application/json')
@@ -171,7 +167,7 @@ pullnewFeeds(doc){
     var newsrack = this.settings.feedparserUrl+'/?url='+url.link+'&feedname='+doc.feedname;
     //console.log(newsrack);
     this.http.get(newsrack).subscribe((response)=> {
-      //console.log("va;",response);
+      console.log("va;",response);
     })
   })
   
@@ -180,12 +176,12 @@ pullnewFeeds(doc){
 checkExpired(){
  
  console.log(superlogin.getSession());
+  
   if(superlogin.getSession() === null){
     superlogin.refresh();
-    superlogin.on('refresh', function(newSession) { 
-      console.log(newSession);
-     })
-    localStorage.removeItem('isLoggedin');
+    
+    
+    //localStorage.removeItem('isLoggedin');
   }
 
 }

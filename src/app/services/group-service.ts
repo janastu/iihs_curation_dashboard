@@ -16,7 +16,7 @@ export class GroupService {
 		this.db = new PouchDB('groups');
 		//function call to create design docs
 		this.createDesignDocs();
-		this.remote = this.settings.protocol+this.settings.host+this.settings.dbgroups;
+		this.remote = this.settings.protocol+this.settings.dbgroups;
 		
 		  
 		     let options = {
