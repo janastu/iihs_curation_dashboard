@@ -20,7 +20,7 @@ constructor(private http: Http,private settings:Settings) {
  
   this.remote = this.settings.protocol+this.settings.dbusers;
 
-    
+
        let options = {
          live: true,
          retry: true,
