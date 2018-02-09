@@ -5,15 +5,7 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
-  dbprotocol:'http://',
- 
-  dbhost:'localhost:5984',
-  dbuser:'admin',
-  dbpassword:'admin',
-  superloginurl:'localhost:3001',
-  feedParserServiceUrl:'localhost:3000'
-=======
+
  dbprotocol:'http://',
  dbhost:'192.168.99.100:5984',
  dbPort:'5984',
@@ -22,10 +14,7 @@ export const environment = {
  authHost:'192.168.99.100:3000',
  authPort:'3000',
  feedParserHost:'192.168.99.100:3500',
- feedParserPort:'3500',
-
-
->>>>>>> e9235614dec6cca9c42d5404afe8ed8922b74ca3
+ feedParserPort:'3500'
 
 
 };
