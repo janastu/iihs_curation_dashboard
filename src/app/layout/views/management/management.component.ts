@@ -16,8 +16,9 @@ export class ManagementComponent implements OnInit {
   groupname:any;
   user:any;
   groups:any=[];
-  alertsuccess;
-catvalue: any;
+  alertsuccess:any;
+  catvalue:any;
+
   //loginForm:FormGroup;
   //name = this.formBuilder.control('', [Validators.required]);
   //mail = this.formBuilder.control('', [Validators.required]);

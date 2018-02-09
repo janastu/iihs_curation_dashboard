@@ -61,11 +61,11 @@
                                       <img data-external="yes" src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="modal-image">
                                     </div>
                                     <div *ngIf="checkimg(feed[0].value.desc)"  class="row">
-                                      
+                                          {{feed[0].value.description}}
                                     </div>
                                     <div *ngIf="!checkimg(feed[0].value.desc)"  class="row">
                                       <div class="modal-feed[0]-content">
-                                             {{feed[0].value.desc}}
+                                             {{feed[0].value.description}}
                                           </div>
                                     </div>
                                     
