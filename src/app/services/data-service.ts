@@ -1,3 +1,4 @@
+
 import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers  }       from '@angular/http';
 import PouchDB from 'pouchdb';
@@ -179,11 +180,7 @@ constructor(private http: Http,private settings:Settings) {
 
 
 
-<<<<<<< HEAD
-  //  var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
-=======
-    //var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
->>>>>>> e9235614dec6cca9c42d5404afe8ed8922b74ca3
+
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
