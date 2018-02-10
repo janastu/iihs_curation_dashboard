@@ -7,13 +7,14 @@ export const environment = {
   production: false,
 
  dbprotocol:'http://',
- dbhost:'192.168.99.100:5984',
+ dbhost:'localhost:5984',
  dbPort:'5984',
  dbuser:'admin',
- dbpassword:'couchforrelax123',
- authHost:'192.168.99.100:3000',
+ dbpassword:'admin',
+ authHost:'localhost:3001',
  authPort:'3000',
- feedParserHost:'192.168.99.100:3500',
+ feedParserHost:'localhost:3000',
+
  feedParserPort:'3500'
 
 
