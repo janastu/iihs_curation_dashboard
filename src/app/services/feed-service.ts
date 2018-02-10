@@ -72,6 +72,19 @@ export class FeedService {
 
 	public getAllFeeds(url){ 	
     console.log("calling get alll feeds", url);
+         return new Promise(resolve => {
+	   	this.db.query('feeds/latestoldestcategory', {
+	   		limit:20,
+	   	    key:category,
+	   	    descending:true
+	   	  }).then(function (result) {
+	   	 // console.log("res",result);
+	   	  resolve(result.rows);
+	   	}).catch(function (err) {
+	   	  console.log(err);
+	   	});
+
+});
 	/*return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
