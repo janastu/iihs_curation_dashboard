@@ -75,7 +75,7 @@ export class FeedService {
          return new Promise(resolve => {
 	   	this.db.query('feeds/latestoldestcategory', {
 	   		limit:20,
-	   	    key:category,
+	   	    key:'legal',
 	   	    descending:true
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
