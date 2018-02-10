@@ -2,12 +2,12 @@ export const environment = {
    production: true,
    dbprotocol:'http://',
    dbhost:'mmcouch.test.openrun.net',
-   dbPort:'',
+   dbPort:'5984',
    dbuser:'admin',
    dbpassword:'couchforrelax123',
    authHost:'mmauth.test.openrun.net',
-   authPort:'',
+   authPort:'3000',
    feedParserHost:'mmfeeds.test.openrun.net',
-   feedParserPort:'',
+   feedParserPort:'3500',
 
 };

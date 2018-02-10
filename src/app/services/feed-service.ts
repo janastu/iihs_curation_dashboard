@@ -1,4 +1,4 @@
-import { Injectable,ViewChild } from '@angular/core';
+	import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
@@ -24,9 +24,12 @@ export class FeedService {
 
 		//remote couchdb url to sync with couchdb
 		
+
+		 //this.remote = this.settings.protocol+this.settings.dbfeed;
+
 		 this.remote = this.settings.protocol+this.settings.dbfeed;
 
-
+		 console.log(this.remote);
 		  
 		     let options = {
 		       live: true,
@@ -38,12 +41,36 @@ export class FeedService {
 		       }
 		     };
 		  
-		     this.db.sync(this.remote, options);//sync pouchdb to couchdb with the options
+			 this.db.sync(this.remote, options);
 		//this.db = new PouchDB('categories')
+		 /* var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+			  live: true,
+		  retry: true
+		}).on('change', function (info) {
+		  // handle change
+		  console.log("change",info)
+	
+		}).on('paused', function (err) {
+		  // replication paused (e.g. replication up to date, user went offline)
+		  console.log("paused",err);
+		}).on('active', function () {
+		  // replicate resumed (e.g. new changes replicating, user went back online)
+		  console.log("active");
+		}).on('denied', function (err) {
+		  // a document failed to replicate (e.g. due to permissions)
+		  console.log("denied",err)
+		}).on('complete', function (info) {
+		  // handle complete
+
+		  console.log("complete",info)
+		}).on('error', function (err) {
+		  // handle error
+		  console.log("error",err)
+		});*/
 		
 	}
 
-	public getAllFeeds(url){ 
+	public getAllFeeds(url){ 	
 
 	return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
@@ -51,7 +78,7 @@ export class FeedService {
 	    this.http.get(newsrack).subscribe((response)=> {
 	  //  console.log(response.json())
 		this.feedNewsrack = response.json();
-
+    
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });
@@ -97,7 +124,7 @@ export class FeedService {
 		    metacategories: {
 		      map: function (doc) {
 		        if (doc.meta) {
-		          emit(doc.meta.categories[0],doc);
+		          emit([doc.meta.categories[0],doc.pubDate],doc);
 		        }
 		      }.toString()
 		    },
@@ -169,8 +196,9 @@ export class FeedService {
 
 	   return new Promise(resolve => {
 	   	this.db.query('feeds/metacategories', {
-	   	    key:category,
-	   	    limit:20
+	   	    startkey: [category],
+	   	    endkey: [category, {}],
+	   	    limit:25
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -189,9 +217,11 @@ export class FeedService {
 	 
 	  var d = new Date();
 	  var date = d.getTime();
-	  console.log(date)
+	  //console.log(date)
+
 
 	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
 
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
@@ -199,7 +229,7 @@ export class FeedService {
 	  this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
 	      endkey: [category, {}],
-	      limit:20
+	      limit:25
 	    }).then(function (result) {
 	   console.log("res",result);
 	    resolve(result.rows);

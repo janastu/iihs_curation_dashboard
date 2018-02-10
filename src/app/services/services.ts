@@ -24,7 +24,9 @@ constructor(private http: Http, private jsonconvert:JsonConvert,private settings
 //Function to get data from newsrack
 public getAll(){ 
     var msgurl = 'assets/example.json';
+
    return new Promise(resolve => {
+
      this.http.get(msgurl).map(res => res.json()).subscribe(data => {
      
       console.log("Value is",data);
@@ -32,10 +34,12 @@ public getAll(){
       }, (err) => {
        console.log(err);
        });
+
       });
 
     
   /* return new Promise(resolve => {
+>>>>>>> e9235614dec6cca9c42d5404afe8ed8922b74ca3
 
     var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/1.json';
 
@@ -108,7 +112,9 @@ public getAll(){
     var date = d.getTime();
     console.log(date)
 
- var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+   var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
 
     //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 

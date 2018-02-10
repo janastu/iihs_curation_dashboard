@@ -52,7 +52,7 @@ ngOnChanges(){
       })
       return _.compact(checkForLink);
     })
-    
+    console.log(linkExists);
     this.labelForFeeds = linkExists.map(link=>{
       if(link[0]){
         return true;
@@ -65,7 +65,7 @@ ngOnChanges(){
   ngOnInit() {
      
       //this.ngconfig.autoClose='outside';
-  	/*this.user = localStorage.getItem('name')
+  /*	this.user = localStorage.getItem('name')
   	this.feedForm = this.formBuilder.group({
   	  feedname: this.feedname
   	});
@@ -111,6 +111,7 @@ ngOnChanges(){
     console.log(doc);
    this.feedService.addFeed(doc);
    this.variab.categoryupdated.push({doc:doc});
+   console.log(this.variab.categoryupdated);
    this.visible = false;
    this.followstatus = true;
    

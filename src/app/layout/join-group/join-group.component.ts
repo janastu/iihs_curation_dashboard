@@ -15,7 +15,9 @@ export class JoinGroupComponent implements OnInit {
   groupname:any;
   user:any;
   groups:any=[];
-  catvalue: any;
+
+  catvalue:any;
+
   //loginForm:FormGroup;
   //name = this.formBuilder.control('', [Validators.required]);
   //mail = this.formBuilder.control('', [Validators.required]);

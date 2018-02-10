@@ -14,7 +14,7 @@
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
                         <!--Feed Category-->     
-                             <a href={{item.value.url}} class="feeds-data">{{item.value.category}}</a>
+                             <a href={{item.value.url}} class="feeds-data">{{item.value.meta.categories}}</a>
                         <!--Feed Date--> 
                              <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                              
