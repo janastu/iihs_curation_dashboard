@@ -71,8 +71,8 @@ export class FeedService {
 	}
 
 	public getAllFeeds(url){ 	
-
-	return new Promise(resolve => {
+    console.log("calling get alll feeds", url);
+	/*return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
@@ -82,7 +82,7 @@ export class FeedService {
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });
-
+*/
 		
 	}
 	addFeed(metadata){
