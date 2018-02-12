@@ -1,4 +1,4 @@
-	import { Injectable,ViewChild } from '@angular/core';
+import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';

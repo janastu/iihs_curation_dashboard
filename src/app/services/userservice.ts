@@ -97,15 +97,18 @@ return new Promise(resolve => {
 getUserSubscriptions(){
 
   let url = localStorage.getItem('url');
+  console.log("url",url);
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers });
+  console.log("auth",options);
   return new Promise(resolve => {
         this.http.get(url,options).map(res=>res.json()).subscribe((response)=> {
+          console.log(response)
           resolve(response.rows);
         }, (err) => {
-          console.log(err);
+          console.log("er",err);
         }); 
 
   });
