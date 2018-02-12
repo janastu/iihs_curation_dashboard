@@ -1,4 +1,4 @@
-	import { Injectable,ViewChild } from '@angular/core';
+import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers }       from '@angular/http';
 import { JsonConvert } from './utilities';
 import PouchDB from 'pouchdb';
@@ -70,22 +70,10 @@ export class FeedService {
 		
 	}
 
-	public getAllFeeds(url){ 	
-    console.log("calling get alll feeds", url);
-         return new Promise(resolve => {
-	   	this.db.query('feeds/latestoldestcategory', {
-	   		limit:20,
-	   	    key:'legal',
-	   	    descending:true
-	   	  }).then(function (result) {
-	   	 // console.log("res",result);
-	   	  resolve(result.rows);
-	   	}).catch(function (err) {
-	   	  console.log(err);
-	   	});
+//Function to get the json feeds when an xml url is given
+	public getNewsrackfeedsFirstTime(url){ 	
 
-});
-	/*return new Promise(resolve => {
+	return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
@@ -95,7 +83,6 @@ export class FeedService {
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });
-*/
 		
 	}
 	addFeed(metadata){
@@ -239,16 +226,16 @@ export class FeedService {
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
 	return new Promise(resolve => {
-	  this.db.query('feeds/latestoldestcategory', {
+	    this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
 	      endkey: [category, {}],
 	      limit:25
 	    }).then(function (result) {
-	   console.log("res",result);
-	    resolve(result.rows);
-	  }).catch(function (err) {
+	   		console.log("res",result);
+	    	resolve(result.rows);
+	  	}).catch(function (err) {
 	    console.log(err);
-	  });
+	  	});
 	});
 
 	  
