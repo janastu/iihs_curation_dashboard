@@ -69,8 +69,8 @@ export class FeedService {
 		});*/
 		
 	}
-
-	public getAllFeeds(url){ 	
+//Function to get the json feeds when an xml url is given
+	public getNewsrackfeedsFirstTime(url){ 	
 
 	return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
@@ -226,16 +226,16 @@ export class FeedService {
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
 	return new Promise(resolve => {
-	  this.db.query('feeds/latestoldestcategory', {
+	    this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
 	      endkey: [category, {}],
 	      limit:25
 	    }).then(function (result) {
-	   console.log("res",result);
-	    resolve(result.rows);
-	  }).catch(function (err) {
+	   		console.log("res",result);
+	    	resolve(result.rows);
+	  	}).catch(function (err) {
 	    console.log(err);
-	  });
+	  	});
 	});
 
 	  
