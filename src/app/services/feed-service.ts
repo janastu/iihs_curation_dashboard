@@ -69,6 +69,7 @@ export class FeedService {
 		});*/
 		
 	}
+
 //Function to get the json feeds when an xml url is given
 	public getNewsrackfeedsFirstTime(url){ 	
 
@@ -82,7 +83,6 @@ export class FeedService {
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });
-
 		
 	}
 	addFeed(metadata){
