@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
           //console.log(this.variab.categoryupdated)
           this.variab.categoryupdated.map(user=>{
             
-            this.userService.pullnewFeeds(user.doc);
+            ///this.userService.pullnewFeeds(user.doc);
           })
             
         });
