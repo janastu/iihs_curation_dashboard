@@ -25,27 +25,31 @@ export class FeedService {
 		//remote couchdb url to sync with couchdb
 		
 
-		 //this.remote = this.settings.protocol+this.settings.dbfeed;
-
-		 /*this.remote = this.settings.protocol+this.settings.dbfeed;
-
-		 console.log(this.remote);
-		  
-		     let options = {
-		       live: true,
-		       retry: true,
-		       continuous: true,
-		       auth:{
-		         username:this.settings.couchdbusername,
-		         password:this.settings.couchdbpassword
-		       }
+		//this.db = new PouchDB('categories')
+ /*let options = {
+		        live: true,
+			      retry: true,
+			      continuous: true,
+				    auth:{
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
 		     };
-		  
-			 this.db.sync(this.remote, options);*/
-		
-		var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
-		  live: true,
-		  retry: true
+		this.db.replicate.from(this.remote).on('complete', function(info) {
+		  // then two-way, continuous, retriable sync
+		  this.db.sync(this.url, options)
+		    .on('change', function(info){console.log('change',info)})
+			  .on('paused', function(info){console.log('paused')})
+				.on('error', function(err){console.log('error',err)});
+ }).on('error',function(info){console.log('change',info)});*/
+		 var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+			  live: true,
+		  	retry: true,
+			auth:{
+		 		    username:this.settings.couchdbusername,
+			       password:this.settings.couchdbpassword
+			       }
+
 		}).on('change', function (info) {
 		  // handle change
 		  console.log("change",info)
@@ -87,11 +91,12 @@ export class FeedService {
 	}
 	addFeed(metadata){
 		console.log(metadata);
-		var usersession = localStorage.getItem("superlogin.session")
-		var jsonusersession = JSON.parse(usersession);
+		//var usersession = localStorage.getItem("superlogin.session")
+		//var jsonusersession = JSON.parse(usersession);
 
-		let url = jsonusersession.userDBs.supertest;
+		//let url = jsonusersession.userDBs.supertest;
 		//console.log(url)
+		let url = localStorage.getItem('url');
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -285,10 +290,10 @@ export class FeedService {
 	      res.date = checkdate*/
 	     // console.log("dateche",res,res.date);
 	      //this.variab.globalfeeds.push({value:res});
-	      console.log("pouchdb",this.db);
+	      
 	      this.db.post(res, function callback(err, result) {
-
-	          if (!err) {
+			console.log("pouchdb",this);
+			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
 	          }
 	        });
@@ -297,11 +302,12 @@ export class FeedService {
 	    
 	  }
 	update(id,metadata){
-		var usersession = localStorage.getItem("superlogin.session")
+		/*var usersession = localStorage.getItem("superlogin.session")
 		var jsonusersession = JSON.parse(usersession);
 
 		let url = jsonusersession.userDBs.supertest;
-		console.log(id,metadata)
+		console.log(id,metadata)*/
+		let url = localStorage.getItem('url');
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
