@@ -16,9 +16,12 @@ export class Userservice {
 //userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http,private settings:Settings) {
-  this.db = new PouchDB('sl_users');
+  //this.db = new PouchDB('userdb');
  
-  this.remote = this.settings.protocol+this.settings.dbusers;
+  let url = localStorage.getItem('url');
+  console.log("url",url);
+
+  /*this.remote = url;
 
 
        let options = {
@@ -31,7 +34,8 @@ constructor(private http: Http,private settings:Settings) {
           }
        };
     
-       this.db.sync(this.remote, options);
+       this.db.sync(this.remote, options);*/
+       
 
 //Configurations for user registration and login
    var config:any = {
@@ -71,9 +75,10 @@ public adduser(user){
 	console.log("usr",user);
   return new Promise(resolve => {
     superlogin.register(user).then(function (response) {
-      console.log(response);
+      
     resolve(response);
     },(err)=>{
+      console.log(err);
       resolve(err);
     });
   });
@@ -95,9 +100,11 @@ return new Promise(resolve => {
 
 }
 getUserSubscriptions(){
-
   let url = localStorage.getItem('url');
-  console.log("url",url);
+  //console.log("url",url);
+
+// let url = 'http://localhost:5984/supertest$vinutha/_all_docs?include_docs=true'
+  
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON

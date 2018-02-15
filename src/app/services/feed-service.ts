@@ -27,7 +27,7 @@ export class FeedService {
 
 		 //this.remote = this.settings.protocol+this.settings.dbfeed;
 
-		 this.remote = this.settings.protocol+this.settings.dbfeed;
+		 /*this.remote = this.settings.protocol+this.settings.dbfeed;
 
 		 console.log(this.remote);
 		  
@@ -41,10 +41,10 @@ export class FeedService {
 		       }
 		     };
 		  
-			 this.db.sync(this.remote, options);
-		//this.db = new PouchDB('categories')
-		 /* var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
-			  live: true,
+			 this.db.sync(this.remote, options);*/
+		
+		var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+		  live: true,
 		  retry: true
 		}).on('change', function (info) {
 		  // handle change
@@ -66,7 +66,7 @@ export class FeedService {
 		}).on('error', function (err) {
 		  // handle error
 		  console.log("error",err)
-		});*/
+		});
 		
 	}
 
@@ -198,7 +198,7 @@ export class FeedService {
 	   	this.db.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}],
-	   	    limit:25
+	   	    limit:50
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -229,7 +229,7 @@ export class FeedService {
 	    this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
 	      endkey: [category, {}],
-	      limit:25
+	      limit:50
 	    }).then(function (result) {
 	   		console.log("res",result);
 	    	resolve(result.rows);
