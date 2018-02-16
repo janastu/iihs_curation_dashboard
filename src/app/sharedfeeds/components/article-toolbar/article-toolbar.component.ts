@@ -63,9 +63,9 @@ date:Date;
            //Map Annotations by its label value
            //Returns array of annotations for each label
             var annosForBoards = this.variab.boardupdated.map( (board, index) => {
-               // console.log("anoo",board,annotatedarray)
+               //console.log("anoo",board,annotatedarray)
                return  _.filter(annotatedarray,function(o) { 
-                 if(o.key===board.key){
+                 if(o.key===board.value.label){
                  return o  ; 
                }
                });
@@ -112,30 +112,33 @@ date:Date;
     this.visible=false;
     
   }
+  //Function called from Create board block to save the feed to the board
   savetoboard(title,i){ 
-    
-     this.labelForBoards[i] = true;
-     this.selectedstar=1;
-     let update = {
-       "@context": "http://www.w3.org/ns/anno.jsonld",
-       "type": "Annotation",
-       "creator": this.user,
-       "created": this.date.getTime(),
-       "modified": this.date.getTime(),
-       "generator": "mm_2017_v1",
-       "generated": this.date.getTime(),
-       "target": this.feeditem,
-       "motivation":"tagging",
-       "label":title.label
-     }
-     this.createboardstore.dispatch('ADD_ITEMS',update);
+   
+      this.labelForBoards[i] = true;
+      this.selectedstar=1;
+      let update = {
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "type": "Annotation",
+        "creator": this.user,
+        "created": this.date.getTime(),
+        "modified": this.date.getTime(),
+        "generator": "mm_2017_v1",
+        "generated": this.date.getTime(),
+        "target": this.feeditem,
+        "motivation":"tagging",
+        "label":[title.label]
+      }
+      this.createboardstore.dispatch('ADD_ITEMS',update);
     
     
     
   }
+
+  //Function called from Create new board block to create new board by giving a board name 
   createboard(){
-    this.visible=true;     
-    console.log("jb",this.boardname)
+    this.visible=false; 
+
       let model={
        
          "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -150,38 +153,40 @@ date:Date;
 
        };
        this.boardservice.addboard(model);
-       this.variab.boardupdated.push({value:model}); 
-       //Update the group database with board idboardupdated:any=[];
+       this.variab.boardupdated.push({value:model});  
+      //this.variab.displayUserBoards.push(this.boardname.value);  
+    //Update the group database with board idboardupdated:any=[];
 
 
-       this.groupService.getgroups().then(res=>{
-         var groups:any=[];
-         groups=res;
-         
-         groups.map(group=>{
-           //Check if the logged member is part of any group
-           var checkmemberof = group.value.members.map(member=>{
-             if(member == this.user){
-               return group.value.groupname;
-             }
-           })
+  /*  this.groupService.getgroups().then(res=>{
+      var groups:any=[];
+      groups=res;
+      
+      groups.map(group=>{
+        //Check if the logged member is part of any group
+        var checkmemberof = group.value.members.map(member=>{
+          if(member == this.user){
+            return group.value.groupname;
+          }
+        })
+        
+        //get the group name and update the group with the board
+        checkmemberof.map(value=>{
+          if(group.value.groupname === value){
+            
+              group.value.boards.push(this.boardname.value);
            
-           //get the group name and update the group with the board
-           checkmemberof.map(value=>{
-             if(group.value.groupname === value){
-               
-                 group.value.boards.push(this.boardname.value);
-              
-               console.log("checkmember",group.value);
-               this.groupService.update(group.value);
-             }
-           })
+            console.log("checkmember",group.value);
+            this.groupService.update(group.value);
+          }
+        })
 
-         })
-         
+      })
+      
 
 
-       }) 
+    })*/
+
      
   }
 

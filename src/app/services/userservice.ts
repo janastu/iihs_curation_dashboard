@@ -111,7 +111,7 @@ getUserSubscriptions(){
   let options = new RequestOptions({ headers: headers });
   console.log("auth",options);
   return new Promise(resolve => {
-        this.http.get(url,options).map(res=>res.json()).subscribe((response)=> {
+        this.http.get(url+'/_all_docs?include_docs=true',options).map(res=>res.json()).subscribe((response)=> {
           console.log(response)
           resolve(response.rows);
         }, (err) => {
@@ -188,8 +188,7 @@ checkExpired(){
  console.log(superlogin.getSession());
   
   if(superlogin.getSession() === null){
-    superlogin.refresh();
-    
+    //superlogin.refresh();  
     
     //localStorage.removeItem('isLoggedin');
   }

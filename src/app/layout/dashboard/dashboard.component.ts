@@ -24,11 +24,7 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
 
-     //Get the user database url from user session
-     var usersession = localStorage.getItem("superlogin.session")
-     var jsonusersession = JSON.parse(usersession);
-     let url = jsonusersession.userDBs.supertest+'/_all_docs?include_docs=true';
-      localStorage.setItem('url',url);
+     
      
 
     this.user = localStorage.getItem('name');
@@ -67,6 +63,11 @@ export class DashboardComponent implements OnInit {
         /*this.service.getAll().then(res=>{
             console.log(res);
         });*/
+        //Get the user database url from user session
+        var usersession = localStorage.getItem("superlogin.session")
+        var jsonusersession = JSON.parse(usersession);
+        let url = jsonusersession.userDBs.supertest;
+         localStorage.setItem('url',url);
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
