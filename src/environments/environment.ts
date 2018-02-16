@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   protocol:'http://',
-  host:'localhost',
+  //host:'localhost',
+  host:'192.168.1.30',
   couchdbusername: 'admin', //couchdb username
   couchdbpassword: 'admin', //couchdb password
   couchdbport: '5984', //couchdb host
