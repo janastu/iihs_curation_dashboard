@@ -18,7 +18,7 @@ export class Userservice {
 constructor(private http: Http,private settings:Settings) {
   this.db = new PouchDB('sl_users');
   this.remote = this.settings.protocol+this.settings.host+this.settings.dbusers;
-  
+  console.log('var', this.settings.protocol, this.settings.host);
     
        let options = {
          live: true,
