@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+    import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Userservice } from '../services/userservice';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
@@ -46,7 +46,7 @@ errormessage:any;
             };
             console.log("doc",doc);
             this.userService.adduser(doc).then(response=>{
-                //console.log("response",response);
+                console.log("response",response);
                 if(response['success']){
                     this.alertsuccess = true;
                     this.ngAlert.type = 'success';
@@ -62,6 +62,17 @@ errormessage:any;
                     }
 
                 }
+                if(response['error'] == 'Validation failed'){
+                    console.log(response['validationErrors']['username'])
+                    this.alertauth=true;
+                    this.errormessage = response['validationErrors']['username']
+                    this.ngAlert.type = 'danger';
+                    if(response['validationErrors']['username'] == undefined){
+                     this.alertauth=true;
+                     this.errormessage = response['validationErrors']['email']
+                     this.ngAlert.type = 'danger';
+                    }
+                }    
 
             });
     }

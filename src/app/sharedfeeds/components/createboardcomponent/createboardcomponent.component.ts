@@ -8,6 +8,7 @@ import { CreateBoardStore } from '../../store/create-board-store';
 import { DataService } from '../../../services/data-service';
 import { GroupService } from '../../../services/group-service';
 import * as _ from 'lodash';
+
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -23,6 +24,7 @@ user:any;
 labelForBoards:any=[];
 outside:any;
 date:Date;
+queryString:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public groupService:GroupService) {
 
      

@@ -25,15 +25,6 @@ export class FeedService {
 		//remote couchdb url to sync with couchdb
 		
 
-		 this.remote = this.settings.protocol+this.settings.dbfeed;
-
-		/* this.remote = this.settings.protocol+this.settings.dbfeed;
-
-		 console.log(this.remote);
-		  
-		    
-		  
-			 this.db.sync(this.remote, options);*/
 		//this.db = new PouchDB('categories')
  /*let options = {
 		        live: true,
@@ -58,6 +49,7 @@ export class FeedService {
 		 		    username:this.settings.couchdbusername,
 			       password:this.settings.couchdbpassword
 			       }
+
 		}).on('change', function (info) {
 		  // handle change
 		  console.log("change",info)
@@ -99,11 +91,13 @@ export class FeedService {
 	}
 	addFeed(metadata){
 		console.log(metadata);
-		var usersession = localStorage.getItem("superlogin.session")
-		var jsonusersession = JSON.parse(usersession);
+		//var usersession = localStorage.getItem("superlogin.session")
+		//var jsonusersession = JSON.parse(usersession);
 
-		let url = jsonusersession.userDBs.supertest;
-		//console.log(url)
+		//let url = jsonusersession.userDBs.supertest;
+		//
+		let url = localStorage.getItem('url');
+		console.log(url)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -112,11 +106,14 @@ export class FeedService {
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
+		        if(response.ok === true){
+		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        }
 		       // resolve(response.rows);
 		      }, (err) => {
 		        console.log(err);
 		      });
-		this.addtopouch(this.feedNewsrack,metadata.feedname);
+		//
 
 	}
 	createDesignDocs(){
@@ -210,7 +207,7 @@ export class FeedService {
 	   	this.db.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}],
-	   	    limit:25
+	   	    limit:50
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -241,7 +238,7 @@ export class FeedService {
 	    this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
 	      endkey: [category, {}],
-	      limit:25
+	      limit:50
 	    }).then(function (result) {
 	   		console.log("res",result);
 	    	resolve(result.rows);
@@ -309,11 +306,12 @@ export class FeedService {
 	    
 	  }
 	update(id,metadata){
-		var usersession = localStorage.getItem("superlogin.session")
+		/*var usersession = localStorage.getItem("superlogin.session")
 		var jsonusersession = JSON.parse(usersession);
 
 		let url = jsonusersession.userDBs.supertest;
-		console.log(id,metadata)
+		console.log(id,metadata)*/
+		let url = localStorage.getItem('url');
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -322,11 +320,13 @@ export class FeedService {
 		      this.http.put(url+'/'+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
-		       // resolve(response.rows);
+		        if(response.ok == true){
+		        	 this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        }
 		      }, (err) => {
 		        console.log(err);
 		      }); 
-		 this.addtopouch(this.feedNewsrack,metadata.feedname);
+		
 
 	}
 

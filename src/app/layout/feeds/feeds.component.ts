@@ -81,20 +81,21 @@ user:any;
   //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
   // and display the rest of the feeds
   checkForDeletedFeeds(){
-    console.log("check",this.variab.globalfeeds);
+    
     let hiddenfeeds:any=[];
     this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
      hiddenfeeds=res;
      console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.globalfeeds;
+       console.log("check",this.variab.globalfeeds);
        document.getElementById('loading').style.display = 'none';
        }
       
      
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-         // console.log("hiddem",feed.value._id,globalfeed.id)
+         console.log("hiddem",feed.value._id,globalfeed.id)
            if(feed.value._id === globalfeed.id) {
             var i = _.indexOf(this.variab.globalfeeds,globalfeed);
             this.variab.globalfeeds.splice(i,1);
@@ -138,6 +139,7 @@ user:any;
         
           return res;
         }
+       
 
     });
   

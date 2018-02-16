@@ -30,8 +30,9 @@ this.date = new Date();
     
     this.user = localStorage.getItem('name');
    
-      
+      console.log(this.variab.readlaterfeeds);
       this.variab.readlaterfeeds.filter(anno=>{
+        console.log(this.feeditem.value._id,anno.value.target.id)
         if(anno.value.target.id === this.feeditem.value._id){
           this.selectedIndex=1;
         }

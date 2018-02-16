@@ -3,9 +3,9 @@
       <button *ngIf="followstatus"  class="btn btn-success" id="dropdownBasic1" ngbDropdownToggle>Following</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
            <form class="form-inline form-group find-feed">
-             <input class="form-control mr-sm-2" type="text" placeholder="Find a Feed">
+             <input class="form-control mr-sm-2" type="text" placeholder="Find a Feed" [(ngModel)]="queryString" name="query">
            </form>
-           <div class="field" *ngFor="let feed of feedsnames;let i =index;">
+           <div class="field" *ngFor="let feed of feedsnames | FilterPipe: queryString;let i =index;">
            
 
             <div class="board-item">
