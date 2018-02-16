@@ -72,7 +72,7 @@ queryString:any;
           
    
         });
-        // console.log("annotations",annotatedarray,this.variab.boardupdated);
+        //console.log("annotations",annotatedarray,this.variab.boardupdated);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.variab.boardupdated)
