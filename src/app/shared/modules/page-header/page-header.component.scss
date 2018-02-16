@@ -137,7 +137,7 @@
 .form-item{
     display: inherit;
     font-size: 12px;
-    margin-bottom: 47px;
+    /*margin-bottom: 47px;*/
     margin-left: 30px;
 }
 .form-from{
@@ -148,15 +148,19 @@
    font-size: 11px;
    }
    .form-to{
-       margin-left: -183px;
-       margin-bottom: -105px;
-       display: inherit;
+       margin-left: 22px;
+       /*margin-bottom: -105px;
+       display: inherit;*/
    }
    .form-to input{
    font-size: 11px;
    }
-   .form-to button{
+   /*.form-to button{
        margin-left: 11px;
+    }*/
+    .filter-button{
+    margin-left: 25px;
+    margin-top: 31px;
     }
 }
 
