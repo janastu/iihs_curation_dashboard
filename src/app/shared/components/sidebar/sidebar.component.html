@@ -46,7 +46,7 @@
             <img src="assets/images/radio.png" class="user-avatar img-log" />&nbsp;{{ 'IIHS-MM' | translate }}
         </a>
        
-        <div class="nested-menu">
+        <!--<div class="nested-menu">
             <a class="list-group-item" (click)="addFeedClass('feeds')">
                 <span><i class="fa fa-bars"></i>&nbsp;{{ 'Feeds' | translate }}</span>
             </a>
@@ -62,7 +62,61 @@
                 
                  </ul>
             </li>
+        </div>-->
+
+        <div class="nested-menu" *ngFor="let item of variab.categoryupdated">
+                <!--<a (click)="select(item.doc.feedname)">
+                    <i class="fa fa-chevron-right"></i>
+                </a> 
+           
+                <a  (click)="routeto(item.doc.feedname)" class="onmenu">
+                    {{ item.doc.feedname}}
+                </a>
+                
+                
+                    
+                    <li class="nested">
+                        <ul class="submenu">
+                                
+                    
+                            <li *ngFor="let meta of item.doc.metadata">
+                                <div *ngFor="let cat of meta.categories">
+                                    <a  (click)="routetometa(n.doc.feedname,cat)" class="onmenu">
+                                    {{cat}}
+                                    </a>
+                                </div>
+                            
+                            </li>
+                    
+                        </ul>
+                    </li>
+-->
+                
+                
+                 
         </div>
+        <div class="feedname-heading">
+            <i class="fa fa-bars"></i>&nbsp;{{ 'Feeds' | translate }}
+        </div>
+        <div class="nested-menu">
+            <li  *ngFor="let n of variab.categoryupdated" [ngClass]="{active: isactive(n.doc.feedname)}">
+            
+            <div class="feed-list-item">
+            <i class="fa fa-chevron-right onmenu" (click)="select(n.doc.feedname)"></i>
+            <span (click)="routeto(n.doc.feedname)" class="onmenu">&nbsp;&nbsp;{{n.doc.feedname}}</span>
+            </div>
+          
+                    <ul class="submenu">
+                      <li *ngFor="let child of n.doc.metadata">
+                          <div *ngFor="let meta of child.categories">
+                              <a  (click)="routetometa(n.doc.feedname,meta)" class="onmenu">
+                              <span>&nbsp;{{ meta }}</span></a>
+                          </div>
+                      </li>
+                    </ul>
+            </li>
+        </div>
+        
          
         
         <div class="nested-menu">

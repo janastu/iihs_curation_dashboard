@@ -1,3 +1,4 @@
+
 import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers  }       from '@angular/http';
 import PouchDB from 'pouchdb';
@@ -19,8 +20,10 @@ constructor(private http: Http,private settings:Settings) {
   this.createDesignDocs();
 
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
- this.remote  = this.settings.protocol+this.settings.host+this.settings.dbannotations;
+ this.remote  = this.settings.protocol+this.settings.dbannotations;
+
     console.log("remote",this.remote)
+
 
     
        let options = {
@@ -103,7 +106,7 @@ constructor(private http: Http,private settings:Settings) {
         boardfeeds: {
           map: function (doc) {
             if (doc.label && !doc.hideboardanno) {
-                     emit(doc.label,doc.target.value);
+                     emit(doc.label[0],doc.target.value);
              }
           }.toString()
         },
@@ -151,7 +154,7 @@ constructor(private http: Http,private settings:Settings) {
      this.db.query('annotations/boardannotation', {
            
          }).then(function (result) {
-          console.log("res",result);
+         // console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -177,12 +180,12 @@ constructor(private http: Http,private settings:Settings) {
 
 
 
-    var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"'
+
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
       this.db.query('annotatedfeeds/boardfeeds', {
-           key:[board]
+           key:board
          }).then(function (result) {
          console.log("res",result);
          resolve(result.rows);
@@ -197,10 +200,7 @@ constructor(private http: Http,private settings:Settings) {
   }
   getreadlater(usr){
 
-     var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/readlater?key='+'"'+usr+'"';
 
-    //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotations/_view/readlater?key='+'"'+usr+'"';
-    console.log(url)
     return new Promise(resolve => {
       this.db.query('annotations/readlater', {
           key:usr
@@ -217,7 +217,7 @@ constructor(private http: Http,private settings:Settings) {
   getrecentlyread(usr){
 
    // var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
-  var url =this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
+  //var url =this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
 
 
     return new Promise(resolve => {
@@ -244,7 +244,7 @@ constructor(private http: Http,private settings:Settings) {
  
   getalldeletedfeeds(){
 
-    var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/alldeletedfeeds'
+  //  var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/alldeletedfeeds'
 
    // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
    return new Promise(resolve => {
@@ -261,9 +261,7 @@ constructor(private http: Http,private settings:Settings) {
   }
   getdeletedfeeds(usr,category){
 
-    var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"'
 
-    console.log(url)
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
       this.db.query('annotatedfeeds/deletedfeeds', {

@@ -23,47 +23,81 @@ export class FeedService {
 
 
 		//remote couchdb url to sync with couchdb
-		 this.remote = this.settings.protocol+this.settings.host+this.settings.dbfeed;
+		
 
-
-		  
-		     let options = {
-		       live: true,
-		       retry: true,
-		       continuous: true,
-		       auth:{
-		         username:this.settings.couchdbusername,
-		         password:this.settings.couchdbpassword
-		       }
-		     };
-		  
-		     this.db.sync(this.remote, options);//sync pouchdb to couchdb with the options
 		//this.db = new PouchDB('categories')
+ /*let options = {
+		        live: true,
+			      retry: true,
+			      continuous: true,
+				    auth:{
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
+		     };
+		this.db.replicate.from(this.remote).on('complete', function(info) {
+		  // then two-way, continuous, retriable sync
+		  this.db.sync(this.url, options)
+		    .on('change', function(info){console.log('change',info)})
+			  .on('paused', function(info){console.log('paused')})
+				.on('error', function(err){console.log('error',err)});
+ }).on('error',function(info){console.log('change',info)});*/
+		 var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+			  live: true,
+		  	retry: true,
+			auth:{
+		 		    username:this.settings.couchdbusername,
+			       password:this.settings.couchdbpassword
+			       }
+
+		}).on('change', function (info) {
+		  // handle change
+		  console.log("change",info)
+	
+		}).on('paused', function (err) {
+		  // replication paused (e.g. replication up to date, user went offline)
+		  console.log("paused",err);
+		}).on('active', function () {
+		  // replicate resumed (e.g. new changes replicating, user went back online)
+		  console.log("active");
+		}).on('denied', function (err) {
+		  // a document failed to replicate (e.g. due to permissions)
+		  console.log("denied",err)
+		}).on('complete', function (info) {
+		  // handle complete
+
+		  console.log("complete",info)
+		}).on('error', function (err) {
+		  // handle error
+		  console.log("error",err)
+		});
 		
 	}
 
-	public getAllFeeds(url){ 
+//Function to get the json feeds when an xml url is given
+	public getNewsrackfeedsFirstTime(url){ 	
 
 	return new Promise(resolve => {
-	    var newsrack = 'http://localhost:3000/?id='+url;
+	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
 	  //  console.log(response.json())
 		this.feedNewsrack = response.json();
-
+    
 		resolve(this.feedNewsrack[0].meta);	
 	   	});
 	 });
-
 		
 	}
 	addFeed(metadata){
 		console.log(metadata);
-		var usersession = localStorage.getItem("superlogin.session")
-		var jsonusersession = JSON.parse(usersession);
+		//var usersession = localStorage.getItem("superlogin.session")
+		//var jsonusersession = JSON.parse(usersession);
 
-		let url = jsonusersession.userDBs.supertest;
-		//console.log(url)
+		//let url = jsonusersession.userDBs.supertest;
+		//
+		let url = localStorage.getItem('url');
+		console.log(url)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -72,11 +106,14 @@ export class FeedService {
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
+		        if(response.ok === true){
+		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        }
 		       // resolve(response.rows);
 		      }, (err) => {
 		        console.log(err);
 		      });
-		this.addtopouch(this.feedNewsrack,metadata.feedname);
+		//
 
 	}
 	createDesignDocs(){
@@ -96,7 +133,7 @@ export class FeedService {
 		    metacategories: {
 		      map: function (doc) {
 		        if (doc.meta) {
-		          emit(doc.meta.categories,doc);
+		          emit([doc.meta.categories[0],doc.pubDate],doc);
 		        }
 		      }.toString()
 		    },
@@ -109,9 +146,31 @@ export class FeedService {
 		    }
 		  }
 		}
+		var linkdoc = {
+			_id: '_design/links',
+			views: {
+				link: {
+				  map: function (doc) {
+				    emit(doc.meta.link, doc.title);
+				  }.toString(),
+				  reduce: function (doc) {
+				    return null;
+				  }.toString()
+				}
+
+			}
+
+		}
 
 		// save the design doc
 		this.db.put(ddoc).catch(function (err) {
+		  if (err.name !== 'conflict') {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+		// save the design doc
+		this.db.put(linkdoc).catch(function (err) {
 		  if (err.name !== 'conflict') {
 		    throw err;
 		  }
@@ -129,7 +188,7 @@ export class FeedService {
 	   	this.db.query('feeds/categoryfeeds', {
 	   		limit:20,
 	   	    key:category,
-	   	    
+	   	    descending:true
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -146,8 +205,9 @@ export class FeedService {
 
 	   return new Promise(resolve => {
 	   	this.db.query('feeds/metacategories', {
-	   	    key:category,
-	   	    include_docs: true
+	   	    startkey: [category],
+	   	    endkey: [category, {}],
+	   	    limit:50
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -166,22 +226,25 @@ export class FeedService {
 	 
 	  var d = new Date();
 	  var date = d.getTime();
-	  console.log(date)
+	  //console.log(date)
 
-	 var url = this.settings.protocol+this.settings.host+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
+	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+
 
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
 	return new Promise(resolve => {
-	  this.db.query('feeds/latestoldestcategory', {
+	    this.db.query('feeds/latestoldestcategory', {
 	      startkey: [category],
-	      endkey: [category, {}]
+	      endkey: [category, {}],
+	      limit:50
 	    }).then(function (result) {
-	   console.log("res",result);
-	    resolve(result.rows);
-	  }).catch(function (err) {
+	   		console.log("res",result);
+	    	resolve(result.rows);
+	  	}).catch(function (err) {
 	    console.log(err);
-	  });
+	  	});
 	});
 
 	  
@@ -231,10 +294,10 @@ export class FeedService {
 	      res.date = checkdate*/
 	     // console.log("dateche",res,res.date);
 	      //this.variab.globalfeeds.push({value:res});
-	      console.log("pouchdb",this.db);
+	      
 	      this.db.post(res, function callback(err, result) {
-
-	          if (!err) {
+			console.log("pouchdb",this);
+			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
 	          }
 	        });
@@ -243,24 +306,27 @@ export class FeedService {
 	    
 	  }
 	update(id,metadata){
-		var usersession = localStorage.getItem("superlogin.session")
+		/*var usersession = localStorage.getItem("superlogin.session")
 		var jsonusersession = JSON.parse(usersession);
 
 		let url = jsonusersession.userDBs.supertest;
-
+		console.log(id,metadata)*/
+		let url = localStorage.getItem('url');
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
 			
-		      this.http.put(url+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
+		      this.http.put(url+'/'+id,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
-		       // resolve(response.rows);
+		        if(response.ok == true){
+		        	 this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        }
 		      }, (err) => {
 		        console.log(err);
 		      }); 
-		 this.addtopouch(this.feedNewsrack,metadata.feedname);
+		
 
 	}
 

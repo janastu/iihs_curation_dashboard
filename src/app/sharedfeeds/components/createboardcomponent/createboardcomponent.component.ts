@@ -8,6 +8,7 @@ import { CreateBoardStore } from '../../store/create-board-store';
 import { DataService } from '../../../services/data-service';
 import { GroupService } from '../../../services/group-service';
 import * as _ from 'lodash';
+
 @Component({
   selector: 'app-createboardcomponent',
   templateUrl: './createboardcomponent.component.html',
@@ -23,6 +24,7 @@ user:any;
 labelForBoards:any=[];
 outside:any;
 date:Date;
+queryString:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public groupService:GroupService) {
 
      
@@ -70,7 +72,7 @@ date:Date;
           
    
         });
-         console.log("annotations",annotatedarray,this.variab.boardupdated);
+        // console.log("annotations",annotatedarray,this.variab.boardupdated);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.variab.boardupdated)
@@ -84,7 +86,7 @@ date:Date;
 
          });
 
-         console.log("annoforboards",annosForBoards);
+         //console.log("annoforboards",annosForBoards);
          //Map Annos for Boards to return boolean array
          //Returns example:[true,false,true] 
          //Index of output == Index of label which means label[0] and label[1] 
@@ -161,7 +163,7 @@ date:Date;
     //Update the group database with board idboardupdated:any=[];
 
 
-    this.groupService.getgroups().then(res=>{
+  /*  this.groupService.getgroups().then(res=>{
       var groups:any=[];
       groups=res;
       
@@ -188,7 +190,7 @@ date:Date;
       
 
 
-    })
+    })*/
 
      
   }
@@ -196,7 +198,7 @@ date:Date;
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
     this.labelForBoards[i]=false;
-    this.selectedstar = 0;
+    //this.selectedstar = 0;
     this.variab.annotations.map(anno=>{
       if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
            

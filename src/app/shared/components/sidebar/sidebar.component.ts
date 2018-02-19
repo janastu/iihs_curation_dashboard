@@ -18,10 +18,9 @@ import * as _ from 'lodash';
 export class SidebarComponent implements OnInit{
   
     user:any;
-    
     isActive = false;
     showMenu = '';
-
+    selected:any;
     eventCalled() {
         this.isActive = !this.isActive;
     }
@@ -33,12 +32,25 @@ export class SidebarComponent implements OnInit{
         }
     }
     addFeedClass(element: any) {
+        
         if (element === this.showMenu) {
-            this.showMenu = '0';
+          
+            this.showMenu = '0';  
         } else {
+            
             this.showMenu = element;
+
         }
     }
+   
+   select(item){
+        this.selected = (this.selected === item ? null : item);
+     }
+     isactive(item){
+       return this.selected === item;
+     }
+
+
     
     constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public service:Service,public groupService:GroupService){
    
@@ -66,29 +78,12 @@ export class SidebarComponent implements OnInit{
                        this.variab.recentlyread=result;
                    });
           
-        //Get the boards from the group the registered user belongs to
-        /*this.groupService.getgroups().then(res=>{
-          
-            var groups:any=[];
-            groups =res;
-            console.log("boards",groups);
-            groups.map(checkgroup=>{
-              checkgroup.value.members.map(member=>{
-
-                  if(member === this.user){
-                      
-                      this.variab.displayUserBoards = checkgroup.value.boards;
-                      
-                  }
-              })
-            });
-        })*/
-          //Get the board names to display in the sidebar and createboard component
+        
 
                
 
 
-                this.groupService.getgroups().then(res=>{
+                /*this.groupService.getgroups().then(res=>{
                   var groups:any=[];
                   groups=res;
                   
@@ -103,7 +98,9 @@ export class SidebarComponent implements OnInit{
                     //get the boards belong to a group
                     checkmemberof.map(value=>{
                       if(group.value.groupname === value){
+
                         this.variab.displayUserBoards = group.value.boards;
+                        
                       }
                      
                       
@@ -113,26 +110,26 @@ export class SidebarComponent implements OnInit{
 
                     var boardsOnGroup:any=[];
                     
-                      this.variab.displayUserBoards.map(userboard=>{
-                        this.boardservice.getboards(userboard).then(res=>{
-                          
-                          boardsOnGroup.push(res);
+                      this.variab.displayUserBoards.map(userboard=>{*/
+                        this.boardservice.getboards().then(res=>{
+                          this.variab.boardupdated = res;
+                         /* boardsOnGroup.push(res);
                           this.variab.boardupdated = _.flatten(boardsOnGroup) 
-                          console.log("er",this.variab.boardupdated);
+                          console.log("er",this.variab.boardupdated);*/
                         });
                        
                        //
-                      })
+                      //})
                       
                    
 
                   
 
-                  });
+                 // });
                   
 
 
-              });
+             // });*/
 
                 
 
@@ -148,6 +145,8 @@ export class SidebarComponent implements OnInit{
         //  console.log(this.variab.categoryupdated)
           
         });
+
+
         
 
 
@@ -158,6 +157,21 @@ export class SidebarComponent implements OnInit{
         
         
         this.router.navigate(['/feeds',category] )
+       // console.log(category);
+          /*this.service.getcategoryfeeds(category).then(res=>{
+                 this.variab.globalcatname = category;
+                   this.variab.globalfeeds=res;
+                     //console.log(this.variab.globalfeeds);
+                 this.componentsService.alert(category,res); 
+        
+        });*/
+
+    }
+    //Function called from html to navigate to feeds component with category name in the meta data
+    routetometa(category,meta){
+        
+        
+        this.router.navigate(['/feeds',category,{subcategory:meta}])
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;

@@ -9,6 +9,7 @@ import { CreateBoardStore } from '../../store/create-board-store';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogComponentModule } from '../dialog-component/dialog-component.module';
+import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -17,7 +18,8 @@ import { DialogComponentModule } from '../dialog-component/dialog-component.modu
         FormsModule,
         ReactiveFormsModule,
         DialogComponentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedPipesModule
     ],
     declarations: [ArticleToolbarComponent],
     exports: [ArticleToolbarComponent],

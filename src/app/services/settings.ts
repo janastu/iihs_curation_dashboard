@@ -11,22 +11,31 @@ import { environment } from '../../environments/environment';
 */
 @Injectable()
 export class Settings{
-
+ 
 	constructor(){
-		
+	
+
+
+		console.log('env superloginurl', environment.authHost);
+	console.log('env host', environment.dbhost);
+console.log('env host', environment.dbprotocol);
+
+
+
 	}
-	protocol:any='http://'; 
+	protocol: any = environment.dbprotocol;
 
-	//host:any='login.test.openrun.net'; 
-	host:any = environment.host;	//couchdb host
-	dbfeed:any='/feeds'; //feeds database
-	dbannotations:any='/iihs_annotation'; //annotations database
-	dbboards:any='/boards';	//boards database
-	dbgroups:any='/groups';	//groups database
-	dbusers:any='/sl-users';//users database
-	couchdbusername:any=environment.username; //couchdb username
-	couchdbpassword:any=environment.password;	//couchdb password
-	superloginserverUrl:any=environment.superLoginServerUrl // super login server url
-
+	//host:any='login.test.openrun.net';
+	
+	dbfeed:any=environment.dbhost+'/feeds'; //feeds database
+	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
+	dbboards: any = environment.dbhost +'/boards';	//boards database
+	dbgroups: any = environment.dbhost +'/groups';	//groups database
+	dbusers: any = environment.dbhost +'/sl-users';//users database
+	couchdbusername: any =environment.dbuser; //couchdb username
+	couchdbpassword:any=environment.dbpassword;	//couchdb password
+	superloginserverUrl:any= environment.dbprotocol+environment.authHost; // super login server url
+    //superloginserverUrl:any='http://192.168.99.100:3000'
+	feedparserUrl: any = environment.dbprotocol+environment.feedParserHost;  // super login  s erv er url
 
 }

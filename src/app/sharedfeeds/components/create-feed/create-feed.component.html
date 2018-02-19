@@ -1,11 +1,11 @@
 <div ngbDropdown class="d-inline-block" autoClose='outside'>
-      <button *ngIf="!followstatus" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Follow</button>
-      <button *ngIf="followstatus"  class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Following</button>
+      <button *ngIf="!followstatus" class="btn btn-success" id="dropdownBasic1" ngbDropdownToggle>Follow</button>
+      <button *ngIf="followstatus"  class="btn btn-success" id="dropdownBasic1" ngbDropdownToggle>Following</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-           <form class="form-inline form-group">
-             <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
+           <form class="form-inline form-group find-feed">
+             <input class="form-control mr-sm-2" type="text" placeholder="Find a Feed" [(ngModel)]="queryString" name="query">
            </form>
-           <div class="field" *ngFor="let feed of feedsnames;let i =index;">
+           <div class="field" *ngFor="let feed of feedsnames | FilterPipe: queryString;let i =index;">
            
 
             <div class="board-item">
@@ -37,12 +37,12 @@
           
 
           <div *ngIf="visible" class="form-group savetoboard">
-            <form [formGroup]="feedForm" class="form-inline form-group">
+            <form [formGroup]="feedForm" class="form-inline form-group create-feed">
               <input class="form-control mr-sm-2" type="text" formControlName="feedname" placeholder="Enter Feed Name">
             </form>
 
             
-            <div>
+            <div class="create-feed-buttons">
               <button (click)="createfeed()" class="btn btn-sm btn-success">Create a Feed</button>
               <button (click)="cancelfeed()" class="btn btn-sm btn-success">Cancel</button>
             </div>

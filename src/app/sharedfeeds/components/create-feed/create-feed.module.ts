@@ -6,14 +6,15 @@ import { CreateFeedComponent } from './create-feed.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../../services/category-service';
-
+import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedPipesModule
     ],
     declarations: [CreateFeedComponent ],
     exports: [CreateFeedComponent ],

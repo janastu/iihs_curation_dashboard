@@ -105,7 +105,8 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     }
     ul.submenu {
         display: none;
-        height: 0;
+        margin-left: 20px;
+        
     }
     & .expand {
         ul.submenu {
@@ -163,4 +164,27 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
 }
 .onmenu{
     cursor:pointer;
+}
+ul li{
+cursor:pointer;
+}
+.active ul{
+display:block !important;
+}
+.feed-list-item{
+    background: $topnav-background-color;
+    border: 0;
+    border-radius: 0;
+    color: $topnav-color;
+    text-decoration: none;
+    margin-left: 19px;
+    
+}
+.feed-list-item:hover{
+    background: darken($topnav-background-color, 5%);
+            color: $onhover;   
+}
+.feedname-heading{
+    margin-left: 13px;
+    margin-bottom: 8px;
 }
