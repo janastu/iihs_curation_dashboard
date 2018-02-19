@@ -96,24 +96,26 @@ export class FeedService {
 
 		//let url = jsonusersession.userDBs.supertest;
 		//
+
 		let url = localStorage.getItem('url');
 		console.log(url)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
-			
+			return new Promise(resolve => {
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
 		        if(response.ok === true){
+		        	resolve(response);
 		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
 		        }
 		       // resolve(response.rows);
 		      }, (err) => {
 		        console.log(err);
 		      });
-		//
+			});
 
 	}
 	createDesignDocs(){

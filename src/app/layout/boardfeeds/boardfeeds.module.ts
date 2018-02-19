@@ -9,7 +9,7 @@ import { BoardfeedsRoutingModule } from './boardfeeds-routing.module';
 import { BoardfeedsComponent } from './boardfeeds.component';
 import { PageHeaderModule } from '../../shared';
 import { StatModule } from '../../shared';
-import { Service } from '../../services/services';
+//import { Service } from '../../services/services';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {
@@ -43,7 +43,7 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
        
     ],
    
-    providers: [DatePipe,Service]
+    providers: [DatePipe]
      
 })
 export class BoardfeedsModule { }

@@ -8,6 +8,7 @@ import { GroupService } from '../../../services/group-service';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
+import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-article-toolbar',
   templateUrl: './article-toolbar.component.html',
@@ -27,7 +28,9 @@ selectedstar:number;
 showDialog:boolean;
 date:Date;
 queryString:any;
-  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService) { 
+alertexists:boolean=false;
+alertempty:boolean=false;
+  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService,public ngAlert:NgbAlertConfig) { 
      this.selectedIndex = -1;
  
 }
@@ -138,23 +141,60 @@ queryString:any;
 
   //Function called from Create new board block to create new board by giving a board name 
   createboard(){
-    this.visible=false; 
+    
 
-      let model={
-       
-         "@context": "http://www.w3.org/ns/anno.jsonld",
-         "type": "Annotation",
-         "creator": this.user,
-         "created": this.date.getTime(),
-         "modified": this.date.getTime(),
-         "generator": "mm_2017_v1",
-         "generated": this.date.getTime(),
-         "motivation":"identifying",
-         "label":this.boardname.value
+        var model={
+         
+           "@context": "http://www.w3.org/ns/anno.jsonld",
+           "type": "Annotation",
+           "creator": this.user,
+           "created": this.date.getTime(),
+           "modified": this.date.getTime(),
+           "generator": "mm_2017_v1",
+           "generated": this.date.getTime(),
+           "motivation":"identifying",
+           "label":this.boardname.value
 
-       };
-       this.boardservice.addboard(model);
-       this.variab.boardupdated.push({value:model});  
+         };
+        
+        if(this.boardname.value === ''){
+          console.log("boardname cant be empty");
+          this.alertempty = true;
+      this.ngAlert.type = 'warning';
+        }
+        else{
+        this.boardservice.getboards().then(res=>{
+          console.log(res);
+          var toCheckrepeatBoards:any =[];
+          var boardExists :any = 0;
+           toCheckrepeatBoards =res;
+          toCheckrepeatBoards.map(boardname=>{
+             if(this.boardname.value === boardname.value.label){
+               console.log("boardname exists");
+               boardExists = 1; 
+             }
+           })
+          if(boardExists == 1){
+            console.log("exit");
+            this.alertexists = true;
+            this.ngAlert.type = 'warning'
+          }
+          if(boardExists == 0){
+            console.log("add");
+            this.boardservice.addboard(model).then(res=>{
+                  if(res['ok'] == true){
+                    this.variab.boardupdated.push({value:model});  
+                    this.visible=false; 
+                    this.alertempty = false;
+                    this.alertexists = false;
+                  }
+            })
+          }
+        })
+
+
+        
+      }  
       //this.variab.displayUserBoards.push(this.boardname.value);  
     //Update the group database with board idboardupdated:any=[];
 
@@ -300,6 +340,11 @@ queryString:any;
    
    console.log(this.index,this.variab.globalfeeds);
    this.showDialog = false;
+  }
+  public closeAlert() {
+      this.alertexists=false;
+      this.alertempty= false;
+      
   }
  
 }

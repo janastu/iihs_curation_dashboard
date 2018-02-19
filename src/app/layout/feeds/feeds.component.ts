@@ -201,6 +201,7 @@ user:any;
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
+    this.catname = 'Recent feeds'
     this.feeds = childrefresh
   }
    
