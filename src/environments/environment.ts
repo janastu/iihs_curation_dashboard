@@ -6,13 +6,13 @@
 export const environment = {
   production: false,
  dbprotocol:'http://',
- dbhost:'192.168.1.8:5984',
+ dbhost:'localhost:5984',
  dbPort:'5984',
  dbuser:'admin',
  dbpassword:'admin',
- authHost:'192.168.1.8:3001',
+ authHost:'localhost:3001',
  authPort:'3000',
- feedParserHost:'192.168.1.8:3000',
+ feedParserHost:'localhost:3000',
 
  feedParserPort:'3500' 
 
