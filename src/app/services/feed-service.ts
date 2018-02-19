@@ -42,6 +42,7 @@ export class FeedService {
 			  .on('paused', function(info){console.log('paused')})
 				.on('error', function(err){console.log('error',err)});
  }).on('error',function(info){console.log('change',info)});*/
+
 		 var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
 			  live: true,
 		  	retry: true,
@@ -109,7 +110,11 @@ export class FeedService {
 		        console.log("user",response);
 		        if(response.ok === true){
 		        	resolve(response);
-		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
+		        		if(res['ok'] == true){
+		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        		}
+		        	});
 		        }
 		       // resolve(response.rows);
 		      }, (err) => {
@@ -285,7 +290,7 @@ export class FeedService {
 	}*/
 	//Function adds the newsrack feeds to couchdb
 	 addtopouch(feed,feedname){
-
+	 	return new Promise(resolve => {
 	   
 	    feed.map(res=>{
 	      res.feednme = feedname;
@@ -301,8 +306,11 @@ export class FeedService {
 			console.log("pouchdb",this);
 			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
+	            resolve(result);
 	          }
-	        });
+
+	        	});
+	  	 });
 	    });
 
 	    
@@ -331,5 +339,6 @@ export class FeedService {
 		
 
 	}
+	
 
 }
