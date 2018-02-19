@@ -26,6 +26,7 @@ selectedIcon: number;
 selectedstar:number;
 showDialog:boolean;
 date:Date;
+queryString:any;
   constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService) { 
      this.selectedIndex = -1;
  

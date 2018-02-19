@@ -30,15 +30,16 @@ this.date = new Date();
     
     this.user = localStorage.getItem('name');
    
-      
+      console.log(this.variab.readlaterfeeds);
       this.variab.readlaterfeeds.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.value._id){
+        //console.log(this.feeditem,anno)
+        if(anno.value.target.value._id === this.feeditem.value._id){
           this.selectedIndex=1;
         }
       });
 
       this.variab.recentlyread.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.value._id){
+        if(anno.value.target.value._id === this.feeditem.value._id){
           this.selectedIcon=1;
           this.iconState.emit(this.selectedIcon);
 

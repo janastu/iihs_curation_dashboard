@@ -21,6 +21,7 @@ user:any;
 labelForFeeds:any=[];
 feedsnames:any=[];
 followstatus:boolean=false;
+queryString:any;
 @Input('data') data:any;
 @Input('url') url:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public categoryservice:CategoryService,public variab:Global,public feedService:FeedService,public userservice:Userservice) {
