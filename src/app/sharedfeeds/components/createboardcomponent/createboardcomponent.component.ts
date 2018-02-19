@@ -113,6 +113,8 @@ alertempty:boolean=false;
 //Function called from Create new board block to remove the block
   cancelboard(){
     this.visible=false;
+    this.alertempty = false;
+    this.alertexists = false;
     
   }
  //Function called from Create board division to open a new createboard block

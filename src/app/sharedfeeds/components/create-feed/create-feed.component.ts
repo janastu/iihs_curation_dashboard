@@ -188,6 +188,8 @@ ngOnChanges(){
  }
  cancelfeed(){
    this.visible = false;
+   this.alertempty = false;
+   this.alertexists = false;
  }
  removefromboard(i){
     this.labelForFeeds[i]=false;
