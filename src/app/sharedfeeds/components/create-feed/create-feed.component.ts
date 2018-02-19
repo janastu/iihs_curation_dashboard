@@ -7,6 +7,7 @@ import { FeedService } from '../../../services/feed-service';
 import { Userservice } from '../../../services/userservice';
 import { Global } from '../../../shared/global';
 import * as _ from 'lodash';
+import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-create-feed',
   templateUrl: './create-feed.component.html',
@@ -22,9 +23,11 @@ labelForFeeds:any=[];
 feedsnames:any=[];
 followstatus:boolean=false;
 queryString:any;
+alertexists:boolean=false;
+alertempty:boolean=false;
 @Input('data') data:any;
 @Input('url') url:any;
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public categoryservice:CategoryService,public variab:Global,public feedService:FeedService,public userservice:Userservice) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public categoryservice:CategoryService,public variab:Global,public feedService:FeedService,public userservice:Userservice,public ngAlert:NgbAlertConfig) {
 }
 
 ngOnChanges(){
@@ -103,18 +106,54 @@ ngOnChanges(){
  createfeed(i){
 
    //this.data.feedlink = [this.url];
-
- 	    let doc={
+   let doc={
          "feedname":this.feedname.value,
          "metadata":[this.data]
         }
-    
-    console.log(doc);
-   this.feedService.addFeed(doc);
-   this.variab.categoryupdated.push({doc:doc});
-   console.log(this.variab.categoryupdated);
-   this.visible = false;
-   this.followstatus = true;
+
+     
+     if(this.feedname.value === ''){
+       console.log("feedname cant be empty");
+       this.alertempty = true;
+       this.ngAlert.type = 'warning';
+       //this.visible = false;
+     }
+     else{
+     
+       
+       var toCheckrepeatFeednames:any =[];
+       var feednameExists :any = 0;
+        
+       this.feedsnames.map(feedname=>{
+          if(this.feedname.value === feedname.doc.feedname){
+            console.log("boardname exists");
+            feednameExists = 1; 
+          }
+        })
+       if(feednameExists == 1){
+         console.log("exit");
+         this.alertexists = true;
+         this.ngAlert.type = 'warning'
+       }
+       if(feednameExists == 0){
+         console.log("add");
+         this.feedService.addFeed(doc).then(res=>{
+               if(res['ok'] == true){
+                 this.variab.categoryupdated.push({doc:doc});  
+                 this.visible = false;
+                 this.followstatus = true;
+                 this.alertempty = false;
+                    this.alertexists = false;
+               }
+         })
+       }
+     
+       
+       
+
+     
+   }
+   
    
  }
  //Save the feed metadata and link  to a already feed name 
@@ -149,9 +188,16 @@ ngOnChanges(){
  }
  cancelfeed(){
    this.visible = false;
+   this.alertempty = false;
+   this.alertexists = false;
  }
  removefromboard(i){
     this.labelForFeeds[i]=false;
+  }
+  public closeAlert() {
+      this.alertexists=false;
+      this.alertempty= false;
+      
   }
 
   

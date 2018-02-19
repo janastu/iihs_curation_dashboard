@@ -42,6 +42,7 @@ export class FeedService {
 			  .on('paused', function(info){console.log('paused')})
 				.on('error', function(err){console.log('error',err)});
  }).on('error',function(info){console.log('change',info)});*/
+
 		 var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
 			  live: true,
 		  	retry: true,
@@ -96,24 +97,30 @@ export class FeedService {
 
 		//let url = jsonusersession.userDBs.supertest;
 		//
+
 		let url = localStorage.getItem('url');
 		console.log(url)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
-			
+			return new Promise(resolve => {
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
 		        if(response.ok === true){
-		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        	resolve(response);
+		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
+		        		if(res['ok'] == true){
+		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        		}
+		        	});
 		        }
 		       // resolve(response.rows);
 		      }, (err) => {
 		        console.log(err);
 		      });
-		//
+			});
 
 	}
 	createDesignDocs(){
@@ -283,7 +290,7 @@ export class FeedService {
 	}*/
 	//Function adds the newsrack feeds to couchdb
 	 addtopouch(feed,feedname){
-
+	 	return new Promise(resolve => {
 	   
 	    feed.map(res=>{
 	      res.feednme = feedname;
@@ -299,8 +306,11 @@ export class FeedService {
 			console.log("pouchdb",this);
 			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
+	            resolve(result);
 	          }
-	        });
+
+	        	});
+	  	 });
 	    });
 
 	    
@@ -329,5 +339,6 @@ export class FeedService {
 		
 
 	}
+	
 
 }

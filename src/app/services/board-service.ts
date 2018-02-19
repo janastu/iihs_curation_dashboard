@@ -84,10 +84,13 @@ export class BoardService {
 	addboard(res){
 
 		console.log(res);
+	return new Promise(resolve => {
 		this.db.post(res, function callback(err, result) {
 		    if (!err) {
 		      console.log('Successfully posted a todo!',result);
+		      resolve(result);
 		    }
 		  });
+	});
 	}
 }

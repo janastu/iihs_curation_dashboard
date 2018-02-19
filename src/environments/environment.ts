@@ -5,7 +5,6 @@
 
 export const environment = {
   production: false,
-
  dbprotocol:'http://',
  dbhost:'localhost:5984',
  dbPort:'5984',
@@ -15,7 +14,20 @@ export const environment = {
  authPort:'3000',
  feedParserHost:'localhost:3000',
 
+ feedParserPort:'3500' 
+
+
+ /*dbprotocol:'http://',
+ dbhost:'localhost:5984',
+ dbPort:'5984',
+ dbuser:'admin',
+ dbpassword:'admin',
+ authHost:'localhost:3001',
+ authPort:'3000',
+ feedParserHost:'localhost:3000',
+
  feedParserPort:'3500'
+*/
 
 
 
