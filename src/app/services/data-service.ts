@@ -22,7 +22,7 @@ constructor(private http: Http,private settings:Settings) {
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
  this.remote  = this.settings.protocol+this.settings.dbannotations;
 
-    console.log("remote",this.remote)
+    //console.log("remote",this.remote)
 
 
     

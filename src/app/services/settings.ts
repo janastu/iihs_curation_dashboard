@@ -13,12 +13,6 @@ import { environment } from '../../environments/environment';
 export class Settings{
  
 	constructor(){
-	
-
-
-		console.log('env superloginurl', environment.authHost);
-	console.log('env host', environment.dbhost);
-console.log('env host', environment.dbprotocol);
 
 
 

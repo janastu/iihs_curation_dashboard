@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import { ComponentsService } from '../../services/components-service';
-import { Service } from '../../services/services';
+//import { ComponentsService } from '../../services/components-service';
+//import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
+import { PageHeaderModule } from '../../shared';
+import * as _ from 'lodash'
 @Component({
   selector: 'app-boardfeeds',
   templateUrl: './boardfeeds.component.html',
@@ -19,7 +21,7 @@ feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 boardname:any;
-  constructor(public service:Service,public componentsService:ComponentsService,public dataService:DataService,public variab:Global,private route: ActivatedRoute) { }
+  constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
     //
@@ -29,8 +31,8 @@ boardname:any;
          .subscribe(params => {
            this.boardname = params.id;
            this.dataService.getboardfeeds(params.id).then(res=>{
-               console.log(res);
-               this.feeds = res;
+              this.variab.boardfeeds = res;
+               this.feeds = this.variab.boardfeeds;
              
                 });
     });
@@ -42,25 +44,19 @@ boardname:any;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-
     this.date = childDates;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
-    var fromdate = Date.parse(this.date.changefrom);
-    var todate = Date.parse(this.date.changeto);
-    console.log("global",this.globalfeeds,fromdate);
-     this.feeds =  this.globalfeeds.filter((res)=>{
-     
-     var chunks = res.date.split('.');
 
-     var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
-     var checkdate = Date.parse(formattedDate);
-     console.log("ch",formattedDate,checkdate);
-      if(fromdate<=checkdate && todate>=checkdate){
-         return res;
-       }
+    this.feeds =  this.variab.boardfeeds.filter((res)=>{
+        console.log("date",Date.parse(res.value.date));
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
+        
+          return res;
+        }
+       
 
-   });
+    });
   }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
@@ -72,6 +68,25 @@ boardname:any;
         }
 
     });
+  }
+  //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
+  handleSort(childSortLabel:any){
+    var checkForCategory:any=[];
+    if(childSortLabel === 'Latest'){
+  
+     this.variab.boardfeeds.sort(function(a, b) {
+        
+       return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
+     });
+    
+    }
+    if(childSortLabel === 'Oldest'){
+      this.variab.boardfeeds.sort(function(a, b) {
+         
+        return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
+      });
+  
+    }
   }
 
 }
