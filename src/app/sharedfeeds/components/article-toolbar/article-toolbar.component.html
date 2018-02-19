@@ -1,14 +1,14 @@
 <div class="navbar-nav article-tool-bar">
-  <div ngbDropdown class="board">
+  <div ngbDropdown class="board" autoClose="outside">
   <a class="save" ngbDropdownToggle aria-expanded="true">
     <i class="fa" [ngClass]="{'fa-star-o': selectedstar !== 1, 'fa-star': selectedstar == 1}" title="Save to board"></i>
   </a>
    <!--button class="save btn btn-sm btn-success" ngbDropdownToggle><i class="fa fa-fw fa-star-o"></i></button-->
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
         <form class="form-inline form-group">
-          <input class="form-control mr-sm-2" type="text" placeholder="Find a board">
+          <input class="form-control mr-sm-2" type="text" placeholder="Find a board" [(ngModel)]="queryString" name="query">
         </form>
-        <div class="field" *ngFor="let item of variab.boardupdated;let i = index;">
+        <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;let i = index;">
 
          <div class="board-item"><i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] == false || labelForBoards[i]== undefined, 'fa-star': labelForBoards[i] == true}" aria-hidden="true" title="Save to board"></i>
           <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->

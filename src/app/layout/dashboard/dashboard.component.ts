@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { routerTransition } from '../../router.animations';
-import { Service } from '../../services/services';
+import { FeedService } from '../../services/feed-service';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
-import { ComponentsService } from '../../services/components-service';
+import { Service } from '../../services/services';
 import { Userservice } from '../../services/userservice';
 import { CategoryService } from '../../services/category-service';
 import { Router } from "@angular/router";
@@ -19,11 +19,13 @@ export class DashboardComponent implements OnInit {
 	feeds:any=[];
     user:any;
     imgstatus:number=0;
-    constructor(/*public spinnerService: SpinnerService,*/public service:Service,public dataservice:DataService,public variab:Global,public componentsService:ComponentsService,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
+    constructor(/*public spinnerService: SpinnerService,*/public feedService:FeedService,public dataservice:DataService,public variab:Global,public service:Service,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
     }
 
     ngOnInit() {
-     this.userService.checkExpired();
+
+     
+     
 
     this.user = localStorage.getItem('name');
    
@@ -61,12 +63,17 @@ export class DashboardComponent implements OnInit {
         /*this.service.getAll().then(res=>{
             console.log(res);
         });*/
+        //Get the user database url from user session
+        var usersession = localStorage.getItem("superlogin.session")
+        var jsonusersession = JSON.parse(usersession);
+        let url = jsonusersession.userDBs.supertest;
+         localStorage.setItem('url',url);
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           this.variab.categoryupdated=res;
           //console.log(this.variab.categoryupdated)
           this.variab.categoryupdated.map(user=>{
-            console.log("use",user)
+            
             this.userService.pullnewFeeds(user.doc);
           })
             
@@ -79,7 +86,7 @@ export class DashboardComponent implements OnInit {
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked
     oncategory(category){
         this.router.navigate(['/feeds',category] )
-          this.service.getcategoryfeeds(category).then(res=>{
+          this.feedService.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
                   console.log(res);
         

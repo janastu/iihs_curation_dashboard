@@ -11,25 +11,31 @@ import { environment } from '../../environments/environment';
 */
 @Injectable()
 export class Settings{
-
+ 
 	constructor(){
 	
-	console.log("ENv files",environment.couchdbusername);
-	
+
+
+		console.log('env superloginurl', environment.authHost);
+	console.log('env host', environment.dbhost);
+console.log('env host', environment.dbprotocol);
+
+
 
 	}
-	protocol: any = environment.protocol;
+	protocol: any = environment.dbprotocol;
 
 	//host:any='login.test.openrun.net';
-	host:any = environment.host;	//couchdb host
-	dbfeed:any=':'+environment.couchdbport+'/feeds'; //feeds database
-	dbannotations: any = ':'+environment.couchdbport+'/iihs_annotation'; //annotations database
-	dbboards: any = ':'+environment.couchdbport+'/boards';	//boards database
-	dbgroups: any = ':'+environment.couchdbport+'/groups';	//groups database
-	dbusers: any = ':'+environment.couchdbport+'/sl-users';//users database
-	couchdbusername: any =environment.couchdbusername; //couchdb username
-	couchdbpassword:any=environment.couchdbpassword;	//couchdb password
-	superloginserverUrl: any = environment.protocol+environment.host+':'+environment.superloginport; // super login server url
-	feedparserUrl: any = environment.protocol+environment.host+':'+environment.feedParserport; // super login server url
+	
+	dbfeed:any=environment.dbhost+'/feeds'; //feeds database
+	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
+	dbboards: any = environment.dbhost +'/boards';	//boards database
+	dbgroups: any = environment.dbhost +'/groups';	//groups database
+	dbusers: any = environment.dbhost +'/sl-users';//users database
+	couchdbusername: any =environment.dbuser; //couchdb username
+	couchdbpassword:any=environment.dbpassword;	//couchdb password
+	superloginserverUrl:any= environment.dbprotocol+environment.authHost; // super login server url
+    //superloginserverUrl:any='http://192.168.99.100:3000'
+	feedparserUrl: any = environment.dbprotocol+environment.feedParserHost;  // super login  s erv er url
 
 }

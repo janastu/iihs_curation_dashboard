@@ -16,7 +16,9 @@ export class ManagementComponent implements OnInit {
   groupname:any;
   user:any;
   groups:any=[];
-  alertsuccess
+  alertsuccess:any;
+  catvalue:any;
+
   //loginForm:FormGroup;
   //name = this.formBuilder.control('', [Validators.required]);
   //mail = this.formBuilder.control('', [Validators.required]);
@@ -43,11 +45,11 @@ export class ManagementComponent implements OnInit {
             if(user.value.memberof === undefined){
               user.value.memberof=[group];
               user.value.type=u;
-             this.userService.updateAuser(user.value);
+             //this.userService.updateAuser(user.value);
             }
             else{
               user.value.memberof.push(group);
-              this.userService.updateAuser(user.value);
+              //this.userService.updateAuser(user.value);
             }
           console.log(user.value);
          
@@ -56,7 +58,7 @@ export class ManagementComponent implements OnInit {
               if(usergroup.key === group) {
                 
                 usergroup.value.members.push(name)
-              this.groupService.update(usergroup.value);
+             // this.groupService.update(usergroup.value);
               }
             })
                
@@ -86,7 +88,7 @@ export class ManagementComponent implements OnInit {
    this.alertsuccess=true;
    this.ngAlert.type = 'success';
    this.groupname='';
-   this.groupService.addGroupDb(doc);
+   //this.groupService.addGroupDb(doc);
   }
   public closeAlert() {
       this.alertsuccess=false;

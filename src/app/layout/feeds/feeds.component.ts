@@ -52,17 +52,17 @@ user:any;
               this.feedService.getmetacategories(this.catname).then(res=>{
                 console.log(res);
                 this.variab.globalfeeds = res;
-               
+                 this.variab.globalfeeds.reverse();
                  this.checkForDeletedFeeds(); 
               })
             }
             else{
               this.catname = params.id
-               this.feedService.getcategoryfeeds(params.id).then(res=>{
+               this.feedService.getlatestfeeds(params.id).then(res=>{
                 
                  
                     this.variab.globalfeeds = res;
-                     
+                     this.variab.globalfeeds.reverse();
                      //After filtering the feeds according to category remove the hidden feeds 
                      //and display the rest feeds
                        
@@ -81,20 +81,21 @@ user:any;
   //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
   // and display the rest of the feeds
   checkForDeletedFeeds(){
-    console.log("check",this.variab.globalfeeds);
+    
     let hiddenfeeds:any=[];
     this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
      hiddenfeeds=res;
      console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.globalfeeds;
+       console.log("check",this.variab.globalfeeds);
        document.getElementById('loading').style.display = 'none';
        }
       
      
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-         // console.log("hiddem",feed.value._id,globalfeed.id)
+         console.log("hiddem",feed.value._id,globalfeed.id)
            if(feed.value._id === globalfeed.id) {
             var i = _.indexOf(this.variab.globalfeeds,globalfeed);
             this.variab.globalfeeds.splice(i,1);
@@ -138,6 +139,7 @@ user:any;
         
           return res;
         }
+       
 
     });
   
@@ -145,7 +147,7 @@ user:any;
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
     console.log("in feed",childCategory)
-      this.service.getcategoryfeeds(childCategory).then(result =>{
+      this.feedService.getcategoryfeeds(childCategory).then(result =>{
         this.feeds = result;
         this.catname = childCategory;
       })
@@ -154,19 +156,47 @@ user:any;
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-     this.feedService.getlatestfeeds(this.catname).then(result=>{
-       this.feeds=result;
-       this.feeds.reverse();
-       
-     })
+      this.route.params
+       .subscribe(params => {
+          if(params.subcategory){
+            this.feedService.getmetacategories(params.subcategory).then(result=>{
+                this.feeds=result;
+                this.feeds.reverse();
+
+            })
+          }
+          else{
+            this.feedService.getlatestfeeds(this.catname).then(result=>{
+              this.feeds=result;
+              this.feeds.reverse();
+              
+            })
+
+          } 
+       });
+
+     
     }
     if(childSortLabel === 'Oldest'){
       
-     this.feedService.getlatestfeeds(this.catname).then(result=>{
-       this.feeds=result;
-       
-       console.log(this.feeds)
-     })
+     this.route.params
+      .subscribe(params => {
+         if(params.subcategory){
+           this.feedService.getmetacategories(params.subcategory).then(result=>{
+               this.feeds=result;
+               
+
+           })
+         }
+         else{
+           this.feedService.getlatestfeeds(this.catname).then(result=>{
+             this.feeds=result;
+             
+             
+           })
+
+         } 
+      });
     }
   }
   //Function to handle refreshed feeds when clicked from page-header component

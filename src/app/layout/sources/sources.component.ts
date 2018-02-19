@@ -37,11 +37,11 @@ export class SourcesComponent implements OnInit {
     this.categoryService.addcategory(doc);
     this.variab.categoryupdated.push({doc:doc})*/
 
-      this.feedService.getAllFeeds(this.feedlink).then(res=>{
+      this.feedService.getNewsrackfeedsFirstTime(this.feedlink).then(res=>{
       this.metadata = res;
       this.category = this.metadata.categories[0];
       this.createfeed = true;
-      this.feedlink='';
+      //this.feedlink='';
       console.log("value",this.metadata,this.createfeed);
     });
   	

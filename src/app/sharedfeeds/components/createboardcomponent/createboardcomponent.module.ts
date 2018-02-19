@@ -7,15 +7,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
+import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedPipesModule
     ],
-    declarations: [CreateboardcomponentComponent ],
+    declarations: [CreateboardcomponentComponent],
     exports: [CreateboardcomponentComponent ],
     providers: [BoardService,CreateBoardStore]
 })
