@@ -35,7 +35,6 @@
             <div *ngIf="confirmpassword.hasError('required')" class="error-box">* Repeat Password is required!</div>
             <div *ngIf="username.hasError('minlength')" class="error-box">* Minimum username length is 6!</div>
              <div *ngIf="password.hasError('minlength')" class="error-box">* Minimum password length is 6!</div>
-            <div *ngIf="!username.valid" class="error-box">*Username should only have characters </div>
         </div>
     </div>
 </div>
