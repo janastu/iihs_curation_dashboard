@@ -42,7 +42,7 @@ user:any;
 
 
  //Access the query parameter and filter the feeds according to category
-           this.route.params
+           this.route.queryParams
             .subscribe(params => {
               console.log(params);
               
@@ -57,8 +57,8 @@ user:any;
               })
             }
             else{
-              this.catname = params.id
-               this.feedService.getlatestfeeds(params.id).then(res=>{
+              this.catname = params.feedname
+               this.feedService.getlatestfeeds(params.feedname).then(res=>{
                 
                  
                     this.variab.globalfeeds = res;
@@ -130,18 +130,26 @@ user:any;
   public handleDate(childDates:any){
 
     this.date = childDates;
+    var xmlLink:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
 
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-        console.log("date",Date.parse(res.value.date));
+        
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
-        }
-       
+        }     
 
     });
+
+    /*if (this.feeds.length == 0) {
+     //console.log("apito newsrack",xmlLink); 
+     this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
+             return res;
+      }) 
+    }*/
+    
   
   }
   //Function to handle Category event from page-header component

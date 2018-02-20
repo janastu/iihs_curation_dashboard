@@ -8,10 +8,10 @@
 
           <div class="row">
 
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds">
+              <div class="feeds-entries" *ngFor="let item of incomingfeeds| slice:0:20;">
                 <!--Feed Title-->
                   <div class="row">
-                    <app-modal #modal [item]="item.value" [index]='i'></app-modal>
+                    <app-modal #modal [item]="item" [index]='i'></app-modal>
                    <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                    </div>
                   <!--Feed Category-->
