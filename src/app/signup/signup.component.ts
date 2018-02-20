@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
 
 registerForm:FormGroup;
 name = this.formBuilder.control('', [Validators.required]);
-username = this.formBuilder.control('', [Validators.required,Validators.minLength(6),Validators.pattern('[a-zA-Z]*')]);
+username = this.formBuilder.control('', [Validators.required,Validators.minLength(6)]);
 email = this.formBuilder.control('', [Validators.email]);
 password = this.formBuilder.control('', [Validators.required,,Validators.minLength(6)]);
 confirmpassword = this.formBuilder.control('', [Validators.required]);

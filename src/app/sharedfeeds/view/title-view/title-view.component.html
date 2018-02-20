@@ -20,7 +20,7 @@
                              
                         <!--Feed Title--> 
 
-                            <app-modal #modal [item]="item.value"></app-modal>
+                            <app-modal #modal [item]="item"></app-modal>
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
                               
                         <!--Feed description--> 

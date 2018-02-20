@@ -39,7 +39,7 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item.value" [index]='i'></app-modal>
+                      <app-modal #modal [item]="item" [index]='i'></app-modal>
                      <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.value.url}} class="metadata-magazine">

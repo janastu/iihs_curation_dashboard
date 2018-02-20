@@ -130,26 +130,25 @@ user:any;
   public handleDate(childDates:any){
 
     this.date = childDates;
-    
+    var xmlLink:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
 
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-        console.log("date",Date.parse(res.value.date));
+        
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
-        }
-       
+        }     
 
     });
 
-    if (this.feeds.length == 0) {
-     console.log("apito newsrack"); 
-     this.feedService.getRangeFeeds(fromdate,todate,this.catname).then(res=>{
+    /*if (this.feeds.length == 0) {
+     //console.log("apito newsrack",xmlLink); 
+     this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
              return res;
       }) 
-    }
+    }*/
     
   
   }
