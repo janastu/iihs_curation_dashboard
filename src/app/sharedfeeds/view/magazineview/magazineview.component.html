@@ -18,7 +18,7 @@
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds;let i=index;">
+              <div class="feeds-entries" *ngFor="let item of incomingfeeds | slice:0:20;let i=index;">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
