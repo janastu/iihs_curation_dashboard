@@ -18,7 +18,11 @@ export class BoardService {
 
 		this.localdb.sync(this.remote, {
 		  live: true,
-		  retry:true
+		  retry:true,
+		  auth:{
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
 		}).on('change', function (change) {
 		  // yo, something changed!
 		  console.log("syncchnage",change);
