@@ -74,6 +74,24 @@ public adduser(user){
    
    
 }
+public sendConfirmEmail(email)
+{
+  var status;
+  console.log("Called to msg");
+   return new Promise(resolve => {
+     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email;
+       //console.log(newsrack);
+   this.http.get(emailurl).subscribe((response) => {
+     console.log("sd",response.ok);
+     status = response.ok;
+      
+     resolve(status);  
+        });
+    });
+     
+    
+ 
+}
 public login(credentials){
 
 return new Promise(resolve => { 
