@@ -47,9 +47,20 @@ loading: boolean = false;
     var changefrom,changeto;
     changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
     changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
+    var fromdate = Date.parse(changefrom);
+    var todate = Date.parse(changeto);
+
+    var feeds =  this.variab.globalfeeds.filter((res)=>{
+        
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
+        
+          return res;
+        }     
+
+    });
     //console.log("date value",changefrom,Date.parse(changefrom));
-    this.Dates.emit({changefrom,changeto});
-    
+    this.Dates.emit(feeds);
+    this.loginForm.reset();
   }
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {

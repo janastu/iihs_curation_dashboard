@@ -15,24 +15,28 @@ export class DataService {
 constructor(private http: Http,private settings:Settings) { 
 
     //this.localdb = new PouchDB('iihs_annotation');
-   this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
-   //this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
+  this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
+  this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
 
-   /*this.localdb.sync(this.remote, {
-     live: true,
-     retry:true
-   }).on('change', function (change) {
-     // yo, something changed!
-     console.log("syncchnage",change);
-   }).on('error', function (err) {
-     console.log("syncerr",err);
-     // yo, we got an error! (maybe the user went offline?)
-   })*/
+  this.localdb.sync(this.remote, {
+    live: true,
+    retry:true,
+    auth:{
+              username:this.settings.couchdbusername,
+              password:this.settings.couchdbpassword
+            }
+  }).on('change', function (change) {
+    // yo, something changed!
+    console.log("syncchnage",change);
+  }).on('error', function (err) {
+    console.log("syncerr",err);
+    // yo, we got an error! (maybe the user went offline?)
+  })
   //function call to create design docs
   this.createDesignDocs();
 
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
-this.remote  = this.settings.protocol+this.settings.dbannotations;
+/* this.remote  = this.settings.protocol+this.settings.dbannotations;
 
     //console.log("remote",this.remote)
 
@@ -47,7 +51,7 @@ this.remote  = this.settings.protocol+this.settings.dbannotations;
             password: this.settings.couchdbpassword
           }
        };
-    this.localdb.sync(this.remote, options);
+    this.localdb.sync(this.remote, options);*/
 
   }
 

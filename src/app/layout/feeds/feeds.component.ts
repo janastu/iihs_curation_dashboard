@@ -128,8 +128,8 @@ user:any;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-
-    this.date = childDates;
+    this.feeds = childDates;
+    /*this.date = childDates;
     var xmlLink:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
@@ -143,7 +143,7 @@ user:any;
 
     });
 
-    /*if (this.feeds.length == 0) {
+    if (this.feeds.length == 0) {
      //console.log("apito newsrack",xmlLink); 
      this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
              return res;
