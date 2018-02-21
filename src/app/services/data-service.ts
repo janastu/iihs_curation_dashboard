@@ -15,7 +15,7 @@ export class DataService {
 constructor(private http: Http,private settings:Settings) { 
 
     //this.localdb = new PouchDB('iihs_annotation');
-   this.localdb = new PouchDB('feeds'); //create a pouchdb 
+   this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
    this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
 
    this.localdb.sync(this.remote, {
@@ -125,7 +125,7 @@ constructor(private http: Http,private settings:Settings) {
         deletedfeeds: {
           map: function (doc) {
             if (doc.hidden === true) {
-                  emit([doc.creator,doc.target.value.feednme],doc.target);
+                  emit([doc.creator],doc.target);
                    }
           }.toString()
         },
@@ -271,13 +271,13 @@ constructor(private http: Http,private settings:Settings) {
     });
 
   }
-  getdeletedfeeds(usr,category){
+  getdeletedfeeds(usr){
 
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
       this.localdb.query('annotatedfeeds/deletedfeeds', {
-          key:[usr,category]
+          key:[usr]
           
         }).then(function (result) {
        console.log("res",result);

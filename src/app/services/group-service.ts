@@ -14,7 +14,7 @@ export class GroupService {
 
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings) { 
 		//this.localdb = new PouchDB('groups');
-		this.localdb = new PouchDB('feeds'); //create a pouchdb 
+		this.localdb = new PouchDB('groups'); //create a pouchdb 
 		this.remote = new PouchDB(this.settings.protocol+this.settings.dbgroups);
 
 		this.localdb.sync(this.remote, {
