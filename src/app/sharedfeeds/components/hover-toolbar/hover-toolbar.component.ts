@@ -30,7 +30,7 @@ this.date = new Date();
     
     this.user = localStorage.getItem('name');
    
-      console.log(this.variab.readlaterfeeds);
+      //console.log(this.variab.readlaterfeeds);
       this.variab.readlaterfeeds.filter(anno=>{
         //console.log(this.feeditem,anno)
         if(anno.value.target.value._id === this.feeditem.value._id){
@@ -50,7 +50,7 @@ this.date = new Date();
 
   }
   readlater(index: number){
-    console.log("called");
+    //console.log("called");
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
        
@@ -69,7 +69,7 @@ this.date = new Date();
      }
      else{
        this.selectedIndex = index;
-       
+       // console.log("notrecentlyread",this.feeditem)
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
@@ -91,7 +91,7 @@ this.date = new Date();
   markasread(index:number){
     if(this.selectedIcon == index){
        this.selectedIcon = -1;
-       console.log("recentlyread")
+       //console.log("recentlyread")
        this.variab.recentlyread.map(anno=>{
          if(anno.value.target.id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
@@ -106,7 +106,7 @@ this.date = new Date();
      }
      else{
        this.selectedIcon = index;
-        console.log("notrecentlyread")
+       
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
