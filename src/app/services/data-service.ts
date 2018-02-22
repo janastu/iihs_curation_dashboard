@@ -85,7 +85,7 @@ constructor(private http: Http,private settings:Settings) {
         },
         readlater: {
           map: function (doc) {
-            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno) {
+            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno && !doc.hidden) {
                     emit(doc.creator,doc);
                          }
           }.toString()
