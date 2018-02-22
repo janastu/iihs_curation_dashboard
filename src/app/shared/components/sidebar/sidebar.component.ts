@@ -156,7 +156,7 @@ export class SidebarComponent implements OnInit{
     routeto(category){
         
         
-        this.router.navigate(['/feeds',category] )
+        this.router.navigate(['/feeds'], { queryParams: { feedname: category } })
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;
@@ -170,8 +170,8 @@ export class SidebarComponent implements OnInit{
     //Function called from html to navigate to feeds component with category name in the meta data
     routetometa(category,meta){
         
-        
-        this.router.navigate(['/feeds',category,{subcategory:meta}])
+        this.router.navigate(['/feeds'], { queryParams: { feedname: category , subcategory:meta } });
+        //this.router.navigate(['/feeds',category,{subcategory:meta}])
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
                  this.variab.globalcatname = category;

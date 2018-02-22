@@ -30,6 +30,8 @@
      <!--Create a new board BLock-->
 
      <div *ngIf="visible" class="form-group savetoboard">
+     <ngb-alert *ngIf="alertexists" (close)="closeAlert()">Board already Exists</ngb-alert>
+      <ngb-alert *ngIf="alertempty" (close)="closeAlert()">Board Cannot be Empty</ngb-alert>
        <form [formGroup]="boardForm" class="form-inline form-group">
          <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Enter Board Name">
        </form>

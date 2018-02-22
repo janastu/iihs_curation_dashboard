@@ -8,21 +8,37 @@ declare function emit(key: any,value:any): void;
 @Injectable()
 
 export class DataService {
-  db:any;
+  localdb:any;
   remote:any;
   username:any;
   password:any;
 constructor(private http: Http,private settings:Settings) { 
 
-    this.db = new PouchDB('iihs_annotation');
-   
-  //function call to create design docs
+    //this.localdb = new PouchDB('iihs_annotation');
+  this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
+ /* this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
+
+  this.localdb.sync(this.remote, {
+    live: true,
+    retry:true,
+    auth:{
+              username:this.settings.couchdbusername,
+              password:this.settings.couchdbpassword
+            }
+  }).on('change', function (change) {
+    // yo, something changed!
+    console.log("syncchnage",change);
+  }).on('error', function (err) {
+    console.log("syncerr",err);
+    // yo, we got an error! (maybe the user went offline?)
+  })
+  //function call to create design docs*/
   this.createDesignDocs();
 
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
  this.remote  = this.settings.protocol+this.settings.dbannotations;
 
-    console.log("remote",this.remote)
+    //console.log("remote",this.remote)
 
 
     
@@ -35,7 +51,7 @@ constructor(private http: Http,private settings:Settings) {
             password: this.settings.couchdbpassword
           }
        };
-    this.db.sync(this.remote, options);
+    this.localdb.sync(this.remote, options);
 
   }
 
@@ -43,7 +59,7 @@ constructor(private http: Http,private settings:Settings) {
    
     
 
-        this.db.post(payload, function callback(err, result) {
+        this.localdb.post(payload, function callback(err, result) {
           if (!err) {
             console.log('Successfully posted a todo!',result);
             
@@ -113,7 +129,7 @@ constructor(private http: Http,private settings:Settings) {
         deletedfeeds: {
           map: function (doc) {
             if (doc.hidden === true) {
-                  emit([doc.creator,doc.target.value.feednme],doc.target);
+                  emit([doc.creator],doc.target);
                    }
           }.toString()
         },
@@ -129,14 +145,14 @@ constructor(private http: Http,private settings:Settings) {
     }
 
     // save the design doc
-    this.db.put(ddoc).catch(function (err) {
+    this.localdb.put(ddoc).catch(function (err) {
       if (err.name !== 'conflict') {
         throw err;
       }
       // ignore if doc already exists
     })
     // save the design doc
-    this.db.put(feedsdoc).catch(function (err) {
+    this.localdb.put(feedsdoc).catch(function (err) {
       if (err.name !== 'conflict') {
         throw err;
       }
@@ -151,7 +167,7 @@ constructor(private http: Http,private settings:Settings) {
     
 
    return new Promise(resolve => {
-     this.db.query('annotations/boardannotation', {
+     this.localdb.query('annotations/boardannotation', {
            
          }).then(function (result) {
          // console.log("res",result);
@@ -168,7 +184,7 @@ constructor(private http: Http,private settings:Settings) {
       emit(doc.label,doc);
     }
     return new Promise(resolve => {
-      this.db.query(map).then(function (result) {
+      this.localdb.query(map).then(function (result) {
          
         resolve(result.rows);
       }).catch(function (err) {
@@ -184,7 +200,7 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
-      this.db.query('annotatedfeeds/boardfeeds', {
+      this.localdb.query('annotatedfeeds/boardfeeds', {
            key:board
          }).then(function (result) {
          console.log("res",result);
@@ -202,7 +218,7 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-      this.db.query('annotations/readlater', {
+      this.localdb.query('annotations/readlater', {
           key:usr
         }).then(function (result) {
        // console.log("res",result);
@@ -221,7 +237,7 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-      this.db.query('annotations/recentlyread', {
+      this.localdb.query('annotations/recentlyread', {
           key:usr
         }).then(function (result) {
        // console.log("res",result);
@@ -234,7 +250,7 @@ constructor(private http: Http,private settings:Settings) {
 
   }
   /*updatedoc(doc){
-   this.db.put(doc).then(function (response) {
+   this.localdb.put(doc).then(function (response) {
      // handle response
      console.log(response)
    }).catch(function (err) {
@@ -242,14 +258,14 @@ constructor(private http: Http,private settings:Settings) {
    });
   }*/
  
-  getalldeletedfeeds(){
+  getalldeletedfeeds(usr){
 
   //  var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/alldeletedfeeds'
 
    // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
    return new Promise(resolve => {
-      this.db.query('annotatedfeeds/alldeletedfeeds', {
-          
+      this.localdb.query('annotatedfeeds/alldeletedfeeds', {
+          key:usr
         }).then(function (result) {
        // console.log("res",result);
         resolve(result.rows);
@@ -259,13 +275,13 @@ constructor(private http: Http,private settings:Settings) {
     });
 
   }
-  getdeletedfeeds(usr,category){
+  getdeletedfeeds(usr){
 
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
-      this.db.query('annotatedfeeds/deletedfeeds', {
-          key:[usr,category]
+      this.localdb.query('annotatedfeeds/deletedfeeds', {
+          key:[usr]
           
         }).then(function (result) {
        console.log("res",result);
@@ -278,7 +294,7 @@ constructor(private http: Http,private settings:Settings) {
   }
   //Update database for deleted and modidifed
   updatedatabase(doc){
-    this.db.put(doc).then(function (response) {
+    this.localdb.put(doc).then(function (response) {
       // handle response
       console.log(response)
     }).catch(function (err) {

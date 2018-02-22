@@ -9,15 +9,30 @@ declare function emit(key: any,value:any): void;
 
 @Injectable()
 export class FeedService {
-	db:any;
+	localdb:any;
 	remote:any;
 	username:any;
 	password:any;
 	feedNewsrack:any=[];
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
 		  
-		  this.db = new PouchDB('feeds'); //create a pouchdb 
+		  this.localdb = new PouchDB('feeds'); //create a pouchdb 
+		  this.remote = new PouchDB(this.settings.protocol+this.settings.dbfeed);
 
+		  this.localdb.sync(this.remote, {
+		    live: true,
+		    retry:true,
+		    auth:{
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
+		  }).on('change', function (change) {
+		    // yo, something changed!
+		    console.log("syncchnage",change);
+		  }).on('error', function (err) {
+		  	console.log("syncerr",err);
+		    // yo, we got an error! (maybe the user went offline?)
+		  })
 		  //function call to create design docs
 		  this.createDesignDocs();
 
@@ -25,7 +40,7 @@ export class FeedService {
 		//remote couchdb url to sync with couchdb
 		
 
-		//this.db = new PouchDB('categories')
+		//this.localdb = new PouchDB('categories')
  /*let options = {
 		        live: true,
 			      retry: true,
@@ -34,15 +49,10 @@ export class FeedService {
 				      username:this.settings.couchdbusername,
 				      password:this.settings.couchdbpassword
 		        }
-		     };
-		this.db.replicate.from(this.remote).on('complete', function(info) {
-		  // then two-way, continuous, retriable sync
-		  this.db.sync(this.url, options)
-		    .on('change', function(info){console.log('change',info)})
-			  .on('paused', function(info){console.log('paused')})
-				.on('error', function(err){console.log('error',err)});
- }).on('error',function(info){console.log('change',info)});*/
-		 var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
+		     };*/
+
+
+		 /*var sync = PouchDB.sync('feeds', this.settings.protocol+this.settings.dbfeed, {
 			  live: true,
 		  	retry: true,
 			auth:{
@@ -70,7 +80,7 @@ export class FeedService {
 		}).on('error', function (err) {
 		  // handle error
 		  console.log("error",err)
-		});
+		});*/
 		
 	}
 
@@ -96,24 +106,30 @@ export class FeedService {
 
 		//let url = jsonusersession.userDBs.supertest;
 		//
+
 		let url = localStorage.getItem('url');
 		console.log(url)
 		let headers = new Headers();
 		 headers.append( 'Content-Type', 'application/json')
 		 headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
 		let options = new RequestOptions({ headers: headers });
-			
+			return new Promise(resolve => {
 		      this.http.post(url,metadata,options).map(res=>res.json()).subscribe((response)=> {
 		        
 		        console.log("user",response);
 		        if(response.ok === true){
-		        	this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        	resolve(response);
+		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
+		        		if(res['ok'] == true){
+		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        		}
+		        	});
 		        }
 		       // resolve(response.rows);
 		      }, (err) => {
 		        console.log(err);
 		      });
-		//
+			});
 
 	}
 	createDesignDocs(){
@@ -163,14 +179,14 @@ export class FeedService {
 		}
 
 		// save the design doc
-		this.db.put(ddoc).catch(function (err) {
+		this.localdb.put(ddoc).catch(function (err) {
 		  if (err.name !== 'conflict') {
 		    throw err;
 		  }
 		  // ignore if doc already exists
 		})
 		// save the design doc
-		this.db.put(linkdoc).catch(function (err) {
+		this.localdb.put(linkdoc).catch(function (err) {
 		  if (err.name !== 'conflict') {
 		    throw err;
 		  }
@@ -185,7 +201,7 @@ export class FeedService {
 	  getcategoryfeeds(category){
 
 	   return new Promise(resolve => {
-	   	this.db.query('feeds/categoryfeeds', {
+	   	this.localdb.query('feeds/categoryfeeds', {
 	   		limit:20,
 	   	    key:category,
 	   	    descending:true
@@ -204,10 +220,9 @@ export class FeedService {
 	  getmetacategories(category){
 
 	   return new Promise(resolve => {
-	   	this.db.query('feeds/metacategories', {
+	   	this.localdb.query('feeds/metacategories', {
 	   	    startkey: [category],
-	   	    endkey: [category, {}],
-	   	    limit:50
+	   	    endkey: [category, {}]
 	   	  }).then(function (result) {
 	   	 // console.log("res",result);
 	   	  resolve(result.rows);
@@ -235,10 +250,9 @@ export class FeedService {
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
 	return new Promise(resolve => {
-	    this.db.query('feeds/latestoldestcategory', {
+	    this.localdb.query('feeds/latestoldestcategory', {
 	      startkey: [category],
-	      endkey: [category, {}],
-	      limit:50
+	      endkey: [category, {}]
 	    }).then(function (result) {
 	   		console.log("res",result);
 	    	resolve(result.rows);
@@ -283,7 +297,7 @@ export class FeedService {
 	}*/
 	//Function adds the newsrack feeds to couchdb
 	 addtopouch(feed,feedname){
-
+	 	return new Promise(resolve => {
 	   
 	    feed.map(res=>{
 	      res.feednme = feedname;
@@ -295,12 +309,15 @@ export class FeedService {
 	     // console.log("dateche",res,res.date);
 	      //this.variab.globalfeeds.push({value:res});
 	      
-	      this.db.post(res, function callback(err, result) {
+	      this.localdb.post(res, function callback(err, result) {
 			console.log("pouchdb",this);
 			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
+	            resolve(result);
 	          }
-	        });
+
+	        	});
+	  	 });
 	    });
 
 	    
@@ -329,5 +346,19 @@ export class FeedService {
 		
 
 	}
+	//function  to get feeds in a range
+	getRangeFeeds(from,to,feedname){
+		console.log(from,to);
+		return new Promise(resolve => {
+			var newsrackrange = this.settings.feedparserUrl+'/range?from='+from+'&to='+to+'&link='+feedname;
+			console.log(newsrackrange)
+			this.http.get(newsrackrange).map(res=>res.json()).subscribe((response)=>{
+				
+			})
+			resolve('err');
+		});
+
+	}
+	
 
 }
