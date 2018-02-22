@@ -93,20 +93,7 @@ p:any;
     //this.feedmark = sendIcon;
     console.log("icon",this.feedmark)
   }
-  goToPage(n: number): void {
-      this.page = n;
-      //this.getMessages();
-    }
 
-    onNext(): void {
-      this.page++;
-      //this.getMessages();
-    }
-
-    onPrev(): void {
-      this.page--;
-      //this.getMessages();
-    }
  
   
 }
