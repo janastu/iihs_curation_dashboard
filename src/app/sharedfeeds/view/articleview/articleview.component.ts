@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
 export class ArticleviewComponent implements OnInit {
   @Input('feeds') incomingfeeds:any=[];
  
-
+p:any;
 boards:any=[];
 visible:boolean=false;
 closeResult: string;
