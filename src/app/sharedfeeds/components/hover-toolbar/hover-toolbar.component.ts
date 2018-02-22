@@ -139,9 +139,9 @@ this.date = new Date();
       "hidden":true
     }   
     //this.variab.recentlyread.push({value:model});
-    this.readlaterstore.dispatch('ADD_ITEMS',model)
+   this.readlaterstore.dispatch('ADD_ITEMS',model)
    this.variab.globalfeeds.splice(this.index,1);
-
+   this.variab.readlaterfeeds.splice(this.index,1);
    
    console.log(this.index,this.variab.globalfeeds);
    this.showDialog = false;

@@ -5,6 +5,7 @@ import { ArticleviewComponent } from './articleview.component';
 import { ArticleToolbarModule,CreateboardcomponentModule } from '../../components';
 import { ModalModule } from '../../components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ArticleToolbarModule,
         NgbModule.forRoot(),
        	CreateboardcomponentModule,
-       	ModalModule
+       	ModalModule,
+        NgxPaginationModule
 
     ],
     declarations: [ArticleviewComponent],

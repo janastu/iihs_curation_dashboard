@@ -1,7 +1,7 @@
     import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Userservice } from '../services/userservice';
-import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { FormBuilder,Validators, FormGroup, FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
@@ -22,11 +22,17 @@ confirmpassword = this.formBuilder.control('', [Validators.required]);
 alertsuccess:boolean = false;
 alertauth:boolean= false;
 errormessage:any;
+
+form: FormGroup;
+    
+
     urlstatus:boolean=false;
     emailfromurl: any ;
     constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
 
+
     ngOnInit() { 
+
 
         
 
@@ -43,6 +49,7 @@ errormessage:any;
             }
 
            });
+
         
         this.registerForm = this.formBuilder.group({
             name:this.name,
@@ -56,6 +63,8 @@ errormessage:any;
 
     	
     }
+
+
     onregister(){
             let doc = {
                 'name':this.name.value,

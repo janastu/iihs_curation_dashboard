@@ -11,14 +11,13 @@
   <div class="row">
     <div class="col">
       <div class="col-sm-6 offset-sm-3">
-    
+          
           <div class="card-blocks">
             <div class="row centered magazine-list">
-              <div *ngIf="alert"><ngb-alert  (close)="closeAlert(alert)">Feed is hidden</ngb-alert></div>
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds | slice:0:20;let i=index;">
+              <div class="feeds-entries" *ngFor="let item of incomingfeeds | paginate: { itemsPerPage: 10, currentPage: p };let i=index;">
                 <!--Feed Hover-->
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
@@ -62,10 +61,15 @@
                </div> 
             </div>
           </div>
-    
+          
         </div>
 
       </div> 
-    </div>    
+      <div class="col-sm-6 offset-sm-3">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+      </div>
+    </div>   
+    
   </div>
+  
 </div>  

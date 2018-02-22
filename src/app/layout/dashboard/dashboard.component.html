@@ -38,7 +38,7 @@
                       <img src="assets/images/loading_spinner.gif">
                     </div>
             <div class="list-group recent-feeds" *ngFor="let item of feeds| slice:0:3;">
-                <a href="javascript:;" class="list-group-item">
+                <a target="_blank" href="{{item.value.link}}" class="list-group-item">
                     <h4 class="list-group-item-heading">{{item.value.title}}</h4>
                 
                 </a>

@@ -5,13 +5,15 @@ import { HoverToolbarModule,ModalModule } from '../../components';
 //import { CreateboardcomponentModule } from '../../components';
 import { MagazineviewComponent } from './magazineview.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         HoverToolbarModule,
         ModalModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        NgxPaginationModule
     ],
     declarations: [MagazineviewComponent],
     exports: [MagazineviewComponent]

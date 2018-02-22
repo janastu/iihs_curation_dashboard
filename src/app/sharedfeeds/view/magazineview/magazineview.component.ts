@@ -15,6 +15,10 @@ export class MagazineviewComponent implements OnInit {
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
+loading = false;
+ total = 0;
+ page = 1;
+ limit = 20;
   constructor() {
    /*if(this.incomingfeeds.length == 0) {
       // code...
@@ -92,6 +96,20 @@ feedmark:number =0;
     //this.feedmark = sendIcon;
     console.log("icon",this.feedmark)
   }
+  goToPage(n: number): void {
+      this.page = n;
+      //this.getMessages();
+    }
+
+    onNext(): void {
+      this.page++;
+      //this.getMessages();
+    }
+
+    onPrev(): void {
+      this.page--;
+      //this.getMessages();
+    }
  
   
 }
