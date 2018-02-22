@@ -29,7 +29,7 @@ user:any;
     this.dataservice.getreadlater(this.user).then(result=>{
       //Set result to global variable as it can be accessed outdside the component
         this.variab.readlaterfeeds=result;
-       
+       console.log(this.variab.readlaterfeeds);
   
        
        this.feedFromAnnotation();

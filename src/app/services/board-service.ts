@@ -6,18 +6,34 @@ declare function emit(key: any,value:any): void;
 
 @Injectable()
 export class BoardService {
-	db:any;
+	localdb:any;
 	remote:any;
 	username:any;
 	password:any;
 
 	constructor(private http: Http,private settings:Settings) { 
-		this.db = new PouchDB('boards');
+		this.localdb = new PouchDB('boards');
+		
+		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards);
 
+		this.localdb.sync(this.remote, {
+		  live: true,
+		  retry:true,
+		  auth:{
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
+		}).on('change', function (change) {
+		  // yo, something changed!
+		  console.log("syncchnage",change);
+		}).on('error', function (err) {
+			console.log("syncerr",err);
+		  // yo, we got an error! (maybe the user went offline?)
+		})
 		//function call to create design docs
 		this.createDesignDocs();
 
-		this.remote = this.settings.protocol+this.settings.dbboards;
+		/*this.remote = this.settings.protocol+this.settings.dbboards;
 
 		
 		  
@@ -31,7 +47,7 @@ export class BoardService {
 		        }
 		     };
 		  
-		     this.db.sync(this.remote, options);
+		     this.db.sync(this.remote, options);*/
 
 	  }
 	createDesignDocs(){
@@ -52,7 +68,7 @@ export class BoardService {
 		}
 
 		// save the design doc
-		this.db.put(ddoc).catch(function (err) {
+		this.localdb.put(ddoc).catch(function (err) {
 		  if (err.name !== 'conflict') {
 		    throw err;
 		  }
@@ -69,7 +85,7 @@ export class BoardService {
 		//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
 
 	return new Promise(resolve => {
-	  this.db.query('board/boards', {
+	  this.localdb.query('board/boards', {
 	     
 	      
 	    }).then(function (result) {
@@ -85,7 +101,7 @@ export class BoardService {
 
 		console.log(res);
 	return new Promise(resolve => {
-		this.db.post(res, function callback(err, result) {
+		this.localdb.post(res, function callback(err, result) {
 		    if (!err) {
 		      console.log('Successfully posted a todo!',result);
 		      resolve(result);

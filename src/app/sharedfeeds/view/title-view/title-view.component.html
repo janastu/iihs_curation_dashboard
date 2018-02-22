@@ -9,7 +9,7 @@
     	<div class="col">
             <div class="mb-3">
     	               <div class="card-header title-header"><strong>All Feeds</strong></div>
-    	        <div class="list-entries" *ngFor="let item of incomingfeeds">
+    	        <div class="list-entries" *ngFor="let item of incomingfeeds| paginate: { itemsPerPage: 20, currentPage: p}">
                         <div class="list-item">
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
@@ -20,7 +20,7 @@
                              
                         <!--Feed Title--> 
 
-                            <app-modal #modal [item]="item.value"></app-modal>
+                            <app-modal #modal [item]="item"></app-modal>
                              <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
                               
                         <!--Feed description--> 
@@ -37,5 +37,8 @@
                 </div>
             </div> 
         </div>    
+    </div>
+    <div class="col-sm-6 offset-sm-3">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls> 
     </div>
 </div>

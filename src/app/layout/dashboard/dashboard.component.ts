@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
     }
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked
     oncategory(category){
-        this.router.navigate(['/feeds',category] )
+        this.router.navigate(['/feeds'],{queryParams:{feedname:category}} )
           this.feedService.getcategoryfeeds(category).then(res=>{
               this.variab.globalfeeds=res;
                   console.log(res);

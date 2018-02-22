@@ -14,7 +14,7 @@ const routes: Routes = [
             { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
             { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-            { path: 'feeds/:id', loadChildren: './feeds/feeds.module#FeedsModule'},
+            { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule'},
             { path: 'readlater', loadChildren: './read-later/read-later.module#ReadLaterModule'},
             { path: 'recentlyread', loadChildren: './recently-read/recently-read.module#RecentlyReadModule'},
             { path: 'boardfeeds/:id', loadChildren: './boardfeeds/boardfeeds.module#BoardfeedsModule',data: [{isProd: true}]},

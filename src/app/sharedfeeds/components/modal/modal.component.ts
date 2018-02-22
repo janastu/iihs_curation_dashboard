@@ -19,7 +19,7 @@ export class ModalComponent {
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
     val:boolean=false;
-    feed:any=[];
+    
     selectedIndex: any;
     selectedIcon: number;
     user:any;
@@ -39,21 +39,21 @@ export class ModalComponent {
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
-        
-        this.feed.push({value:this.item})
+        //console.log(this.item);
+       // this.feed.push({value:this.item})
         
 
         this.user = localStorage.getItem('name');
         
           
           this.variab.readlaterfeeds.filter(anno=>{
-            if(anno.value.target.id === this.feed[0].value._id){
+            if(anno.value.target.id === this.item.value._id){
               this.selectedIndex=1;
             }
           });
 
           this.variab.recentlyread.filter(anno=>{
-            if(anno.value.target.id === this.feed[0].value._id){
+            if(anno.value.target.id === this.item.value._id){
               this.selectedIcon=1;
             }
           });
@@ -93,7 +93,7 @@ export class ModalComponent {
        this.icon=true;       
     }
     checkimg(feeds){
-
+      //console.log(feeds);
           return (/<img[\s\S]*>/i.test(feeds));
        
       }
@@ -121,92 +121,102 @@ export class ModalComponent {
          }*/
        
       }
-      readlater(index: number){
-        console.log("called");
-         if(this.selectedIndex == index){
-           this.selectedIndex = -1;
-           this.selectedIndex = -1;
-           this.variab.readlaterfeeds.map(anno=>{
-             if(anno.value.target.id === this.item._id){
-               anno.value.modified = this.date.getTime();
-               anno.value.hidereadlateranno = true;
-               console.log(anno.value); 
-
-           this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-             }
-
-           })
-           this.variab.readlaterfeeds.splice(this.index,1)
-         }
-         else{
-           this.selectedIndex = index;
-           let model = {
-             "@context": "http://www.w3.org/ns/anno.jsonld",
-             "type": "Annotation",
-             "creator": this.user,
-             "created": this.date.getTime(),
-             "modified": this.date.getTime(),
-             "generator": "mm_2017_v1",
-             "generated": this.date.getTime(),
-             "target": this.item,
-             "motivation":"bookmarking"
-           }   
-           this.variab.readlaterfeeds.push({value:model});
-           this.readlaterstore.dispatch('ADD_ITEMS',model)
-         }
-           
-         
-      }
-      markasread(index:number){
-        if(this.selectedIcon == index){
-           this.selectedIcon = -1;
-           this.variab.recentlyread.map(anno=>{
-             if(anno.value.target.id === this.item._id){
-               anno.value.modified = this.date.getTime();
-               anno.value.hiderecenltyreadanno = true;
-               console.log(anno.value); 
-
-           this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-             }
-
-           })
-           this.variab.recentlyread.splice(this.index,1)
-         }
-         else{
-           this.selectedIcon = index;
-           let model = {
-             "@context": "http://www.w3.org/ns/anno.jsonld",
-             "type": "Annotation",
-             "creator": this.user,
-             "created": this.date.getTime(),
-             "modified": this.date.getTime(),
-             "generator": "mm_2017_v1",
-             "generated": this.date.getTime(),
-             "target": this.item,
-             "motivation":"tagging"
-           }   
-           this.variab.recentlyread.push({value:model});
-           this.readlaterstore.dispatch('ADD_ITEMS',model)
-         }
-        
-      }
-      hide(){
-        let model = {
-          "@context": "http://www.w3.org/ns/anno.jsonld",
-          "type": "Annotation",
-          "creator": this.user,
-          "created": this.date.getTime(),
-          "modified": this.date.getTime(),
-          "generator": "mm_2017_v1",
-          "generated": this.date.getTime(),
-          "target": this.item,
-          "hidden":true
-        }   
-        this.variab.recentlyread.push({value:model});
-        this.readlaterstore.dispatch('ADD_ITEMS',model)
-       this.variab.globalfeeds.splice(this.index,1);
-
+  readlater(index: number){
+    //console.log("called");
+     if(this.selectedIndex == index){
+       this.selectedIndex = -1;
        
-       console.log(this.index,this.variab.globalfeeds);
-      }
+       this.variab.readlaterfeeds.map(anno=>{
+         if(anno.value.target.id === this.item.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hidereadlateranno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.readlaterfeeds.splice(this.index,1)
+       console.log(this.variab.readlaterfeeds);
+     }
+     else{
+       this.selectedIndex = index;
+       
+       let model = {
+         "@context": "http://www.w3.org/ns/anno.jsonld",
+         "type": "Annotation",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
+         "generator": "mm_2017_v1",
+         "generated": this.date.getTime(),
+         "target": this.item,
+         "motivation":"bookmarking"
+       }   
+        //console.log(this.feed)
+       this.variab.readlaterfeeds.push({value:model});
+        console.log("postmodal",this.variab.readlaterfeeds)
+       this.readlaterstore.dispatch('ADD_ITEMS',model)
+     }
+       
+     
+  }
+  markasread(index:number){
+    if(this.selectedIcon == index){
+       this.selectedIcon = -1;
+       console.log("recentlyread")
+       this.variab.recentlyread.map(anno=>{
+         if(anno.value.target.id === this.item.value._id){
+           anno.value.modified = this.date.getTime();
+           anno.value.hiderecenltyreadanno = true;
+           console.log(anno.value); 
+
+       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+         }
+
+       })
+       this.variab.recentlyread.splice(this.index,1)
+     }
+     else{
+       this.selectedIcon = index;
+        console.log("notrecentlyread")
+       let model = {
+         "@context": "http://www.w3.org/ns/anno.jsonld",
+         "type": "Annotation",
+         "creator": this.user,
+         "created": this.date.getTime(),
+         "modified": this.date.getTime(),
+         "generator": "mm_2017_v1",
+         "generated": this.date.getTime(),
+         "target": this.item,
+         "motivation":"tagging"
+       }   
+       this.variab.recentlyread.push({value:model});
+       this.readlaterstore.dispatch('ADD_ITEMS',model)
+     }
+    
+  }
+  
+  hide(){
+
+    
+    let model = {
+      "@context": "http://www.w3.org/ns/anno.jsonld",
+      "type": "Annotation",
+      "creator": this.user,
+      "created": this.date.getTime(),
+      "modified": this.date.getTime(),
+      "generator": "mm_2017_v1",
+      "generated": this.date.getTime(),
+      "target": this.item,
+      "hidden":true
+    }   
+    //this.variab.recentlyread.push({value:model});
+    this.readlaterstore.dispatch('ADD_ITEMS',model)
+   this.variab.globalfeeds.splice(this.index,1);
+
+   
+   console.log(this.index,this.variab.globalfeeds);
+   this.showDialog = false;
+  }
 }

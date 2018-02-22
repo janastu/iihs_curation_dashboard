@@ -42,7 +42,7 @@ user:any;
 
 
  //Access the query parameter and filter the feeds according to category
-           this.route.params
+           this.route.queryParams
             .subscribe(params => {
               console.log(params);
               
@@ -57,8 +57,8 @@ user:any;
               })
             }
             else{
-              this.catname = params.id
-               this.feedService.getlatestfeeds(params.id).then(res=>{
+              this.catname = params.feedname
+               this.feedService.getlatestfeeds(params.feedname).then(res=>{
                 
                  
                     this.variab.globalfeeds = res;
@@ -83,7 +83,7 @@ user:any;
   checkForDeletedFeeds(){
     
     let hiddenfeeds:any=[];
-    this.dataservice.getdeletedfeeds(this.user,this.catname).then(res=>{
+    this.dataservice.getdeletedfeeds(this.user).then(res=>{
      hiddenfeeds=res;
      console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
@@ -95,13 +95,13 @@ user:any;
      
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-         console.log("hiddem",feed.value._id,globalfeed.id)
+        // console.log("hiddem",feed.value._id,globalfeed.id)
            if(feed.value._id === globalfeed.id) {
             var i = _.indexOf(this.variab.globalfeeds,globalfeed);
             this.variab.globalfeeds.splice(i,1);
 
             this.feeds = this.variab.globalfeeds;
-             //console.log("feedis",this.feeds,this.variab.globalfeeds)
+             console.log("feedis",this.feeds,this.variab.globalfeeds)
                if(this.feeds.length == 0){
                   //this.loading = true;
                   
@@ -128,20 +128,28 @@ user:any;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-
-    this.date = childDates;
+    this.feeds = childDates;
+    /*this.date = childDates;
+    var xmlLink:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
 
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
-        console.log("date",Date.parse(res.value.date));
+        
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
-        }
-       
+        }     
 
     });
+
+    if (this.feeds.length == 0) {
+     //console.log("apito newsrack",xmlLink); 
+     this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
+             return res;
+      }) 
+    }*/
+    
   
   }
   //Function to handle Category event from page-header component
@@ -156,19 +164,24 @@ user:any;
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-      this.route.params
+      this.route.queryParams
        .subscribe(params => {
           if(params.subcategory){
             this.feedService.getmetacategories(params.subcategory).then(result=>{
-                this.feeds=result;
-                this.feeds.reverse();
+                this.variab.globalfeeds=result;
+                this.checkForDeletedFeeds();
+                
+                this.variab.globalfeeds.reverse();
 
             })
           }
           else{
             this.feedService.getlatestfeeds(this.catname).then(result=>{
-              this.feeds=result;
-              this.feeds.reverse();
+              this.variab.globalfeeds=result;
+              this.checkForDeletedFeeds();
+              //this.feeds=this.variab.globalfeeds;
+              this.variab.globalfeeds.reverse();
+              
               
             })
 
@@ -179,19 +192,19 @@ user:any;
     }
     if(childSortLabel === 'Oldest'){
       
-     this.route.params
+     this.route.queryParams
       .subscribe(params => {
          if(params.subcategory){
            this.feedService.getmetacategories(params.subcategory).then(result=>{
-               this.feeds=result;
-               
+               this.variab.globalfeeds=result;
+               this.checkForDeletedFeeds();
 
            })
          }
          else{
            this.feedService.getlatestfeeds(this.catname).then(result=>{
-             this.feeds=result;
-             
+             this.variab.globalfeeds=result;
+             this.checkForDeletedFeeds();
              
            })
 

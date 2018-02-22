@@ -13,11 +13,18 @@
                         <input type="text" class="form-control input-underline input-lg"  placeholder="Full Name" formControlName="name">
                     </div>
                     <div class="form-group">
+                    
                         <input type="text" class="form-control input-underline input-lg"  placeholder="User Name" formControlName="username">
-                    </div>
+                        
+                 </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email">
+                      
+                        <input type="text" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email" value={{emailfromurl}} >
+                       
+                         
+
+
                     </div>
 
                     <div class="form-group">
@@ -37,7 +44,6 @@
             <div *ngIf="confirmpassword.hasError('required')" class="error-box">* Repeat Password is required!</div>
             <div *ngIf="username.hasError('minlength')" class="error-box">* Minimum username length is 6!</div>
              <div *ngIf="password.hasError('minlength')" class="error-box">* Minimum password length is 6!</div>
-            <div *ngIf="!username.valid" class="error-box">*Username should only have characters </div>
         </div>
     </div>
 </div>
