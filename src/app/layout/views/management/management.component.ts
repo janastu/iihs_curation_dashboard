@@ -21,6 +21,7 @@ export class ManagementComponent implements OnInit {
   groups:any=[];
   alertsuccess:any;
   requiredsuccess: any;
+  mailsuccess: any;
   catvalue:any;
 
   userform:FormGroup;
@@ -85,12 +86,14 @@ this.groupform=this.formBuilder.group({
       groupnames.map(groupname=>{
         if (groupname.key===group)
         {
-          groupname.value.members.push([{ 'email': mail, 'type': usertype}]);
+          groupname.value.members.push([{ 'name':name,'email': mail, 'type': usertype}]);
           console.log('asd', groupname);
           this.userService.sendConfirmEmail(mail).then(res=>{
       console.log('in com', res);
       if (res === true)
       {
+           this.mailsuccess = true;
+        this.ngAlert.type = 'success';
         this.groupService.update(groupname.value);
     }
 

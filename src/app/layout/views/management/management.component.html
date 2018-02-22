@@ -30,7 +30,7 @@
             <div class="add-user"><button (click)="addNewUser()" class="btn btn-sm btn-success"><span>ADD USER</span></button></div>
 
           </form>
-
+ <ngb-alert *ngIf="mailsuccess" (close)="closeAlert()">User Added Successfully</ngb-alert>
 
           </div>
 

@@ -82,22 +82,15 @@ export class GroupService {
 
  
 	addGroupDb(metadata){
-<<<<<<< HEAD
 		return new Promise(resolve => {
-			this.db.post(metadata, function callback(err, result) {
+			this.localdb.post(metadata, function callback(err, result) {
 				if (!err) {
 					console.log('Successfully posted a todo!', result);
 				}
 				resolve(result.ok);
 				console.log('as', result.ok);
 			});
-=======
-		
-		this.localdb.post(metadata, function callback(err, result) {
-		    if (!err) {
-		      console.log('Successfully posted a todo!',result);
-		    }
->>>>>>> 171aeb1f6db3c8641555907a0238a27b4d8765c2
+
 		});
 
 	}
