@@ -9,7 +9,7 @@
     	<div class="col">
             <div class="mb-3">
     	               <div class="card-header title-header"><strong>All Feeds</strong></div>
-    	        <div class="list-entries" *ngFor="let item of incomingfeeds| slice:0:20;">
+    	        <div class="list-entries" *ngFor="let item of incomingfeeds| paginate: { itemsPerPage: 20, currentPage: p}">
                         <div class="list-item">
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
@@ -37,5 +37,8 @@
                 </div>
             </div> 
         </div>    
+    </div>
+    <div class="col-sm-6 offset-sm-3">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls> 
     </div>
 </div>

@@ -5,13 +5,14 @@ import { HoverToolbarModule,ModalModule } from '../../components';
 //import { CreateboardcomponentModule } from '../../components';
 import { TitleViewComponent } from './title-view.component';
 //import { DropdownComponent } from '../../../layout/bs-component/components';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         HoverToolbarModule,
-       	ModalModule
+       	ModalModule,
+       	NgxPaginationModule
     ],
     declarations: [TitleViewComponent],
     exports: [TitleViewComponent]
