@@ -15,10 +15,7 @@ export class MagazineviewComponent implements OnInit {
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
-loading = false;
- total = 0;
- page = 1;
- limit = 20;
+p:any;
   constructor() {
    /*if(this.incomingfeeds.length == 0) {
       // code...

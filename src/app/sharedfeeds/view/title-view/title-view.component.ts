@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 export class TitleViewComponent implements OnInit {
 feeds:any=[];
 mouseover:boolean = false;
+p:any;
 @Input('feeds') incomingfeeds:any=[];
 @Input('metadata') incomingmetadata:any=[];
   constructor(public service:Service) {
