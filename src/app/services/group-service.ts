@@ -80,15 +80,18 @@ export class GroupService {
 
 	}
 
-
+ 
 	addGroupDb(metadata){
-		
-		this.localdb.post(metadata, function callback(err, result) {
-		    if (!err) {
-		      console.log('Successfully posted a todo!',result);
-		    }
-		});
+		return new Promise(resolve => {
+			this.localdb.post(metadata, function callback(err, result) {
+				if (!err) {
+					console.log('Successfully posted a todo!', result);
+				}
+				resolve(result.ok);
+				console.log('as', result.ok);
+			});
 
+		});
 
 	}
 	update(metadata){

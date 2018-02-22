@@ -4,6 +4,7 @@ import { Userservice } from '../services/userservice';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
@@ -21,9 +22,28 @@ confirmpassword = this.formBuilder.control('', [Validators.required]);
 alertsuccess:boolean = false;
 alertauth:boolean= false;
 errormessage:any;
-    constructor(public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
+    urlstatus:boolean=false;
+    emailfromurl: any ;
+    constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
 
     ngOnInit() { 
+
+        
+
+        this.activatedRoute.queryParams.subscribe(params => {
+            if (params[ 'email']){
+                this.urlstatus == true;
+                this.emailfromurl = params['email'];
+            console.log(this.emailfromurl); // Print the parameter to the console. 
+               
+           }
+           else{
+               this.emailfromurl=''
+             
+            }
+
+           });
+        
         this.registerForm = this.formBuilder.group({
             name:this.name,
             username:this.username,
