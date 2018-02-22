@@ -31,5 +31,5 @@ export class Settings{
 	superloginserverUrl:any= environment.dbprotocol+environment.authHost; // super login server url
     //superloginserverUrl:any='http://192.168.99.100:3000'
 	feedparserUrl: any = environment.dbprotocol+environment.feedParserHost;  // super login  s erv er url
-
+	
 }

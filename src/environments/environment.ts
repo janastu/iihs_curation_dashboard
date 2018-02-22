@@ -5,13 +5,15 @@
 
 export const environment = {
   production: false,
+
  dbprotocol:'http://',
  dbhost:'localhost:5984',
  dbPort:'5984',
  dbuser:'admin',
  dbpassword:'admin',
- authHost:'localhost:3001',
+ authHost:'localhost:3000',
  authPort:'3000',
+
  feedParserHost:'localhost:3000',
 
  feedParserPort:'3500' 
@@ -29,6 +31,7 @@ export const environment = {
  feedParserPort:'3500'
 */
 
+ 
 
 
 };

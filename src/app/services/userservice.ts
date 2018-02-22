@@ -16,25 +16,13 @@ export class Userservice {
 //userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
 
 constructor(private http: Http,private settings:Settings) {
+
   //this.db = new PouchDB('userdb');
  
   let url = localStorage.getItem('url');
   //console.log("url",url);
 
-  /*this.remote = url;
-
-
-       let options = {
-         live: true,
-         retry: true,
-         continuous: true,
-         auth: {
-            username: this.settings.couchdbusername,
-            password: this.settings.couchdbpassword
-          }
-       };
-    
-       this.db.sync(this.remote, options);*/
+  
        
 
 //Configurations for user registration and login
@@ -85,6 +73,24 @@ public adduser(user){
   
    
    
+}
+public sendConfirmEmail(email)
+{
+  var status;
+  console.log("Called to msg");
+   return new Promise(resolve => {
+     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email;
+       //console.log(newsrack);
+   this.http.get(emailurl).subscribe((response) => {
+     console.log("sd",response.ok);
+     status = response.ok;
+      
+     resolve(status);  
+        });
+    });
+     
+    
+ 
 }
 public login(credentials){
 

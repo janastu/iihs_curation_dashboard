@@ -24,6 +24,7 @@ errormessage:any;
     constructor(public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
 
     ngOnInit() { 
+        
         this.registerForm = this.formBuilder.group({
             name:this.name,
             username:this.username,
