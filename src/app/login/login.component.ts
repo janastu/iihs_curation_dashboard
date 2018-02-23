@@ -60,7 +60,7 @@ showDialog:boolean;
                 this.alertsuccess=true;
                 this.ngAlert.type = 'success';
                localStorage.setItem('isLoggedin', 'true');
-               localStorage.setItem('name', this.username.value);
+               localStorage.setItem('name', this.loginForm.controls['username'].value);
                this.router.navigate(['/dashboard']);
             }
             if(response['error'] == 'Unauthorized'){
