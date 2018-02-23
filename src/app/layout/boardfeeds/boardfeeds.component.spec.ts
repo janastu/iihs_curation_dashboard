@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BoardfeedsRoutingModule } from './boardfeeds-routing.module';
 import { BoardfeedsComponent } from './boardfeeds.component';
 
 describe('BoardfeedsComponent', () => {
@@ -8,7 +8,10 @@ describe('BoardfeedsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoardfeedsComponent ]
+      declarations: [ BoardfeedsComponent ],
+      imports:[
+      BoardfeedsRoutingModule,
+        
     })
     .compileComponents();
   }));
