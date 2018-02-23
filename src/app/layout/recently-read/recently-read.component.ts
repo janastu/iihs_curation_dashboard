@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
+import * as _ from 'lodash'
 @Component({
   selector: 'app-recently-read',
   templateUrl: './recently-read.component.html',
@@ -26,18 +27,66 @@ user:any;
   	this.dataservice.getrecentlyread(this.user).then(result=>{
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
-                  this.feedFromAnnotation();
+                       
+                  this.checkForDeletedFeeds();
      
     });
      
 
   }
-  //Function to get feeds from annotations
-  feedFromAnnotation(){
-    this.feeds = this.variab.recentlyread.map(feed=>{
-      return feed.value.target;
-    });
-    console.log("recentlyread",this.feeds)
+  //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
+  // and display the rest of the feeds
+  checkForDeletedFeeds(){
+    
+    let hiddenfeeds:any=[];
+    this.dataservice.getdeletedfeeds(this.user).then(res=>{
+     hiddenfeeds=res;
+     console.log(hiddenfeeds)
+     if(hiddenfeeds.length == 0){
+       this.feeds = this.variab.recentlyread;
+       document.getElementById('loading').style.display = 'none';
+       }
+      
+     
+      this.variab.recentlyread.map(globalfeed=>{
+        hiddenfeeds.map(feed=>{
+        console.log("hiddem",feed.value._id,globalfeed.value._id)
+           if(feed.value._id === globalfeed.value._id) {
+            var i = _.indexOf(this.variab.recentlyread,globalfeed);
+            this.variab.recentlyread.splice(i,hiddenfeeds.length);
+
+            this.feeds = this.variab.recentlyread;
+           // console.log("feedis",this.feeds,this.variab.recentlyread)
+               if(this.feeds.length == 0){
+                  //this.loading = true;
+                  
+                  document.getElementById('loading').style.display = 'block';
+               }
+               else{
+                   //this.loading = false;
+                   document.getElementById('loading').style.display = 'none';
+
+               }
+           }
+           else{
+           this.feeds = this.variab.recentlyread;
+           if(this.feeds.length == 0){
+              //this.loading = true;
+              
+              document.getElementById('loading').style.display = 'block';
+           }
+           else{
+               //this.loading = false;
+               document.getElementById('loading').style.display = 'none';
+
+           }
+         }
+        })
+     })
+     
+
+    })
+
   }
 
   //Function to handle view event from page-header component
@@ -54,16 +103,14 @@ user:any;
 
     this.feeds =  this.variab.recentlyread.filter((res)=>{
         
-       if(fromdate<=Date.parse(res.value.target.value.date) && todate>=Date.parse(res.value.target.value.date)){
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         //sconsole.log("date",res.value.target);
           return res;
         }
        
 
     });
-    this.feeds = this.feeds.map(val=>{
-      return val.value.target;
-    })
+
   }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
@@ -83,18 +130,16 @@ user:any;
     
      this.variab.recentlyread.sort(function(a, b) {
        
-       return new Date(b.value.target.value.date).getTime() - new Date(a.value.target.value.date).getTime()
+       return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
      });
-     this.feedFromAnnotation();
+     
     
     }
     if(childSortLabel === 'Oldest'){
       this.variab.recentlyread.sort(function(a, b) {
          
-        return new Date(a.value.target.value.date).getTime() - new Date(b.value.target.value.date).getTime()
+        return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
       });
-      this.feedFromAnnotation();
-     
     }
   }
 

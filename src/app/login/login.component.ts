@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
     alertauth:boolean= false;
     alertmissing:boolean=false;
     errormessage:any;
+showDialog:boolean;
+
     constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global) {
               
 
@@ -36,6 +38,11 @@ export class LoginComponent implements OnInit {
 
     }
 
+    onforget(){
+        this.userService.onforget().then(response => {
+            console.log("re", response);
+        });
+    }
     onLoggedin() {
         console.log(this.username)
         let credentials = {

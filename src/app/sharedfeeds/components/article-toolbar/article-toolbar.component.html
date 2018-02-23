@@ -50,7 +50,7 @@
         </a>
     <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
-    <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-fw fa-close" title="Remove"></i></a>
+    <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-fw fa-trash" title="Remove"></i></a>
   
 </div>
                
@@ -60,5 +60,6 @@
         <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
         <button (click)="hide()" class="btn btn-sm btn-success dialog-ok">Ok</button>
     </div>
+    <ngb-alert *ngIf="alertremove" (close)="closeAlert()">Cannot remove from trashbox</ngb-alert>
 </app-dialog>
 

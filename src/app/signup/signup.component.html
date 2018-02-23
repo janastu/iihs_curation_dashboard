@@ -3,7 +3,7 @@
         <div class="col-md-4 push-md-4">
 
             <img class="user-avatar  img-log" src="assets/images/radio.png"/>
-            <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Registration Successful</ngb-alert>
+           
             <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <h1>Media Monitor</h1>
             <form role="form" [formGroup]="signupForm" (ngSubmit)="onregister()">
@@ -34,8 +34,15 @@
                                   class="help-block"> Please confirm password</span>
                     </div>
                 </div>
+
                 
                 <button class="btn rounded-btn" (click)="onregister()"> Register </button>&nbsp;
+
+                <!--button class="btn rounded-btn" (click)="register()" > Register </button-->
+                <!--button class="btn rounded-btn" (click)="onregister()" [disabled]="!registerForm.valid"> Register </button-->&nbsp;
+
+                 <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Registration Successful Verify your Email ID</ngb-alert>
+
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </form>
             <!--div *ngIf="username.hasError('required')" class="error-box">* Username is required!</div>
