@@ -46,34 +46,44 @@ catname:any;
     this.view= childView;
 
   }
-  //Function to handle Date event from page-header component
-  public handleDate(childDates:any){
 
-    this.date = childDates;
-    var fromdate = Date.parse(this.date.changefrom);
-    var todate = Date.parse(this.date.changeto);
-    this.feeds =  this.variab.globalfeeds.filter((res)=>{
-      console.log(res);
-      var chunks = res.value.date.split('.');
-
-      var formattedDate = chunks[2]+'.'+chunks[1]+'.'+chunks[0];
-      var checkdate = Date.parse(formattedDate);
-     
-       if(fromdate<=checkdate && todate>=checkdate){
-          return res;
-        }
-
-    });
+ //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
+ handleSort(childSortLabel:any){
   
-  }
-  //Function to handle Category event from page-header component
-  public handleCategory(childCategory:any){
-    console.log("in feed",childCategory)
-      this.service.getcategoryfeeds(childCategory).then(result =>{
-        this.feeds = result
-      })
-  }
+   if(childSortLabel === 'Latest'){
+   
+    this.variab.hiddenfeeds.sort(function(a, b) {
+      
+      return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
+    });
+    
+   
+   }
+   if(childSortLabel === 'Oldest'){
+     this.variab.hiddenfeeds.sort(function(a, b) {
+        
+       return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
+     });
+   }
+ }
+ //Function to handle Date event from page-header component
+ public handleDate(childDates:any){
 
+   this.date = childDates;
+   var fromdate = Date.parse(this.date.changefrom);
+   var todate = Date.parse(this.date.changeto);
+
+   this.feeds =  this.variab.hiddenfeeds.filter((res)=>{
+      // console.log(res.value.date);
+      if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
+       console.log("date",res);
+         return res;
+       }
+      
+
+   });
+
+ }
    
 
 }

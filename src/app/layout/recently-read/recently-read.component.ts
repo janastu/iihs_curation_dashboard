@@ -103,16 +103,14 @@ user:any;
 
     this.feeds =  this.variab.recentlyread.filter((res)=>{
         
-       if(fromdate<=Date.parse(res.value.target.value.date) && todate>=Date.parse(res.value.target.value.date)){
+       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         //sconsole.log("date",res.value.target);
           return res;
         }
        
 
     });
-    this.feeds = this.feeds.map(val=>{
-      return val.value.target;
-    })
+
   }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
@@ -132,7 +130,7 @@ user:any;
     
      this.variab.recentlyread.sort(function(a, b) {
        
-       return new Date(b.value.target.value.date).getTime() - new Date(a.value.target.value.date).getTime()
+       return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
      });
      
     
@@ -140,7 +138,7 @@ user:any;
     if(childSortLabel === 'Oldest'){
       this.variab.recentlyread.sort(function(a, b) {
          
-        return new Date(a.value.target.value.date).getTime() - new Date(b.value.target.value.date).getTime()
+        return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
       });
     }
   }
