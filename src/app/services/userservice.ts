@@ -57,7 +57,39 @@ constructor(private http: Http,private settings:Settings) {
 
 
   }
+public resetPassword(token,pwd){
 
+
+  let doc = {
+    token: token,
+   password:pwd,
+    confirmPassword:pwd
+  };
+
+  return new Promise(resolve => {
+    superlogin.resetPassword(doc).then(function(response) {
+      console.log("asd", response);
+      resolve(response );
+      },(err)=>{
+         console.log(err);
+        resolve(err);
+      });
+    });
+
+}
+public onforget()
+{
+  var email='jabiulla24@gmail.com'
+return new Promise(resolve => {
+    superlogin.forgotPassword(email).then(function (response) {
+    console.log("asd", response);
+    resolve(response );
+    },(err)=>{
+       console.log(err);
+      resolve(err);
+    });
+  });
+}
 
 public adduser(user){
 	console.log("usr",user);
