@@ -6,46 +6,51 @@
            
             <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <h1>Media Monitor</h1>
-            <form role="form" [formGroup]="registerForm">
+            <form role="form" [formGroup]="signupForm" (ngSubmit)="onregister()">
                 <div class="form-content">
                     <div class="form-group">
-                     <label for="name" class="control-label required"></label>
-                        <input type="text" class="form-control input-underline input-lg"  placeholder="Full Name" formControlName="name">
+                     <!--label for="title" class="control-label required"></label-->
+                        <input type="text" class="form-control input-underline input-lg" placeholder="Full Name" formControlName="name" id="name" name="name">
                     </div>
                     <div class="form-group">
                     
-                        <input type="text" class="form-control input-underline input-lg"  placeholder="User Name" formControlName="username">
-                        
-                 </div>
-
-                    <div class="form-group">
-                      
-                        <input type="text" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email" value={{emailfromurl}} >
-                       
-                         
-
-
+                        <input type="text" class="form-control input-underline input-lg"  placeholder="User Name" formControlName="username" id="username" name="username">
+                         <span *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched" 
+                                  class="help-block"> Please enter user name (Minimum 6 Characters)</span>                      
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" placeholder="Password" formControlName="password">
+                        <input type="email" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email" value={{emailfromurl}} id="email" name="email">
+                        <span *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched" class="help-block"> Please provide vaild email address (Example: johnson@gmail.com)</span>
+                        </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg"  placeholder="Password" formControlName="password" id="password" name="password">
+                        <span *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched" class="help-block"> Please enter password</span>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg"  placeholder="Confirm Password" formControlName="confirmpassword">
+                        <input type="password" class="form-control input-underline input-lg"  placeholder="Confirm Password" formControlName="confirmpassword" id="confirmpassword" name="confirmpassword">
+                        <span *ngIf="!signupForm.get('confirmpassword').valid && signupForm.get('confirmpassword').touched" 
+                                  class="help-block"> Please confirm password</span>
                     </div>
                 </div>
+
+                
+                <button class="btn rounded-btn" (click)="onregister()"> Register </button>&nbsp;
+
                 <!--button class="btn rounded-btn" (click)="register()" > Register </button-->
-                <button class="btn rounded-btn" (click)="onregister()" [disabled]="!registerForm.valid"> Register </button>&nbsp;
+                <!--button class="btn rounded-btn" (click)="onregister()" [disabled]="!registerForm.valid"> Register </button-->&nbsp;
 
                  <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Registration Successful Verify your Email ID</ngb-alert>
+
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </form>
-            <div *ngIf="username.hasError('required')" class="error-box">* Username is required!</div>
+            <!--div *ngIf="username.hasError('required')" class="error-box">* Username is required!</div>
             <div *ngIf="password.hasError('required')" class="error-box">* Password is required!</div>
             <div *ngIf="email.hasError('email')" class="error-box">* Please Enter a valid email!</div>
             <div *ngIf="confirmpassword.hasError('required')" class="error-box">* Repeat Password is required!</div>
             <div *ngIf="username.hasError('minlength')" class="error-box">* Minimum username length is 6!</div>
-             <div *ngIf="password.hasError('minlength')" class="error-box">* Minimum password length is 6!</div>
+             <div *ngIf="password.hasError('minlength')" class="error-box">* Minimum password length is 6!</div-->
         </div>
     </div>
 </div>
