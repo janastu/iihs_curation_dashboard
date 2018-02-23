@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared/global';
 import { DataService } from '../../../services/data-service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-modal',
     templateUrl: './modal.component.html',
@@ -23,12 +24,12 @@ export class ModalComponent {
     selectedIndex: any;
     selectedIcon: number;
     user:any;
-
+    alertremove:boolean=false
     date:Date;
 
     showDialog:boolean;
 
-    constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
+    constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router) {
       this.date = new Date();
      
      }
@@ -47,13 +48,13 @@ export class ModalComponent {
         
           
           this.variab.readlaterfeeds.filter(anno=>{
-            if(anno.value.target.id === this.item.value._id){
+            if(anno.value._id === this.item.value._id){
               this.selectedIndex=1;
             }
           });
 
           this.variab.recentlyread.filter(anno=>{
-            if(anno.value.target.id === this.item.value._id){
+            if(anno.value._id === this.item.value._id){
               this.selectedIcon=1;
             }
           });
@@ -127,7 +128,7 @@ export class ModalComponent {
        this.selectedIndex = -1;
        
        this.variab.readlaterfeeds.map(anno=>{
-         if(anno.value.target.id === this.item.value._id){
+         if(anno.value._id === this.item.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
            console.log(anno.value); 
@@ -166,7 +167,7 @@ export class ModalComponent {
        this.selectedIcon = -1;
        console.log("recentlyread")
        this.variab.recentlyread.map(anno=>{
-         if(anno.value.target.id === this.item.value._id){
+         if(anno.value._id === this.item.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
            console.log(anno.value); 
@@ -198,8 +199,6 @@ export class ModalComponent {
   }
   
   hide(){
-
-    
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -208,15 +207,30 @@ export class ModalComponent {
       "modified": this.date.getTime(),
       "generator": "mm_2017_v1",
       "generated": this.date.getTime(),
-      "target": this.item,
+      "target": this.feeditem,
       "hidden":true
     }   
-    //this.variab.recentlyread.push({value:model});
-    this.readlaterstore.dispatch('ADD_ITEMS',model)
-   this.variab.globalfeeds.splice(this.index,1);
+    
+    console.log(this.router.url);
+    if(this.router.url === '/trashbox'){
+      console.log('donot remove from trash');
+      this.alertremove=true
+    }
 
+  else{
+    //this.variab.recentlyread.push({value:model});
+   this.readlaterstore.dispatch('ADD_ITEMS',model)
    
-   console.log(this.index,this.variab.globalfeeds);
+   this.variab.globalfeeds.splice(this.index,1);
+   this.variab.boardfeeds.splice(this.index,1);
+   this.variab.readlaterfeeds.splice(this.index,1);
+   this.variab.recentlyread.splice(this.index,1);
    this.showDialog = false;
+   }
+
+  }
+  public closeAlert() {
+      this.alertremove=false;
+      
   }
 }

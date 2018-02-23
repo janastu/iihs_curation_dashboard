@@ -3,6 +3,7 @@ import { routerTransition } from '../../router.animations';
 //import { Service } from '../../services/services';
 import { DataService } from '../../services/data-service';
 import { Global } from '../../shared';
+import * as _ from 'lodash'
 @Component({
   selector: 'app-read-later',
   templateUrl: './read-later.component.html',
@@ -29,21 +30,68 @@ user:any;
     this.dataservice.getreadlater(this.user).then(result=>{
       //Set result to global variable as it can be accessed outdside the component
         this.variab.readlaterfeeds=result;
-       console.log(this.variab.readlaterfeeds);
   
-       
-       this.feedFromAnnotation();
-     //console.log("readlater",this.variab.readlaterfeeds);
+       this.checkForDeletedFeeds();
+      // this.feedFromAnnotation();
+    // console.log("readlater",this.variab.readlaterfeeds);
    });
     
   }
-  //Function to get feeds from annotations
-  feedFromAnnotation(){
-    this.feeds = this.variab.readlaterfeeds.map(feed=>{
-      return feed.value.target;
-    });
-    console.log("readlaterfeeds",this.feeds);
-  }
+ //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
+ // and display the rest of the feeds
+ checkForDeletedFeeds(){
+   
+   let hiddenfeeds:any=[];
+   this.dataservice.getdeletedfeeds(this.user).then(res=>{
+    hiddenfeeds=res;
+    console.log(hiddenfeeds)
+    if(hiddenfeeds.length == 0){
+      this.feeds = this.variab.readlaterfeeds;
+      document.getElementById('loading').style.display = 'none';
+      }
+     
+    
+     this.variab.readlaterfeeds.map(globalfeed=>{
+       hiddenfeeds.map(feed=>{
+       console.log("hiddem",feed.value._id,globalfeed.value._id)
+          if(feed.value._id === globalfeed.value._id) {
+           var i = _.indexOf(this.variab.readlaterfeeds,globalfeed);
+           this.variab.readlaterfeeds.splice(i,hiddenfeeds.length);
+
+           this.feeds = this.variab.readlaterfeeds;
+          //  console.log("feedis",this.feeds,this.variab.readlaterfeeds)
+              if(this.feeds.length == 0){
+                 //this.loading = true;
+                 
+                 document.getElementById('loading').style.display = 'block';
+              }
+              else{
+                  //this.loading = false;
+                  document.getElementById('loading').style.display = 'none';
+
+              }
+          }
+          else{
+          this.feeds = this.variab.readlaterfeeds;
+          if(this.feeds.length == 0){
+             //this.loading = true;
+             
+             document.getElementById('loading').style.display = 'block';
+          }
+          else{
+              //this.loading = false;
+              document.getElementById('loading').style.display = 'none';
+
+          }
+        }
+       })
+    })
+    
+
+   })
+
+ }
+
   //Function to handle view event from page-header component
   public handleView(childView:any){
     this.view = childView;
@@ -89,7 +137,7 @@ user:any;
         
        return new Date(b.value.target.value.date).getTime() - new Date(a.value.target.value.date).getTime()
      });
-    this.feedFromAnnotation();
+    //this.feedFromAnnotation();
     }
     if(childSortLabel === 'Oldest'){
       this.variab.readlaterfeeds.sort(function(a, b) {
@@ -98,7 +146,7 @@ user:any;
       });
   
     }
-    this.feedFromAnnotation();
+   // this.feedFromAnnotation();
   }
 
 
