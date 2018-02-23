@@ -14,16 +14,16 @@ import { ActivatedRoute } from '@angular/router';
 export class SignupComponent implements OnInit {
 
 registerForm:FormGroup;
-name = this.formBuilder.control('', [Validators.required]);
-username = this.formBuilder.control('', [Validators.required,Validators.minLength(6)]);
-email = this.formBuilder.control('', [Validators.email]);
-password = this.formBuilder.control('', [Validators.required,,Validators.minLength(6)]);
-confirmpassword = this.formBuilder.control('', [Validators.required]);
+name = this.formBuilder.control('', /*[Validators.required]*/);
+username = this.formBuilder.control('', /*[Validators.required,Validators.minLength(6)]*/);
+email = this.formBuilder.control('', /*[Validators.email]*/);
+password = this.formBuilder.control('',/* [Validators.required,,Validators.minLength(6)]*/);
+confirmpassword = this.formBuilder.control('', /*[Validators.required]*/);
 alertsuccess:boolean = false;
 alertauth:boolean= false;
 errormessage:any;
 
-form: FormGroup;
+signupForm: FormGroup;
     
 
     urlstatus:boolean=false;
@@ -33,7 +33,13 @@ form: FormGroup;
 
     ngOnInit() { 
 
-
+        this.signupForm = new FormGroup({
+            'name': new FormControl(null, [Validators.required]),
+            'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            'email': new FormControl(null, [Validators.required, Validators.email]),
+            'password': new FormControl(null, [Validators.required]),
+            'confirmpassword': new FormControl(null, [Validators.required])
+        });
         
 
         this.activatedRoute.queryParams.subscribe(params => {
@@ -51,27 +57,28 @@ form: FormGroup;
            });
 
         
-        this.registerForm = this.formBuilder.group({
+       /* this.signupForm = this.formBuilder.group({
             name:this.name,
             username:this.username,
             email:this.email,
             password:this.password,
             confirmpassword:this.confirmpassword
 
-        });
+        });*/
 
 
     	
     }
 
-
     onregister(){
+            console.log(this.signupForm.controls['username'].value)
+        //this.signupForm.controls['firstname'].markAsTouched()
             let doc = {
-                'name':this.name.value,
-                'username':this.username.value,
-                'email':this.email.value,
-                'password':this.password.value,
-                'confirmPassword':this.confirmpassword.value
+                'name':this.signupForm.controls['name'].value,
+                'username':this.signupForm.controls['username'].value,
+                'email':this.signupForm.controls['email'].value,
+                'password':this.signupForm.controls['password'].value,
+                'confirmPassword':this.signupForm.controls['confirmpassword'].value
             };
             console.log("doc",doc);
             this.userService.adduser(doc).then(response=>{
@@ -92,7 +99,7 @@ form: FormGroup;
 
                 }
                 if(response['error'] == 'Validation failed'){
-                    console.log(response['validationErrors']['username'])
+                    console.log("hgfh",response['validationErrors']['username'])
                     this.alertauth=true;
                     this.errormessage = response['validationErrors']['username']
                     this.ngAlert.type = 'danger';
