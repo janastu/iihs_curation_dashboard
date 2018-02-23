@@ -207,7 +207,7 @@ export class ModalComponent {
       "modified": this.date.getTime(),
       "generator": "mm_2017_v1",
       "generated": this.date.getTime(),
-      "target": this.feeditem,
+      "target": this.item,
       "hidden":true
     }   
     
