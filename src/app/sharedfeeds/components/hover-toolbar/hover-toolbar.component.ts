@@ -2,7 +2,7 @@ import { Component, OnInit,Input,Output,EventEmitter,Inject } from '@angular/cor
 import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared';
 import { DataService } from '../../../services/data-service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-hover-toolbar',
   templateUrl: './hover-toolbar.component.html',
@@ -18,7 +18,8 @@ selectedIcon: number;
 user:any;
 showDialog:boolean;
 date:Date;
-  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService) {
+alertremove:boolean=false;
+  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router) {
 
     this.selectedIndex = -1;
     //this.variab.selectedIcon = -1;
@@ -33,15 +34,15 @@ this.date = new Date();
       //console.log(this.variab.readlaterfeeds);
       this.variab.readlaterfeeds.filter(anno=>{
         //console.log(this.feeditem,anno)
-        if(anno.value.target.value._id === this.feeditem.value._id){
+        if(anno.value._id === this.feeditem.value._id){
           this.selectedIndex=1;
         }
       });
 
       this.variab.recentlyread.filter(anno=>{
-        if(anno.value.target.value._id === this.feeditem.value._id){
+        if(anno.value._id === this.feeditem.value._id){
           this.selectedIcon=1;
-          this.iconState.emit(this.selectedIcon);
+         // this.iconState.emit(this.selectedIcon);
 
         }
       });
@@ -55,7 +56,7 @@ this.date = new Date();
        this.selectedIndex = -1;
        
        this.variab.readlaterfeeds.map(anno=>{
-         if(anno.value.target.id === this.feeditem.value._id){
+         if(anno.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
            console.log(anno.value); 
@@ -93,7 +94,7 @@ this.date = new Date();
        this.selectedIcon = -1;
        //console.log("recentlyread")
        this.variab.recentlyread.map(anno=>{
-         if(anno.value.target.id === this.feeditem.value._id){
+         if(anno.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
            console.log(anno.value); 
@@ -125,8 +126,6 @@ this.date = new Date();
   }
  
   hide(){
-
-    
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -138,13 +137,28 @@ this.date = new Date();
       "target": this.feeditem,
       "hidden":true
     }   
+    
+    console.log(this.router.url);
+    if(this.router.url === '/trashbox'){
+      console.log('donot remove from trash');
+      this.alertremove=true
+    }
+
+  else{
     //this.variab.recentlyread.push({value:model});
    this.readlaterstore.dispatch('ADD_ITEMS',model)
-   this.variab.globalfeeds.splice(this.index,1);
-   this.variab.readlaterfeeds.splice(this.index,1);
    
-   console.log(this.index,this.variab.globalfeeds);
+   this.variab.globalfeeds.splice(this.index,1);
+   this.variab.boardfeeds.splice(this.index,1);
+   this.variab.readlaterfeeds.splice(this.index,1);
+   this.variab.recentlyread.splice(this.index,1);
    this.showDialog = false;
+   }
+
+  }
+  public closeAlert() {
+      this.alertremove=false;
+      
   }
 
 }

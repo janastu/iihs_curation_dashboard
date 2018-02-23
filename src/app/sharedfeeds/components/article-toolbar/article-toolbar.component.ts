@@ -9,6 +9,7 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-article-toolbar',
   templateUrl: './article-toolbar.component.html',
@@ -30,7 +31,8 @@ date:Date;
 queryString:any;
 alertexists:boolean=false;
 alertempty:boolean=false;
-  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService,public ngAlert:NgbAlertConfig) { 
+alertremove:boolean=false;
+  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService,public ngAlert:NgbAlertConfig,public router:Router) { 
      this.selectedIndex = -1;
  
 }
@@ -99,14 +101,14 @@ alertempty:boolean=false;
     
    //Get annotations for readlater feeds and toogle the bookmark icon   
       this.variab.readlaterfeeds.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.value._id){
+        if(anno.value._id === this.feeditem.value._id){
           this.selectedIndex=1;
         }
       });
        
       //Get annotations for recently read feeds and toogle the check icon   
       this.variab.recentlyread.filter(anno=>{
-        if(anno.value.target.id === this.feeditem.value._id){
+        if(anno.value._id === this.feeditem.value._id){
           this.selectedIcon=1;
         }
       });
@@ -249,7 +251,7 @@ alertempty:boolean=false;
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
        this.variab.readlaterfeeds.map(anno=>{
-         if(anno.value.target.id === this.feeditem.value._id){
+         if(anno.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
            console.log(anno.value); 
@@ -283,7 +285,7 @@ alertempty:boolean=false;
     if(this.selectedIcon == index){
        this.selectedIcon = -1;
        this.variab.recentlyread.map(anno=>{
-         if(anno.value.target.id === this.feeditem.value._id){
+         if(anno.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
            console.log(anno.value); 
@@ -320,31 +322,40 @@ alertempty:boolean=false;
   }*/
 
   hide(){
-
-    
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
       "creator": this.user,
-      "created": "2015-01-28T12:00:00Z",
-      "modified": "2015-01-29T09:00:00Z",
+      "created": this.date.getTime(),
+      "modified": this.date.getTime(),
       "generator": "mm_2017_v1",
-      "generated": "2015-02-04T12:00:00Z",
+      "generated": this.date.getTime(),
       "target": this.feeditem,
       "hidden":true
     }   
-    this.variab.recentlyread.push({value:model});
-    this.readlaterstore.dispatch('ADD_ITEMS',model)
-   this.variab.globalfeeds.splice(this.index,1);
+    
+    console.log(this.router.url);
+    if(this.router.url === '/trashbox'){
+      console.log('donot remove from trash');
+      this.alertremove=true
+    }
 
+  else{
+    //this.variab.recentlyread.push({value:model});
+   this.readlaterstore.dispatch('ADD_ITEMS',model)
    
-   console.log(this.index,this.variab.globalfeeds);
+   this.variab.globalfeeds.splice(this.index,1);
+   this.variab.boardfeeds.splice(this.index,1);
+   this.variab.readlaterfeeds.splice(this.index,1);
+   this.variab.recentlyread.splice(this.index,1);
    this.showDialog = false;
+   }
+
   }
   public closeAlert() {
       this.alertexists=false;
       this.alertempty= false;
-      
+      this.alertremove=false;
   }
  
 }

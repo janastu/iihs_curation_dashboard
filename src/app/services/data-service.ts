@@ -1,4 +1,3 @@
-
 import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers  }       from '@angular/http';
 import PouchDB from 'pouchdb';
@@ -85,15 +84,15 @@ constructor(private http: Http,private settings:Settings) {
         },
         readlater: {
           map: function (doc) {
-            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno && !doc.hidden) {
-                    emit(doc.creator,doc);
+            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno) {
+                    emit(doc.creator,doc.target.value);
                          }
           }.toString()
         },
         recentlyread: {
           map: function (doc) {
             if (doc.motivation === 'tagging' && !doc.label && !doc.hiderecenltyreadanno) {
-                     emit(doc.creator,doc);
+                     emit(doc.creator,doc.target.value);
                        }
           }.toString()
         },
