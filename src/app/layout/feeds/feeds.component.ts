@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
+  import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { routerTransition } from '../../router.animations';
@@ -95,13 +95,13 @@ user:any;
      
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-        // console.log("hiddem",feed.value._id,globalfeed.id)
+         console.log("hiddem",feed.value._id,globalfeed.value._id)
            if(feed.value._id === globalfeed.id) {
             var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-            this.variab.globalfeeds.splice(i,1);
+            this.variab.globalfeeds.splice(i,hiddenfeeds.length);
 
             this.feeds = this.variab.globalfeeds;
-             console.log("feedis",this.feeds,this.variab.globalfeeds)
+             //console.log("feedis",this.feeds,this.variab.globalfeeds)
                if(this.feeds.length == 0){
                   //this.loading = true;
                   
@@ -113,6 +113,18 @@ user:any;
 
                }
            }
+          // console.log("else",this.variab.globalfeeds);
+          this.feeds = this.variab.globalfeeds;
+          if(this.feeds.length == 0){
+             //this.loading = true;
+             
+             document.getElementById('loading').style.display = 'block';
+          }
+          else{
+              //this.loading = false;
+              document.getElementById('loading').style.display = 'none';
+
+          }
         })
      })
      
@@ -128,8 +140,8 @@ user:any;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.feeds = childDates;
-    /*this.date = childDates;
+    //this.feeds = childDates;
+    this.date = childDates;
     var xmlLink:any;
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
@@ -143,7 +155,7 @@ user:any;
 
     });
 
-    if (this.feeds.length == 0) {
+    /*if (this.feeds.length == 0) {
      //console.log("apito newsrack",xmlLink); 
      this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
              return res;

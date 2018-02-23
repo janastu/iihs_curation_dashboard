@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
-import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { FormBuilder,Validators, FormGroup, FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Userservice } from '../services/userservice';
 import { Global } from '../shared';
@@ -15,33 +15,41 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 export class LoginComponent implements OnInit {
 
     loginForm:FormGroup;
-    username=this.formBuilder.control('', [Validators.required]);
-    password=this.formBuilder.control('', [Validators.required]);
+    username=this.formBuilder.control('', /*[Validators.required]*/);
+    password=this.formBuilder.control('',/* [Validators.required]*/);
     alertsuccess:boolean = false;
     alertauth:boolean= false;
     alertmissing:boolean=false;
     errormessage:any;
+showDialog:boolean;
+
     constructor(public router: Router,public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global) {
               
 
             }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-           
-            username:this.username,
-            password:this.password
+        /**/
 
+        this.loginForm = new FormGroup({
+            'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            'password': new FormControl(null, [Validators.required])
         });
-      
+
     }
 
+    onforget(){
+        this.userService.onforget().then(response => {
+            console.log("re", response);
+        });
+    }
     onLoggedin() {
+        console.log(this.username)
         let credentials = {
-            'username':this.username.value,
-            'password':this.password.value
+            'username':this.loginForm.controls['username'].value,
+            'password':this.loginForm.controls['password'].value
         };
-        //console.log("log",credentials);
+        console.log("log",credentials);
         
         
 

@@ -21,10 +21,11 @@ feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 boardname:any;
+user:any;
   constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
-    //
+    this.user =localStorage.getItem('name');
     //this.feeds = this.variab.boardfeeds;
     //this.route.params.subscribe( params => console.log(params));
     this.route.params
@@ -32,11 +33,66 @@ boardname:any;
            this.boardname = params.id;
            this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
-               this.feeds = this.variab.boardfeeds;
-             
+               //this.feeds = this.variab.boardfeeds;
+               this.checkForDeletedFeeds();
                 });
     });
-    //this.componentsService.getBoards().subscribe(data => this.alertReceived(data));
+    
+  }
+  //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
+  // and display the rest of the feeds
+  checkForDeletedFeeds(){
+    
+    let hiddenfeeds:any=[];
+    this.dataService.getdeletedfeeds(this.user).then(res=>{
+     hiddenfeeds=res;
+     console.log(hiddenfeeds)
+     if(hiddenfeeds.length == 0){
+       this.feeds = this.variab.boardfeeds;
+       //console.log("check",this.variab.globalfeeds);
+       document.getElementById('loading').style.display = 'none';
+       }
+      
+     
+      this.variab.boardfeeds.map(globalfeed=>{
+        hiddenfeeds.map(feed=>{
+        console.log("hiddem",feed.value._id,globalfeed.id)
+           if(feed.value._id === globalfeed.value._id) {
+            var i = _.indexOf(this.variab.boardfeeds,globalfeed);
+            this.variab.boardfeeds.splice(i,hiddenfeeds.length);
+
+            this.feeds = this.variab.boardfeeds;
+           //  console.log("feedis",this.feeds,this.variab.boardfeeds)
+               if(this.feeds.length == 0){
+                  //this.loading = true;
+                  
+                  document.getElementById('loading').style.display = 'block';
+               }
+               else{
+                   //this.loading = false;
+                   document.getElementById('loading').style.display = 'none';
+
+               }
+           }
+           else{
+           this.feeds = this.variab.boardfeeds;
+           if(this.feeds.length == 0){
+              //this.loading = true;
+              
+              document.getElementById('loading').style.display = 'block';
+           }
+           else{
+               //this.loading = false;
+               document.getElementById('loading').style.display = 'none';
+
+           }
+         }
+        })
+     })
+     
+
+    })
+
   }
   //Function to handle view event from page-header component
   public handleView(childView:any){

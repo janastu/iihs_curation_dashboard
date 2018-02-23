@@ -5,10 +5,16 @@
     border-radius: 0px ! important;
     border: 0px ! important;
 }
-.control-label.required:after { 
+/*.control-label.required:after { 
   color: #d00;
   content: "*";
   position: absolute;
   margin-left: 5px;
   top:7px;
+}*/
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
 }

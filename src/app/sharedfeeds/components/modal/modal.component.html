@@ -16,7 +16,7 @@
                                     'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
                                     </a>
                                 <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
-                                <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-close" title="Remove"></i></a>
+                                <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-trash" title="Remove"></i></a>
 
                                 <!--<a class="nav-item" href="#"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>-->
                                 
@@ -92,6 +92,7 @@
                             <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
                             <button (click)="hide()" class="btn btn-sm btn-success dialog-ok">Ok</button>
                         </div>
+                        <ngb-alert *ngIf="alertremove" (close)="closeAlert()">Cannot remove from trashbox</ngb-alert>
                     </app-dialog>
                 </ng-template>
 
