@@ -354,7 +354,11 @@ export class FeedService {
 		        
 		        console.log("user",response);
 		        if(response.ok == true){
-		        	 this.addtopouch(this.feedNewsrack,metadata.feedname);
+		        	 this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
+		        	 	if(res['ok'] == true){
+		        	 		PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        	 	}
+		        	 });
 		        }
 		      }, (err) => {
 		        console.log(err);

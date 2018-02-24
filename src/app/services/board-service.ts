@@ -110,6 +110,11 @@ export class BoardService {
 		this.localdb.post(res, function callback(err, result) {
 		    if (!err) {
 		      console.log('Successfully posted a todo!',result);
+
+		        		if(result['ok'] == true){
+		        			PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
+		        		}
+		        
 		      resolve(result);
 		    }
 		  });
