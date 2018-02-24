@@ -199,6 +199,12 @@ export class FeedService {
 	}
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getcategoryfeeds(category){
+	  	this.remote.replicate.to(this.localdb, {
+	  	   filter: '_view',
+	  	   view: 'feeds/categoryfeeds'
+	  	 }).then(res=>{
+	  	console.log(res);
+	  	});
 
 	   return new Promise(resolve => {
 	   	this.localdb.query('feeds/categoryfeeds', {
@@ -218,6 +224,12 @@ export class FeedService {
 	  }
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
+	  	this.remote.replicate.to(this.localdb, {
+	  	   filter: '_view',
+	  	   view: 'feeds/metacategories'
+	  	 }).then(res=>{
+	  	console.log(res);
+	  	});
 
 	   return new Promise(resolve => {
 	   	this.localdb.query('feeds/metacategories', {
@@ -241,15 +253,15 @@ export class FeedService {
 	 
 	  var d = new Date();
 	  var date = d.getTime();
-	  //console.log(date)
-
+	 
 
 	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
-	 this.remote.replicate.to(this.localdb, {
+	this.remote.replicate.to(this.localdb, {
 	   filter: '_view',
 	   view: 'feeds/latestoldestcategory'
-	 });
-
+	 }).then(res=>{
+	console.log(res);
+	});
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
 	return new Promise(resolve => {
