@@ -16,7 +16,7 @@ export class BoardService {
 		
 		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards);
 
-		this.localdb.sync(this.remote, {
+		/*this.localdb.sync(this.remote, {
 		  live: true,
 		  retry:true,
 		  auth:{
@@ -29,7 +29,7 @@ export class BoardService {
 		}).on('error', function (err) {
 			console.log("syncerr",err);
 		  // yo, we got an error! (maybe the user went offline?)
-		})
+		})*/
 		//function call to create design docs
 		this.createDesignDocs();
 
@@ -82,7 +82,13 @@ export class BoardService {
 
 	getboards(){
 
-		//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
+			//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
+			this.remote.replicate.to(this.localdb, {
+			   filter: '_view',
+			   view: 'board/boards'
+			 }).then(res=>{
+			console.log(res);
+			});
 
 	return new Promise(resolve => {
 	  this.localdb.query('board/boards', {
