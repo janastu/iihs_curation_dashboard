@@ -19,7 +19,7 @@ export class FeedService {
 		  this.localdb = new PouchDB('feeds'); //create a pouchdb 
 		  this.remote = new PouchDB(this.settings.protocol+this.settings.dbfeed);
 
-		  this.localdb.sync(this.remote, {
+		  /*this.localdb.sync(this.remote, {
 		    live: true,
 		    retry:true,
 		    auth:{
@@ -32,7 +32,7 @@ export class FeedService {
 		  }).on('error', function (err) {
 		  	console.log("syncerr",err);
 		    // yo, we got an error! (maybe the user went offline?)
-		  })
+		  })*/
 		  //function call to create design docs
 		  this.createDesignDocs();
 
@@ -40,7 +40,7 @@ export class FeedService {
 		//remote couchdb url to sync with couchdb
 		
 
-		//this.localdb = new PouchDB('categories')
+	
  /*let options = {
 		        live: true,
 			      retry: true,
@@ -245,7 +245,10 @@ export class FeedService {
 
 
 	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
-
+	 this.remote.replicate.to(this.localdb, {
+	   filter: '_view',
+	   view: 'feeds/latestoldestcategory'
+	 });
 
 	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
 	  console.log(category)
@@ -260,6 +263,7 @@ export class FeedService {
 	    console.log(err);
 	  	});
 	});
+
 
 	  
 	}
