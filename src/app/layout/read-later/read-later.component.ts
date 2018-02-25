@@ -50,7 +50,7 @@ user:any;
       document.getElementById('loading').style.display = 'none';
       }
      
-    
+    console.log("resd",this.variab.readlaterfeeds)
      this.variab.readlaterfeeds.map(globalfeed=>{
        hiddenfeeds.map(feed=>{
        console.log("hiddem",feed.value._id,globalfeed.value._id)

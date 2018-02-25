@@ -45,7 +45,7 @@ user:any;
            this.route.queryParams
             .subscribe(params => {
               console.log(params);
-              
+              this.feedService.getcategoryfeeds(params.feedname);
               if(params.subcategory){
                 
               this.catname = params.subcategory;
@@ -167,10 +167,10 @@ user:any;
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
     console.log("in feed",childCategory)
-      this.feedService.getcategoryfeeds(childCategory).then(result =>{
+     /* this.feedService.getcategoryfeeds(childCategory).then(result =>{
         this.feeds = result;
         this.catname = childCategory;
-      })
+      })*/
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){

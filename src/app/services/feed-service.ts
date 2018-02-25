@@ -192,19 +192,28 @@ export class FeedService {
 		  }
 		  // ignore if doc already exists
 		})
-		
+
+		//Pull from couch
+		/*this.remote.replicate.to(this.localdb, {
+		   filter: '_view',
+		   view: 'feeds/categoryfeeds'
+		 }).then(res=>{
+		console.log(res);
+		});
+		 
+		this.remote.replicate.to(this.localdb, {
+		   filter: '_view',
+		   view: 'feeds/metacategories'
+		 }).then(res=>{
+		console.log(res);
+		});*/
 		
 	
 
 	}
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getcategoryfeeds(category){
-	  	this.remote.replicate.to(this.localdb, {
-	  	   filter: '_view',
-	  	   view: 'feeds/categoryfeeds'
-	  	 }).then(res=>{
-	  	console.log(res);
-	  	});
+	  	/**/
 
 	   return new Promise(resolve => {
 	   	this.localdb.query('feeds/categoryfeeds', {
@@ -224,14 +233,15 @@ export class FeedService {
 	  }
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
-	  	this.remote.replicate.to(this.localdb, {
-	  	   filter: '_view',
-	  	   view: 'feeds/metacategories'
-	  	 }).then(res=>{
-	  	console.log(res);
-	  	});
+	  	 
 
 	   return new Promise(resolve => {
+	   	this.remote.replicate.to(this.localdb, {
+	   	   filter: '_view',
+	   	   view: 'feeds/metacategories'
+	   	 }).then(res=>{
+	   	console.log(res);
+	   	if(res['ok']==true){
 	   	this.localdb.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
@@ -241,39 +251,42 @@ export class FeedService {
 	   	}).catch(function (err) {
 	   	  console.log(err);
 	   	});
-
-	   });
+	   	}
+		});
+	  });
 
 	    
 	  }
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-	 
+	
 	 
 	  var d = new Date();
 	  var date = d.getTime();
 	 
 
-	 var url = this.settings.protocol+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
+	return new Promise(resolve => { 
 	this.remote.replicate.to(this.localdb, {
 	   filter: '_view',
 	   view: 'feeds/latestoldestcategory'
 	 }).then(res=>{
-	console.log(res);
+	console.log(res)
+	if(res['ok']==true){
+		
+		    this.localdb.query('feeds/latestoldestcategory', {
+		      startkey: [category],
+		      endkey: [category, {}]
+		    }).then(function (result) {
+		   		console.log("res",result);
+		    	resolve(result.rows);
+		  	}).catch(function (err) {
+		    console.log(err);
+		  	});
+	
+	}
 	});
-	  //var url = 'http://localhost:5984/feeds/_design/feeds/_view/latestoldestcategory?&startkey=['+'"'+category+'"'+']&endkey=['+'"'+category+'"'+',{}]';
-	  console.log(category)
-	return new Promise(resolve => {
-	    this.localdb.query('feeds/latestoldestcategory', {
-	      startkey: [category],
-	      endkey: [category, {}]
-	    }).then(function (result) {
-	   		console.log("res",result);
-	    	resolve(result.rows);
-	  	}).catch(function (err) {
-	    console.log(err);
-	  	});
+	  
 	});
 
 
