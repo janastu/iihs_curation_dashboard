@@ -16,7 +16,7 @@ export class BoardService {
 		
 		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards);
 
-		/*this.localdb.sync(this.remote, {
+		this.localdb.sync(this.remote, {
 		  live: true,
 		  retry:true,
 		  auth:{
@@ -29,7 +29,7 @@ export class BoardService {
 		}).on('error', function (err) {
 			console.log("syncerr",err);
 		  // yo, we got an error! (maybe the user went offline?)
-		})*/
+		})
 		//function call to create design docs
 		this.createDesignDocs();
 
@@ -104,20 +104,29 @@ export class BoardService {
 	  
 	}
 	addboard(res){
-
-		console.log(res);
 	return new Promise(resolve => {
-		this.localdb.post(res, function callback(err, result) {
-		    if (!err) {
-		      console.log('Successfully posted a todo!',result);
-
-		        		if(result['ok'] == true){
-		        			PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
-		        		}
-		        
-		      resolve(result);
-		    }
-		  });
+		this.addtopouch(res).then(response=>{
+			console.log(response);
+			if(response['ok'] === true){
+				PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+				resolve(response);
+			}
+		});
 	});
+		
+	}
+	addtopouch(res){
+			
+		return new Promise(resolve => {
+			this.localdb.post(res, function callback(err, result) {
+			    if (!err) {
+			      console.log('Successfully posted a todo!',result);
+
+			        
+			      resolve(result);
+			    }
+			  });
+		});
+
 	}
 }
