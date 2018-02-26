@@ -19,7 +19,7 @@ export class FeedService {
 		  this.localdb = new PouchDB('feeds'); //create a pouchdb 
 		  this.remote = new PouchDB(this.settings.protocol+this.settings.dbfeed);
 
-		  /*this.localdb.sync(this.remote, {
+		  this.localdb.sync(this.remote, {
 		    live: true,
 		    retry:true,
 		    auth:{
@@ -32,7 +32,7 @@ export class FeedService {
 		  }).on('error', function (err) {
 		  	console.log("syncerr",err);
 		    // yo, we got an error! (maybe the user went offline?)
-		  })*/
+		  })
 		  //function call to create design docs
 		  this.createDesignDocs();
 
@@ -118,9 +118,10 @@ export class FeedService {
 		        
 		        console.log("user",response);
 		        if(response.ok === true){
-		        	resolve(response);
+		        	
 		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
 		        		if(res['ok'] == true){
+		        			resolve(res);
 		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
 		        		}
 		        	});
@@ -213,7 +214,6 @@ export class FeedService {
 	}
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getcategoryfeeds(category){
-	  	/**/
 
 	   return new Promise(resolve => {
 	   	this.localdb.query('feeds/categoryfeeds', {
@@ -268,8 +268,8 @@ export class FeedService {
 
 	return new Promise(resolve => { 
 	this.remote.replicate.to(this.localdb, {
-	   filter: '_view',
-	   view: 'feeds/latestoldestcategory'
+	 filter: '_view',
+	 view: 'feeds/latestoldestcategory'
 	 }).then(res=>{
 	console.log(res)
 	if(res['ok']==true){
