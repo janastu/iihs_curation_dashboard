@@ -44,7 +44,7 @@ user:any;
    let hiddenfeeds:any=[];
    this.dataservice.getdeletedfeeds(this.user).then(res=>{
     hiddenfeeds=res;
-    console.log(hiddenfeeds)
+    console.log("hidden",hiddenfeeds,this.variab.readlaterfeeds)
     if(hiddenfeeds.length == 0){
       this.feeds = this.variab.readlaterfeeds;
       document.getElementById('loading').style.display = 'none';
