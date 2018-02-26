@@ -15,7 +15,7 @@ constructor(private http: Http,private settings:Settings) {
 
     //this.localdb = new PouchDB('iihs_annotation');
   this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
- /* this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
+ /*this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
 
   this.localdb.sync(this.remote, {
     live: true,
@@ -55,8 +55,6 @@ constructor(private http: Http,private settings:Settings) {
   }
 
   addtodatabase(payload){
-   
-    
 
         this.localdb.post(payload, function callback(err, result) {
           if (!err) {
@@ -144,7 +142,7 @@ constructor(private http: Http,private settings:Settings) {
     }
     
 
-    
+
     // save the design doc
     this.localdb.put(ddoc).catch(function (err) {
       if (err.name !== 'conflict') {

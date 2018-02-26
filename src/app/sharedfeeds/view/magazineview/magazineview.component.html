@@ -17,8 +17,8 @@
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds | paginate: { itemsPerPage: 10, currentPage: p };let i=index;">
-                <!--Feed Hover-->
+              <div class="feeds-entries" *ngFor="let item of incomingfeeds | paginate: { itemsPerPage: 10, currentPage: p }">
+                
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
               </div>
@@ -65,11 +65,12 @@
         </div>
 
       </div> 
-      <div class="col-sm-6 offset-sm-3">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls> 
-      </div>
+    
     </div>   
     
   </div>
-  
+
 </div>  
+<div class="col-sm-6 offset-sm-3" *ngIf="incomingfeeds['length'] != 0">
+<pagination-controls (pageChange)="p = $event"></pagination-controls> 
+</div>
