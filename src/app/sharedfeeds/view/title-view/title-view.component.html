@@ -38,7 +38,7 @@
             </div> 
         </div>    
     </div>
-    <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-6 offset-sm-3" *ngIf="incomingfeeds['length'] != 0">
         <pagination-controls (pageChange)="p = $event"></pagination-controls> 
     </div>
 </div>
