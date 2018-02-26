@@ -142,7 +142,9 @@ constructor(private http: Http,private settings:Settings) {
 
       }
     }
+    
 
+    
     // save the design doc
     this.localdb.put(ddoc).catch(function (err) {
       if (err.name !== 'conflict') {
