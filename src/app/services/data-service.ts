@@ -159,6 +159,7 @@ constructor(private http: Http,private settings:Settings) {
     })
     
     
+    
   
 
   }
@@ -220,7 +221,7 @@ constructor(private http: Http,private settings:Settings) {
       this.localdb.query('annotations/readlater', {
           key:usr
         }).then(function (result) {
-       // console.log("res",result);
+       console.log("res readlater",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
