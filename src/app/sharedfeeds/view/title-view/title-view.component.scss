@@ -153,7 +153,7 @@ Bootstrap 3 Media Queries
 @media only screen and (min-width : 768px) {
 .title-hover-control {
     opacity: 0;
-    margin-left: 21px !important;
+    margin-left: -41px !important;
 }   
 }
 
@@ -161,7 +161,7 @@ Bootstrap 3 Media Queries
 @media only screen and (min-width : 992px) {
 .title-hover-control {
     opacity: 0;
-    margin-left: 27px !important;
+    margin-left: -46px !important;
 }   
 }
 
@@ -169,6 +169,6 @@ Bootstrap 3 Media Queries
 @media only screen and (min-width : 1200px) {
 .title-hover-control {
     opacity: 0;
-    margin-left: 28px !important;
+    margin-left: -50px !important;
 }
 }

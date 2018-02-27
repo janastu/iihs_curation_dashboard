@@ -10,23 +10,23 @@
             <div class="mb-3">
     	               <div class="card-header title-header"><strong>All Feeds</strong></div>
     	        <div class="list-entries" *ngFor="let item of incomingfeeds| paginate: { itemsPerPage: 10, currentPage: p}">
-                        <div class="list-item">
+                        <div class="list-item container">
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
                         <!--Feed Category-->     
-                             <a href={{item.value.url}} class="feeds-data">{{item.value.meta.categories}}</a>
+                            <div class="col-md-2"> <a href={{item.value.url}} class="feeds-data">{{item.value.meta.categories}}</a></div>
                         <!--Feed Date--> 
-                             <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
+                            <div class="col-md-2"> <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small></div>
                              
                         <!--Feed Title--> 
 
-                            <app-modal #modal [item]="item"></app-modal>
-                             <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a>
+                           <div class="col-md-7"> <app-modal #modal [item]="item"></app-modal>
+                             <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a></div>
                               
                         <!--Feed description--> 
                        <div *ngIf="item.value.description != null">
                             <div *ngIf="checkimg(item.value.description)" class="list-group-item-text desc"></div>
-                            <span *ngIf="!checkimg(item.value.description)" class="list-group-item-text desc">{{item.value.description.substring(0,10)}}</span>
+                            <!--span *ngIf="!checkimg(item.value.description)" class="list-group-item-text desc">{{item.value.description.substring(0,3)}}</span-->
                             </div>
                            <!--Mouse over for each element-->
                            <div class="title-hover-control">
