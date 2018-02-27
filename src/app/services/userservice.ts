@@ -77,9 +77,9 @@ public resetPassword(token,pwd){
     });
 
 }
-public onforget()
+public onforget(email)
 {
-  var email='jabiulla24@gmail.com'
+  
 return new Promise(resolve => {
     superlogin.forgotPassword(email).then(function (response) {
     console.log("asd", response);
