@@ -77,7 +77,7 @@ export class ResetpasswordComponent implements OnInit {
     else{
        this.alertauth = true;
     }
-    
+    }
     public closeAlert() {
         this.alertsuccess=false;
         this.alertauth = false;
