@@ -29,7 +29,7 @@ showDialog:boolean;
             }
 
     ngOnInit() {
-        /**/
+        
 
         this.loginForm = new FormGroup({
             'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
@@ -38,11 +38,7 @@ showDialog:boolean;
 
     }
 
-    onforget(){
-        this.userService.onforget().then(response => {
-            console.log("re", response);
-        });
-    }
+  
     onLoggedin() {
         console.log(this.username)
         let credentials = {

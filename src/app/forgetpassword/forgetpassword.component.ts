@@ -1,60 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
-import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { FormBuilder,Validators, FormGroup,FormControl} from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Userservice } from '../services/userservice';
 import { Global } from '../shared';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
-    selector: 'app-resetpassword',
-    templateUrl: './resetpassword.component.html',
-    styleUrls: ['./resetpassword.component.scss'],
+    selector: 'app-forgetpassword',
+    templateUrl: './forgetpassword.component.html',
+    styleUrls: ['./forgetpassword.component.scss'],
     animations: [routerTransition()],
     providers: [NgbAlertConfig]
 })
-export class ResetpasswordComponent implements OnInit {
+export class ForgetpasswordComponent implements OnInit {
 
     loginForm:FormGroup;
-    username=this.formBuilder.control('', [Validators.required]);
-    password=this.formBuilder.control('', [Validators.required]);
+    email=this.formBuilder.control('', [Validators.required]);
     alertsuccess:boolean = false;
     alertauth:boolean= false;
     alertmissing:boolean=false;
     errormessage:any;
     tokenfromurl: any;
     urlstatus: any;
+
     constructor(public router: Router,public activatedRoute:ActivatedRoute, public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global) {
               
 
             }
 
-    ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-           
-            username:this.username,
-            password:this.password
-
-        });
-      
-
-        this.activatedRoute.queryParams.subscribe(params => {
-            if (params['token']){
-                 this.urlstatus == true;
-                this.tokenfromurl = params['token'];
-            console.log(this.tokenfromurl); // Print the parameter to the console. 
-               
-           }
-           else{
-                this.tokenfromurl = ''
-             
-            }
-             });
-    }
+  ngOnInit() {
+  
+    this.loginForm = new FormGroup({
+        
+        'email': new FormControl(null, [Validators.required, Validators.email])
+       
+    });
+  }
+        
 
      reset(){
-       if (this.username.value!=='' || this.password.value!=='')
-       {
-         console.log("a", this.username.value);
+    let email=this.loginForm.controls['email'].value
+  if (email!=null) {
+
+
+      console.log("a", email);
+
+    this.userService.onforget(email).then(response => {
+      console.log("re", response);
+      if (response['success']) {
+        //alert('Login Successful');
+        this.alertsuccess = true;
+        this.ngAlert.type = 'success';
+       
+      }
+      else {
+      
+        console.log('not changed');
+      }
+
+    });
+    }
+    else{
+  this.alertmissing = true;
+
+  }
+
+/*
          if (this.username.value ==this.password.value) {
              this.userService.resetPassword(this.tokenfromurl, this.password.value).then(response => {
                  console.log("re", response);
@@ -70,12 +81,9 @@ export class ResetpasswordComponent implements OnInit {
           });
          }
          else{
-       this.alertmissing = true;
         console.log("not match");
         }
-    }
-    else{
-       this.alertauth = true;
+        */
     }
     
     public closeAlert() {
