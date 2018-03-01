@@ -106,12 +106,12 @@ public adduser(user){
    
    
 }
-public sendConfirmEmail(email)
+public sendConfirmEmail(email,groupname)
 {
   var status;
   console.log("Called to msg");
    return new Promise(resolve => {
-     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email;
+     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname;
        //console.log(newsrack);
    this.http.get(emailurl).subscribe((response) => {
      console.log("sd",response.ok);

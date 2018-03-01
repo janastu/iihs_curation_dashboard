@@ -88,7 +88,7 @@ this.groupform=this.formBuilder.group({
         {
           groupname.value.members.push([{ 'name':name,'email': mail, 'type': usertype}]);
           console.log('asd', groupname);
-          this.userService.sendConfirmEmail(mail).then(res=>{
+          this.userService.sendConfirmEmail(mail,group).then(res=>{
       console.log('in com', res);
       if (res === true)
       {
