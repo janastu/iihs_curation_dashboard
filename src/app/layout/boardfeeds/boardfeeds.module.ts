@@ -19,6 +19,7 @@ import {
     CardViewModule
 } from '../../sharedfeeds/view';
 import { HoverToolbarModule } from '../../sharedfeeds/components';
+import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -34,7 +35,8 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
         TitleViewModule,
         CardViewModule,
         ArticleviewModule,
-        HoverToolbarModule
+        HoverToolbarModule,
+        SharedPipesModule
       
     ],
     declarations: [

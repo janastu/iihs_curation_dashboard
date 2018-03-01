@@ -3,7 +3,7 @@
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="boardname" (childView)='handleView($event)' (childDates)='handleDate($event)' (childSortLabel)='handleSort($event)'></app-page-header>
+            <app-page-header [heading]="boardname | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)' (childSortLabel)='handleSort($event)'></app-page-header>
         </div>
     </div>
 <!--Component to display if no view is selected-->
