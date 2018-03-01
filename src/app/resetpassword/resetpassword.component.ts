@@ -14,41 +14,41 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ResetpasswordComponent implements OnInit {
 
-    loginForm:FormGroup;
-    username=this.formBuilder.control('', [Validators.required]);
-    password=this.formBuilder.control('', [Validators.required]);
-    alertsuccess:boolean = false;
-    alertauth:boolean= false;
-    alertmissing:boolean=false;
-    errormessage:any;
+    loginForm: FormGroup;
+    username = this.formBuilder.control('', [Validators.required]);
+    password = this.formBuilder.control('', [Validators.required]);
+    alertsuccess: boolean = false;
+    alertauth: boolean = false;
+    alertmissing: boolean = false;
+    errormessage: any;
     tokenfromurl: any;
     urlstatus: any;
-    constructor(public router: Router,public activatedRoute:ActivatedRoute, public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global) {
-              
+    constructor(public router: Router, public activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private userService: Userservice, public ngAlert: NgbAlertConfig, public variab: Global) {
 
-            }
+
+    }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-           
-            username:this.username,
-            password:this.password
+
+            username: this.username,
+            password: this.password
 
         });
-      
+
 
         this.activatedRoute.queryParams.subscribe(params => {
-            if (params['token']){
-                 this.urlstatus == true;
+            if (params['token']) {
+                this.urlstatus == true;
                 this.tokenfromurl = params['token'];
-            console.log(this.tokenfromurl); // Print the parameter to the console. 
-               
-           }
-           else{
-                this.tokenfromurl = ''
-             
+                console.log(this.tokenfromurl); // Print the parameter to the console. 
+
             }
-             });
+            else {
+                this.tokenfromurl = ''
+
+            }
+        });
     }
 
     reset() {
@@ -76,7 +76,10 @@ export class ResetpasswordComponent implements OnInit {
         else {
             this.alertauth = true;
         }
-    }
+    
+
+
+}
     public closeAlert() {
         this.alertsuccess=false;
         this.alertauth = false;
