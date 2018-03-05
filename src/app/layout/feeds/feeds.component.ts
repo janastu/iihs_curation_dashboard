@@ -1,4 +1,4 @@
-  import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { routerTransition } from '../../router.animations';
@@ -29,7 +29,7 @@ date:any;              //variable to store the state of dates to filters
 catname:any;
 usersview:any;
 user:any;
-
+alertrange:boolean=false;
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
@@ -152,6 +152,9 @@ user:any;
         
           return res;
         }     
+        else{
+          this.alertrange=true;
+        }
 
     });
 

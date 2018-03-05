@@ -28,10 +28,11 @@ user:any;
     this.user =localStorage.getItem('name');
     //this.feeds = this.variab.boardfeeds;
     //this.route.params.subscribe( params => console.log(params));
-    this.route.params
+    this.route.queryParams
          .subscribe(params => {
-           this.boardname = params.id;
-           this.dataService.getboardfeeds(params.id).then(res=>{
+
+           this.boardname = params.boardname;
+           this.dataService.getboardfeeds(params.boardname).then(res=>{
               this.variab.boardfeeds = res;
                //this.feeds = this.variab.boardfeeds;
                this.checkForDeletedFeeds();
