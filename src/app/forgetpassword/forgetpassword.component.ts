@@ -47,16 +47,15 @@ export class ForgetpasswordComponent implements OnInit {
 
     this.userService.onforget(email).then(response => {
       console.log("re", response);
-      if (response['success']) {
-        //alert('Login Successful');
-        this.alertsuccess = true;
-        this.ngAlert.type = 'success';
-       
-      }
-      else {
-      
-        console.log('not changed');
-      }
+    if (response['success']) {
+      //alert('Login Successful');
+      this.alertsuccess = true;
+      this.ngAlert.type = 'success';
+
+    }
+    else if (response['error']) {
+    this.alertauth = true;
+    }
 
     });
     }

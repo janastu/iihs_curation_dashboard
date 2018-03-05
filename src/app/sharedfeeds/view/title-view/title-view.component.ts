@@ -28,5 +28,6 @@ p:any;
     return (/<img[\s\S]*>/i.test(feeds));
    
   }
+  
 
 }
