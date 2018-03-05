@@ -42,11 +42,11 @@ export class JoinGroupComponent implements OnInit {
             //if yes the push the group else make a property with group array
             if(user.value.group === undefined){
               user.value.group=[group];
-              this.userService.updateAuser(user.value);
+              //this.userService.updateAuser(user.value);
             }
             else{
               user.value.group.push(group);
-              this.userService.updateAuser(user.value);
+              //this.userService.updateAuser(user.value);
             }
           console.log(user.value);
          
