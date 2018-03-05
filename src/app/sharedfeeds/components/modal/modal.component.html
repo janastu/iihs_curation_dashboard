@@ -63,10 +63,16 @@
                                     <div *ngIf="checkimg(item.value.description)"  class="row">
                                           
                                     </div>
-                                    <div *ngIf="!checkimg(item.value.description)"  class="row">
+                                    <div *ngIf="!checkimg(item.value.description) && !checkhtml(item.value.description)"  class="row">
                                       <div class="modal-item-content">
                                              {{item.value.description}}
                                           </div>
+                                    </div>
+                                    <div *ngIf="checkhtml(item.value.description)" class="feed-content">
+                                      <div class="modal-item-content">
+                                        {{stripHtml(item.value.description)}}
+                                      </div>
+
                                     </div>
                                     
                               </div>

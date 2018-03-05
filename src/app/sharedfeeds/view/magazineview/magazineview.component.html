@@ -52,8 +52,12 @@
                         
                     </div>
 
-                    <div *ngIf="!checkimg(item.value.description)" class="feed-content">
+                    <div *ngIf="!checkimg(item.value.description) && !checkhtml(item.value.description)" class="feed-content">
                         {{item.value.description.substring(0,100)}}
+
+                    </div>
+                    <div *ngIf="checkhtml(item.value.description)" class="feed-content">
+                        {{stripHtml(item.value.description).substring(0,100)}}
 
                     </div>
                    

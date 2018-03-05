@@ -31,7 +31,11 @@
                       <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                       <!--Feed description--> 
                       <p *ngIf="checkimg(item.value.description)" class="feed-desc"></p> 
-                      <p *ngIf="!checkimg(item.value.description)" class="feed-desc">{{item.value.description.substring(0,85)}}</p>
+                      <p *ngIf="!checkimg(item.value.description) && !checkhtml(item.value.description)" class="feed-desc">{{item.value.description.substring(0,85)}}</p>
+                      <p *ngIf="checkhtml(item.value.description)" class="feed-desc">
+                          {{stripHtml(item.value.description).substring(0,100)}}
+
+                      </p>
                     </div>
                 </div>    
           </div>

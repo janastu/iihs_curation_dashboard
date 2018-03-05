@@ -46,14 +46,27 @@ p:any;
 
      }
   */
-  console.log(this.incomingfeeds)
 
    
 	}
   checkimg(feeds){
-
+     
+      
+      
       return (/<img[\s\S]*>/i.test(feeds));
    
+  }
+  checkhtml(feeds){
+    return (/<p[\s\S]*>/i.test(feeds));
+    
+  }
+  stripHtml(html){
+      // Create a new div element
+      var temporalDivElement = document.createElement("div");
+      // Set the HTML content with the providen
+      temporalDivElement.innerHTML = html;
+      // Retrieve the text property of the element (cross-browser support)
+      return temporalDivElement.textContent || temporalDivElement.innerText || "";
   }
   extracturl(str){
     //var regex = /<img.*?src='(.*?)'/;
@@ -62,9 +75,12 @@ p:any;
      //console.log("src",src[0]);
      //var s = src[0].replace(/(height=")\d+("\W+width=")\d+/, '$1$2');
      //console.log("s",s);
+
      var tmp = document.createElement('div');
      
      tmp.innerHTML = str;
+    
+   
      var src = tmp.querySelector('img').getAttribute('src');
      
      return src;
