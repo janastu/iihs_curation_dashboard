@@ -146,9 +146,27 @@ alertempty:boolean=false;
 
   //Function called from Create new board block to create new board by giving a board name 
   createboard(){
-    
+   var model;
+  // console.log('mem',this.variab.groupname);
+  if(this.variab.groupname){
+     model={
+     
+       "@context": "http://www.w3.org/ns/anno.jsonld",
+       "type": "Annotation",
+       "creator": this.user,
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
+       "generator": "mm_2017_v1",
+       "generated": this.date.getTime(),
+       "motivation":"identifying",
+       "label":this.boardname.value,
+       "group":this.variab.groupname
 
-    var model={
+     };
+
+  }
+  else{
+    model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
@@ -161,6 +179,8 @@ alertempty:boolean=false;
        "label":this.boardname.value
 
      };
+
+  }
     
     if(this.boardname.value === ''){
       console.log("boardname cant be empty");
@@ -189,11 +209,12 @@ alertempty:boolean=false;
       if(boardExists == 0){
         console.log("add");
         this.boardservice.addboard(model).then(res=>{
+          console.log("ew",res);
               if(res['ok'] == true){
                 this.variab.boardupdated.push({value:model});  
                 this.visible=false;
                 this.alertempty = false;
-                    this.alertexists = false; 
+                 this.alertexists = false; 
               }
         })
       }
@@ -209,7 +230,7 @@ alertempty:boolean=false;
     //Update the group database with board idboardupdated:any=[];
 
 
-  /*  this.groupService.getgroups().then(res=>{
+  /*) this.groupService.getgroups().then(res=>{
       var groups:any=[];
       groups=res;
       
