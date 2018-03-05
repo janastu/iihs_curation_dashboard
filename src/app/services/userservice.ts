@@ -92,7 +92,7 @@ return new Promise(resolve => {
 }
 
 public adduser(user){
-	console.log("usr",user);
+	//console.log("usr",user);
   return new Promise(resolve => {
     superlogin.register(user).then(function (response) {
       
@@ -109,7 +109,7 @@ public adduser(user){
 public sendConfirmEmail(email,groupname)
 {
   var status;
-  console.log("Called to msg");
+  //console.log("Called to msg");
    return new Promise(resolve => {
      var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname;
        //console.log(newsrack);
@@ -159,8 +159,22 @@ getUserSubscriptions(){
   });
 
 }
+getemail(){
+  var url = this.settings.protocol+this.settings.dbusers+'/_design/auth/_view/email';
+   //console.log(url);
+  return new Promise(resolve => {
+        this.http.get(url).map(res=>res.json()).subscribe((response)=> {
+          
+          //console.log("users",response);
+          resolve(response.rows);
+        }, (err) => {
+          console.log(err);
+        }); 
+
+  });
+}
 getusers(){
-  var url = this.settings.protocol+this.settings.dbusers+'/_design/user/_view/user';
+  var url = this.settings.protocol+this.settings.dbusers+'/_all_docs';
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
@@ -192,7 +206,8 @@ getAuser(user){
 
 }
 updateAuser(user){
-  var url = this.settings.protocol+this.settings.dbusers+'/'+user.name;
+  console.log(user)
+  var url = this.settings.protocol+this.settings.dbusers+'/'+user._id;
  // console.log(url)
   let headers = new Headers();
    headers.append( 'Content-Type', 'application/json')
