@@ -86,7 +86,7 @@ this.groupform=this.formBuilder.group({
       groupnames.map(groupname=>{
         if (groupname.key===group)
         {
-          groupname.value.members.push([{ 'name':name,'email': mail, 'type': usertype}]);
+          groupname.value.members.push({ 'name':name,'email': mail, 'type': usertype});
           console.log('asd', groupname);
           this.userService.sendConfirmEmail(mail,group).then(res=>{
       console.log('in com', res);
@@ -168,7 +168,7 @@ this.ngAlert.type = 'success';
    let doc={
      'groupname':this.gpname.value,
      'owner':this.user,
-     'members':[this.user],
+     'members':[],
      'boards':[]
 
    }
