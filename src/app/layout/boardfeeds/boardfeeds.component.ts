@@ -15,26 +15,29 @@ import * as _ from 'lodash'
   animations: [routerTransition()]
 })
 export class BoardfeedsComponent implements OnInit {
-globalfeeds:any=[];    //variable to store feeds globally
-metadata:any=[];
-feeds:any=[];          //variable to store feeds to display
-view:any;              //variable to store the view state
-date:any;              //variable to store the state of dates to filters
-boardname:any;
-user:any;
+//Local Variable declarations
+feeds:any=[];          //Variable to store feeds to display
+view:any;              //Variable to store the view state
+date:any;              //Variable to store the state of dates to filters
+boardname:any;         //Variable to store the board name to display in the page heading
+user:any;              //Variable to store user name of the logged in user
   constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
+    //Get the user name from local storage and store in a local variable
     this.user =localStorage.getItem('name');
     //this.feeds = this.variab.boardfeeds;
     //this.route.params.subscribe( params => console.log(params));
+    //Get the boardname from query parameters
     this.route.queryParams
          .subscribe(params => {
 
            this.boardname = params.boardname;
+           //Call service function to get board feeds by passing board name as parameter
+           console.log("boa",params.boardname);
            this.dataService.getboardfeeds(params.boardname).then(res=>{
               this.variab.boardfeeds = res;
-               //this.feeds = this.variab.boardfeeds;
+               //Function call to check for the deleted feeds
                this.checkForDeletedFeeds();
                 });
     });
@@ -47,7 +50,7 @@ user:any;
     let hiddenfeeds:any=[];
     this.dataService.getdeletedfeeds(this.user).then(res=>{
      hiddenfeeds=res;
-     console.log(hiddenfeeds)
+    // console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.boardfeeds;
        //console.log("check",this.variab.globalfeeds);
@@ -115,17 +118,7 @@ user:any;
 
     });
   }
-  //Function to handle Category event from page-header component
-  public handleCategory(childCategory:any){
 
-   this.feeds =  this.globalfeeds.filter((res)=>{
-     console.log(childCategory,res.category);
-       if(res.category === childCategory){
-          return res;
-        }
-
-    });
-  }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
