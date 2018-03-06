@@ -23,8 +23,8 @@ import { Userservice } from './services/userservice';
 //import { SpinnerModule } from 'angular-spinners';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { Settings} from './services/settings';
-//import {UrlSerializer} from '@angular/router';
-//import {CustomUrlSerializer} from './CustomUrlSerializer';
+import {UrlSerializer} from '@angular/router';
+import {CustomUrlSerializer} from './CustomUrlSerializer';
 
 
 
@@ -59,7 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
 
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service,Settings,Userservice,FeedService,GroupService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},{provide:UrlSerializer,useClass:CustomUrlSerializer},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service,Settings,Userservice,FeedService,GroupService],
 
 
     bootstrap: [AppComponent]
