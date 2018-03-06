@@ -29,13 +29,13 @@ user:any;              //Variable to store user name of the logged in user
     //this.feeds = this.variab.boardfeeds;
     //this.route.params.subscribe( params => console.log(params));
     //Get the boardname from query parameters
-    this.route.queryParams
+    this.route.params
          .subscribe(params => {
 
-           this.boardname = params.boardname;
+           this.boardname = params.id;
            //Call service function to get board feeds by passing board name as parameter
-           console.log("boa",params.boardname);
-           this.dataService.getboardfeeds(params.boardname).then(res=>{
+           console.log("boa",params.id);
+           this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
                //Function call to check for the deleted feeds
                this.checkForDeletedFeeds();
