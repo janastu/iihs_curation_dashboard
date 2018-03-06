@@ -123,7 +123,7 @@ export class ModalComponent {
        
       }
       checkhtml(feeds){
-        return (/<p[\s\S]*>/i.test(feeds));
+        return (/<p|a|span|div[\s\S]*>/i.test(feeds));
         
       }
       stripHtml(html){

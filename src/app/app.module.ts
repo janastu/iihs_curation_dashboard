@@ -23,8 +23,8 @@ import { Userservice } from './services/userservice';
 //import { SpinnerModule } from 'angular-spinners';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { Settings} from './services/settings';
-import {UrlSerializer} from '@angular/router';
-import {CustomUrlSerializer} from './CustomUrlSerializer';
+//import {UrlSerializer} from '@angular/router';
+//import {CustomUrlSerializer} from './CustomUrlSerializer';
 
 
 
