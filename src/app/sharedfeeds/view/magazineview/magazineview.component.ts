@@ -57,7 +57,9 @@ p:any;
    
   }
   checkhtml(feeds){
-    return (/<p[\s\S]*>/i.test(feeds));
+    //var str = 'Crime watch Chronicle Reporter, Bhopal Over a dozen people sustained burn injuries... <a class="meta-more" href="http://www.centralchronicle.com/lpg-cylinder-explodes-while-cooking-food-over-a-dozen-injured.html">more <span class="meta-nav">&#187;</span></a>'
+    //console.log("checkforhtml",this.stripHtml(str));
+    return (/<p|a|span|div[\s\S]*>/i.test(feeds));
     
   }
   stripHtml(html){
