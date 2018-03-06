@@ -146,10 +146,10 @@ alertempty:boolean=false;
 
   //Function called from Create new board block to create new board by giving a board name 
   createboard(){
-   var model;
+//   var model;
   // console.log('mem',this.variab.groupname);
-  if(this.variab.groupname){
-     model={
+ // if(this.variab.groupname){
+   let  model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
@@ -160,12 +160,12 @@ alertempty:boolean=false;
        "generated": this.date.getTime(),
        "motivation":"identifying",
        "label":this.boardname.value,
-       "group":this.variab.groupname
+     //  "group":this.variab.groupname
 
      };
 
-  }
-  else{
+ // }
+ /* else{
     model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -180,7 +180,7 @@ alertempty:boolean=false;
 
      };
 
-  }
+  }*/
     
     if(this.boardname.value === ''){
       console.log("boardname cant be empty");
