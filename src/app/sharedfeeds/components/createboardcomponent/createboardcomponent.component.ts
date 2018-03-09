@@ -27,6 +27,8 @@ date:Date;
 queryString:any;
 alertexists:boolean=false;
 alertempty:boolean=false;
+alertpartofgroup:boolean=false;
+groupname:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
 
      
@@ -42,6 +44,7 @@ alertempty:boolean=false;
 
    this.user =localStorage.getItem('name');
 
+   this.groupname = localStorage.getItem('group');
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
@@ -65,7 +68,7 @@ alertempty:boolean=false;
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
 
-             this.selectedstar = 1;
+            // this.selectedstar = 1;
 
                  return anno;
                
@@ -95,7 +98,7 @@ alertempty:boolean=false;
          //is active for above output
         this.labelForBoards  =  annosForBoards.map(anno=>{
              if(anno[0]){
-               
+               this.selectedstar = 1;
                  return true;
               }
                else{
@@ -148,7 +151,7 @@ alertempty:boolean=false;
   createboard(){
    var model;
   // console.log('mem',this.variab.groupname);
-  if(this.variab.groupname){
+  if(this.groupname){
      model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -160,13 +163,13 @@ alertempty:boolean=false;
        "generated": this.date.getTime(),
        "motivation":"identifying",
        "label":this.boardname.value,
-       "group":this.variab.groupname
+       "group":this.groupname
 
      };
 
   }
   else{
-    model={
+    /*model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
@@ -178,7 +181,10 @@ alertempty:boolean=false;
        "motivation":"identifying",
        "label":this.boardname.value
 
-     };
+     };*/
+     this.alertpartofgroup = true;
+     this.ngAlert.type = 'warning';
+
 
   }
     
