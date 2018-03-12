@@ -7,7 +7,7 @@
              <input class="form-control mr-sm-2" type="text" placeholder="Find a Feed" [(ngModel)]="queryString" name="query">
            </form>
            <div class="feed_names">
-           <div class="field" *ngFor="let feed of feedsnames | FilterPipe: queryString;let i =index;">
+           <div class="field" *ngFor="let feed of feedsnames | FilterPipe: queryString | slice:0:5;let i =index;">
            
 
             <div class="board-item">
