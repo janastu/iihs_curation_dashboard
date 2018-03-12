@@ -106,12 +106,12 @@ public adduser(user){
    
    
 }
-public sendConfirmEmail(email,groupname)
+public sendConfirmEmail(email,groupname,type)
 {
   var status;
   //console.log("Called to msg");
    return new Promise(resolve => {
-     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname;
+     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname+'&type='+type;
        //console.log(newsrack);
    this.http.get(emailurl).subscribe((response) => {
      console.log("sd",response.ok);
@@ -195,7 +195,7 @@ getAuser(user){
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
           
-          console.log("users",response);
+          //console.log("users",response);
           resolve(response);
         }, (err) => {
           console.log(err);
@@ -206,7 +206,7 @@ getAuser(user){
 
 }
 updateAuser(user){
-  console.log(user)
+  //console.log(user)
   var url = this.settings.protocol+this.settings.dbusers+'/'+user._id;
  // console.log(url)
   let headers = new Headers();

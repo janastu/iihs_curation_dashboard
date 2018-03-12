@@ -10,7 +10,7 @@
 /*User Management input field*/
 .form-item{
 	display: grid;
-	width: 20px;
+	//
 }
 .form-item input{
 	font-size: 1.2rem;
@@ -114,6 +114,9 @@
 	padding: 5px;
 	display: block;
 	cursor: pointer;
+}
+.users-heading{
+	text-align: center;
 }
 /*hover style*/
 .create-group-button:hover{

@@ -41,7 +41,7 @@
             </li>
         </div>-->
 
-        <a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/dashboard']" [queryParams]="{memberof:groupname}" [routerLinkActive]="['router-link-active']" class="list-group-item">
         
             <img src="assets/images/radio.png" class="user-avatar img-log" />&nbsp;{{ 'IIHS-MM' | translate }}
         </a>

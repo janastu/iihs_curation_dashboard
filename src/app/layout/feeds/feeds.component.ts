@@ -85,17 +85,17 @@ alertrange:boolean=false;
     let hiddenfeeds:any=[];
     this.dataservice.getdeletedfeeds(this.user).then(res=>{
      hiddenfeeds=res;
-     console.log(hiddenfeeds)
+    // console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.globalfeeds;
-       console.log("check",this.variab.globalfeeds);
+       //console.log("check",this.variab.globalfeeds);
        document.getElementById('loading').style.display = 'none';
        }
       
      
       this.variab.globalfeeds.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-         console.log("hiddem",feed.value._id,globalfeed.value._id)
+         //console.log("hiddem",feed.value._id,globalfeed.value._id)
            if(feed.value._id === globalfeed.id) {
             var i = _.indexOf(this.variab.globalfeeds,globalfeed);
             this.variab.globalfeeds.splice(i,hiddenfeeds.length);

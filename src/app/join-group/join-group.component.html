@@ -1,0 +1,28 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row">
+        <div class="col-md-4 push-md-4">
+
+
+            <img src="assets/images/radio.png" class="user-avatar img-log" />
+            <h1>Media Monitor</h1>
+            <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Success</ngb-alert>
+            <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
+            <ngb-alert *ngIf="alertmissing" (close)="closeAlert()">{{errormessage}}</ngb-alert>
+            <div class="row">
+              <div class="col"><h1>Your are part of 2 or more groups Choose any one</h1></div>
+            </div>
+            <div class="row"> 
+              <div class="col-sm-4 offset-4">
+                 <fieldset class="form-group field" *ngFor="let item of groups">
+                   <div class="radio">
+                     <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item)" > {{item}}
+                     </label>
+                   </div>
+                 </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+

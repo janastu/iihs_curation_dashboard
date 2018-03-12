@@ -24,10 +24,9 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
 
-     
-     
-
     this.user = localStorage.getItem('name');
+
+    
    
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{

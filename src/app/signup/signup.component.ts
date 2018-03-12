@@ -1,6 +1,7 @@
-    import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Userservice } from '../services/userservice';
+import { GroupService } from '../services/group-service';
 import { FormBuilder,Validators, FormGroup, FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +29,7 @@ signupForm: FormGroup;
 
     urlstatus:boolean=false;
     emailfromurl: any ;
-    constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
+    constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig,public groupService:GroupService) { }
 
 
     ngOnInit() { 
@@ -80,13 +81,11 @@ signupForm: FormGroup;
                 'password':this.signupForm.controls['password'].value,
                 'confirmPassword':this.signupForm.controls['confirmpassword'].value
             };
-            console.log("doc",doc);
             this.userService.adduser(doc).then(response=>{
                 console.log("response",response);
                 if(response['success']){
                     this.alertsuccess = true;
                     this.ngAlert.type = 'success';
-
                     this.router.navigate(['/login']);
                 }
                 if(response['error']){

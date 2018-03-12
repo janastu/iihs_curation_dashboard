@@ -15,7 +15,12 @@ constructor(private http: Http,private settings:Settings) {
 
     //this.localdb = new PouchDB('iihs_annotation');
   this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
- this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations);
+ this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
+            auth:{
+                  username:this.settings.couchdbusername,
+                  password:this.settings.couchdbpassword
+                }
+      });
   //function call to create design docs
   this.createDesignDocs();
 

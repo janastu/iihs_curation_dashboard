@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
     { path: 'resetpassword', loadChildren: './resetpassword/resetpassword.module#ResetpasswordModule' },
     { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordModule' },
+    { path: 'choose-group', loadChildren: './join-group/join-group.module#JoinGroupModule'},
     {path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: '**', redirectTo: 'not-found' }
 ];

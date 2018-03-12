@@ -95,13 +95,15 @@ export class GroupService {
 
 	}
 	update(metadata){
+	  return new Promise(resolve=>{
 		this.localdb.put(metadata).then(function (response) {
 		  // handle response
+		  resolve(response);
 		  console.log(response)
 		}).catch(function (err) {
 		  console.log(err);
 		});
-
+      });
 
 	}
 	getgroups(){

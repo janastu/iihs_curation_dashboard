@@ -14,15 +14,16 @@ export class BoardService {
 	constructor(private http: Http,private settings:Settings) { 
 		this.localdb = new PouchDB('boards');
 		
-		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards);
+		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards,{
+		  	    auth:{
+		  			      username:this.settings.couchdbusername,
+		  			      password:this.settings.couchdbpassword
+		  	        }
+		  });
 
 		this.localdb.sync(this.remote, {
 		  live: true,
-		  retry:true,
-		  auth:{
-				      username:this.settings.couchdbusername,
-				      password:this.settings.couchdbpassword
-		        }
+		  retry:true
 		}).on('change', function (change) {
 		  // yo, something changed!
 		  console.log("syncchnage",change);
@@ -75,7 +76,7 @@ export class BoardService {
 		  // ignore if doc already exists
 		})
 		
-		
+		PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards);
 	
 
 	}
@@ -108,7 +109,7 @@ export class BoardService {
 		this.addtopouch(res).then(response=>{
 			console.log(response);
 			if(response['ok'] === true){
-				PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+				PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
 				resolve(response);
 			}
 		});
