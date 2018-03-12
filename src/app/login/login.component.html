@@ -8,7 +8,7 @@
             <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Success</ngb-alert>
             <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <ngb-alert *ngIf="alertmissing" (close)="closeAlert()">{{errormessage}}</ngb-alert>
-            <form role="form" [formGroup]="loginForm">
+            <form role="form" [formGroup]="loginForm" (ngSubmit)="onLoggedin()">
         
                 <div class="form-content">
                     <div class="form-group">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <a class="btn rounded-btn"  (click)="onLoggedin()"> Log in </a>
+                <button class="btn rounded-btn"> Log in </button>
 
               
                 
@@ -37,3 +37,16 @@
         </div>
     </div>
     </div>
+    <app-dialog class="alert-dialogbox" [visible]="showDialog">
+        <h4>Your are part of 2 or more groups Choose one</h4>
+        <fieldset class="form-group field" *ngFor="let item of groups">
+          <div class="radio">
+            <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item)" > {{item}}
+            </label>
+          </div>
+        </fieldset>
+        <!--<div class="dialog-buttons">
+            <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
+            <button (click)="hide()" class="btn btn-sm btn-success dialog-ok">Ok</button>
+        </div>-->
+    </app-dialog>
