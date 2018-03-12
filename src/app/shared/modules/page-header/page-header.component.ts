@@ -27,13 +27,14 @@ fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 selectedVal:any;
 desc:any;
-
+checkView:any;
 loading: boolean = false;
-
+currDate = new Date();
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public componentsService:ComponentsService,public variab:Global,public service:Service) { }
 
   ngOnInit() {
-
+    this.checkView = localStorage.getItem('view');
+    console.log("cehc",this.checkView);
     this.loginForm = this.formBuilder.group({
 
       fromdate: this.fromdate,

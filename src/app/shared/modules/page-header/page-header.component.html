@@ -7,10 +7,10 @@
   <div class="col-sm-6 form-item">
     <form [formGroup]="loginForm" class="form-inline form-group">
       <div class="form-group form-from"><label class="page-header-form">From</label>
-        <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate">
+        <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate" max="{{currDate|date:'yyyy-MM-dd'}}">
       </div>
       <div class="form-group form-to"><label class="page-header-form">To</label>
-        <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate">
+        <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate" max="{{currDate|date:'yyyy-MM-dd'}}">
         
       </div>
       <button type="button" class="btn btn-sm btn-success filter-button" (click)="datefilter()" >Filter</button>
@@ -46,19 +46,19 @@
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width">  
           <fieldset class="form-group field">
             <div class="radio">
-              <label><input type="radio" #articleview name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChangeView(articleview)" > Article View
+              <label><input type="radio" #articleview name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChangeView(articleview)" [checked]="this.checkView === articleview.value"> Article View
               </label>
             </div>
             <div class="radio">
-              <label><input type="radio" #magazineview name="optionsRadios" id="optionsRadios2" value="Magazine" (click)="onChangeView(magazineview)" > Magazine View
+              <label><input type="radio" #magazineview name="optionsRadios" id="optionsRadios2" value="Magazine" (click)="onChangeView(magazineview)" [checked]="this.checkView === magazineview.value"> Magazine View
               </label>
             </div>
             <div class="radio">
-              <label><input type="radio" #titleview name="optionsRadios" id="optionsRadios3" value="Title" (click)="onChangeView(titleview)" > Title View
+              <label><input type="radio" #titleview name="optionsRadios" id="optionsRadios3" value="Title" (click)="onChangeView(titleview)" [checked]="this.checkView === titleview.value"> Title View
               </label>
             </div>
             <div class="radio">
-              <label><input type="radio" #cardview name="optionsRadios" id="optionsRadios3" value="Card" (click)="onChangeView(cardview)" > Card View
+              <label><input type="radio" #cardview name="optionsRadios" id="optionsRadios3" value="Card" (click)="onChangeView(cardview)" [checked]="this.checkView === cardview.value"> Card View
               </label>
             </div>
           </fieldset>
