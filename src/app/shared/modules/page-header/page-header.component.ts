@@ -14,6 +14,7 @@ export class PageHeaderComponent implements OnInit{
     @Input() icon: string;
     @Output('childView') outgoing:any = new EventEmitter();
     @Output('childDates') Dates:any = new EventEmitter();
+    @Output('clearDates') clear:any = new EventEmitter();
     @Output('childCategory') Category:any = new EventEmitter();
     @Output('childSortLabel') Sortlabel:any = new EventEmitter();
     @Output('childrefresh') Refresh:any = new EventEmitter();
@@ -42,7 +43,7 @@ currDate = new Date();
     });
    
   }
-  //function to get input values annd emit to feed component
+  //function to get date input values annd emit to feed component
   datefilter(){
  
     var changefrom,changeto;
@@ -61,8 +62,14 @@ currDate = new Date();
     });*/
     //console.log("date value",changefrom,Date.parse(changefrom));
     this.Dates.emit({changefrom,changeto});
-    this.loginForm.reset();
+    
   }
+  //function to get input to clear the filter annd emit to feed component
+  reset(){
+    this.loginForm.reset();
+    this.clear.emit('reset');
+  }
+
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {
     this.outgoing.emit(deviceValue.value);
@@ -128,4 +135,5 @@ currDate = new Date();
  onSortlabel(val){
    this.Sortlabel.emit(val);
  }
+
 }

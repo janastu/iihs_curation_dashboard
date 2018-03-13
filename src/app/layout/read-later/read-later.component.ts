@@ -115,6 +115,12 @@ user:any;
     });
 
   }
+  //Function to handle clear Date event from page-header component
+  handleClearDate(eve){
+    if(eve == 'reset'){
+      this.feeds = this.variab.readlaterfeeds;
+    }
+  }
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
 

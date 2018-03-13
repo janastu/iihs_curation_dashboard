@@ -23,7 +23,8 @@ export class ManagementComponent implements OnInit {
   alertsuccess:any;
   requiredsuccess: any;
   requireduser:any;
-  requiredadmin:any;
+  requiredadminUser:any;
+  requiredadminGroup:any;
   mailsuccess: any;
   catvalue:any;
   mygroups:any=[];
@@ -99,6 +100,7 @@ export class ManagementComponent implements OnInit {
 
     this.userService.getAuser(this.user).then(response=>{
       if(response['type'] === 'admin'){
+        
         this.groupService.getgroups().then(res=>{
           groupnames = res;
           //console.log("groupname", groupnames);
@@ -106,8 +108,13 @@ export class ManagementComponent implements OnInit {
             if (groupname.key===group){
               groupname.value.members.push({ 'name':name,'email': mail, 'type': usertype});
               
-          //console.log('asd', groupname);
-             this.userService.sendConfirmEmail(mail,group,usertype).then(res=>{
+          //Check if email is registered
+             this.checkEmail(mail).then(res=>{
+               var regOrlogin = res;
+              // console.log('fgd',regOrlogin);  
+             
+             
+             this.userService.sendConfirmEmail(mail,group,usertype,regOrlogin).then(res=>{
           //console.log('in com', res);
                 if (res === true){
                   
@@ -120,18 +127,31 @@ export class ManagementComponent implements OnInit {
                   });
                 }
               });
+              });
             }
           })
         });
       }
       else{
-         this.requiredadmin=true;
+         this.requiredadminUser=true;
          this.ngAlert.type='warning';
       }
     });
   }
 
    
+  }
+  checkEmail(email){
+    return new Promise(resolve=>{
+      this.userService.validateEmail(email).then(res=>{
+        if(res==true){
+          resolve('register');
+        }
+        else if(res['error']){
+          resolve('login');
+        }
+      });
+    });
   }
 /*
   //Function to add user to a group
@@ -227,7 +247,7 @@ export class ManagementComponent implements OnInit {
           });
         }
         else{
-          this.requiredadmin=true;
+          this.requiredadminGroup=true;
           this.ngAlert.type='warning';
         }
       }) 
@@ -237,7 +257,8 @@ export class ManagementComponent implements OnInit {
       this.alertsuccess=false;
       this.mailsuccess=false;
       this.requiredsuccess=false;
-      this.requiredadmin=false;
+      this.requiredadminGroup=false;
+      this.requiredadminUser  =false;
       this.requireduser=false;
   }
   //On choosing a group

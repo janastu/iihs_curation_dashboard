@@ -84,6 +84,12 @@ catname:any;
    });
 
  }
+ //Function to handle clear Date event from page-header component
+  handleClearDate(eve){
+    if(eve == 'reset'){
+      this.feeds = this.variab.hiddenfeeds;
+    }
+  }
    
 
 }

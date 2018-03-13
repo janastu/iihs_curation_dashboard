@@ -106,12 +106,12 @@ public adduser(user){
    
    
 }
-public sendConfirmEmail(email,groupname,type)
+public sendConfirmEmail(email,groupname,type,regOrlogin)
 {
   var status;
   //console.log("Called to msg");
    return new Promise(resolve => {
-     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname+'&type='+type;
+     var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname+'&type='+type+'&regOrlogin='+regOrlogin;
        //console.log(newsrack);
    this.http.get(emailurl).subscribe((response) => {
      console.log("sd",response.ok);
@@ -123,6 +123,17 @@ public sendConfirmEmail(email,groupname,type)
      
     
  
+}
+public validateEmail(email){
+  return new Promise(resolve => { 
+    superlogin.validateEmail(email).then(res=>{
+      console.log(res);
+      resolve(res);
+    },(err)=>{
+      resolve(err);
+      console.log(err);
+    })
+  });
 }
 public login(credentials){
 

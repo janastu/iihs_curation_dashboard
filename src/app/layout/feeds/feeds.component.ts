@@ -167,6 +167,13 @@ alertrange:boolean=false;
     
   
   }
+  //Function to handle clear Date event from page-header component
+  handleClearDate(eve){
+    if(eve == 'reset'){
+      this.feeds = this.variab.globalfeeds;
+    }
+  }
+
   //Function to handle Category event from page-header component
   public handleCategory(childCategory:any){
     console.log("in feed",childCategory)
@@ -232,6 +239,7 @@ alertrange:boolean=false;
     this.catname = 'Recent feeds'
     this.feeds = childrefresh
   }
+
    
 
 }

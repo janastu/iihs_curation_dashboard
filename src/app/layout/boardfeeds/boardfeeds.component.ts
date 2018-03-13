@@ -138,5 +138,11 @@ user:any;              //Variable to store user name of the logged in user
   
     }
   }
+  //Function to handle clear Date event from page-header component
+  handleClearDate(eve){
+    if(eve == 'reset'){
+      this.feeds = this.variab.boardfeeds;
+    }
+  }
 
 }
