@@ -238,12 +238,12 @@ export class FeedService {
 	  	 
 
 	   return new Promise(resolve => {
-	   	this.remote.replicate.to(this.localdb, {
+	   	/*this.remote.replicate.to(this.localdb, {
 	   	   filter: '_view',
 	   	   view: 'feeds/metacategories'
 	   	 }).then(res=>{
 	   	console.log(res);
-	   	if(res['ok']==true){
+	   	if(res['ok']==true){*/
 	   	this.localdb.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
@@ -253,8 +253,8 @@ export class FeedService {
 	   	}).catch(function (err) {
 	   	  console.log(err);
 	   	});
-	   	}
-		});
+	   	//}
+		//});
 	  });
 
 	    
@@ -269,12 +269,12 @@ export class FeedService {
 	 
 
 	return new Promise(resolve => { 
-	this.remote.replicate.to(this.localdb, {
+	/*this.remote.replicate.to(this.localdb, {
 	 filter: '_view',
 	 view: 'feeds/latestoldestcategory'
 	 }).then(res=>{
 	console.log(res)
-	if(res['ok']==true){
+	if(res['ok']==true){*/
 		
 		    this.localdb.query('feeds/latestoldestcategory', {
 		      startkey: [category],
@@ -286,8 +286,8 @@ export class FeedService {
 		    console.log(err);
 		  	});
 	
-	}
-	});
+	//}
+	//});
 	  
 	});
 
