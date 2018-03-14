@@ -158,7 +158,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     color: $sidecontentcolor;
     }
 .img-log{
-    width: 55px;
+    width: 30px;
     border-radius: 0px ! important;
     border: 0px ! important;
 }
@@ -187,4 +187,32 @@ display:block !important;
 .feedname-heading{
     margin-left: 13px;
     margin-bottom: 8px;
+}
+/*Group dropdown*/
+.dropdown-toggle::after{
+    display:none ! important;
+}
+.show-group{
+    position: relative;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        float: left;
+        min-width: 10rem;
+        padding: 0.5rem 0;
+        margin: 0.125rem 0 0;
+        font-size: 1rem;
+        color: #292b2c;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+}
+.field{
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    width: 20rem;
 }

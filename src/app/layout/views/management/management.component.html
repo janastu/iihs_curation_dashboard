@@ -81,7 +81,7 @@
               </form>
                 <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>CREATE GROUP</span></button>
                 <ngb-alert *ngIf="requiredsuccess" (close)="closeAlert()">Enter Group Name</ngb-alert>
-                
+                <ngb-alert *ngIf="groupnameExists" (close)="closeAlert()">Groupname Already Exists</ngb-alert>
                 <ngb-alert *ngIf="requiredadmin" (close)="closeAlert()">You are not admin</ngb-alert>
                 <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Group Added Successfully</ngb-alert>
             </div>
@@ -93,10 +93,10 @@
           <div class="row">
             <div class="col">
                
-              <div><h4>Your Groups</h4></div>
+              <div><h4>Groups You Own</h4></div>
                 <fieldset class="form-group field" *ngFor="let item of mygroups">
                   <div class="radio">
-                    <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item)" [checked]="this.groupname === item"> {{item}}
+                    <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item.key)" [checked]="this.groupname === item.key"> {{item.key}}
                     </label>
                   </div>
                 </fieldset>

@@ -22,6 +22,8 @@ export class SidebarComponent implements OnInit{
     isActive = false;
     showMenu = '';
     selected:any;
+    groups:any=[];
+    showGroups:any;
     eventCalled() {
         this.isActive = !this.isActive;
     }
@@ -67,12 +69,17 @@ export class SidebarComponent implements OnInit{
         
         if(params.memberof == undefined){
           this.groupname = localStorage.getItem('group');
+            //console.log("lo",this.groupname)
           this.getBoardsOngroups();
+          this.getGroups();
         }
         else{
         this.groupname = params.memberof;
+        console.log("gr",this.groupname)
         this.getBoardsOngroups();
+        this.getGroups();
       }
+
       })
      /* this.userservice.getAuser(this.user).then(user=>{
                this.variab.groupname = user['memberof'];  
@@ -107,9 +114,7 @@ export class SidebarComponent implements OnInit{
           
         });
 
-
         
-
 
        
     }
@@ -123,13 +128,23 @@ export class SidebarComponent implements OnInit{
 
         this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
          if(board.value.group){
-            console.log(this.groupname)
+            
            return board.value.group === this.groupname;
          }
         
         })
         console.log("boars",this.variab.boardupdated)
       });
+
+    }
+    getGroups(){
+      //Get the groups the user is memberof
+      this.userservice.getAuser(this.user).then(res=>{
+        this.groups = res['memberof'];
+        this.groups.map(gr=>{
+          console.log(gr,this.groupname);
+        });
+      })
     }
     //Function called from html to navigate to feeds component with category name variable
     routeto(category){
@@ -175,7 +190,13 @@ export class SidebarComponent implements OnInit{
         this.router.navigate(['/boardfeeds', board],{queryParams:{memberof:this.groupname}})
 
     }
+    //On choosing a group
+  onChoosegroup(groupname){
+    localStorage.setItem('group',groupname);
+    this.showGroups=false;
+   this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
    
+  }
     
     
 }

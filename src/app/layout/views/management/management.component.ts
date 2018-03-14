@@ -26,6 +26,7 @@ export class ManagementComponent implements OnInit {
   requiredadminUser:any;
   requiredadminGroup:any;
   mailsuccess: any;
+  groupnameExists:any;
   catvalue:any;
   mygroups:any=[];
   userform:FormGroup;
@@ -65,12 +66,13 @@ export class ManagementComponent implements OnInit {
          }
           
         });
-       
+       this.mygroups = this.groups.filter(group=>{
+         return group.value.owner == this.user;
+       })
+       console.log(this.mygroups);
     });
 
-    this.userService.getAuser(this.user).then(res=>{
-      this.mygroups = res['memberof'];
-    })
+    
   }
   //Function to add user to a group
   addNewUser() {
@@ -206,7 +208,7 @@ export class ManagementComponent implements OnInit {
       'boards':[]
 
     }
-
+    var groupExists:any
     if (this.gpname.value =='') {
       //console.log("gp", this.gpname.value);
       this.requiredsuccess = true;
@@ -218,9 +220,48 @@ export class ManagementComponent implements OnInit {
         if(response['type'] === 'admin'){
           //console.log("can add group");
         //console.log("dov",doc);
-        
-        
-          this.groupService.addGroupDb(doc).then(result => {
+        this.groupService.getgroups().then(res=>{
+          var gps:any=[];
+          gps=res;
+            gps.map(group=>{
+              if(group.key === this.gpname.value){
+                groupExists = 1;
+              }
+            })
+            if(groupExists ==1 ){
+              this.groupnameExists = true;
+              this.ngAlert.type = 'warning';
+            }
+            else{
+              this.groupService.addGroupDb(doc).then(result => {
+
+                          console.log('resofgroup', result)
+                          if (result ===true) {
+                            this.groups.push({ value: doc });
+                            this.alertsuccess=true;
+                            this.ngAlert.type = 'success';
+                            this.groupname='';
+                            this.userService.getAuser(this.user).then(user=>{
+                              if(user['memberof']){
+                                user['memberof'].push(this.gpname.value);
+                                console.log("ass",user);
+                               this.userService.updateAuser(user);
+                              }
+                              else{
+                              user['memberof']=[];
+                              user['memberof'].push(this.gpname.value);
+                              console.log("na",user);
+                              this.userService.updateAuser(user);
+                              } 
+                              //console.log(user);
+                              
+                            })  
+                          }
+                        });
+            }
+        })
+
+          /*this.groupService.addGroupDb(doc).then(result => {
 
             console.log('resofgroup', result)
             if (result ===true) {
@@ -244,7 +285,7 @@ export class ManagementComponent implements OnInit {
                 
               })  
             }
-          });
+          });*/
         }
         else{
           this.requiredadminGroup=true;
@@ -260,6 +301,7 @@ export class ManagementComponent implements OnInit {
       this.requiredadminGroup=false;
       this.requiredadminUser  =false;
       this.requireduser=false;
+      this.groupnameExists=false;  
   }
   //On choosing a group
   onChoosegroup(groupname){
