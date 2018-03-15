@@ -133,7 +133,7 @@ export class SidebarComponent implements OnInit{
          }
         
         })
-        console.log("boars",this.variab.boardupdated)
+        //console.log("boars",this.variab.boardupdated)
       });
 
     }
@@ -142,7 +142,7 @@ export class SidebarComponent implements OnInit{
       this.userservice.getAuser(this.user).then(res=>{
         this.groups = res['memberof'];
         this.groups.map(gr=>{
-          console.log(gr,this.groupname);
+          //console.log(gr,this.groupname);
         });
       })
     }
