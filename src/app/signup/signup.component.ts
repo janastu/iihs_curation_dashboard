@@ -39,8 +39,8 @@ signupForm: FormGroup;
             'name': new FormControl(null, [Validators.required]),
             'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'email': new FormControl(null, [Validators.required, Validators.email]),
-            'password': new FormControl(null, [Validators.required]),
-            'confirmpassword': new FormControl(null, [Validators.required])
+            'password': new FormControl(null, [Validators.required,Validators.minLength(6)]),
+            'confirmpassword': new FormControl(null, [Validators.required,Validators.minLength(6)])
         });
         
         console.log()
@@ -101,7 +101,7 @@ signupForm: FormGroup;
 
                 }
                 if(response['error'] == 'Validation failed'){
-                    console.log("hgfh",response['validationErrors']['username'])
+                    console.log("hgfh",response)
                     this.alertauth=true;
                     this.errormessage = response['validationErrors']['username']
                     this.ngAlert.type = 'danger';
