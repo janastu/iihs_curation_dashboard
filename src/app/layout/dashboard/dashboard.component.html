@@ -1,17 +1,19 @@
 <div [@routerTransition]>
+<!--Page Heading-->
     <h2 class="text-muted">Dashboard</h2>
     <div class="row">
-        <div class="col col-xl-6 col-lg-12">
-            
+        <div class="col col-xl-6 col-lg-6 col-md-6">
+            <!--Heading Category-->
                 <div class="card-header" >
                    Categories
                 </div>
           <div class="row card-block">
             
-           	
-           <div *ngFor="let item of variab.categoryupdated" class="col-sm-4">	
+          <!--Iterate the category variable to display the feed names--> 	
+          <div *ngFor="let item of variab.categoryupdated" class="col-sm-4">	
           
             <div class="card mb-3 source-card">
+              <!--Click on the feed name to navigate to the feeds-->
                 <div class="card-header card-default card-category" (click)="oncategory(item.doc.feedname)">
                  {{item.doc.feedname}}
                 </div>
@@ -19,36 +21,33 @@
                     Card content
                 </div>-->
             </div>
-      
-    
-        </div>
+          </div>
         
         </div>  
      </div>
-     <div class="col col-xl-6 col-lg-12">
-            <div class="card mb-3">
-    	<div class="card-header">Recent Feeds</div>
-    	<div class="card-block table-responsive">
-                    <table class="table">
-                    
-                    <div id="loading">
-                      <!--spinner name="mySpinner">
-                        <img src="assets/images/loading.gif">
-                      </spinner-->
+     <!--Block to Display recent feeds-->
+     <div class="col col-xl-6 col-lg-6 col-md-6">
+      <div class="card mb-3">
+    	   <div class="card-header">Recent Feeds</div>
+    	     <div class="card-block table-responsive">
+                <table class="table">
+                <!--Block to disply spinner if recentfeeds not loaded-->
+                   <div id="loading" *ngIf="feeds.length==0">
                       <img src="assets/images/loading_spinner.gif">
+                    </div>    
+                    <!--Display recent feeds-->
+                    <div class="list-group recent-feeds" *ngFor="let item of feeds| slice:0:3;">
+                    <!--Click on the recent feed to take to the Story link-->
+                      <a target="_blank" href="{{item.value.link}}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{item.value.title}}</h4>
+                      </a>
                     </div>
-            <div class="list-group recent-feeds" *ngFor="let item of feeds| slice:0:3;">
-                <a target="_blank" href="{{item.value.link}}" class="list-group-item">
-                    <h4 class="list-group-item-heading">{{item.value.title}}</h4>
-                
-                </a>
-            </div>
-        </table>
-    </div>
+                </table>
+          </div>
 
+        </div>  
       </div>  
-    </div>  
 
-
-</div>
+  
+   </div>
 </div>

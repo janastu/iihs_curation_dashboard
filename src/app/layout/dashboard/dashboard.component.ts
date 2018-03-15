@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
-import { routerTransition } from '../../router.animations';
-import { FeedService } from '../../services/feed-service';
-import { DataService } from '../../services/data-service';
-import { Global } from '../../shared';
-import { Service } from '../../services/services';
-import { Userservice } from '../../services/userservice';
-import { CategoryService } from '../../services/category-service';
-import { Router } from "@angular/router";
-//import { SpinnerService } from 'angular-spinners';
+import { routerTransition } from '../../router.animations'; 
+import { Global } from '../../shared'; //Import Global to use global variables in the dashboard's local scope
+import { Service } from '../../services/services';// Import Service to fetch the recent feeds
+import { Userservice } from '../../services/userservice';//Import UserService to get user subscribed feed names
+import { Router } from "@angular/router";//Import router to navigate between components
+
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -16,10 +13,9 @@ import { Router } from "@angular/router";
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
-	feeds:any=[];
-    user:any;
-    imgstatus:number=0;
-    constructor(/*public spinnerService: SpinnerService,*/public feedService:FeedService,public dataservice:DataService,public variab:Global,public service:Service,public categoryService:CategoryService,public router:Router,public userService:Userservice) {
+	  feeds:any=[]; //Local Variable to store recentfeeds
+    user:any;     //Local Variable to store the user name 
+    constructor(public variab:Global,public service:Service,public router:Router,public userService:Userservice) {
     }
 
     ngOnInit() {
@@ -31,49 +27,33 @@ export class DashboardComponent implements OnInit {
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
           
-       console.log("recent",this.variab.recentdocs)
-            //document.getElementById('loading').style.display = 'none';
             this.variab.recentdocs=res;
-
-            //this.variab.recentdocs.length = 0
-            if(this.variab.recentdocs.length == 0) {
-               // code...
-               /*console.log("len em",this.variab.recentdocs.length);
-               //this.spinnerService.show('mySpinner');
-               this.imgstatus == 1;*/
-               document.getElementById('loading').style.display = 'block';
-               setTimeout(5000);
-               console.log("load spinner");
-             }
-             else {
-               //this.spinnerService.hide('mySpinner');
-               document.getElementById('loading').style.display = 'none';
-               console.log("nt em",this.variab.recentdocs.length);
-               this.variab.recentdocs.map(val=>{
-               this.feeds.push({value:val});
-               });
-             }
+            if(this.variab.recentdocs.length > 0) {
+              this.variab.recentdocs.map(val=>{
+                this.feeds.push({value:val});
+              });
+            }
+           
             
-         });
-        /*this.service.getlatestfeeds().then(res=>{
-            this.feeds=res;
-        });*/
+         })
 
-        /*this.service.getAll().then(res=>{
-            console.log(res);
-        });*/
         //Get the user database url from user session
-        var usersession = localStorage.getItem("superlogin.session")
+        //Get the user session object from local Storage and store it in the usersession variable
+        var usersession = localStorage.getItem("superlogin.session"); 
+        //Parse the usersession variable to JSON object and store in the jsonusersession variable
         var jsonusersession = JSON.parse(usersession);
-        console.log("m",jsonusersession);
+        //Get the user db's url and store in the url variable
         let url = jsonusersession.userDBs.supertest;
+        //Set the user db's url to another local Storage variable
          localStorage.setItem('url',url);
+
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
+          //Store the user subscribed feed names in the Global variable
           this.variab.categoryupdated=res;
-          //console.log(this.variab.categoryupdated)
+          
           this.variab.categoryupdated.map(user=>{
-            
+            //For all the user subscribed feed names pull the latest feeds from newsrack
             this.userService.pullnewFeeds(user.doc);
           })
             
@@ -86,11 +66,6 @@ export class DashboardComponent implements OnInit {
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked
     oncategory(category){
         this.router.navigate(['/feeds'],{queryParams:{feedname:category}} )
-         this.feedService.getcategoryfeeds(category).then(res=>{
-              this.variab.globalfeeds=res;
-                  console.log(res);
-        
-        });
     }
 
     
