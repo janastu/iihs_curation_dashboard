@@ -184,7 +184,7 @@ groupname:any;
      };*/
      this.alertpartofgroup = true;
      this.ngAlert.type = 'warning';
-
+     
 
   }
     
@@ -192,7 +192,7 @@ groupname:any;
       console.log("boardname cant be empty");
       this.alertempty = true;
       this.ngAlert.type = 'warning';
-
+      setTimeout(() => this.alertempty = false, 2000);
     }
     else{
     this.boardservice.getboards().then(res=>{
@@ -210,7 +210,8 @@ groupname:any;
       if(boardExists == 1){
         console.log("exit");
         this.alertexists = true;
-         this.ngAlert.type = 'warning'
+        this.ngAlert.type = 'warning'
+        setTimeout(() => this.alertexists = false, 2000);
       }
       if(boardExists == 0){
         console.log("add");

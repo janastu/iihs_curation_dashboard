@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
                 //alert('Login Successful');
                 this.alertsuccess=true;
                 this.ngAlert.type = 'success';
+                setTimeout(() => this.alertsuccess = false, 2000);
                localStorage.setItem('isLoggedin', 'true');
                localStorage.setItem('name', this.loginForm.controls['username'].value);
                //check if member is partof any group or groups
@@ -155,14 +156,14 @@ export class LoginComponent implements OnInit {
                 //alert(response['message'])
                 this.ngAlert.type = 'danger';
                 this.errormessage = response['message'];
-                
+                setTimeout(() => this.alertauth = false, 2000);
             }
             if(response['error'] == 'Username or Password missing...'){
                 this.alertmissing = true;
                 this.ngAlert.type = 'danger';
                 this.errormessage = response['error'];
                 //alert(response['error'])
-                
+                setTimeout(() => this.alertmissing = false, 2000);
             }
         })
 

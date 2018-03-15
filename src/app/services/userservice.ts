@@ -20,7 +20,7 @@ constructor(private http: Http,private settings:Settings) {
   //this.db = new PouchDB('userdb');
  
   let url = localStorage.getItem('url');
-  //console.log("url",url);
+  console.log("url",url);
 
   
        
@@ -158,7 +158,7 @@ getUserSubscriptions(){
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers });
-  //console.log("auth",options);
+  console.log("auth",options);
   return new Promise(resolve => {
         this.http.get(url+'/_all_docs?include_docs=true',options).map(res=>res.json()).subscribe((response)=> {
           console.log(response)

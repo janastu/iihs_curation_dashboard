@@ -62,6 +62,7 @@ export class ResetpasswordComponent implements OnInit {
                         this.alertsuccess = true;
                         this.ngAlert.type = 'success';
                         this.router.navigate(['/login']);
+                        setTimeout(() => this.alertsuccess = false, 2000);
                     }
                     else {
                         console.log('not changed');
@@ -70,11 +71,13 @@ export class ResetpasswordComponent implements OnInit {
             }
             else {
                 this.alertmissing = true;
+                setTimeout(() => this.alertmissing = false, 2000);
                 console.log("not match");
             }
         }
         else {
             this.alertauth = true;
+            setTimeout(() => this.alertauth = false, 2000);
         }
     
 

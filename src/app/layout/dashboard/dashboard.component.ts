@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
     this.user = localStorage.getItem('name');
 
     
-   
+     
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
           
@@ -65,6 +65,7 @@ export class DashboardComponent implements OnInit {
         //Get the user database url from user session
         var usersession = localStorage.getItem("superlogin.session")
         var jsonusersession = JSON.parse(usersession);
+        console.log("m",jsonusersession);
         let url = jsonusersession.userDBs.supertest;
          localStorage.setItem('url',url);
        //Get user subscribed feed names

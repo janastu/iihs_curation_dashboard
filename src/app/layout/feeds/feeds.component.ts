@@ -30,6 +30,7 @@ catname:any;
 usersview:any;
 user:any;
 alertrange:boolean=false;
+alertNofeeds:boolean=false;
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
@@ -38,6 +39,7 @@ alertrange:boolean=false;
     this.usersview = localStorage.getItem('view');
  
     this.view = this.usersview;
+
 
 
 
@@ -147,15 +149,23 @@ alertrange:boolean=false;
     var todate = Date.parse(this.date.changeto);
 
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
+      if(fromdate<todate){
         
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
         }     
         else{
-          this.alertrange=true;
-        }
+           this.alertNofeeds=true;
+           setTimeout(() => this.alertNofeeds = false, 2000);
 
+        }
+      }
+      else{
+         console.log("er");
+         this.alertrange=true;
+         setTimeout(() => this.alertrange = false, 2000);
+      }  
     });
 
     /*if (this.feeds.length == 0) {
@@ -239,7 +249,10 @@ alertrange:boolean=false;
     this.catname = 'Recent feeds'
     this.feeds = childrefresh
   }
-
+  public closeAlert() {
+      this.alertrange=false;
+      this.alertNofeeds=false;
+  }
    
 
 }

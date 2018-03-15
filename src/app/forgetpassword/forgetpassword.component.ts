@@ -51,15 +51,18 @@ export class ForgetpasswordComponent implements OnInit {
       //alert('Login Successful');
             this.alertsuccess = true;
             this.ngAlert.type = 'success';
+            setTimeout(() => this.alertsuccess = false, 2000);
           }
           else if (response['error']) {
             this.alertauth = true;
+            setTimeout(() => this.alertsuccess = false, 2000);
           }
 
       });
     }
     else{
       this.alertmissing = true;
+      setTimeout(() => this.alertmissing = false, 2000);
     }
 
 /*

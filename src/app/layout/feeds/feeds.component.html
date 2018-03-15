@@ -7,6 +7,8 @@
         </div>
     </div>
 
+<ngb-alert *ngIf="alertrange" (close)="closeAlert()">From date Should be less than To Date</ngb-alert>
+<ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
 <!--Component to display if no view is selected-->
 
 <div *ngIf = "view === null" > 

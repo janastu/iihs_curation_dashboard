@@ -116,7 +116,7 @@ ngOnChanges(){
        console.log("feedname cant be empty");
        this.alertempty = true;
        this.ngAlert.type = 'warning';
-       //this.visible = false;
+       setTimeout(() => this.alertempty = false, 2000);
      }
      else{
      
@@ -133,7 +133,8 @@ ngOnChanges(){
        if(feednameExists == 1){
          console.log("exit");
          this.alertexists = true;
-         this.ngAlert.type = 'warning'
+         this.ngAlert.type = 'warning';
+         setTimeout(() => this.alertexists = false, 2000);
        }
        if(feednameExists == 0){
          console.log("add");
@@ -143,7 +144,7 @@ ngOnChanges(){
                  this.visible = false;
                  this.followstatus = true;
                  this.alertempty = false;
-                    this.alertexists = false;
+                 this.alertexists = false;
                }
          })
        }
@@ -175,7 +176,6 @@ ngOnChanges(){
      //If the feedname exists then update the already existing doc with the new feed link 
    
      if(update == 1){
-         console.log("doc",name.doc.metadata);
          name.doc.metadata.push(this.data);
 
          this.feedService.update(name.id,name.doc)
