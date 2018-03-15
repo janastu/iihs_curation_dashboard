@@ -93,10 +93,15 @@ export class FeedService {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
 	    //console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
-	  //  console.log(response.json())
+	  	console.log(response.json())
+	  	if(response.json().length!=0){
 		this.feedNewsrack = response.json();
     
 		resolve(this.feedNewsrack[0].meta);	
+		}
+		else{
+			resolve(response.json());
+		}
 	   	});
 	 });
 		

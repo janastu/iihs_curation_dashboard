@@ -21,6 +21,7 @@
 
                             </div>
                             <div class="row source-follow">
+                             <ngb-alert *ngIf="alertInvalid" (close)="closeAlert()">Feed link must be a valid rss xml</ngb-alert>
                                 <div>&nbsp; &nbsp; {{category}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{metadata.title}}</div>
                                 <div *ngIf="createfeed" class="follow-component">
                                 <app-create-feed [data]="metadata" [url]="feedlink"></app-create-feed>

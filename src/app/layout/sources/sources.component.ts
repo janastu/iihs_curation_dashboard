@@ -16,6 +16,7 @@ export class SourcesComponent implements OnInit {
   category:any;
   feedlink:any;
   createfeed:boolean=false;
+  alertInvalid:boolean=false;
   constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService,public userService:Userservice) { 
     
   }
@@ -38,11 +39,17 @@ export class SourcesComponent implements OnInit {
     this.variab.categoryupdated.push({doc:doc})*/
 
       this.feedService.getNewsrackfeedsFirstTime(this.feedlink).then(res=>{
+        console.log(res);
+      if(res['length']!=0){
       this.metadata = res;
       this.category = this.metadata.categories[0];
       this.createfeed = true;
-      //this.feedlink='';
       console.log("value",this.metadata,this.createfeed);
+      }
+      else{
+        this.alertInvalid=true;
+        setTimeout(() => this.alertInvalid = false, 2000);
+      }
     });
   	
   }
