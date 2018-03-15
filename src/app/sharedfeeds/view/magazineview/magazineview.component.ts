@@ -11,11 +11,12 @@ import { DatePipe } from '@angular/common';
 })
 
 export class MagazineviewComponent implements OnInit {
-@Input('feeds') incomingfeeds:any=[];
+@Input('feeds') item:any=[];
+@Input('pagination') p:any=[];
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
-p:any;
+//p:any;
   constructor() {
    /*if(this.incomingfeeds.length == 0) {
       // code...
@@ -32,6 +33,7 @@ p:any;
    }
 
   ngOnInit() {
+    console.log("p",this.item);
     /*if(this.incomingfeeds.length == 0) {
        // code...
        document.getElementById('loading').style.display = 'block';

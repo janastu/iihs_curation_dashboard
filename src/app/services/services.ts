@@ -39,7 +39,6 @@ public getAll(){
 
     
   /* return new Promise(resolve => {
->>>>>>> e9235614dec6cca9c42d5404afe8ed8922b74ca3
 
     var newsrack = 'http://newsrack.in/stories/iihs_blore/iihs_feeds_v4/1.json';
 

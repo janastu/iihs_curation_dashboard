@@ -13,11 +13,11 @@
       <div class="col-sm-6 offset-sm-3">
           
           <div class="card-blocks">
-            <div class="row centered magazine-list">
+            <div class="row centered">
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds | paginate: { itemsPerPage: 10, currentPage: p }">
+              <div class="feeds-entries">
                 
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
@@ -75,6 +75,3 @@
   </div>
 
 </div>  
-<div class="col-sm-6 offset-sm-3" *ngIf="incomingfeeds['length'] != 0">
-<pagination-controls (pageChange)="p = $event"></pagination-controls> 
-</div>

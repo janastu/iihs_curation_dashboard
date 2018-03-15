@@ -13,10 +13,10 @@ export class TitleViewComponent implements OnInit {
 feeds:any=[];
 mouseover:boolean = false;
 p:any;
-@Input('feeds') incomingfeeds:any=[];
-@Input('metadata') incomingmetadata:any=[];
+@Input('feeds') item:any=[];
+
   constructor(public service:Service) {
-    	console.log("mouseover",this.mouseover);
+    	console.log("mouseover",this.item);
     	 }
 
   ngOnInit() {

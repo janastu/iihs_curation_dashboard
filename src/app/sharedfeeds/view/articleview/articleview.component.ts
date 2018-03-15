@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
   animations: [routerTransition()]
 })
 export class ArticleviewComponent implements OnInit {
-  @Input('feeds') incomingfeeds:any=[];
+  @Input('feeds') item:any=[];
  
 p:any;
 boards:any=[];

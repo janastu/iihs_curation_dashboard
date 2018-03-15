@@ -20,7 +20,7 @@ import {
 } from '../../sharedfeeds/view';
 import { HoverToolbarModule } from '../../sharedfeeds/components';
 import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     imports: [
@@ -38,7 +38,8 @@ import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
         CardViewModule,
         ArticleviewModule,
         HoverToolbarModule,
-        SharedPipesModule
+        SharedPipesModule,
+        NgxPaginationModule
       
     ],
     declarations: [

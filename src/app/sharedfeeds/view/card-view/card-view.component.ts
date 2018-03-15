@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
 })
 export class CardViewComponent implements OnInit {
 
-@Input('feeds') incomingfeeds:any=[];
+@Input('feeds') item:any=[];
 @Input('metadata') metadata:any=[];
   constructor() { }
 

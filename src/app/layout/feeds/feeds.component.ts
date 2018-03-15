@@ -10,8 +10,7 @@ import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
 import { FeedService } from '../../services/feed-service';
-declare var require:any;
-var moment = require('moment');
+
 @Component({
   
   selector: 'app-feeds',
@@ -22,29 +21,29 @@ var moment = require('moment');
 
 export class FeedsComponent implements OnInit {
 
-
+p:any;
+catname:any;  //variable to store the feed name to display as page heading
 feeds:any=[];          //variable to store feeds to display
-view:any;              //variable to store the view state
-date:any;              //variable to store the state of dates to filters
-catname:any;
-usersview:any;
-user:any;
-alertrange:boolean=false;
-alertNofeeds:boolean=false;
+view:any;      //variable to store the view state
+date:any;      //variable to store the state of dates to filters
+user:any;     //variable to store the username
+alertrange:boolean=false; //alert variable to store boolean values if the given input is out of range
+alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
+    console.log("pa",this.p);
     this.user =localStorage.getItem('name');
     
-    this.usersview = localStorage.getItem('view');
+    //this.usersview = localStorage.getItem('view');
  
-    this.view = this.usersview;
+    this.view = localStorage.getItem('view') || null;
 
 
 
 
  //Access the query parameter and filter the feeds according to category
-           this.route.queryParams
+      this.route.queryParams
             .subscribe(params => {
               console.log(params);
               this.feedService.getcategoryfeeds(params.feedname);
@@ -77,7 +76,7 @@ alertNofeeds:boolean=false;
              });
             }
 
-           });
+     });
    
   }
   //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
