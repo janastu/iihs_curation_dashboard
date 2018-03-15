@@ -42,22 +42,20 @@ signupForm: FormGroup;
             'confirmpassword': new FormControl(null, [Validators.required])
         });
         
-
+        console.log()
         this.activatedRoute.queryParams.subscribe(params => {
             if (params[ 'email']){
                 this.urlstatus == true;
                 this.emailfromurl = params['email'];
-            console.log(this.emailfromurl); // Print the parameter to the console. 
-               
+                this.signupForm.get('email').disable()
            }
            else{
                this.emailfromurl=''
-             
-            }
+               }
 
            });
 
-        
+          // console.log(this.signupForm.controls['email'].);
        /* this.signupForm = this.formBuilder.group({
             name:this.name,
             username:this.username,
@@ -82,11 +80,14 @@ signupForm: FormGroup;
                 'confirmPassword':this.signupForm.controls['confirmpassword'].value
             };
             this.userService.adduser(doc).then(response=>{
-                console.log("response",response);
+                
                 if(response['success']){
                     this.alertsuccess = true;
+                    //console.log("response",this.alertsuccess);
                     this.ngAlert.type = 'success';
-                    this.router.navigate(['/login']);
+                    if(this.alertsuccess){
+                       this.router.navigate(['/login']);
+                    }
                 }
                 if(response['error']){
                     if(response['validationErrors']['password']){

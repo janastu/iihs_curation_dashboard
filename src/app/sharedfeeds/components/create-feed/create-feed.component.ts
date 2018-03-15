@@ -177,7 +177,6 @@ ngOnChanges(){
    
      if(update == 1){
          name.doc.metadata.push(this.data);
-
          this.feedService.update(name.id,name.doc)
          this.labelForFeeds[i]=true;
         }
