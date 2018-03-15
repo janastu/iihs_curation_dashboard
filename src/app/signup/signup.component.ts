@@ -22,6 +22,7 @@ password = this.formBuilder.control('',/* [Validators.required,,Validators.minLe
 confirmpassword = this.formBuilder.control('', /*[Validators.required]*/);
 alertsuccess:boolean = false;
 alertauth:boolean= false;
+alertRegistering:boolean=false;
 errormessage:any;
 
 signupForm: FormGroup;
@@ -66,11 +67,12 @@ signupForm: FormGroup;
         });*/
 
 
-    	
+   
     }
 
     onregister(){
-            console.log(this.signupForm.controls['username'].value)
+        this.alertRegistering=true;
+           // console.log(this.signupForm.controls['username'].value)
         //this.signupForm.controls['firstname'].markAsTouched()
             let doc = {
                 'name':this.signupForm.controls['name'].value,
@@ -80,14 +82,13 @@ signupForm: FormGroup;
                 'confirmPassword':this.signupForm.controls['confirmpassword'].value
             };
             this.userService.adduser(doc).then(response=>{
-                
                 if(response['success']){
+                    this.alertRegistering=false;
                     this.alertsuccess = true;
                     //console.log("response",this.alertsuccess);
                     this.ngAlert.type = 'success';
-                    if(this.alertsuccess){
-                       this.router.navigate(['/login']);
-                    }
+                    this.signupForm.reset();
+                    setTimeout(() => this.alertsuccess = false, 5000);
                 }
                 if(response['error']){
                     if(response['validationErrors']['password']){
@@ -95,6 +96,7 @@ signupForm: FormGroup;
                         this.alertauth=true;
                         this.errormessage= response['validationErrors']['password'];
                         this.ngAlert.type = 'danger';
+                        setTimeout(() => this.alertauth = false, 2000);
                     }
 
                 }
@@ -107,6 +109,7 @@ signupForm: FormGroup;
                      this.alertauth=true;
                      this.errormessage = response['validationErrors']['email']
                      this.ngAlert.type = 'danger';
+                     setTimeout(() => this.alertsuccess = false, 2000);
                     }
                 }    
 
@@ -115,6 +118,6 @@ signupForm: FormGroup;
     public closeAlert() {
         this.alertsuccess=false;
         this.alertauth = false;
-        
+        this.alertRegistering=false;
     }
 }

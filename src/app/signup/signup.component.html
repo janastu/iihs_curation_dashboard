@@ -3,6 +3,7 @@
         <div class="col-md-4 push-md-4">
 
             <img class="user-avatar  img-log" src="assets/images/radio.png"/>
+            <ngb-alert *ngIf="alertRegistering" (close)="closeAlert()">Registering....</ngb-alert>
            <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Registration Successful Verify your Email ID</ngb-alert>
             <ngb-alert *ngIf="alertauth" (close)="closeAlert()">{{errormessage}}</ngb-alert>
             <h1>Media Monitor</h1>
