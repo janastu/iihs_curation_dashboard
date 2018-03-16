@@ -3,13 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
-import { Service } from '../../services/services';
-import { DataService } from '../../services/data-service';
-import { Global } from '../../shared/global';
+import { DataService } from '../../services/data-service'; //Import dataservice file to get the hidden feeds
+import { Global } from '../../shared/global';//Import Global to use global variables in the dashboard's local scope
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
-import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
-import { FeedService } from '../../services/feed-service';
+import { FeedService } from '../../services/feed-service';//Import feed service to get feeds
 
 @Component({
   
@@ -22,14 +20,14 @@ import { FeedService } from '../../services/feed-service';
 export class FeedsComponent implements OnInit {
 
 p:any;
-catname:any;  //variable to store the feed name to display as page heading
+pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertrange:boolean=false; //alert variable to store boolean values if the given input is out of range
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
 
@@ -50,41 +48,63 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
              //check if the query parameter has subcatgeory property 
               if(params.subcategory){
                 
-              this.catname = params.subcategory;
-              //Call the feed service to get the feeds filtered according to subcategory
-              this.feedService.getmetacategories(this.catname).then(res=>{
-             
-                //Store the result in the global variable globalfeeds
-                this.variab.globalfeeds = res;
+              this.pageheading = params.subcategory;
+             this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+                this.variab.globalfeeds = val;
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
+              //Call the checkForDeleted method to check for hidden/removed feeds
+              //and remove those feeds from the display array  
+               this.checkForDeletedFeeds();   
+
+              });
               
-                 //Call the checkForDeleted method to check for hidden/removed feeds
-                 //and remove those feeds from the display array
-                 this.checkForDeletedFeeds(); 
-              })
             }
             //To get feeds,filtered according to feedname
             else{
-              this.catname = params.feedname;
-              //Call the feed service to get the feeds filtered according to feedname
-               this.feedService.getlatestfeeds(params.feedname).then(res=>{
-                
-                  //Store the result in the global variable globalfeeds
-                    this.variab.globalfeeds = res;
-                     //Reverse the filter to sort according to latest feeds
-                     this.variab.globalfeeds.reverse(); 
-                     //Call the checkForDeleted method to check for hidden/removed feeds
-                   //and remove those feeds from the display array  
-                     this.checkForDeletedFeeds();   
-                       
-                        
-                   
-             });
+              this.pageheading = params.feedname;
+              this.getfeedsOnFeedname(params.feedname).then(val=>{
+                this.variab.globalfeeds = val;
+                //Reverse the filter to sort according to latest feeds
+                 this.variab.globalfeeds.reverse();
+              //Call the checkForDeleted method to check for hidden/removed feeds
+              //and remove those feeds from the display array  
+               this.checkForDeletedFeeds();   
+
+              });
             }
 
      });
    
+  }
+  //Get feeds filtered on feedname
+  getfeedsOnFeedname(feedname){
+    var feedsOnFeedname:any=[];
+    return new Promise(resolve=>{
+     //Call the feed service to get the feeds filtered according to feedname
+      this.feedService.getlatestfeeds(feedname).then(res=>{
+       
+         //Store the result in the global variable globalfeeds
+           feedsOnFeedname = res;
+           resolve(feedsOnFeedname);            
+          
+      });
+    });
+
+
+  }
+  //Get feeds filtered on subcategory
+  getfeedsOnSubcategory(subcategory){
+    var feedsOnSubcategory:any=[];
+    return new Promise(resolve=>{
+    //Call the feed service to get the feeds filtered according to subcategory
+      this.feedService.getmetacategories(subcategory).then(res=>{
+    
+        //Store the result in the global variable globalfeeds
+        feedsOnSubcategory = res;
+        resolve(feedsOnSubcategory);
+      });
+    });
   }
   //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
   // and display the rest of the feeds
@@ -174,23 +194,26 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
       this.route.queryParams
        .subscribe(params => {
           if(params.subcategory){
-            this.feedService.getmetacategories(params.subcategory).then(result=>{
-                this.variab.globalfeeds=result;
-                this.checkForDeletedFeeds();
-                
-                this.variab.globalfeeds.reverse();
+               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+                  this.variab.globalfeeds = val;
+                  //Reverse the filter to sort according to latest feeds
+                   this.variab.globalfeeds.reverse();
+                //Call the checkForDeleted method to check for hidden/removed feeds
+                //and remove those feeds from the display array  
+                 this.checkForDeletedFeeds();   
 
-            })
+                });   
           }
           else{
-            this.feedService.getlatestfeeds(this.catname).then(result=>{
-              this.variab.globalfeeds=result;
-              this.checkForDeletedFeeds();
-              //this.feeds=this.variab.globalfeeds;
-              this.variab.globalfeeds.reverse();
-              
-              
-            })
+            this.getfeedsOnFeedname(params.feedname).then(val=>{
+              this.variab.globalfeeds = val;
+              //Reverse the filter to sort according to latest feeds
+               this.variab.globalfeeds.reverse();
+            //Call the checkForDeleted method to check for hidden/removed feeds
+            //and remove those feeds from the display array  
+             this.checkForDeletedFeeds();   
+
+            });
 
           } 
        });
@@ -202,18 +225,22 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
      this.route.queryParams
       .subscribe(params => {
          if(params.subcategory){
-           this.feedService.getmetacategories(params.subcategory).then(result=>{
-               this.variab.globalfeeds=result;
-               this.checkForDeletedFeeds();
+           this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+              this.variab.globalfeeds = val;
+            //Call the checkForDeleted method to check for hidden/removed feeds
+            //and remove those feeds from the display array  
+             this.checkForDeletedFeeds();   
 
-           })
+            });
          }
          else{
-           this.feedService.getlatestfeeds(this.catname).then(result=>{
-             this.variab.globalfeeds=result;
-             this.checkForDeletedFeeds();
-             
-           })
+          this.getfeedsOnFeedname(params.feedname).then(val=>{
+            this.variab.globalfeeds = val;
+          //Call the checkForDeleted method to check for hidden/removed feeds
+          //and remove those feeds from the display array  
+           this.checkForDeletedFeeds();   
+
+          });
 
          } 
       });
@@ -221,9 +248,10 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.catname = 'Recent feeds'
+    this.pageheading = 'Recent feeds'
     this.feeds = childrefresh
   }
+  //Function to close alerts
   public closeAlert() {
       this.alertrange=false;
       this.alertNofeeds=false;

@@ -84,12 +84,12 @@ export class BoardService {
 	getboards(){
 
 			//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
-			this.remote.replicate.to(this.localdb, {
+			/*this.remote.replicate.to(this.localdb, {
 			   filter: '_view',
 			   view: 'board/boards'
 			 }).then(res=>{
 			console.log(res);
-			});
+			});*/
 
 	return new Promise(resolve => {
 	  this.localdb.query('board/boards', {

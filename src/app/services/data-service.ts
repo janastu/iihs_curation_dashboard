@@ -25,7 +25,7 @@ constructor(private http: Http,private settings:Settings) {
   this.createDesignDocs();
 
  // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
- /*this.remote  = this.settings.protocol+this.settings.dbannotations;
+ this.remote  = this.settings.protocol+this.settings.dbannotations;
 
     //console.log("remote",this.remote)
 
@@ -40,7 +40,7 @@ constructor(private http: Http,private settings:Settings) {
             password: this.settings.couchdbpassword
           }
        };
-    this.localdb.sync(this.remote, options);*/
+    this.localdb.sync(this.remote, options);
    
 
   }
@@ -200,12 +200,12 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+    /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/boardfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){
+    if(res['ok']==true){*/
       this.localdb.query('annotatedfeeds/boardfeeds', {
            key:board
          }).then(function (result) {
@@ -214,8 +214,8 @@ constructor(private http: Http,private settings:Settings) {
        }).catch(function (err) {
          console.log(err);
        });
-      }
-    });
+      //}
+    //});
     });
 
   
@@ -226,12 +226,12 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-      this.remote.replicate.to(this.localdb, {
+      /*this.remote.replicate.to(this.localdb, {
          filter: '_view',
          view: 'annotations/readlater'
        }).then(res=>{
       console.log(res);
-      if(res['ok']==true){
+      if(res['ok']==true){*/
     
       this.localdb.query('annotations/readlater', {
           key:usr
@@ -241,8 +241,8 @@ constructor(private http: Http,private settings:Settings) {
       }).catch(function (err) {
         console.log(err);
       });
-      }
-     });
+      //}
+     //});
     });
 
 
@@ -254,12 +254,12 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+   /* this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotations/recentlyread'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){
+    if(res['ok']==true){*/
       this.localdb.query('annotations/recentlyread', {
           key:usr
         }).then(function (result) {
@@ -268,8 +268,8 @@ constructor(private http: Http,private settings:Settings) {
       }).catch(function (err) {
         console.log(err);
       });
-     }
-    });
+     //}
+    //});
     });
 
 
@@ -289,12 +289,12 @@ constructor(private http: Http,private settings:Settings) {
 
    // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
    return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+    /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/alldeletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){
+    if(res['ok']==true){*/
       this.localdb.query('annotatedfeeds/alldeletedfeeds', {
           key:usr
         }).then(function (result) {
@@ -303,8 +303,8 @@ constructor(private http: Http,private settings:Settings) {
       }).catch(function (err) {
         console.log(err);
       });
-     }
-    });
+     //}
+    //});
     });
 
   }
@@ -313,12 +313,12 @@ constructor(private http: Http,private settings:Settings) {
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+    /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/deletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){ 
+    if(res['ok']==true){ */
       this.localdb.query('annotatedfeeds/deletedfeeds', {
           key:[usr]
           
@@ -328,8 +328,8 @@ constructor(private http: Http,private settings:Settings) {
       }).catch(function (err) {
         console.log(err);
       });
-     }
-    });
+     //}
+    //});
     });
 
   }

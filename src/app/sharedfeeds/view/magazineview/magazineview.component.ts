@@ -33,7 +33,6 @@ feedmark:number =0;
    }
 
   ngOnInit() {
-    console.log("p",this.item);
     /*if(this.incomingfeeds.length == 0) {
        // code...
        document.getElementById('loading').style.display = 'block';
