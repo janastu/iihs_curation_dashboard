@@ -28,7 +28,7 @@ alertremove:boolean=false;
 
   ngOnInit() {
 this.date = new Date();
-    
+    console.log("out",this.index);
     this.user = localStorage.getItem('name');
    
       //console.log(this.variab.readlaterfeeds);
@@ -150,6 +150,7 @@ this.date = new Date();
    
    this.variab.globalfeeds.splice(this.index,1);
    this.variab.boardfeeds.splice(this.index,1);
+  console.log("bef",this.index);
    this.variab.readlaterfeeds.splice(this.index,1);
    this.variab.recentlyread.splice(this.index,1);
    this.showDialog = false;

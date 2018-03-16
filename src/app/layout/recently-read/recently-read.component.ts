@@ -41,7 +41,7 @@ user:any;
     let hiddenfeeds:any=[];
     this.dataservice.getdeletedfeeds(this.user).then(res=>{
      hiddenfeeds=res;
-     console.log(hiddenfeeds)
+     //console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.recentlyread;
        document.getElementById('loading').style.display = 'none';
@@ -50,7 +50,7 @@ user:any;
      
       this.variab.recentlyread.map(globalfeed=>{
         hiddenfeeds.map(feed=>{
-        console.log("hiddem",feed.value._id,globalfeed.value._id)
+        //console.log("hiddem",feed.value._id,globalfeed.value._id)
            if(feed.value._id === globalfeed.value._id) {
             var i = _.indexOf(this.variab.recentlyread,globalfeed);
             this.variab.recentlyread.splice(i,hiddenfeeds.length);

@@ -44,16 +44,16 @@ user:any;
    let hiddenfeeds:any=[];
    this.dataservice.getdeletedfeeds(this.user).then(res=>{
     hiddenfeeds=res;
-    console.log("hidden",hiddenfeeds,this.variab.readlaterfeeds)
+    //console.log("hidden",hiddenfeeds,this.variab.readlaterfeeds)
     if(hiddenfeeds.length == 0){
       this.feeds = this.variab.readlaterfeeds;
       document.getElementById('loading').style.display = 'none';
       }
      
-    console.log("resd",this.variab.readlaterfeeds)
+    
      this.variab.readlaterfeeds.map(globalfeed=>{
        hiddenfeeds.map(feed=>{
-       console.log("hiddem",feed.value._id,globalfeed.value._id)
+       //console.log("hiddem",feed.value._id,globalfeed.value._id)
           if(feed.value._id === globalfeed.value._id) {
            var i = _.indexOf(this.variab.readlaterfeeds,globalfeed);
            this.variab.readlaterfeeds.splice(i,hiddenfeeds.length);
@@ -73,6 +73,7 @@ user:any;
           }
           else{
           this.feeds = this.variab.readlaterfeeds;
+          //console.log("resd",this.feeds)
           if(this.feeds.length == 0){
              //this.loading = true;
              
