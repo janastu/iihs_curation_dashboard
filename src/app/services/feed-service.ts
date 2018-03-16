@@ -253,7 +253,7 @@ export class FeedService {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
 	   	  }).then(function (result) {
-	   	 // console.log("res",result);
+	   	  console.log("res",result);
 	   	  resolve(result.rows);
 	   	}).catch(function (err) {
 	   	  console.log(err);

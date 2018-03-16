@@ -32,7 +32,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
   //On loading Component
   ngOnInit() {
-    console.log("pa",this.p);
+
     this.user =localStorage.getItem('name');
     
     //this.usersview = localStorage.getItem('view');
@@ -45,31 +45,38 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
-              console.log(params);
-              this.feedService.getcategoryfeeds(params.feedname);
+             
+             //To get feeds , filtered according to subcategory 
+             //check if the query parameter has subcatgeory property 
               if(params.subcategory){
                 
               this.catname = params.subcategory;
+              //Call the feed service to get the feeds filtered according to subcategory
               this.feedService.getmetacategories(this.catname).then(res=>{
-                console.log(res);
+             
+                //Store the result in the global variable globalfeeds
                 this.variab.globalfeeds = res;
+                //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
+              
+                 //Call the checkForDeleted method to check for hidden/removed feeds
+                 //and remove those feeds from the display array
                  this.checkForDeletedFeeds(); 
               })
             }
+            //To get feeds,filtered according to feedname
             else{
-              this.catname = params.feedname
+              this.catname = params.feedname;
+              //Call the feed service to get the feeds filtered according to feedname
                this.feedService.getlatestfeeds(params.feedname).then(res=>{
                 
-                 
+                  //Store the result in the global variable globalfeeds
                     this.variab.globalfeeds = res;
-                     this.variab.globalfeeds.reverse();
-                     //After filtering the feeds according to category remove the hidden feeds 
-                     //and display the rest feeds
-                       
-                      
-                       
-                    this.checkForDeletedFeeds();   
+                     //Reverse the filter to sort according to latest feeds
+                     this.variab.globalfeeds.reverse(); 
+                     //Call the checkForDeleted method to check for hidden/removed feeds
+                   //and remove those feeds from the display array  
+                     this.checkForDeletedFeeds();   
                        
                         
                    
@@ -86,11 +93,11 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     let hiddenfeeds:any=[];
     this.dataservice.getdeletedfeeds(this.user).then(res=>{
      hiddenfeeds=res;
-    // console.log(hiddenfeeds)
+     console.log(hiddenfeeds)
      if(hiddenfeeds.length == 0){
        this.feeds = this.variab.globalfeeds;
-       //console.log("check",this.variab.globalfeeds);
-       document.getElementById('loading').style.display = 'none';
+       
+      // document.getElementById('loading').style.display = 'none';
        }
       
      
@@ -102,30 +109,11 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             this.variab.globalfeeds.splice(i,hiddenfeeds.length);
 
             this.feeds = this.variab.globalfeeds;
-             //console.log("feedis",this.feeds,this.variab.globalfeeds)
-               if(this.feeds.length == 0){
-                  //this.loading = true;
-                  
-                  document.getElementById('loading').style.display = 'block';
-               }
-               else{
-                   //this.loading = false;
-                   document.getElementById('loading').style.display = 'none';
-
-               }
+             
            }
           // console.log("else",this.variab.globalfeeds);
           this.feeds = this.variab.globalfeeds;
-          if(this.feeds.length == 0){
-             //this.loading = true;
-             
-             document.getElementById('loading').style.display = 'block';
-          }
-          else{
-              //this.loading = false;
-              document.getElementById('loading').style.display = 'none';
-
-          }
+ 
         })
      })
      
@@ -141,38 +129,35 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    //this.feeds = childDates;
+
     this.date = childDates;
-    var xmlLink:any;
+    //Parse the from and to dates to timestamp to filter
     var fromdate = Date.parse(this.date.changefrom);
     var todate = Date.parse(this.date.changeto);
-
+    //Filter the globalfeeds ondate and store in the local variable feeds
     this.feeds =  this.variab.globalfeeds.filter((res)=>{
+      //Check if from date less than to date
       if(fromdate<todate){
-        
+        //Get the date from every feed in the database and check if it exists between 
+        //the given from and to date
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
         
           return res;
-        }     
+        }    
+        //Alert if no feeds between the from and to dates
         else{
            this.alertNofeeds=true;
            setTimeout(() => this.alertNofeeds = false, 2000);
 
         }
-      }
+      } 
+      //Alert if the from date is greater than to date
       else{
-         console.log("er");
+         
          this.alertrange=true;
          setTimeout(() => this.alertrange = false, 2000);
       }  
     });
-
-    /*if (this.feeds.length == 0) {
-     //console.log("apito newsrack",xmlLink); 
-     this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
-             return res;
-      }) 
-    }*/
     
   
   }
@@ -181,15 +166,6 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     if(eve == 'reset'){
       this.feeds = this.variab.globalfeeds;
     }
-  }
-
-  //Function to handle Category event from page-header component
-  public handleCategory(childCategory:any){
-    console.log("in feed",childCategory)
-     /* this.feedService.getcategoryfeeds(childCategory).then(result =>{
-        this.feeds = result;
-        this.catname = childCategory;
-      })*/
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
