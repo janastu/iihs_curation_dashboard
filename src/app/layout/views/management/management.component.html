@@ -10,11 +10,16 @@
             <!--Heading-->
             <div><h4>User Management</h4>
               <!--Inputfied for name and email-->
-              <div class="form-item" >
+               <div class="form-item">
                 <input type="text" placeholder="name" formControlName="name"/>
-
+                <span *ngIf="!userform.get('name').valid && userform.get('name').touched" 
+                         class="help-block"> Please enter user name</span>
+                </div>
+                <div class="form-item">
                 <input type="text" placeholder="email" class="mang-mail" formControlName="mail"/>
-              </div>
+                <span *ngIf="!userform.get('mail').valid && userform.get('mail').touched"
+                         class="help-block"> Please provide vaild email address (Example: johnson@gmail.com)</span>
+                </div>
             </div>
             <!--Dropdown for user type and group-->
               <div class="form-dropdown">
@@ -30,22 +35,31 @@
             <div class="add-user"><button (click)="addNewUser()" class="btn btn-sm btn-success"><span>ADD USER</span></button></div>
 
           </form>
- <ngb-alert *ngIf="mailsuccess" (close)="closeAlert()">User Added Successfully</ngb-alert>
-
+          <ngb-alert *ngIf="mailsuccess" (close)="closeAlert()">User Added Successfully</ngb-alert>
+          <ngb-alert *ngIf="requiredadmin" (close)="closeAlert()">You are not admin</ngb-alert>
+          <ngb-alert *ngIf="requireduser" (close)="closeAlert()">Fields should not be empty</ngb-alert>
           </div>
 
         <!--Display user info in a table-->
           <div class="row">
             <div class="col">
               <div class="user-mang">
+              <h4>User Details of Selected Group </h4>
                 <table class="userinfo table table-bordered table-hover">
-                  <tr scope="row" *ngFor="let contact of contacts">
-                    <!--td>{{contact.descr}}</td-->
+
+                  <tr><th colspan="4" class="users-heading">{{groupname}}</th></tr>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <!--<th>Remove</th>-->
+                  </tr>
+                  <tr scope="row" *ngFor="let contact of displayMembers">
                     <td>{{contact.name}}</td>
-                    <td>{{contact.mail}}</td>
-                    <td>{{contact.user}}</td>
-                    <td>{{contact.group}}</td>
-                     <td><button (click)="removeContact(contact)" class="btn btn-sm btn-success remove-user"><span>Remove</span></button></td>
+                    <td>{{contact.email}}</td>
+                    <td>{{contact.type}}</td>
+                    
+                     <!--<td><button (click)="removeContact(contact)" class="btn btn-sm btn-success remove-user"><span>Remove</span></button></td>-->
                     </tr>        
                 </table>
               </div>
@@ -65,11 +79,28 @@
                   <input type="text" class="form-control" placeholder="Group name" formControlName="gpname" />
                 </div>
               </form>
-                <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>ADD GROUP</span></button>
+                <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>CREATE GROUP</span></button>
                 <ngb-alert *ngIf="requiredsuccess" (close)="closeAlert()">Enter Group Name</ngb-alert>
-                
-                
+                <ngb-alert *ngIf="groupnameExists" (close)="closeAlert()">Groupname Already Exists</ngb-alert>
+                <ngb-alert *ngIf="requiredadmin" (close)="closeAlert()">You are not admin</ngb-alert>
                 <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Group Added Successfully</ngb-alert>
+            </div>
+          </div> 
+        </div>
+
+        <!--Your groups and magange-->
+        <div class="container user-create-group">
+          <div class="row">
+            <div class="col">
+               
+              <div><h4>Groups You Own</h4></div>
+                <fieldset class="form-group field" *ngFor="let item of mygroups">
+                  <div class="radio">
+                    <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item.key)" [checked]="this.groupname === item.key"> {{item.key}}
+                    </label>
+                  </div>
+                </fieldset>
+                
             </div>
           </div> 
         </div>

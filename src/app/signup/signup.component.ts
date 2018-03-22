@@ -1,6 +1,7 @@
-    import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Userservice } from '../services/userservice';
+import { GroupService } from '../services/group-service';
 import { FormBuilder,Validators, FormGroup, FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,7 @@ password = this.formBuilder.control('',/* [Validators.required,,Validators.minLe
 confirmpassword = this.formBuilder.control('', /*[Validators.required]*/);
 alertsuccess:boolean = false;
 alertauth:boolean= false;
+alertRegistering:boolean=false;
 errormessage:any;
 
 signupForm: FormGroup;
@@ -28,7 +30,7 @@ signupForm: FormGroup;
 
     urlstatus:boolean=false;
     emailfromurl: any ;
-    constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig) { }
+    constructor(private activatedRoute: ActivatedRoute,public userService:Userservice,public formBuilder:FormBuilder,public router:Router,public ngAlert:NgbAlertConfig,public groupService:GroupService) { }
 
 
     ngOnInit() { 
@@ -37,26 +39,24 @@ signupForm: FormGroup;
             'name': new FormControl(null, [Validators.required]),
             'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'email': new FormControl(null, [Validators.required, Validators.email]),
-            'password': new FormControl(null, [Validators.required]),
-            'confirmpassword': new FormControl(null, [Validators.required])
+            'password': new FormControl(null, [Validators.required,Validators.minLength(6)]),
+            'confirmpassword': new FormControl(null, [Validators.required,Validators.minLength(6)])
         });
         
-
+        console.log()
         this.activatedRoute.queryParams.subscribe(params => {
             if (params[ 'email']){
                 this.urlstatus == true;
                 this.emailfromurl = params['email'];
-            console.log(this.emailfromurl); // Print the parameter to the console. 
-               
+                this.signupForm.get('email').disable()
            }
            else{
                this.emailfromurl=''
-             
-            }
+               }
 
            });
 
-        
+          // console.log(this.signupForm.controls['email'].);
        /* this.signupForm = this.formBuilder.group({
             name:this.name,
             username:this.username,
@@ -67,11 +67,12 @@ signupForm: FormGroup;
         });*/
 
 
-    	
+   
     }
 
     onregister(){
-            console.log(this.signupForm.controls['username'].value)
+        this.alertRegistering=true;
+           // console.log(this.signupForm.controls['username'].value)
         //this.signupForm.controls['firstname'].markAsTouched()
             let doc = {
                 'name':this.signupForm.controls['name'].value,
@@ -80,14 +81,14 @@ signupForm: FormGroup;
                 'password':this.signupForm.controls['password'].value,
                 'confirmPassword':this.signupForm.controls['confirmpassword'].value
             };
-            console.log("doc",doc);
             this.userService.adduser(doc).then(response=>{
-                console.log("response",response);
                 if(response['success']){
+                    this.alertRegistering=false;
                     this.alertsuccess = true;
+                    //console.log("response",this.alertsuccess);
                     this.ngAlert.type = 'success';
-
-                    this.router.navigate(['/login']);
+                    this.signupForm.reset();
+                    setTimeout(() => this.alertsuccess = false, 5000);
                 }
                 if(response['error']){
                     if(response['validationErrors']['password']){
@@ -95,11 +96,12 @@ signupForm: FormGroup;
                         this.alertauth=true;
                         this.errormessage= response['validationErrors']['password'];
                         this.ngAlert.type = 'danger';
+                        setTimeout(() => this.alertauth = false, 2000);
                     }
 
                 }
                 if(response['error'] == 'Validation failed'){
-                    console.log("hgfh",response['validationErrors']['username'])
+                    console.log("hgfh",response)
                     this.alertauth=true;
                     this.errormessage = response['validationErrors']['username']
                     this.ngAlert.type = 'danger';
@@ -107,6 +109,7 @@ signupForm: FormGroup;
                      this.alertauth=true;
                      this.errormessage = response['validationErrors']['email']
                      this.ngAlert.type = 'danger';
+                     setTimeout(() => this.alertsuccess = false, 2000);
                     }
                 }    
 
@@ -115,6 +118,6 @@ signupForm: FormGroup;
     public closeAlert() {
         this.alertsuccess=false;
         this.alertauth = false;
-        
+        this.alertRegistering=false;
     }
 }

@@ -10,7 +10,7 @@ import { Userservice } from '../../../services/userservice';
 export class HeaderComponent implements OnInit {
     user:any;
     pushRightClass: string = 'push-right';
-    
+    disableManagement:boolean=false;
     constructor(private translate: TranslateService, public router: Router,public userService:Userservice) {
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
@@ -21,7 +21,11 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.user = localStorage.getItem('name');
-         
+        this.userService.getAuser(this.user).then(response=>{
+          if(response['type'] === 'admin'){
+             this.disableManagement=true;
+           }
+        });
         
     }
 
@@ -43,6 +47,7 @@ export class HeaderComponent implements OnInit {
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
         localStorage.removeItem('url');
+        localStorage.removeItem('group');
         this.userService.logout();
     }
 

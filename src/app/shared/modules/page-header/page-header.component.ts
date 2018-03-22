@@ -1,9 +1,9 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Service } from '../../../services/services';
+import { FeedService } from '../../../services/feed-service';
 import { Global } from '../../global';
-import { ComponentsService } from '../../../services/components-service';
+
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -14,6 +14,7 @@ export class PageHeaderComponent implements OnInit{
     @Input() icon: string;
     @Output('childView') outgoing:any = new EventEmitter();
     @Output('childDates') Dates:any = new EventEmitter();
+    @Output('clearDates') clear:any = new EventEmitter();
     @Output('childCategory') Category:any = new EventEmitter();
     @Output('childSortLabel') Sortlabel:any = new EventEmitter();
     @Output('childrefresh') Refresh:any = new EventEmitter();
@@ -27,13 +28,14 @@ fromdate = this.formBuilder.control('', [Validators.required]);
 todate = this.formBuilder.control('', [Validators.required]);
 selectedVal:any;
 desc:any;
-
+checkView:any;
 loading: boolean = false;
-
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public componentsService:ComponentsService,public variab:Global,public service:Service) { }
+currDate = new Date();
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService) { }
 
   ngOnInit() {
-
+    this.checkView = localStorage.getItem('view');
+    console.log("cehc",this.checkView);
     this.loginForm = this.formBuilder.group({
 
       fromdate: this.fromdate,
@@ -41,7 +43,7 @@ loading: boolean = false;
     });
    
   }
-  //function to get input values annd emit to feed component
+  //function to get date input values annd emit to feed component
   datefilter(){
  
     var changefrom,changeto;
@@ -60,8 +62,14 @@ loading: boolean = false;
     });*/
     //console.log("date value",changefrom,Date.parse(changefrom));
     this.Dates.emit({changefrom,changeto});
-    this.loginForm.reset();
+    
   }
+  //function to get input to clear the filter annd emit to feed component
+  reset(){
+    this.loginForm.reset();
+    this.clear.emit('reset');
+  }
+
   //function to get radio input values for view annd emit to feed component
   onChangeView(deviceValue) {
     this.outgoing.emit(deviceValue.value);
@@ -127,4 +135,5 @@ loading: boolean = false;
  onSortlabel(val){
    this.Sortlabel.emit(val);
  }
+
 }

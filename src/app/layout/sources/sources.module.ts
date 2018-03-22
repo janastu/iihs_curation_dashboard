@@ -9,11 +9,10 @@ import { SourcesRoutingModule } from './sources-routing.module';
 import { SourcesComponent } from './sources.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
-import { Service } from '../../services/services';
 import { SidebarComponent } from '../../shared'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateFeedModule } from '../../sharedfeeds/components';
+import { CreateFeedModule } from '../../shared/modules/create-feed/create-feed.module';
 
 @NgModule({
     imports: [
@@ -34,7 +33,7 @@ import { CreateFeedModule } from '../../sharedfeeds/components';
        
     ],
    
-    providers: [Service]
+    providers: []
      
 })
 export class SourcesModule { }

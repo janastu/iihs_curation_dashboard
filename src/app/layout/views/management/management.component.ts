@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { FormBuilder,Validators,FormGroup, FormControl} from '@angular/forms';
 import { GroupService } from '../../../services/group-service';
 import { Userservice } from '../../../services/userservice';
+import { Global } from '../../../shared';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Subject} from 'rxjs/Subject';
 import {debounceTime} from 'rxjs/operator/debounceTime';
-
+import { Router,ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-management',
   templateUrl: './management.component.html',
@@ -21,55 +22,74 @@ export class ManagementComponent implements OnInit {
   groups:any=[];
   alertsuccess:any;
   requiredsuccess: any;
+  requireduser:any;
+  requiredadminUser:any;
+  requiredadminGroup:any;
   mailsuccess: any;
+  groupnameExists:any;
   catvalue:any;
-
+  mygroups:any=[];
   userform:FormGroup;
-  name = this.formBuilder.control('', [Validators.required]);
-  mail = this.formBuilder.control('', [Validators.required]);
-  usertype = this.formBuilder.control('', [Validators.required]);
-  selectgroup = this.formBuilder.control('', [Validators.required]);
-
+  name = this.formBuilder.control('',);
+  mail = this.formBuilder.control('',);
+  usertype = this.formBuilder.control('',);
+  selectgroup = this.formBuilder.control('',);
+  displayMembers:any=[];
  groupform: FormGroup;
  gpname = this.formBuilder.control('', [Validators.required]);
 
  
-  constructor(public formBuilder: FormBuilder, public groupService:GroupService,public userService:Userservice,public ngAlert:NgbAlertConfig) { }
+  constructor(public formBuilder: FormBuilder, public groupService:GroupService,public userService:Userservice,public ngAlert:NgbAlertConfig,public router:Router,public variab:Global) { }
 
   ngOnInit() {
     
-
-    this.userform = this.formBuilder.group({
-       
-        name:this.name,
-        mail:this.mail,
-        usertype:this.usertype,
-    selectgroup: this.selectgroup
-
-    });
-this.groupform=this.formBuilder.group({
-  gpname: this.gpname
-});
-
     this.user = localStorage.getItem('name');
+
+    this.groupname = localStorage.getItem('group');
+
+    this.userform = new FormGroup({
+        'name': new FormControl(null, [Validators.required]),
+        'mail': new FormControl(null, [Validators.required, Validators.email]),
+        'usertype': new FormControl(),
+        'selectgroup': new FormControl()
+    });
+
+    this.groupform=this.formBuilder.group({
+      gpname: this.gpname
+    });
     this.groupService.getgroups().then(res=>{
       this.groups = res;
-    })
+       this.groups.filter(group=>{
+         if(group.key === this.groupname){
+          this.displayMembers =  group.value.members;  
+           console.log("mem",this.displayMembers);
+         }
+          
+        });
+       this.mygroups = this.groups.filter(group=>{
+         return group.value.owner == this.user;
+       })
+       console.log(this.mygroups);
+    });
+
+    
   }
   //Function to add user to a group
   addNewUser() {
-    console.log('asd', this.name.value, this.mail.value, this.usertype.value, this.selectgroup.value);
-  var name = this.name.value;
-  var mail = this.mail.value;
-  var group = this.selectgroup.value;
-  var usertype = this.usertype.value;
-  if (this.name.value === '' || this.mail.value === '' || this.usertype.value === '' || this.selectgroup.value==='')
+  //console.log('asd', this.name.value, this.mail.value, this.usertype.value, this.selectgroup.value);
+  var name = this.userform.controls.name.value;
+  var mail = this.userform.controls.mail.value;
+  var group = this.userform.controls.selectgroup.value;
+  var usertype = this.userform.controls.usertype.value;
+  console.log('asd',usertype);
+  if (name === '' || mail === '' || group === '' || usertype ==='')
   {
-         console.log("gp", this.gpname.value);
-       this.requiredsuccess = true;
-    this.ngAlert.type = 'success';
-      }
-      else {
+     //console.log("gp", this.gpname.value);
+      this.requireduser = true;
+      this.ngAlert.type = 'success';
+  }
+  else {
+
     
    
     var groupnames: any = [];
@@ -80,33 +100,60 @@ this.groupform=this.formBuilder.group({
         'groupname':group
     };
 
-    this.groupService.getgroups().then(res=>{
-      groupnames = res;
-      console.log("groupname", groupnames);
-      groupnames.map(groupname=>{
-        if (groupname.key===group)
-        {
-          groupname.value.members.push({ 'name':name,'email': mail, 'type': usertype});
-          console.log('asd', groupname);
-          this.userService.sendConfirmEmail(mail,group).then(res=>{
-      console.log('in com', res);
-      if (res === true)
-      {
-           this.mailsuccess = true;
-        this.ngAlert.type = 'success';
-        this.groupService.update(groupname.value);
-    }
-
-      });
-
-        }
-      })
-
+    this.userService.getAuser(this.user).then(response=>{
+      if(response['type'] === 'admin'){
+        
+        this.groupService.getgroups().then(res=>{
+          groupnames = res;
+          //console.log("groupname", groupnames);
+          groupnames.map(groupname=>{
+            if (groupname.key===group){
+              groupname.value.members.push({ 'name':name,'email': mail, 'type': usertype});
+              
+          //Check if email is registered
+             this.checkEmail(mail).then(res=>{
+               var regOrlogin = res;
+              // console.log('fgd',regOrlogin);  
+             
+             
+             this.userService.sendConfirmEmail(mail,group,usertype,regOrlogin).then(res=>{
+          //console.log('in com', res);
+                if (res === true){
+                  
+                  this.groupService.update(groupname.value).then(res=>{
+                      if(res['ok'] == true){
+                        this.mailsuccess = true;
+                        this.ngAlert.type = 'success';
+                        this.displayMembers.push({ 'name':name,'email': mail, 'type': usertype});
+                      }
+                  });
+                }
+              });
+              });
+            }
+          })
+        });
+      }
+      else{
+         this.requiredadminUser=true;
+         this.ngAlert.type='warning';
+      }
     });
-   
-   }
+  }
 
    
+  }
+  checkEmail(email){
+    return new Promise(resolve=>{
+      this.userService.validateEmail(email).then(res=>{
+        if(res==true){
+          resolve('register');
+        }
+        else if(res['error']){
+          resolve('login');
+        }
+      });
+    });
   }
 /*
   //Function to add user to a group
@@ -147,54 +194,124 @@ this.groupform=this.formBuilder.group({
       
   }
   */
-   removeContact(contact){
+  removeContact(contact){
       let index = this.contacts.indexOf(contact);
       this.contacts.splice(index,1);
   }
   //Function to add group 
   addGroup(){
+
+    let doc={
+      'groupname':this.gpname.value,
+      'owner':this.user,
+      'members':[],
+      'boards':[]
+
+    }
+    var groupExists:any
     if (this.gpname.value =='') {
-     console.log("gp", this.gpname.value);
-   this.requiredsuccess = true;
-this.ngAlert.type = 'success';
+      //console.log("gp", this.gpname.value);
+      this.requiredsuccess = true;
+      this.ngAlert.type = 'warning';
+    }
+    else {
+    //console.log("gpsa", this.gpname.value);
+      this.userService.getAuser(this.user).then(response=>{
+        if(response['type'] === 'admin'){
+          //console.log("can add group");
+        //console.log("dov",doc);
+        this.groupService.getgroups().then(res=>{
+          var gps:any=[];
+          gps=res;
+            gps.map(group=>{
+              if(group.key === this.gpname.value){
+                groupExists = 1;
+              }
+            })
+            if(groupExists ==1 ){
+              this.groupnameExists = true;
+              this.ngAlert.type = 'warning';
+            }
+            else{
+              this.groupService.addGroupDb(doc).then(result => {
+
+                          console.log('resofgroup', result)
+                          if (result ===true) {
+                            this.groups.push({ value: doc });
+                            this.alertsuccess=true;
+                            this.ngAlert.type = 'success';
+                            this.groupname='';
+                            this.userService.getAuser(this.user).then(user=>{
+                              if(user['memberof']){
+                                user['memberof'].push(this.gpname.value);
+                                console.log("ass",user);
+                               this.userService.updateAuser(user);
+                              }
+                              else{
+                              user['memberof']=[];
+                              user['memberof'].push(this.gpname.value);
+                              console.log("na",user);
+                              this.userService.updateAuser(user);
+                              } 
+                              //console.log(user);
+                              
+                            })  
+                          }
+                        });
+            }
+        })
+
+          /*this.groupService.addGroupDb(doc).then(result => {
+
+            console.log('resofgroup', result)
+            if (result ===true) {
+              this.groups.push({ value: doc });
+              this.alertsuccess=true;
+              this.ngAlert.type = 'success';
+              this.groupname='';
+              this.userService.getAuser(this.user).then(user=>{
+                if(user['memberof']){
+                  user['memberof'].push(this.gpname.value);
+                  console.log("ass",user);
+                 this.userService.updateAuser(user);
+                }
+                else{
+                user['memberof']=[];
+                user['memberof'].push(this.gpname.value);
+                console.log("na",user);
+                this.userService.updateAuser(user);
+                } 
+                //console.log(user);
+                
+              })  
+            }
+          });*/
+        }
+        else{
+          this.requiredadminGroup=true;
+          this.ngAlert.type='warning';
+        }
+      }) 
+    }
   }
-  else {
-    console.log("gpsa", this.gpname.value);
-     
-         
-    
-   var members:any=[];
-   var boards:any=[];
-   let doc={
-     'groupname':this.gpname.value,
-     'owner':this.user,
-     'members':[],
-     'boards':[]
-
-   }
-   //console.log("dov",doc);
-   
-   this.alertsuccess=true;
-   this.ngAlert.type = 'success';
-   this.groupname='';
-   this.groupService.addGroupDb(doc).then(result => {
-
-     console.log('resofgroup', result)
-     if (result ===true) {
-       this.groups.push({ value: doc });
-     }
-
-   });
-
-}
-   }
   public closeAlert() {
       this.alertsuccess=false;
-      
+      this.mailsuccess=false;
+      this.requiredsuccess=false;
+      this.requiredadminGroup=false;
+      this.requiredadminUser  =false;
+      this.requireduser=false;
+      this.groupnameExists=false;  
+  }
+  //On choosing a group
+  onChoosegroup(groupname){
+    localStorage.setItem('group',groupname);
+   this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
+   
   }
 
 }
-class Contact{
+/*class Contact{
     name:string;
     mail:string;
     user:string;
@@ -208,4 +325,4 @@ class Contact{
         this.group=group
         this.descr=this.name+'   '+this.mail+'   '+this.user+'   '+this.group;
     }
-}
+}*/

@@ -7,13 +7,26 @@ import { Userservice } from '../services/userservice';
     styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
-
+user:any;
     constructor(public router: Router,public userService:Userservice) { }
 
     ngOnInit() {
-    	this.userService.checkExpired();
+    	    
+        this.user = localStorage.getItem('name')
+        
         if (this.router.url === '/') {
-            this.router.navigate(['/dashboard']);
+            console.log("in");
+            this.userService.getAuser(this.user).then(userDoc=>{
+             var groupname = userDoc['memberof'][0] ;
+             if(groupname){
+
+               this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
+             } 
+             else{
+               this.router.navigate(['/dashboard']);
+             }
+            });
+            //this.router.navigate(['/dashboard']);
         }
     }
 

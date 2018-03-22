@@ -1,12 +1,11 @@
 import { Component,Input,OnInit,Output,EventEmitter } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router,ActivatedRoute } from "@angular/router";
 import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../../../services/board-service';
 import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
-import { Service } from '../../../services/services';
 import * as _ from 'lodash';
 @Component({
     selector: 'app-sidebar',
@@ -18,9 +17,12 @@ import * as _ from 'lodash';
 export class SidebarComponent implements OnInit{
   
     user:any;
+    groupname:any;
     isActive = false;
     showMenu = '';
     selected:any;
+    groups:any=[];
+    showGroups:any;
     eventCalled() {
         this.isActive = !this.isActive;
     }
@@ -52,12 +54,34 @@ export class SidebarComponent implements OnInit{
 
 
     
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public service:Service,public groupService:GroupService){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public groupService:GroupService,public route:ActivatedRoute){
    
 
     }
     ngOnInit(){
+
+      
+
       this.user = localStorage.getItem('name');
+
+      this.route.queryParams.subscribe(params=>{
+        
+        if(params.memberof == undefined){
+          this.groupname = localStorage.getItem('group');
+            //console.log("lo",this.groupname)
+          this.getBoardsOngroups();
+          this.getGroups();
+        }
+        else{
+        this.groupname = params.memberof;
+        this.getBoardsOngroups();
+        this.getGroups();
+      }
+
+      })
+     /* this.userservice.getAuser(this.user).then(user=>{
+               this.variab.groupname = user['memberof'];  
+      });*/
 
         //Get board annotations
                    this.dataservice.getannotations().then(res=>{
@@ -77,85 +101,53 @@ export class SidebarComponent implements OnInit{
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
                    });
-          
-        
-
-               
-
-
-                /*this.groupService.getgroups().then(res=>{
-                  var groups:any=[];
-                  groups=res;
-                  
-                  groups.map(group=>{
-                    //Check if the logged member is part of any group
-                    var checkmemberof = group.value.members.map(member=>{
-                      if(member == this.user){
-                        return group.value.groupname;
-                      }
-                    })
-                    
-                    //get the boards belong to a group
-                    checkmemberof.map(value=>{
-                      if(group.value.groupname === value){
-
-                        this.variab.displayUserBoards = group.value.boards;
-                        
-                      }
-                     
-                      
-                    })
-                    
-                    //get board docs by giving group board name of the group boards
-
-                    var boardsOnGroup:any=[];
-                    
-                      this.variab.displayUserBoards.map(userboard=>{*/
-                        this.boardservice.getboards().then(res=>{
-                          this.variab.boardupdated = res;
-                         /* boardsOnGroup.push(res);
-                          this.variab.boardupdated = _.flatten(boardsOnGroup) 
-                          console.log("er",this.variab.boardupdated);*/
-                        });
-                       
-                       //
-                      //})
-                      
-                   
-
-                  
-
-                 // });
-                  
-
-
-             // });*/
-
-                
-
-         
-
 
 
 
         //Get the feed names to display in the sidebar and other components
         this.userservice.getUserSubscriptions().then(res=>{
            //Set result to global variable as it can be accessed outdside the component
-          this.variab.categoryupdated=res;
+          this.variab.categoryfeeds=res;
         //  console.log(this.variab.categoryupdated)
           
         });
 
-
         
 
-
        
+    }
+    getBoardsOngroups(){
+      this.boardservice.getboards().then(res=>{
+
+        this.variab.boardupdated = res;
+       // console.log("boards",this.variab.boardupdated)
+       /* boardsOnGroup.push(res);
+        this.variab.boardupdated = _.flatten(boardsOnGroup)*/ 
+
+        this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
+         if(board.value.group){
+            
+           return board.value.group === this.groupname;
+         }
+        
+        })
+        //console.log("boars",this.variab.boardupdated)
+      });
+
+    }
+    getGroups(){
+      //Get the groups the user is memberof
+      this.userservice.getAuser(this.user).then(res=>{
+        this.groups = res['memberof'];
+        this.groups.map(gr=>{
+          //console.log(gr,this.groupname);
+        });
+      })
     }
     //Function called from html to navigate to feeds component with category name variable
     routeto(category){
         
-        
+        console.log("lc",category.toLowerCase())
         this.router.navigate(['/feeds'], { queryParams: { feedname: category } })
        // console.log(category);
           /*this.service.getcategoryfeeds(category).then(res=>{
@@ -191,12 +183,18 @@ export class SidebarComponent implements OnInit{
              this.componentsService.alertboards(board,res); 
   
      });*/
-     
-        this.router.navigate(['/boardfeeds', board ]);
-
+       //console.log(this.variab.groupname);
+        //this.router.navigate(['/boardfeeds', this.variab.groupname],{queryParams:{boardname:board}});
+        this.router.navigate(['/boardfeeds', board],{queryParams:{memberof:this.groupname}})
 
     }
+    //On choosing a group
+  onChoosegroup(groupname){
+    localStorage.setItem('group',groupname);
+    this.showGroups=false;
+   this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
    
+  }
     
     
 }

@@ -11,12 +11,12 @@ export const environment = {
  dbPort:'5984',
  dbuser:'admin',
  dbpassword:'admin',
- authHost:'localhost:3000',
- authPort:'3000',
+ authHost:'localhost:3001',
+ authPort:'3001',
 
  feedParserHost:'localhost:3000',
 
- feedParserPort:'3500' 
+ feedParserPort:'3000' 
 
 
  /*dbprotocol:'http://',

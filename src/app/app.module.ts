@@ -14,17 +14,17 @@ import { BoardService } from './services/board-service';
 import { CategoryService } from './services/category-service';
 import { DataService } from './services/data-service';
 import { ComponentsService } from './services/components-service';
-import { Service } from './services/services';
+import { DbConfig } from './services/db-config';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { GroupService } from './services/group-service';
 import { FeedService } from './services/feed-service';
 import { Userservice } from './services/userservice';
-
-//import { SpinnerModule } from 'angular-spinners';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
-import { Settings} from './services/settings';
-import {UrlSerializer} from '@angular/router';
-import {CustomUrlSerializer} from './CustomUrlSerializer';
+import { Utilities } from './shared';
+import { HtmlParser } from './shared';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Settings } from './services/settings';
+import { UrlSerializer } from '@angular/router';
+import { CustomUrlSerializer } from './CustomUrlSerializer';
 
 
 
@@ -59,7 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
 
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},{provide:UrlSerializer,useClass:CustomUrlSerializer},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,Service,Settings,Userservice,FeedService,GroupService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},{provide:UrlSerializer,useClass:CustomUrlSerializer},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,Utilities,HtmlParser],
 
 
     bootstrap: [AppComponent]

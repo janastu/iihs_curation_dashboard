@@ -1,0 +1,31 @@
+<div [@routerTransition] class="row list-entries">
+
+     <!-- <div class="row">
+        <div class="col-sm-9 offset-sm-3">
+              <app-page-header [heading]="'Feeds'"></app-page-header>
+        </div>
+      </div>-->
+    
+                        <!--Read Later Button-->
+                             <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
+                        <!--Feed Category-->     
+                            <div class="col-md-2"> <a href={{item.value.url}} class="feeds-data">{{item.value.meta.categories}}</a></div>
+                        <!--Feed Date--> 
+                            <div class="col-md-2"> <small class="text-muted title-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small></div>
+                             
+                        <!--Feed Title--> 
+
+                           <div class="col-md-7"> <app-modal #modal [item]="item"></app-modal>
+                             <a (click)="modal.open(desc)"class="feeds-list">{{item.value.title.substring(0,60)}}</a></div>
+                              
+                        <!--Feed description
+                       <div *ngIf="item.value.description != null">
+                            <div *ngIf="checkimg(item.value.description)" class="list-group-item-text desc"></div>
+                          span *ngIf="!checkimg(item.value.description)" class="list-group-item-text desc">{{item.value.description.substring(0,3)}}</span
+                            </div>-->
+                           <!--Mouse over for each element-->
+                           <div class="title-hover-control">
+                            <app-hover-toolbar [item]='item' [index]='i'></app-hover-toolbar>
+                           </div>
+                           
+</div>
