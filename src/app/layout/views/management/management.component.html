@@ -36,7 +36,7 @@
 
           </form>
           <ngb-alert *ngIf="mailsuccess" (close)="closeAlert()">User Added Successfully</ngb-alert>
-          <ngb-alert *ngIf="requiredadmin" (close)="closeAlert()">You are not admin</ngb-alert>
+          <ngb-alert *ngIf="requiredadminUser" (close)="closeAlert()">You are not admin</ngb-alert>
           <ngb-alert *ngIf="requireduser" (close)="closeAlert()">Fields should not be empty</ngb-alert>
           </div>
 
@@ -82,7 +82,7 @@
                 <button (click)="addGroup()" class="btn btn-sm btn-success create-group-button"><span>CREATE GROUP</span></button>
                 <ngb-alert *ngIf="requiredsuccess" (close)="closeAlert()">Enter Group Name</ngb-alert>
                 <ngb-alert *ngIf="groupnameExists" (close)="closeAlert()">Groupname Already Exists</ngb-alert>
-                <ngb-alert *ngIf="requiredadmin" (close)="closeAlert()">You are not admin</ngb-alert>
+                <ngb-alert *ngIf="requiredadminGroup" (close)="closeAlert()">You are not admin</ngb-alert>
                 <ngb-alert *ngIf="alertsuccess" (close)="closeAlert()">Group Added Successfully</ngb-alert>
             </div>
           </div> 

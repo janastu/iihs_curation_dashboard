@@ -22,6 +22,7 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
+p:any;//variable to store the current page
   constructor(public variab:Global,public dataservice:DataService,public util:Utilities) { }
   //On loading Component
   ngOnInit() {

@@ -13,6 +13,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 })
 export class BoardfeedsComponent implements OnInit {
 //Local Variable declarations
+p:any;//variable to store the current page
 feeds:any=[];          //Variable to store feeds to display
 view:any;              //Variable to store the view state
 date:any;              //Variable to store the state of dates to filters

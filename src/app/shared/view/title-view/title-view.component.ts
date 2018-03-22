@@ -9,8 +9,8 @@ import { DatePipe } from '@angular/common';
   animations: [routerTransition()]
 })
 export class TitleViewComponent implements OnInit {
-feeds:any=[];
 
+desc:any;//Parameter to pass with modal component
 @Input('feeds') item:any=[];
 @Input('index') index:any;
   constructor() {

@@ -16,6 +16,7 @@ view:any;                    //variable to store the view state
 globalfeeds:any=[];          //variable to store feeds globally
 date:any;                    //variable to store the state of dates to filters
 user:any;
+p:any;//variable to store the current page
   constructor(public dataservice:DataService,public variab:Global,public util:Utilities) {
    }
    

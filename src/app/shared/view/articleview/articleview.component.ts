@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class ArticleviewComponent implements OnInit {
   @Input('feeds') item:any=[];
   @Input('index') index:any; 
-
+  desc:any;//Parameter to pass with modal component
   constructor(public html:HtmlParser) {
    }
 
