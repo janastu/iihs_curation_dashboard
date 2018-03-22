@@ -7,46 +7,40 @@
         </div>
     </div>
 
-<ngb-alert *ngIf="alertrange" (close)="closeAlert()">From date Should be less than To Date</ngb-alert>
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
 
 
 <div class="row centered">
       <div class="col">
             <div class="mb-3">
-                     <div class="card-header title-header"><strong>All Feeds</strong></div>
+                     
                
                         <div class="container">
                             
 
-<div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p}">
+<div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p}" >
 <!--Component to display if no view is selected-->
 <div *ngIf = "view === null"> 
-  <app-magazineview [feeds]='feed'></app-magazineview>
+  <app-magazineview [feeds]='feed' [index]='index'></app-magazineview>
 </div>
 
 <!--Component to display if Magazine view is selected-->
-<div *ngIf = "view === 'Magazine'" > 
-  <!--div id="loading">
-    <img src="assets/images/loading.gif">
-  </div-->
-  <app-magazineview [feeds]='feed'></app-magazineview>
+<div *ngIf = "view === 'Magazine'"> 
+  <app-magazineview [feeds]='feed' [index]='index'></app-magazineview>
 </div>
 
 <!--Component to display if Article view is selected-->
-<div *ngIf = "view === 'Article'" > 
-  <app-articleview [feeds]='feed'></app-articleview>
+<div *ngIf = "view === 'Article'"> 
+  <app-articleview [feeds]='feed' [index]='index'></app-articleview>
 </div>
 <!--Component to display if Card view is selected-->
-<span *ngIf = "view === 'Card'" class="card-parent"> 
-
-  <app-card-view [feeds]='feed'></app-card-view>
-
-</span>
+<div *ngIf = "view === 'Card'"> 
+    <app-card-view [feeds]='feed' [index]='index'></app-card-view>
+</div>
 <!--Component to display if Title view is selected-->
-<div *ngIf = "view === 'Title'" > 
+<div *ngIf = "view === 'Title'"> 
 <div class="container">
- <app-title-view [feeds]='feed'></app-title-view>
+ <app-title-view [feeds]='feed'  [index]='index'></app-title-view>
 </div>                
 
 </div>

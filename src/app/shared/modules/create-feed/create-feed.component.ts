@@ -15,33 +15,33 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateFeedComponent implements OnInit {
 
-feedForm:FormGroup;
-feedname = this.formBuilder.control('', [Validators.required]);
-visible:boolean;
-user:any;
-labelForFeeds:any=[];
-feedsnames:any=[];
-followstatus:boolean=false;
-queryString:any;
+feedForm:FormGroup;//variable of type form to store the feed form
+feedname = this.formBuilder.control('', [Validators.required]);//variable to store the feedname value typed in the form
+visible:boolean;//variable to store the status of showing createfeed block
+labelForFeeds:any=[];//variables to store the index of feednames
+feedsnames:any=[];//variable to store the feed names
+followstatus:boolean=false;//boolean variable to store the status of the feed following or not
 alertexists:boolean=false;
 alertempty:boolean=false;
+user:any;     //variable to store the username
+queryString:any;//variable to store the input given to find a feed name
 @Input('data') data:any;
 @Input('url') url:any;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public categoryservice:CategoryService,public variab:Global,public feedService:FeedService,public userservice:Userservice,public ngAlert:NgbAlertConfig) {
 }
 
 ngOnChanges(){
-  console.log(this.labelForFeeds,this.data,this.url);
-    this.user = localStorage.getItem('name')
+    this.user = localStorage.getItem('name');
+    //get the feed name value from the form
     this.feedForm = this.formBuilder.group({
       feedname: this.feedname
     });
+    //Get the feednames from user subscriptions
     this.userservice.getUserSubscriptions().then(res=>{
-      this.variab.categoryupdated=res;
-      this.feedsnames = this.variab.categoryupdated;
+      this.feedsnames = res;
     });
     //Check for link is added to a feedname and user subscriptions
-    var linkExists = this.variab.categoryupdated.map(link=>{
+    var linkExists = this.variab.categoryfeeds.map(link=>{
       
       var checkForLink = link.doc.metadata.map(everylink=>{
 
@@ -56,7 +56,10 @@ ngOnChanges(){
       })
       return _.compact(checkForLink);
     })
-    console.log(linkExists);
+    //Map link for feeds to return boolean array
+    //Returns example:[true,false,true] 
+    //Index of output == Index of label which means label[0] and label[1] 
+    //is active for above output
     this.labelForFeeds = linkExists.map(link=>{
       if(link[0]){
         return true;
@@ -68,79 +71,51 @@ ngOnChanges(){
 }
   ngOnInit() {
      
-      //this.ngconfig.autoClose='outside';
-  /*	this.user = localStorage.getItem('name')
-  	this.feedForm = this.formBuilder.group({
-  	  feedname: this.feedname
-  	});
-    this.userservice.getUserSubscriptions().then(res=>{
-      this.variab.categoryupdated=res;
-      this.feedsnames = this.variab.categoryupdated;
-    });
-    //Check for link is added to a feedname and user subscriptions
-    var linkExists = this.variab.categoryupdated.map(link=>{
-      
-      var checkForLink = link.doc.metadata.feedlink.map(everylink=>{
-
-        if(everylink === this.url){
-          this.followstatus=true;
-          return true;
-        }
-      })
-      return _.compact(checkForLink);
-    })
-    
-    this.labelForFeeds = linkExists.map(link=>{
-      if(link[0]){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    console.log(this.labelForFeeds);*/
 
 
   }
   //Create a new feed name and add the feed name and metadata to user subscriptions
  createfeed(i){
-
-   //this.data.feedlink = [this.url];
+   var date = new Date();
+   
+   //Data model of the user subscription
    let doc={
          "feedname":this.feedname.value,
-         "metadata":[this.data]
+         "metadata":[this.data],
+         "lastmodified":date.getTime()
         }
 
-     
+     //Check if entered feed name is empty
      if(this.feedname.value === ''){
        console.log("feedname cant be empty");
        this.alertempty = true;
        this.ngAlert.type = 'warning';
        setTimeout(() => this.alertempty = false, 2000);
      }
-     else{
      
-       
+     else{
        var toCheckrepeatFeednames:any =[];
        var feednameExists :any = 0;
         
        this.feedsnames.map(feedname=>{
           if(this.feedname.value === feedname.doc.feedname){
-            console.log("boardname exists");
+            //console.log("boardname exists");
             feednameExists = 1; 
           }
         })
+       //Check if feedname already exists in the user subscriptions
        if(feednameExists == 1){
          console.log("exit");
          this.alertexists = true;
          this.ngAlert.type = 'warning';
          setTimeout(() => this.alertexists = false, 2000);
        }
+       //Add the feed model to the database
        if(feednameExists == 0){
          console.log("add");
          this.feedService.addFeed(doc).then(res=>{
                if(res['ok'] == true){
-                 this.variab.categoryupdated.push({doc:doc});  
+                 this.variab.categoryfeeds.push({doc:doc});  
                  this.visible = false;
                  this.followstatus = true;
                  this.alertempty = false;
@@ -163,7 +138,7 @@ ngOnChanges(){
  	var update:any;//update status variable
 
 //Check if the feedname already exists in the database
-   var checkForFeedname = this.variab.categoryupdated.map(name=>{
+   var checkForFeedname = this.variab.categoryfeeds.map(name=>{
      
         if(name.doc.feedname === feed){
           update = 1;

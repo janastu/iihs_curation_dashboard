@@ -9,7 +9,6 @@ import { FeedsRoutingModule } from './feeds-routing.module';
 import { FeedsComponent } from './feeds.component';
 import { PageHeaderModule } from './../../shared';
 import { StatModule } from '../../shared';
-//import { Service } from '../../services/services';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {
@@ -17,8 +16,8 @@ import {
     MagazineviewModule,
     TitleViewModule,
     CardViewModule
-} from '../../sharedfeeds/view';
-import { HoverToolbarModule } from '../../sharedfeeds/components';
+} from '../../shared/view';
+import { HoverToolbarModule } from '../../shared/modules/hover-toolbar/hover-toolbar.module';
 import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 

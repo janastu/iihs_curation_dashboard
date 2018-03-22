@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { routerTransition } from '../../router.animations'; 
 import { Global } from '../../shared'; //Import Global to use global variables in the dashboard's local scope
-import { Service } from '../../services/services';// Import Service to fetch the recent feeds
+import { FeedService } from '../../services/feed-service';// Import Feed Service to fetch the recent feeds
 import { Userservice } from '../../services/userservice';//Import UserService to get user subscribed feed names
 import { Router } from "@angular/router";//Import router to navigate between components
-
+import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -15,14 +15,22 @@ import { Router } from "@angular/router";//Import router to navigate between com
 export class DashboardComponent implements OnInit {
 	  feeds:any=[]; //Local Variable to store recentfeeds
     user:any;     //Local Variable to store the user name 
-    constructor(public variab:Global,public service:Service,public router:Router,public userService:Userservice) {
+    alertupdated:boolean=false//alert variable to store the status of feeds updated
+    alertupdating:boolean=false//alert variable to store the status of feeds updating
+    constructor(public variab:Global,public service:FeedService,public router:Router,public userService:Userservice,public ngAlert:NgbAlertConfig) {
     }
 
     ngOnInit() {
 
     this.user = localStorage.getItem('name');
-
-    
+       //Pull new feeds of user subscriptions
+       this.userService.pullnewFeeds().then(res=>{
+         if(res['status']==304 || res['status'] == 201 ){
+           this.alertupdated=true;
+           this.ngAlert.type = 'success';
+           setTimeout(() => this.alertupdated = false, 2000);
+         }
+       });
      
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
@@ -50,13 +58,7 @@ export class DashboardComponent implements OnInit {
        //Get user subscribed feed names
         this.userService.getUserSubscriptions().then(res=>{
           //Store the user subscribed feed names in the Global variable
-          this.variab.categoryupdated=res;
-          
-          this.variab.categoryupdated.map(user=>{
-            //For all the user subscribed feed names pull the latest feeds from newsrack
-            this.userService.pullnewFeeds(user.doc);
-          })
-            
+          this.variab.categoryfeeds=res;
         });
 
         

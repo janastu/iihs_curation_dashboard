@@ -1,8 +1,11 @@
 <div [@routerTransition]>
 <!--Page Heading-->
     <h2 class="text-muted">Dashboard</h2>
+    
     <div class="row">
         <div class="col col-xl-6 col-lg-6 col-md-6">
+          <ngb-alert *ngIf="alertupdating" (close)="closeAlert()" class="alert-width">Updating feeds</ngb-alert>
+          <ngb-alert *ngIf="alertupdated" (close)="closeAlert()" class="alert-width">Feeds Updated</ngb-alert>
             <!--Heading Category-->
                 <div class="card-header" >
                    Categories
@@ -10,7 +13,7 @@
           <div class="row card-block">
             
           <!--Iterate the category variable to display the feed names--> 	
-          <div *ngFor="let item of variab.categoryupdated" class="col-sm-4">	
+          <div *ngFor="let item of variab.categoryfeeds" class="col-sm-4">	
           
             <div class="card mb-3 source-card">
               <!--Click on the feed name to navigate to the feeds-->

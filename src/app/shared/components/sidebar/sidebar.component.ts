@@ -6,7 +6,6 @@ import { BoardService } from '../../../services/board-service';
 import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
-import { Service } from '../../../services/services';
 import * as _ from 'lodash';
 @Component({
     selector: 'app-sidebar',
@@ -55,7 +54,7 @@ export class SidebarComponent implements OnInit{
 
 
     
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public service:Service,public groupService:GroupService,public route:ActivatedRoute){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public groupService:GroupService,public route:ActivatedRoute){
    
 
     }
@@ -75,7 +74,6 @@ export class SidebarComponent implements OnInit{
         }
         else{
         this.groupname = params.memberof;
-        console.log("gr",this.groupname)
         this.getBoardsOngroups();
         this.getGroups();
       }
@@ -109,7 +107,7 @@ export class SidebarComponent implements OnInit{
         //Get the feed names to display in the sidebar and other components
         this.userservice.getUserSubscriptions().then(res=>{
            //Set result to global variable as it can be accessed outdside the component
-          this.variab.categoryupdated=res;
+          this.variab.categoryfeeds=res;
         //  console.log(this.variab.categoryupdated)
           
         });

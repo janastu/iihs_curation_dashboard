@@ -7,20 +7,12 @@ import {Settings} from './settings'
 declare function emit(key: any,value:any): void;
 @Injectable()
 export class Userservice {  
-  db:any;
-  remote:any;
-  username:any;
-  password:any;
-  user:any;
-//userservicedomain:any='http://192.168.1.15:3001';
-//userserviceendpoints:any={register:'/auth/register',login:'/auth/login'}
+user:any;
 
 constructor(private http: Http,private settings:Settings) {
 
   //this.db = new PouchDB('userdb');
- 
-  let url = localStorage.getItem('url');
-  console.log("url",url);
+
 
   
        
@@ -57,6 +49,7 @@ constructor(private http: Http,private settings:Settings) {
 
 
   }
+  //Superlogin Api service to reset pasword
 public resetPassword(token,pwd){
 
 
@@ -68,7 +61,7 @@ public resetPassword(token,pwd){
 
   return new Promise(resolve => {
     superlogin.resetPassword(doc).then(function(response) {
-      console.log("asd", response);
+      //console.log("asd", response);
       resolve(response );
       },(err)=>{
          console.log(err);
@@ -77,12 +70,13 @@ public resetPassword(token,pwd){
     });
 
 }
+//Superlogin Api service to send reset link on forget password
 public onforget(email)
 {
   
 return new Promise(resolve => {
     superlogin.forgotPassword(email).then(function (response) {
-    console.log("asd", response);
+    //console.log("asd", response);
     resolve(response );
     },(err)=>{
        console.log(err);
@@ -90,7 +84,7 @@ return new Promise(resolve => {
     });
   });
 }
-
+//Superlogin Api service to add a user
 public adduser(user){
 	//console.log("usr",user);
   return new Promise(resolve => {
@@ -106,6 +100,7 @@ public adduser(user){
    
    
 }
+//Superlogin Api service to send registration confirmation email
 public sendConfirmEmail(email,groupname,type,regOrlogin)
 {
   var status;
@@ -114,7 +109,7 @@ public sendConfirmEmail(email,groupname,type,regOrlogin)
      var emailurl = this.settings.superloginserverUrl+'/sendemail?email='+email+'&groupname='+groupname+'&type='+type+'&regOrlogin='+regOrlogin;
        //console.log(newsrack);
    this.http.get(emailurl).subscribe((response) => {
-     console.log("sd",response.ok);
+     //console.log("sd",response.ok);
      status = response.ok;
       
      resolve(status);  
@@ -124,30 +119,39 @@ public sendConfirmEmail(email,groupname,type,regOrlogin)
     
  
 }
+//Superlogin Api service to validate the email
 public validateEmail(email){
   return new Promise(resolve => { 
     superlogin.validateEmail(email).then(res=>{
-      console.log(res);
+      //console.log(res);
       resolve(res);
     },(err)=>{
       resolve(err);
-      console.log(err);
+      //console.log(err);
     })
   });
 }
+//Superlogin Api service to login
 public login(credentials){
 
 return new Promise(resolve => { 
   superlogin.login(credentials).then((response)=>{
-    console.log(response);
+    //console.log(response);
     resolve(response);
   },(err)=>{
    resolve(err);
-    console.log(err);
+    //console.log(err);
   });
 });
 
 }
+ //Superlogin Api service to logout
+logout(){
+  superlogin.logout('message').then(res=>{
+    //console.log(res);
+  })
+}
+//Api service to get the user subscriptions
 getUserSubscriptions(){
   let url = localStorage.getItem('url');
   //console.log("url",url);
@@ -158,18 +162,18 @@ getUserSubscriptions(){
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers });
-  console.log("auth",options);
+  //console.log("auth",options);
   return new Promise(resolve => {
         this.http.get(url+'/_all_docs?include_docs=true',options).map(res=>res.json()).subscribe((response)=> {
-          console.log(response)
+          //console.log(response)
           resolve(response.rows);
         }, (err) => {
           console.log("er",err);
         }); 
-
   });
 
 }
+//Api service to get email of all users
 getemail(){
   var url = this.settings.protocol+this.settings.dbusers+'/_design/auth/_view/email';
    //console.log(url);
@@ -184,6 +188,7 @@ getemail(){
 
   });
 }
+//Api service to get all users documents
 getusers(){
   var url = this.settings.protocol+this.settings.dbusers+'/_all_docs';
    //console.log(url);
@@ -200,6 +205,7 @@ getusers(){
 
 
 }
+//Api service to get document of a particular user by passing his id
 getAuser(user){
   var url = this.settings.protocol+this.settings.dbusers+'/'+user;
    //console.log(url);
@@ -216,6 +222,7 @@ getAuser(user){
 
 
 }
+//Api service to update a user's document
 updateAuser(user){
   //console.log(user)
   var url = this.settings.protocol+this.settings.dbusers+'/'+user._id;
@@ -234,35 +241,24 @@ updateAuser(user){
         }); 
 
 }
-pullnewFeeds(doc){
-  
-  doc.metadata.map(url=>{
-    //console.log(doc);
-    var newsrack = this.settings.feedparserUrl+'/?url='+url.link+'&feedname='+doc.feedname;
+//Api service to call newsrack and pull the recent feeds of the user's subcscriptions
+pullnewFeeds(){
+  let url = localStorage.getItem('url');
+  return new Promise(resolve=>{
+    var newsrack = this.settings.feedparserUrl+'/?user='+url;
     //console.log(newsrack);
     this.http.get(newsrack).subscribe((response)=> {
-      console.log("va;",response);
-    })
-  })
-  
-}
- 
-checkExpired(){
- 
- //console.log(superlogin.getSession());
-  
-  if(superlogin.getSession() === null){
-    //superlogin.refresh();  
-    
-    //localStorage.removeItem('isLoggedin');
-  }
+       resolve(response);
+    },(err)=>{
+      resolve(err);
+      
+    });
 
+  });
+    
+  
 }
-logout(){
-  superlogin.logout('message').then(res=>{
-    console.log(res);
-  })
-}
+
 
 
 

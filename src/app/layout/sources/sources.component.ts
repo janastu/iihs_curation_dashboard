@@ -22,21 +22,13 @@ export class SourcesComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.feedService.getfrompouchdb();
-    this.categoryService.getAll().then((result)=>{
-      this.variab.categoryfeeds=result;
-    })
+   
   }
   onselectingcategory(category){
   	
   	this.catvalue=category;
   }
   addcontent(){
-   /* let doc={
-      category:value
-    }
-    this.categoryService.addcategory(doc);
-    this.variab.categoryupdated.push({doc:doc})*/
 
       this.feedService.getNewsrackfeedsFirstTime(this.feedlink).then(res=>{
         console.log(res);

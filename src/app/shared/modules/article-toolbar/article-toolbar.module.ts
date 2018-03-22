@@ -8,7 +8,7 @@ import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DialogComponentModule } from '../dialog-component/dialog-component.module';
+import { DialogComponentModule } from '../../../shared/modules/dialog-component/dialog-component.module';
 import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
 @NgModule({
     imports: [

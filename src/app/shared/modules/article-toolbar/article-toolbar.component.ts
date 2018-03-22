@@ -196,39 +196,7 @@ alertremove:boolean=false;
 
 
         
-      }  
-      //this.variab.displayUserBoards.push(this.boardname.value);  
-    //Update the group database with board idboardupdated:any=[];
-
-
-  /*  this.groupService.getgroups().then(res=>{
-      var groups:any=[];
-      groups=res;
-      
-      groups.map(group=>{
-        //Check if the logged member is part of any group
-        var checkmemberof = group.value.members.map(member=>{
-          if(member == this.user){
-            return group.value.groupname;
-          }
-        })
-        
-        //get the group name and update the group with the board
-        checkmemberof.map(value=>{
-          if(group.value.groupname === value){
-            
-              group.value.boards.push(this.boardname.value);
-           
-            console.log("checkmember",group.value);
-            this.groupService.update(group.value);
-          }
-        })
-
-      })
-      
-
-
-    })*/
+      } 
 
      
   }
@@ -314,12 +282,6 @@ alertremove:boolean=false;
      }
     
   }
-  /*hide(){
-   this.variab.globalfeeds.splice(this.index,1);
-
-   
-   console.log(this.index,this.variab.globalfeeds);
-  }*/
 
   hide(){
     let model = {

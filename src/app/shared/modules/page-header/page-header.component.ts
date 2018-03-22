@@ -1,9 +1,9 @@
 import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Service } from '../../../services/services';
+import { FeedService } from '../../../services/feed-service';
 import { Global } from '../../global';
-import { ComponentsService } from '../../../services/components-service';
+
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -31,7 +31,7 @@ desc:any;
 checkView:any;
 loading: boolean = false;
 currDate = new Date();
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public componentsService:ComponentsService,public variab:Global,public service:Service) { }
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');

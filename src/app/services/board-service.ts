@@ -2,6 +2,7 @@ import { Injectable,ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import PouchDB from 'pouchdb';
 import { Settings }from './settings';
+import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -11,16 +12,17 @@ export class BoardService {
 	username:any;
 	password:any;
 
-	constructor(private http: Http,private settings:Settings) { 
-		this.localdb = new PouchDB('boards');
-		
+	constructor(private http: Http,private settings:Settings,public variab:Global) { 
+		//Create pouchdb instance for boards
+		/*this.localdb = new PouchDB('boards');
+		//Create reomte couchdb instance for boards
 		this.remote = new PouchDB(this.settings.protocol+this.settings.dbboards,{
 		  	    auth:{
 		  			      username:this.settings.couchdbusername,
 		  			      password:this.settings.couchdbpassword
 		  	        }
 		  });
-
+		//Synch pouchdb with couchdb
 		this.localdb.sync(this.remote, {
 		  live: true,
 		  retry:true
@@ -32,67 +34,17 @@ export class BoardService {
 		  // yo, we got an error! (maybe the user went offline?)
 		})
 		//function call to create design docs
-		this.createDesignDocs();
+		this.createDesignDocs();*/
 
-		/*this.remote = this.settings.protocol+this.settings.dbboards;
-
-		
-		  
-		     let options = {
-		       live: true,
-		       retry: true,
-		       continuous: true,
-		       auth: {
-		          username: this.settings.couchdbusername,
-		          password: this.settings.couchdbpassword
-		        }
-		     };
-		  
-		     this.db.sync(this.remote, options);*/
 
 	  }
-	createDesignDocs(){
-	
-	
-
-		var ddoc = {
-		  _id: '_design/board',
-		  views: {
-		    boards: {
-		      map: function (doc) {
-		        if(doc.label && doc.motivation === 'identifying'){
-		           emit(doc.label,doc);  
-		       }
-		      }.toString()
-		    }
-		  }
-		}
-
-		// save the design doc
-		this.localdb.put(ddoc).catch(function (err) {
-		  if (err.name !== 'conflict') {
-		    throw err;
-		  }
-		  // ignore if doc already exists
-		})
-		
-		PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards);
-	
-
-	}
-
+	//Api service to get boards from pouchdb
 	getboards(){
 
-			//var url = this.settings.protocol+this.settings.host+this.settings.dbboards+'/_design/board/_view/boards';
-			/*this.remote.replicate.to(this.localdb, {
-			   filter: '_view',
-			   view: 'board/boards'
-			 }).then(res=>{
-			console.log(res);
-			});*/
+
 
 	return new Promise(resolve => {
-	  this.localdb.query('board/boards', {
+	  this.variab.localboards.query('board/boards', {
 	     
 	      
 	    }).then(function (result) {
@@ -104,10 +56,11 @@ export class BoardService {
 	});
 	  
 	}
+	//Api service to add board to pouchdb and replicate to coudhdb
 	addboard(res){
 	return new Promise(resolve => {
 		this.addtopouch(res).then(response=>{
-			console.log(response);
+			//console.log(response);
 			if(response['ok'] === true){
 				PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
 				resolve(response);
@@ -116,12 +69,13 @@ export class BoardService {
 	});
 		
 	}
+	//Api service to add board to pouch db
 	addtopouch(res){
 			
 		return new Promise(resolve => {
-			this.localdb.post(res, function callback(err, result) {
+			this.variab.localboards.post(res, function callback(err, result) {
 			    if (!err) {
-			      console.log('Successfully posted a todo!',result);
+			      //console.log('Successfully posted a todo!',result);
 
 			        
 			      resolve(result);
