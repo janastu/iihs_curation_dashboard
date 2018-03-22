@@ -151,7 +151,7 @@ queryString:any;//variable to store the input to find a board name
 //   var model;
   // console.log('mem',this.variab.groupname);
   if(this.groupname){
-     model={
+    var model={
      
        "@context": "http://www.w3.org/ns/anno.jsonld",
        "type": "Annotation",
