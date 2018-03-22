@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { DataService } from '../../services/data-service';
-import { Global } from '../../shared';
-import * as _ from 'lodash'
+import { DataService } from '../../services/data-service'; //Import data service to fetch recently read feeds
+import { Global } from '../../shared';//Import Global to use global variables in the recently read feed's local scope
+import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
   selector: 'app-recently-read',
   templateUrl: './recently-read.component.html',
@@ -16,78 +16,28 @@ view:any;                    //variable to store the view state
 globalfeeds:any=[];          //variable to store feeds globally
 date:any;                    //variable to store the state of dates to filters
 user:any;
-  constructor(public variab:Global,public dataservice:DataService) {
+  constructor(public variab:Global,public dataservice:DataService,public util:Utilities) {
    }
    
    //On loading Component
   ngOnInit() {
     var doc:any=[];
     this.user = localStorage.getItem('name');
+    this.view = localStorage.getItem('view');
     //Fetch the data from service and store in global variable
   	this.dataservice.getrecentlyread(this.user).then(result=>{
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
                        
-                  this.checkForDeletedFeeds();
+                  this.util.checkForDeletedFeeds(this.variab.recentlyread).then(res=>{
+                    this.feeds = res;
+                  });
      
     });
      
 
   }
-  //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
-  // and display the rest of the feeds
-  checkForDeletedFeeds(){
-    
-    let hiddenfeeds:any=[];
-    this.dataservice.getdeletedfeeds(this.user).then(res=>{
-     hiddenfeeds=res;
-     //console.log(hiddenfeeds)
-     if(hiddenfeeds.length == 0){
-       this.feeds = this.variab.recentlyread;
-       document.getElementById('loading').style.display = 'none';
-       }
-      
-     
-      this.variab.recentlyread.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-        //console.log("hiddem",feed.value._id,globalfeed.value._id)
-           if(feed.value._id === globalfeed.value._id) {
-            var i = _.indexOf(this.variab.recentlyread,globalfeed);
-            this.variab.recentlyread.splice(i,hiddenfeeds.length);
 
-            this.feeds = this.variab.recentlyread;
-           // console.log("feedis",this.feeds,this.variab.recentlyread)
-               if(this.feeds.length == 0){
-                  //this.loading = true;
-                  
-                  document.getElementById('loading').style.display = 'block';
-               }
-               else{
-                   //this.loading = false;
-                   document.getElementById('loading').style.display = 'none';
-
-               }
-           }
-           else{
-           this.feeds = this.variab.recentlyread;
-           if(this.feeds.length == 0){
-              //this.loading = true;
-              
-              document.getElementById('loading').style.display = 'block';
-           }
-           else{
-               //this.loading = false;
-               document.getElementById('loading').style.display = 'none';
-
-           }
-         }
-        })
-     })
-     
-
-    })
-
-  }
 
   //Function to handle view event from page-header component
   public handleView(childView:any){
@@ -96,20 +46,10 @@ user:any;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-
-    this.date = childDates;
-    var fromdate = Date.parse(this.date.changefrom);
-    var todate = Date.parse(this.date.changeto);
-
-    this.feeds =  this.variab.recentlyread.filter((res)=>{
-        
-       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
-        //sconsole.log("date",res.value.target);
-          return res;
-        }
-       
-
-    });
+    this.util.filterDate(childDates,this.variab.boardfeeds).then(res=>{
+      this.feeds = res;
+      console.log(this.feeds);
+    })
 
   }
   //Function to handle clear Date event from page-header component
@@ -118,34 +58,22 @@ user:any;
       this.feeds = this.variab.recentlyread;
     }
   }
-  //Function to handle Category event from page-header component
-  public handleCategory(childCategory:any){
-
-   this.feeds =  this.globalfeeds.filter((res)=>{
-     console.log(childCategory,res.category);
-       if(res.category === childCategory){
-          return res;
-        }
-
-    });
-  }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
    
     if(childSortLabel === 'Latest'){
     
-     this.variab.recentlyread.sort(function(a, b) {
-       
-       return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
-     });
+     this.util.sortdescending(this.variab.boardfeeds).then(res=>{
+       this.feeds = res;
+       console.log(this.feeds)
+     })
      
     
     }
     if(childSortLabel === 'Oldest'){
-      this.variab.recentlyread.sort(function(a, b) {
-         
-        return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
-      });
+      this.util.sortascending(this.variab.boardfeeds).then(res=>{
+        this.feeds = res;
+      })
     }
   }
 

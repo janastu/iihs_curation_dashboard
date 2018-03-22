@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ArticleviewComponent } from './articleview.component';
-import { ArticleToolbarModule,CreateboardcomponentModule } from '../../components';
-import { ModalModule } from '../../components';
+import { ArticleToolbarModule } from '../../modules/article-toolbar/article-toolbar.module';
+import { CreateboardcomponentModule } from '../../modules/createboardcomponent/createboardcomponent.module'
+import { ModalModule } from '../../modules/modal/modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 

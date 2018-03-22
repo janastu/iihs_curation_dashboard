@@ -16,19 +16,18 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateboardcomponentComponent implements OnInit {
   @Input('feeditem') feeditem:any;
-selectedstar: number;
-visible:boolean;
-boardForm:FormGroup;
-boardname = this.formBuilder.control('', [Validators.required]);
-user:any;
-labelForBoards:any=[];
+selectedstar: number;//Status variable to store the status of star icon
+visible:boolean;//variale to store the status to show th create board block
+boardForm:FormGroup;//variable to store the form input
+boardname = this.formBuilder.control('', [Validators.required]);//variable to store the input value of the form
+user:any;//variable to store the user name of logged in user
+labelForBoards:any=[];//variable to store the index of the boards
 outside:any;
 date:Date;
-queryString:any;
-alertexists:boolean=false;
-alertempty:boolean=false;
-alertpartofgroup:boolean=false;
-groupname:any;
+alertexists:boolean=false;//alert variable to store the status if board already exists
+alertempty:boolean=false;//alert variable to store the status if board name is empty
+groupname:any;//variable to store the groupname
+queryString:any;//variable to store the input to find a board name
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
 
      
@@ -168,38 +167,20 @@ groupname:any;
      };
 
   }
-  else{
-    /*model={
-     
-       "@context": "http://www.w3.org/ns/anno.jsonld",
-       "type": "Annotation",
-       "creator": this.user,
-       "created": this.date.getTime(),
-       "modified": this.date.getTime(),
-       "generator": "mm_2017_v1",
-       "generated": this.date.getTime(),
-       "motivation":"identifying",
-       "label":this.boardname.value
-
-     };*/
-     this.alertpartofgroup = true;
-     this.ngAlert.type = 'warning';
-     
-
-  }
-    
+    //Check if boardname exists
     if(this.boardname.value === ''){
-      console.log("boardname cant be empty");
+      //console.log("boardname cant be empty");
       this.alertempty = true;
       this.ngAlert.type = 'warning';
       setTimeout(() => this.alertempty = false, 2000);
     }
+    //check if board already exists by getting the boards
     else{
     this.boardservice.getboards().then(res=>{
       console.log(res);
       var toCheckrepeatBoards:any =[];
       var boardExists :any = 0;
-       toCheckrepeatBoards =res;
+      toCheckrepeatBoards =res;
       toCheckrepeatBoards.map(boardname=>{
          if(this.boardname.value === boardname.value.label){
            console.log("boardname exists");
@@ -208,11 +189,11 @@ groupname:any;
          }
        })
       if(boardExists == 1){
-        console.log("exit");
         this.alertexists = true;
         this.ngAlert.type = 'warning'
         setTimeout(() => this.alertexists = false, 2000);
       }
+      //Add the board to the database
       if(boardExists == 0){
         console.log("add");
         this.boardservice.addboard(model).then(res=>{
@@ -221,7 +202,7 @@ groupname:any;
                 this.variab.boardupdated.push({value:model});  
                 this.visible=false;
                 this.alertempty = false;
-                 this.alertexists = false; 
+                this.alertexists = false; 
               }
         })
       }
@@ -230,41 +211,6 @@ groupname:any;
 
     
   }
-      
-       
-       //this.variab.boardupdated.push({value:model});  
-      //this.variab.displayUserBoards.push(this.boardname.value);  
-    //Update the group database with board idboardupdated:any=[];
-
-
-  /*) this.groupService.getgroups().then(res=>{
-      var groups:any=[];
-      groups=res;
-      
-      groups.map(group=>{
-        //Check if the logged member is part of any group
-        var checkmemberof = group.value.members.map(member=>{
-          if(member == this.user){
-            return group.value.groupname;
-          }
-        })
-        
-        //get the group name and update the group with the board
-        checkmemberof.map(value=>{
-          if(group.value.groupname === value){
-            
-              group.value.boards.push(this.boardname.value);
-           
-            console.log("checkmember",group.value);
-            this.groupService.update(group.value);
-          }
-        })
-
-      })
-      
-
-
-    })*/
 
      
   }
@@ -272,7 +218,7 @@ groupname:any;
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
     this.labelForBoards[i]=false;
-    //this.selectedstar = 0;
+    this.selectedstar = 0;
     this.variab.annotations.map(anno=>{
       if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
            

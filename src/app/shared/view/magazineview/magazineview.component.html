@@ -13,24 +13,24 @@
       <div class="col-sm-6 offset-sm-3">
           
           <div class="card-blocks">
-            <div class="row centered magazine-list">
+            <div class="row centered">
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds | paginate: { itemsPerPage: 10, currentPage: p }">
+              <div class="feeds-entries">
                 
               <div class="magazine-hover-control">
-              <app-hover-toolbar [item]='item' [index]='i' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
+              <app-hover-toolbar [item]='item' [index]='childIndex' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
               </div>
               
 
                <div class="feed-entry" *ngIf="item.value.description != null">
                <!--Feed Image--> 
-                <div *ngIf="checkimg(item.value.description)" class="desc-image">
-                 <img [src]="extracturl(item.value.description)" class="magazine-image">
+                <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
+                 <img [src]="html.extracturl(item.value.description)" class="magazine-image">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="magazine-image"></div>-->
                 </div>
-                <div *ngIf="!checkimg(item.value.description)" class="desc-image">
+                <div *ngIf="!html.checkimg(item.value.description)" class="desc-image">
                  <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
                
                 
@@ -38,7 +38,7 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item" [index]='i'></app-modal>
+                      <app-modal #modal [item]="item" [index]='chilIndex'></app-modal>
                      <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
                     <a href={{item.value.url}} class="metadata-magazine">
@@ -48,16 +48,16 @@
                       {{item.value.pubDate | date}}
                     </a>
                     <!--Feed Desc-->
-                    <div *ngIf="checkimg(item.value.description)" class="feed-content">
+                    <div *ngIf="html.checkimg(item.value.description)" class="feed-content">
                         
                     </div>
 
-                    <div *ngIf="!checkimg(item.value.description) && !checkhtml(item.value.description)" class="feed-content">
+                    <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content">
                         {{item.value.description.substring(0,100)}}
 
                     </div>
-                    <div *ngIf="checkhtml(item.value.description)" class="feed-content">
-                        {{stripHtml(item.value.description).substring(0,100)}}
+                    <div *ngIf="html.checkhtml(item.value.description)" class="feed-content">
+                        {{html.stripHtml(item.value.description).substring(0,100)}}
 
                     </div>
                    
@@ -75,6 +75,3 @@
   </div>
 
 </div>  
-<div class="col-sm-6 offset-sm-3" *ngIf="incomingfeeds['length'] != 0">
-<pagination-controls (pageChange)="p = $event"></pagination-controls> 
-</div>

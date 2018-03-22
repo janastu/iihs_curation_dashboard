@@ -12,21 +12,19 @@ import 'rxjs/add/operator/map';
 export class Global {
 
    
-   globalfeeds:any=[];
-   readlaterfeeds:any=[];
-   recentlyread:any=[];
-   boardupdated:any=[];
-   displayUserBoards:any=[];
-   categoryfeeds:any=[];
-   categoryupdated:any=[];
-   metacategories:any=[];
-   hiddenfeeds:any=[]; 
-   boardfeeds:any=[];
-   recentdocs:any=[];
-   annotations:any=[];
-   globalcatname:any;  
-   globalboardname:any;
-   userDoc:any;
+   globalfeeds:any=[];//global variable to store feeds in global buffer
+   readlaterfeeds:any=[];//global variable to store readlater feeds in global buffer
+   recentlyread:any=[];//global variable to store recently read feeds in global buffer
+   boardupdated:any=[];//global variable to store boards in global buffer
+   categoryfeeds:any=[];//global variable to store categories in global buffer
+   hiddenfeeds:any=[]; //global variable to store hidden feeds in global buffer
+   boardfeeds:any=[];//global variable to store board feeds in global buffer
+   recentdocs:any=[];//global variable to store recent feeds in global buffer
+   annotations:any=[];//global variable to store board annotations in global buffer
+   localfeeds:any;//global variable to store the pouchdb object for feeds
+   localannotations:any;//global variable to store the pouchdb object for annotations
+   localgroups:any;//global variable to store the pouchdb object for groups
+   localboards:any;//global variable to store the pouchdb object for boards
   constructor(public http: Http) {
   
 

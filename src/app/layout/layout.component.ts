@@ -11,7 +11,7 @@ user:any;
     constructor(public router: Router,public userService:Userservice) { }
 
     ngOnInit() {
-    	this.userService.checkExpired();
+    	    
         this.user = localStorage.getItem('name')
         
         if (this.router.url === '/') {

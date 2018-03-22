@@ -10,8 +10,6 @@ import { PreferencesRoutingModule } from './preferences-routing.module';
 import { PreferencesComponent } from './preferences.component';
 import { PageHeaderModule } from '../../../shared';
 import { StatModule } from '../../../shared';
-import { Service } from '../../../services/services';
-
 
 
 
@@ -33,7 +31,7 @@ import { Service } from '../../../services/services';
        
     ],
    
-    providers: [Service]
+    providers: []
      
 })
 export class PreferencesModule { }

@@ -8,10 +8,10 @@
 
           <div class="row">
 
-              <div class="feeds-entries" *ngFor="let item of incomingfeeds| paginate: { itemsPerPage: 10, currentPage: p}">
+              <div class="feeds-entries">
                 <!--Feed Title-->
                   <div class="row">
-                    <app-modal #modal [item]="item" [index]='i'></app-modal>
+                    <app-modal #modal [item]="item" [index]='index'></app-modal>
                    <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                    </div>
                   <!--Feed Category-->
@@ -30,30 +30,30 @@
                   <!--Feed Toolbar-->
                   <div class="row">
 
-                    <app-article-toolbar [item]='item' [index]='i'></app-article-toolbar>
+                    <app-article-toolbar [item]='item' [index]='index'></app-article-toolbar>
                   
 
                   </div>
                   <!--Feed Image-->
                   
-                    <div *ngIf="checkimg(item.value.description)" class="row">
+                    <div *ngIf="html.checkimg(item.value.description)" class="row">
                     <!--<div [innerHtml]="extracturl(item.value.desc)" class="article-image"></div>-->
-                      <img [src]="extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
+                      <img [src]="html.extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
                     </div>
-                    <div *ngIf="!checkimg(item.value.description)" class="row">
+                    <div *ngIf="!html.checkimg(item.value.description)" class="row">
                       <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
                     
                     </div>
                   <!--Feed Desc-->
                   <div class="row" *ngIf="item.value.description != null">
-                    <div *ngIf="checkimg(item.value.description)" class="feed-content article-feed-content">
+                    <div *ngIf="html.checkimg(item.value.description)" class="feed-content article-feed-content">
                           
                     </div>
-                    <div *ngIf="!checkimg(item.value.description) && !checkhtml(item.value.description)" class="feed-content article-feed-content">
+                    <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content article-feed-content">
                             {{item.value.description.substring(0,250)}}
                     </div>
-                    <div *ngIf="checkhtml(item.value.description)" class="feed-content article-feed-content">
-                        {{stripHtml(item.value.description).substring(0,100)}}
+                    <div *ngIf="html.checkhtml(item.value.description)" class="feed-content article-feed-content">
+                        {{html.stripHtml(item.value.description).substring(0,100)}}
 
                     </div>
                   </div>
@@ -66,9 +66,6 @@
         </div>
 
     </div>
-        <div class="col-sm-6 offset-sm-3" *ngIf="incomingfeeds['length'] != 0">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls> 
-        </div>
   </div>
        
 </div>

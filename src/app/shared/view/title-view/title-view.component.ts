@@ -1,8 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { Service } from '../../../services/services';
 import { DatePipe } from '@angular/common';
-
+//import { HtmlParser} from '../../Utilities/html-parser';
 @Component({
   selector: 'app-title-view',
   templateUrl: './title-view.component.html',
@@ -11,23 +10,17 @@ import { DatePipe } from '@angular/common';
 })
 export class TitleViewComponent implements OnInit {
 feeds:any=[];
-mouseover:boolean = false;
-p:any;
-@Input('feeds') incomingfeeds:any=[];
-@Input('metadata') incomingmetadata:any=[];
-  constructor(public service:Service) {
-    	console.log("mouseover",this.mouseover);
+
+@Input('feeds') item:any=[];
+@Input('index') index:any;
+  constructor() {
+    	//console.log("mouseover",this.item);
     	 }
 
   ngOnInit() {
-    this.service.getAll().then(result=>{
-  	  this.feeds= result;
-    });
-  }
-  checkimg(feeds){
-    return (/<img[\s\S]*>/i.test(feeds));
    
   }
+ 
   
 
 }
