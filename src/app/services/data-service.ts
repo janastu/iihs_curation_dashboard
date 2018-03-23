@@ -1,7 +1,8 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { Http,RequestOptions,Headers  }       from '@angular/http';
 import PouchDB from 'pouchdb';
-import { Settings } from './settings'
+import { Settings } from './settings';
+import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -11,163 +12,32 @@ export class DataService {
   remote:any;
   username:any;
   password:any;
-constructor(private http: Http,private settings:Settings) { 
-
-    //this.localdb = new PouchDB('iihs_annotation');
-  this.localdb = new PouchDB('iihs_annotation'); //create a pouchdb 
- this.remote = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
-            auth:{
-                  username:this.settings.couchdbusername,
-                  password:this.settings.couchdbpassword
-                }
-      });
-  //function call to create design docs
-  this.createDesignDocs();
-
- // this.remote = 'https://login.test.openrun.net/iihs_annotattion';
- /*this.remote  = this.settings.protocol+this.settings.dbannotations;
-
-    //console.log("remote",this.remote)
-
-
-    
-       let options = {
-         live: true,
-         retry: true,
-         continuous: true,
-         auth: {
-            username: this.settings.couchdbusername,
-            password: this.settings.couchdbpassword
-          }
-       };
-    this.localdb.sync(this.remote, options);*/
-   
+constructor(private http: Http,private settings:Settings,public variab:Global) { 
 
   }
-
+  //Api service to add annotatioins to pouchdb
   addtodatabase(payload){
-   this.localdb.post(payload, function callback(err, result) {
-     if (!err) {
-       console.log('Successfully posted a todo!',result);
-      
-     }
-   });
+    console.log("called");
+    return new Promise(resolve=>{
+     this.variab.localannotations.post(payload, function callback(err, result) {
+       if (!err) {
+         //console.log('Successfully posted a todo!',result);
+          resolve(result);
+       }
+       
+     });
+    });
 
 
   }
  
-  //Design Docs
-  createDesignDocs(){
-  
-  
-
-    var ddoc = {
-      _id: '_design/annotations',
-      views: {
-        boardannotation: {
-          map: function (doc) {
-            if (doc.label && doc.motivation ==='tagging' && !doc.hideboardanno) {
-                     
-                      emit(doc.label[0],doc);
-                    }
-          }.toString()
-        },
-        readlater: {
-          map: function (doc) {
-            if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno) {
-                    emit(doc.creator,doc.target.value);
-                         }
-          }.toString()
-        },
-        recentlyread: {
-          map: function (doc) {
-            if (doc.motivation === 'tagging' && !doc.label && !doc.hiderecenltyreadanno) {
-                     emit(doc.creator,doc.target.value);
-                       }
-          }.toString()
-        },
-        hidden: {
-          map: function (doc) {
-            if (doc.hidden === true && doc.target.key) {
-                    emit(doc.creator,doc);
-                           }
-          }.toString()
-        },
-        boardhidden: {
-          map: function (doc) {
-            if(doc.hideboardanno == true){
-              emit(doc.label,doc);
-            }
-          }.toString()
-        }
-
-      }
-
-
-    }
-    var feedsdoc = {
-      _id: '_design/annotatedfeeds',
-      views: {
-        boardfeeds: {
-          map: function (doc) {
-            if (doc.label && !doc.hideboardanno) {
-                     emit(doc.label[0],doc.target.value);
-             }
-          }.toString()
-        },
-        deletedfeeds: {
-          map: function (doc) {
-            if (doc.hidden === true) {
-                  emit([doc.creator],doc.target);
-                   }
-          }.toString()
-        },
-        alldeletedfeeds: {
-          map: function (doc) {
-            if(doc.hidden == true){
-              emit(doc.creator,doc.target.value);
-            }
-          }.toString()
-        }
-
-      }
-    }
-    
-
-
-    // save the design doc
-    this.localdb.put(ddoc).catch(function (err) {
-      if (err.name !== 'conflict') {
-        throw err;
-      }
-      // ignore if doc already exists
-    })
-    // save the design doc
-    this.localdb.put(feedsdoc).catch(function (err) {
-      if (err.name !== 'conflict') {
-        throw err;
-      }
-      // ignore if doc already exists
-    });
-    this.localdb.replicate.to(this.remote, {
-      live: true,
-      retry: true,
-      back_off_function: function (delay) {
-        if (delay === 0) {
-          return 1000;
-        }
-        return delay * 3;
-      }
-    });
-  
-
-  }
+  //Api service to get board annotations
   getannotations(){ 
     
 
    return new Promise(resolve => {
    
-     this.localdb.query('annotations/boardannotation', {
+     this.variab.localannotations.query('annotations/boardannotation', {
            
          }).then(function (result) {
          // console.log("res",result);
@@ -178,20 +48,41 @@ constructor(private http: Http,private settings:Settings) {
    });
 
   }
- /* getboards(){
-    function map(doc) {
-      if(doc.label && doc.motivation === 'identifying')
-      emit(doc.label,doc);
-    }
-    return new Promise(resolve => {
-      this.localdb.query(map).then(function (result) {
-         
-        resolve(result.rows);
-      }).catch(function (err) {
-      console.log(err);
-      });
-    });
-  }*/
+  //Api service to get read later annotations
+  getreadlaterannotations(){ 
+    
+
+   return new Promise(resolve => {
+   
+     this.variab.localannotations.query('annotations/readlater', {
+           
+         }).then(function (result) {
+         //console.log("res",result);
+         resolve(result.rows);
+       }).catch(function (err) {
+         console.log(err);
+       });
+   });
+
+  }
+  //Api service to get recently read annotations
+  getrecentlyreadannotations(){ 
+    
+
+   return new Promise(resolve => {
+   
+     this.variab.localannotations.query('annotations/recentlyread', {
+           
+         }).then(function (result) {
+         // console.log("res",result);
+         resolve(result.rows);
+       }).catch(function (err) {
+         console.log(err);
+       });
+   });
+
+  }
+  //Api service to get board feeds
   getboardfeeds(board){
 
 
@@ -200,53 +91,57 @@ constructor(private http: Http,private settings:Settings) {
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/boardfeeds?key='+'"'+board+'"';
 
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+    /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/boardfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){
-      this.localdb.query('annotatedfeeds/boardfeeds', {
+    if(res['ok']==true){*/
+      this.variab.localannotations.query('annotatedfeeds/boardfeeds', {
            key:board
          }).then(function (result) {
-         console.log("res",result);
+        //
+
+        // console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
        });
-      }
-    });
+      //}
+    //});
     });
 
   
 
 
   }
+  //Api service to get readlater annotations and feeds
   getreadlater(usr){
 
 
     return new Promise(resolve => {
-      this.remote.replicate.to(this.localdb, {
+      /*this.remote.replicate.to(this.localdb, {
          filter: '_view',
          view: 'annotations/readlater'
        }).then(res=>{
       console.log(res);
-      if(res['ok']==true){
+      if(res['ok']==true){*/
     
-      this.localdb.query('annotations/readlater', {
+      this.variab.localannotations.query('annotatedfeeds/readlaterfeeds', {
           key:usr
         }).then(function (result) {
-       console.log("res readlater",result);
+       //console.log("res readlater",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
       });
-      }
-     });
+      //}
+     //});
     });
 
 
   }
+  //Api Service to get recently read annotations and feeds
   getrecentlyread(usr){
 
    // var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotations/_view/recentlyread?key='+'"'+usr+'"';
@@ -254,13 +149,13 @@ constructor(private http: Http,private settings:Settings) {
 
 
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+   /* this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotations/recentlyread'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){
-      this.localdb.query('annotations/recentlyread', {
+    if(res['ok']==true){*/
+      this.variab.localannotations.query('annotatedfeeds/recentlyreadfeeds', {
           key:usr
         }).then(function (result) {
        // console.log("res",result);
@@ -268,76 +163,44 @@ constructor(private http: Http,private settings:Settings) {
       }).catch(function (err) {
         console.log(err);
       });
-     }
-    });
+     //}
+    //});
     });
 
 
   }
-  /*updatedoc(doc){
-   this.localdb.put(doc).then(function (response) {
-     // handle response
-     console.log(response)
-   }).catch(function (err) {
-     console.log(err);
-   });
-  }*/
  
-  getalldeletedfeeds(usr){
-
-  //  var url = this.settings.protocol+this.settings.host+this.settings.dbannotations+'/_design/annotatedfeeds/_view/alldeletedfeeds'
-
-   // var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/alldeletedfeeds';
-   return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
-       filter: '_view',
-       view: 'annotatedfeeds/alldeletedfeeds'
-     }).then(res=>{
-    console.log(res);
-    if(res['ok']==true){
-      this.localdb.query('annotatedfeeds/alldeletedfeeds', {
-          key:usr
-        }).then(function (result) {
-       // console.log("res",result);
-        resolve(result.rows);
-      }).catch(function (err) {
-        console.log(err);
-      });
-     }
-    });
-    });
-
-  }
+  //Api service to get deleted feeds
   getdeletedfeeds(usr){
 
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     return new Promise(resolve => {
-    this.remote.replicate.to(this.localdb, {
+    /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/deletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){ 
-      this.localdb.query('annotatedfeeds/deletedfeeds', {
+    if(res['ok']==true){ */
+      this.variab.localannotations.query('annotatedfeeds/deletedfeeds', {
           key:[usr]
           
         }).then(function (result) {
-       console.log("res",result);
+       //console.log("res",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
       });
-     }
-    });
+     //}
+    //});
     });
 
   }
   //Update database for deleted and modidifed
   updatedatabase(doc){
-    this.localdb.put(doc).then(function (response) {
+    this.variab.localannotations.put(doc).then(function (response) {
       // handle response
-      console.log(response)
+     // console.log(response)
     }).catch(function (err) {
       console.log(err);
     });

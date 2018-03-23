@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { SpinnerModule } from 'angular-spinners';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { PageHeaderModule } from './../../shared';
-//import { BrowserModule } from '@angular/platform-browser';
-import { Userservice } from '../../services/userservice';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PageHeaderModule } from './../../shared'; //Import the Pageheader Module from shared and declare in imports
+import { Userservice } from '../../services/userservice';//Import the User Service from services and declare in Providers
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
     PageHeaderModule,
-   // SpinnerModule
+    NgbModule.forRoot()
   ],
   declarations: [DashboardComponent],
   providers: [Userservice]

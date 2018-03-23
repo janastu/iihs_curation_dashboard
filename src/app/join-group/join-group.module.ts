@@ -8,9 +8,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { JoinGroupRoutingModule } from './join-group-routing.module';
 import { JoinGroupComponent } from './join-group.component';
-//import { PageHeaderModule } from '../../shared';
-//import { StatModule } from '../../shared';
-import { Service } from '../services/services';
+
 
 
 
@@ -33,7 +31,7 @@ import { Service } from '../services/services';
        
     ],
    
-    providers: [Service]
+    providers: []
      
 })
 export class JoinGroupModule { }

@@ -3,15 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
-import { Service } from '../../services/services';
-import { DataService } from '../../services/data-service';
-import { Global } from '../../shared/global';
+import { DataService } from '../../services/data-service'; //Import dataservice file to get the hidden feeds
+import { Global } from '../../shared/global';//Import Global to use global variables in the feeds's local scope
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
-import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
-import { FeedService } from '../../services/feed-service';
-declare var require:any;
-var moment = require('moment');
+import { FeedService } from '../../services/feed-service';//Import feed service to get feeds
+import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
   
   selector: 'app-feeds',
@@ -22,117 +19,97 @@ var moment = require('moment');
 
 export class FeedsComponent implements OnInit {
 
-
+p:any; //variable to store the current page nuber
+pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
-view:any;              //variable to store the view state
-date:any;              //variable to store the state of dates to filters
-catname:any;
-usersview:any;
-user:any;
-alertrange:boolean=false;
-alertNofeeds:boolean=false;
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute) { }
+view:any;      //variable to store the view state
+date:any;      //variable to store the state of dates to filters
+user:any;     //variable to store the username
+alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
+
     this.user =localStorage.getItem('name');
     
-    this.usersview = localStorage.getItem('view');
+    //this.usersview = localStorage.getItem('view');
  
-    this.view = this.usersview;
-
+    this.view = localStorage.getItem('view') || null;
 
 
 
  //Access the query parameter and filter the feeds according to category
-           this.route.queryParams
+      this.route.queryParams
             .subscribe(params => {
-              console.log(params);
-              this.feedService.getcategoryfeeds(params.feedname);
+             
+             //To get feeds , filtered according to subcategory 
+             //check if the query parameter has subcatgeory property 
               if(params.subcategory){
                 
-              this.catname = params.subcategory;
-              this.feedService.getmetacategories(this.catname).then(res=>{
-                console.log(res);
-                this.variab.globalfeeds = res;
+              this.pageheading = params.subcategory;
+              this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+                this.variab.globalfeeds = val;
+                //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
-                 this.checkForDeletedFeeds(); 
-              })
+                 this.feeds = this.variab.globalfeeds;
+              //Call the checkForDeleted method to check for hidden/removed feeds
+              //and remove those feeds from the display array  
+
+               /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
+                 this.feeds = res;
+               });  */ 
+
+              });
+              
             }
+            //To get feeds,filtered according to feedname
             else{
-              this.catname = params.feedname
-               this.feedService.getlatestfeeds(params.feedname).then(res=>{
-                
-                 
-                    this.variab.globalfeeds = res;
-                     this.variab.globalfeeds.reverse();
-                     //After filtering the feeds according to category remove the hidden feeds 
-                     //and display the rest feeds
-                       
-                      
-                       
-                    this.checkForDeletedFeeds();   
-                       
-                        
-                   
-             });
+              this.pageheading = params.feedname;
+              this.getfeedsOnFeedname(params.feedname).then(val=>{
+                this.variab.globalfeeds = val;
+                //Reverse the filter to sort according to latest feeds
+                 this.variab.globalfeeds.reverse();
+              //Call the checkForDeleted method to check for hidden/removed feeds
+              //and remove those feeds from the display array
+                    this.feeds=this.variab.globalfeeds;
+                  /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
+                    this.feeds=res;
+                  }); */ 
+
+              });
             }
 
-           });
+     });
    
   }
-  //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
-  // and display the rest of the feeds
-  checkForDeletedFeeds(){
+  //Get feeds filtered on feedname
+  getfeedsOnFeedname(feedname){
+    var feedsOnFeedname:any=[];
+    return new Promise(resolve=>{
+     //Call the feed service to get the feeds filtered according to feedname
+      this.feedService.getlatestfeeds(feedname).then(res=>{
+       
+         //Store the result in the global variable globalfeeds
+           feedsOnFeedname = res;
+           resolve(feedsOnFeedname);            
+          
+      });
+    });
+
+
+  }
+  //Get feeds filtered on subcategory
+  getfeedsOnSubcategory(subcategory){
+    var feedsOnSubcategory:any=[];
+    return new Promise(resolve=>{
+    //Call the feed service to get the feeds filtered according to subcategory
+      this.feedService.getmetacategories(subcategory).then(res=>{
     
-    let hiddenfeeds:any=[];
-    this.dataservice.getdeletedfeeds(this.user).then(res=>{
-     hiddenfeeds=res;
-    // console.log(hiddenfeeds)
-     if(hiddenfeeds.length == 0){
-       this.feeds = this.variab.globalfeeds;
-       //console.log("check",this.variab.globalfeeds);
-       document.getElementById('loading').style.display = 'none';
-       }
-      
-     
-      this.variab.globalfeeds.map(globalfeed=>{
-        hiddenfeeds.map(feed=>{
-         //console.log("hiddem",feed.value._id,globalfeed.value._id)
-           if(feed.value._id === globalfeed.id) {
-            var i = _.indexOf(this.variab.globalfeeds,globalfeed);
-            this.variab.globalfeeds.splice(i,hiddenfeeds.length);
-
-            this.feeds = this.variab.globalfeeds;
-             //console.log("feedis",this.feeds,this.variab.globalfeeds)
-               if(this.feeds.length == 0){
-                  //this.loading = true;
-                  
-                  document.getElementById('loading').style.display = 'block';
-               }
-               else{
-                   //this.loading = false;
-                   document.getElementById('loading').style.display = 'none';
-
-               }
-           }
-          // console.log("else",this.variab.globalfeeds);
-          this.feeds = this.variab.globalfeeds;
-          if(this.feeds.length == 0){
-             //this.loading = true;
-             
-             document.getElementById('loading').style.display = 'block';
-          }
-          else{
-              //this.loading = false;
-              document.getElementById('loading').style.display = 'none';
-
-          }
-        })
-     })
-     
-
-    })
-
+        //Store the result in the global variable globalfeeds
+        feedsOnSubcategory = res;
+        resolve(feedsOnSubcategory);
+      });
+    });
   }
 
   //Function to handle view event from page-header component
@@ -142,39 +119,16 @@ alertNofeeds:boolean=false;
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    //this.feeds = childDates;
-    this.date = childDates;
-    var xmlLink:any;
-    var fromdate = Date.parse(this.date.changefrom);
-    var todate = Date.parse(this.date.changeto);
-
-    this.feeds =  this.variab.globalfeeds.filter((res)=>{
-      if(fromdate<todate){
-        
-       if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
-        
-          return res;
-        }     
-        else{
-           this.alertNofeeds=true;
-           setTimeout(() => this.alertNofeeds = false, 2000);
-
-        }
+    this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
+      //console.log(res);
+      if(res['length'] == 0){
+        this.alertNofeeds = true;
+        setTimeout(() => this.alertNofeeds = false, 2000);
       }
       else{
-         console.log("er");
-         this.alertrange=true;
-         setTimeout(() => this.alertrange = false, 2000);
-      }  
-    });
-
-    /*if (this.feeds.length == 0) {
-     //console.log("apito newsrack",xmlLink); 
-     this.feedService.getRangeFeeds(fromdate,todate,xmlLink).then(res=>{
-             return res;
-      }) 
-    }*/
-    
+        this.feeds = res;
+      }
+    })
   
   }
   //Function to handle clear Date event from page-header component
@@ -183,74 +137,30 @@ alertNofeeds:boolean=false;
       this.feeds = this.variab.globalfeeds;
     }
   }
-
-  //Function to handle Category event from page-header component
-  public handleCategory(childCategory:any){
-    console.log("in feed",childCategory)
-     /* this.feedService.getcategoryfeeds(childCategory).then(result =>{
-        this.feeds = result;
-        this.catname = childCategory;
-      })*/
-  }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-      this.route.queryParams
-       .subscribe(params => {
-          if(params.subcategory){
-            this.feedService.getmetacategories(params.subcategory).then(result=>{
-                this.variab.globalfeeds=result;
-                this.checkForDeletedFeeds();
-                
-                this.variab.globalfeeds.reverse();
-
-            })
-          }
-          else{
-            this.feedService.getlatestfeeds(this.catname).then(result=>{
-              this.variab.globalfeeds=result;
-              this.checkForDeletedFeeds();
-              //this.feeds=this.variab.globalfeeds;
-              this.variab.globalfeeds.reverse();
-              
-              
-            })
-
-          } 
-       });
-
+      //If input is latest sort the feeds in the descending order
+      this.util.sortdescending(this.variab.globalfeeds).then(res=>{
+        this.feeds = res;
+      })
      
     }
     if(childSortLabel === 'Oldest'){
-      
-     this.route.queryParams
-      .subscribe(params => {
-         if(params.subcategory){
-           this.feedService.getmetacategories(params.subcategory).then(result=>{
-               this.variab.globalfeeds=result;
-               this.checkForDeletedFeeds();
-
-           })
-         }
-         else{
-           this.feedService.getlatestfeeds(this.catname).then(result=>{
-             this.variab.globalfeeds=result;
-             this.checkForDeletedFeeds();
-             
-           })
-
-         } 
-      });
+      //If input is oldest sort the feeds in the descending order
+      this.util.sortascending(this.variab.globalfeeds).then(res=>{
+        this.feeds = res;
+      })
     }
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.catname = 'Recent feeds'
-    this.feeds = childrefresh
+    this.pageheading = 'Recent feeds'
+    this.feeds = childrefresh;
   }
+  //Function to close alerts
   public closeAlert() {
-      this.alertrange=false;
       this.alertNofeeds=false;
   }
    

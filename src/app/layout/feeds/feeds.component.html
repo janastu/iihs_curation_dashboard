@@ -3,45 +3,65 @@
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="catname | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)' (childCategory)='handleCategory($event)' (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
+            <app-page-header [heading]="pageheading | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
         </div>
     </div>
 
-<ngb-alert *ngIf="alertrange" (close)="closeAlert()">From date Should be less than To Date</ngb-alert>
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
-<!--Component to display if no view is selected-->
 
-<div *ngIf = "view === null" > 
-  <app-magazineview [feeds]='feeds'></app-magazineview>
+
+<div class="row centered">
+      <div class="col">
+            <div class="mb-3">
+                     
+               
+                        <div class="container">
+                            
+
+<div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p}" >
+<!--Component to display if no view is selected-->
+<div *ngIf = "view === null"> 
+  <app-magazineview [feeds]='feed' [index]='index'></app-magazineview>
 </div>
 
 <!--Component to display if Magazine view is selected-->
-<div *ngIf = "view === 'Magazine'" > 
-  <!--div id="loading">
-    <img src="assets/images/loading.gif">
-  </div-->
-  <app-magazineview [feeds]='feeds'></app-magazineview>
+<div *ngIf = "view === 'Magazine'"> 
+  <app-magazineview [feeds]='feed' [index]='index'></app-magazineview>
 </div>
+
 <!--Component to display if Article view is selected-->
-<div *ngIf = "view === 'Article'" > 
-  <app-articleview [feeds]='feeds'></app-articleview>
+<div *ngIf = "view === 'Article'"> 
+  <app-articleview [feeds]='feed' [index]='index'></app-articleview>
 </div>
 <!--Component to display if Card view is selected-->
-<div *ngIf = "view === 'Card'" > 
-  <app-card-view [feeds]='feeds'></app-card-view>
+<div *ngIf = "view === 'Card'"> 
+    <app-card-view [feeds]='feed' [index]='index'></app-card-view>
 </div>
 <!--Component to display if Title view is selected-->
-<div *ngIf = "view === 'Title'" > 
-  <app-title-view [feeds]='feeds'></app-title-view>
+<div *ngIf = "view === 'Title'"> 
+<div class="container">
+ <app-title-view [feeds]='feed'  [index]='index'></app-title-view>
+</div>                
+
 </div>
+</div>
+                    </div>
+                  </div>
+               </div>
+           
+</div>    
 <!--<div>
   <button (click)="markallasread()">Mark all as read</button>
 </div>-->
 
 <!--Progress-Spinner-->
-<div id="loading" class= "col-sm-6 offset-sm-3">
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length == 0">
   <!--img *ngIf="loading" class=" spinner-image" src="assets/images/spinner.gif"  /-->
   <img src="assets/images/loading_spinner.gif">
-</div>
+<!--Pagination Component-->
 
+</div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div> 
 </div>  

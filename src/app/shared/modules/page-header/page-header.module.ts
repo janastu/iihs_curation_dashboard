@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageHeaderComponent } from './page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from '../../../sharedfeeds/components/modal/modal.module';
+import { ModalModule } from '../../../shared/modules/modal/modal.module';
 
 
 @NgModule({

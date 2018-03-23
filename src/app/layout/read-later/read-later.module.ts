@@ -9,7 +9,6 @@ import { ReadLaterRoutingModule } from './read-later-routing.module';
 import { ReadLaterComponent } from './read-later.component';
 import { PageHeaderModule } from '../../shared';
 import { StatModule } from '../../shared';
-import { Service } from '../../services/services';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {
@@ -17,9 +16,9 @@ import {
     MagazineviewModule,
     TitleViewModule,
     CardViewModule
-} from '../../sharedfeeds/view';
-import { HoverToolbarModule } from '../../sharedfeeds/components';
-
+} from '../../shared/view';
+import { HoverToolbarModule } from '../../shared/modules/hover-toolbar/hover-toolbar.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +34,8 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
         TitleViewModule,
         CardViewModule,
         ArticleviewModule,
-        HoverToolbarModule
+        HoverToolbarModule,
+        NgxPaginationModule
     ],
     declarations: [
         ReadLaterComponent
@@ -43,7 +43,7 @@ import { HoverToolbarModule } from '../../sharedfeeds/components';
        
     ],
    
-    providers: [Service,DatePipe]
+    providers: [DatePipe]
      
 })
 export class ReadLaterModule { }

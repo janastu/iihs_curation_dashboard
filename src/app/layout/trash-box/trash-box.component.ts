@@ -1,15 +1,11 @@
 import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { fadeInAnimation } from '../../fade-in.animation';
-import { Service } from '../../services/services';
-import { DataService } from '../../services/data-service';
-import { Global } from '../../shared/global';
-import * as _ from 'lodash'
-import { DatePipe } from '@angular/common';
-import { ReadlaterStore } from '../../sharedfeeds/store/readlater-store';
-import { ComponentsService } from '../../services/components-service';
-declare var require:any;
-var moment = require('moment');
+import { DataService } from '../../services/data-service';//Import dataservice to fetch board feeds
+import { Global } from '../../shared';//Import Global to use global variables in the board feed's local scope
+import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
+
+
 @Component({
   
   selector: 'app-trash-box',
@@ -26,14 +22,15 @@ view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
-  constructor(public service:Service,private datepipe:DatePipe,public variab:Global,public readlaterstore:ReadlaterStore,public dataservice:DataService,public componentsService:ComponentsService) { }
+p:any;//variable to store the current page
+  constructor(public variab:Global,public dataservice:DataService,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
     
     this.user = localStorage.getItem('name');
-
+    this.view = localStorage.getItem('view');
      //Fetch the data from service and store in global variable
-     this.dataservice.getalldeletedfeeds(this.user).then(res=>{
+     this.dataservice.getdeletedfeeds(this.user).then(res=>{
        this.variab.hiddenfeeds = res;
        this.feeds = this.variab.hiddenfeeds;
      })
@@ -52,36 +49,26 @@ catname:any;
   
    if(childSortLabel === 'Latest'){
    
-    this.variab.hiddenfeeds.sort(function(a, b) {
-      
-      return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
-    });
+    this.util.sortdescending(this.variab.hiddenfeeds).then(res=>{
+      this.feeds = res;
+      console.log(this.feeds)
+    })
     
    
    }
    if(childSortLabel === 'Oldest'){
-     this.variab.hiddenfeeds.sort(function(a, b) {
-        
-       return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
-     });
+     this.util.sortascending(this.variab.hiddenfeeds).then(res=>{
+       this.feeds = res;
+     })
    }
  }
  //Function to handle Date event from page-header component
  public handleDate(childDates:any){
 
-   this.date = childDates;
-   var fromdate = Date.parse(this.date.changefrom);
-   var todate = Date.parse(this.date.changeto);
-
-   this.feeds =  this.variab.hiddenfeeds.filter((res)=>{
-      // console.log(res.value.date);
-      if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
-       console.log("date",res);
-         return res;
-       }
-      
-
-   });
+   this.util.filterDate(childDates,this.variab.hiddenfeeds).then(res=>{
+     this.feeds = res;
+     console.log(this.feeds);
+   })
 
  }
  //Function to handle clear Date event from page-header component
