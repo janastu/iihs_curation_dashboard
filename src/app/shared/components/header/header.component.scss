@@ -143,7 +143,10 @@ Bootstrap 3 Media Queries
 .menu-item{
     font-size: 10px;
     max-width: 100px;
+    position: absolute !important;
+    top: 40px;
 }
+
 }
 
 /* Extra Small Devices, Phones */ 
@@ -180,6 +183,8 @@ Bootstrap 3 Media Queries
 .menu-item{
     font-size: 10px;
     max-width: 100px;
+    position: absolute !important;
+    top: 40px;
 }
   
 }
@@ -219,6 +224,8 @@ Bootstrap 3 Media Queries
 .menu-item{
     font-size: 10px;
     max-width: 100px;
+    position: absolute !important;
+    top: 40px;
 }
 }
 

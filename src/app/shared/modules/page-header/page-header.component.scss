@@ -140,28 +140,30 @@
        display: inherit;
    }
    .form-from input{
-   font-size: 7px;
-   max-height: 34px;
-   margin-top: 37px;
-   margin-left: -37px;
+   font-size: 6px;
+   max-height: 25px;
+   margin-top: 34px;
+   margin-left: -40px;
+   max-width: 80px;
    }
    .form-to{
-       margin-left: 22px;
+       margin-left: 10px;
        /*margin-bottom: -105px;
        display: inherit;*/
    }
    .form-to input{
-   font-size: 7px;
-   max-height: 34px;
+   font-size: 6px;
+   max-height: 25px;
     margin-left: 8px;
+    max-width: 80px;
    }
    /*.form-to button{
        margin-left: 11px;
     }*/
     .filter-button{
-    margin-left: 25px;
-    margin-top: 21px;
-    font-size: 13px;
+    margin-left: 15px;
+    margin-top: 20px;
+    font-size: 9px;
     }
 }
 
@@ -372,6 +374,8 @@
         margin-top: 0px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
       }
    .form-to{
        margin-left: -10px;
@@ -383,6 +387,8 @@
         margin-left: -5px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
             }
    /*.form-to button{
        margin-left: 0px;
@@ -553,6 +559,8 @@
         margin-top: 0px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
       }
 .form-to{
         margin-left: -13px;
@@ -565,6 +573,8 @@
         margin-left: -5px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
             }
 .filter-button{
     margin-left: 25px;
@@ -642,6 +652,8 @@
         margin-top: 0px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
       }
 .form-to{
         margin-left: -13px;
@@ -649,12 +661,15 @@
         display: inherit;
         margin-top: 0px;
         font-size: 18px;
+
         
       }
 .form-to input{
         margin-left: -5px;
         display: inherit;
         font-size: 12px;
+        max-width: 100%;
+        max-height: inherit;
             }
 .filter-button{
     margin-left: 25px;
