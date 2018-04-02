@@ -8,7 +8,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ManagementRoutingModule } from './management-routing.module';
 import { ManagementComponent } from './management.component';
-import { PageHeaderModule } from '../../../shared';
+import { PageHeaderModule } from '../../../shared/modules/page-header/page-header.module';
 import { StatModule } from '../../../shared';
 
 

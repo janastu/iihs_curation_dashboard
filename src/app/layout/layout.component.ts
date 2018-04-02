@@ -15,7 +15,7 @@ user:any;
         this.user = localStorage.getItem('name')
         
         if (this.router.url === '/') {
-            console.log("in");
+           // console.log("in");
             this.userService.getAuser(this.user).then(userDoc=>{
              var groupname = userDoc['memberof'][0] ;
              if(groupname){
@@ -27,6 +27,9 @@ user:any;
              }
             });
             //this.router.navigate(['/dashboard']);
+        }
+        if(this.router.url === '/mm'){
+            console.log("publishing url")
         }
     }
 

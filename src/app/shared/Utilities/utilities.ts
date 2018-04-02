@@ -28,7 +28,7 @@ checkForDeletedFeeds(feeds){
    // console.log("feed",feeds);
     hiddenfeeds.map(feed=>{
        feeds.filter(globalfeed=>{
-        console.log(feed.value._id,globalfeed.value._id)
+        //console.log(feed.value._id,globalfeed.value._id)
         if(globalfeed.value._id === feed.value._id){
           var i = _.indexOf(feeds,globalfeed);
           feeds.splice(i,1);

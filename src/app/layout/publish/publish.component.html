@@ -3,12 +3,16 @@
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="pageheading | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
+            <app-page-header [heading]="'Confirm Publish' | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
         </div>
     </div>
-
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
-
+<ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Published</ngb-alert>
+      <div *ngIf="publishingurl">
+      <input type="text" #targetString value="{{publishingurl}}">
+      <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
+        [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
+      </div>
 
 <div class="row centered">
       <div class="col">
@@ -16,10 +20,13 @@
                      
                
                         <div class="container">
-                            
-
+ <form [formGroup]="checkForm" (ngSubmit)="publish()">
+ <button type="submit" class="btn btn-secondary next-buttton">Publish</button> 
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
+ <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
+<input type="checkbox" (change)="onChange(feed, $event.target.checked)">
+<!--<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title" [checked]="feedstobechecked[i]==true" />-->
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
@@ -46,11 +53,14 @@
 
 </div>
 </div>
+ 
+</form>
                     </div>
                   </div>
                </div>
            
-</div>    
+</div> 
+ 
 <!--<div>
   <button (click)="markallasread()">Mark all as read</button>
 </div>-->

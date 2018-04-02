@@ -8,7 +8,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { PageHeaderModule } from '../../../shared';
+import { PageHeaderModule } from '../../../shared/modules/page-header/page-header.module';
 import { StatModule } from '../../../shared';
 
 

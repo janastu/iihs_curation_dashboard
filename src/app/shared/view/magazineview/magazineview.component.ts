@@ -13,14 +13,13 @@ import { HtmlParser } from '../../Utilities/html-parser';
 
 export class MagazineviewComponent implements OnInit {
 @Input('feeds') item:any=[];
-@Input('index') childIndex:any;
+@Input('index') index:number;
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
 //p:any;
   constructor(public html:HtmlParser) {
-    
-   /*if(this.incomingfeeds.length == 0) {
+     /*if(this.incomingfeeds.length == 0) {
       // code...
       //document.getElementById('loading').style.display = 'block';
       //setTimeout(5000);

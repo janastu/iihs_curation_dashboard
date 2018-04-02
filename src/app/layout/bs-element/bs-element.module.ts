@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BsElementRoutingModule } from './bs-element-routing.module';
 import { BsElementComponent } from './bs-element.component';
-import { PageHeaderModule } from './../../shared';
+import { PageHeaderModule } from './../../shared/modules/page-header/page-header.module';
 
 @NgModule({
     imports: [

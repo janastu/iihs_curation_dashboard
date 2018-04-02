@@ -248,8 +248,10 @@ pullnewFeeds(){
     var newsrack = this.settings.feedparserUrl+'/?user='+url;
     //console.log(newsrack);
     this.http.get(newsrack).subscribe((response)=> {
+       console.log("response",response);
        resolve(response);
     },(err)=>{
+      console.log(err);
       resolve(err);
       
     });

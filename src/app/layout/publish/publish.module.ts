@@ -5,9 +5,9 @@ import {
     NgbAlertModule,
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
-import { BoardfeedsRoutingModule } from './boardfeeds-routing.module';
-import { BoardfeedsComponent } from './boardfeeds.component';
-import { PageHeaderModule } from '../../shared/modules/page-header/page-header.module';
+import { PublishRoutingModule } from './publish-routing.module';
+import { PublishComponent } from './publish.component';
+import { PageHeaderModule } from './../../shared/modules/page-header/page-header.module';
 import { StatModule } from '../../shared';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -18,13 +18,14 @@ import { CardViewModule } from '../../shared/view/card-view/card-view.module';
 import { HoverToolbarModule } from '../../shared/modules/hover-toolbar/hover-toolbar.module';
 import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
     imports: [
         CommonModule,
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         NgbModule.forRoot(),
-        BoardfeedsRoutingModule,
+        PublishRoutingModule,
         StatModule,
         PageHeaderModule,
         FormsModule,
@@ -35,16 +36,17 @@ import {NgxPaginationModule} from 'ngx-pagination';
         ArticleviewModule,
         HoverToolbarModule,
         SharedPipesModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        ClipboardModule
       
     ],
     declarations: [
-        BoardfeedsComponent
-    
+        PublishComponent
+        
        
     ],
-   
+    exports:[PublishComponent],
     providers: [DatePipe]
      
 })
-export class BoardfeedsModule { }
+export class PublishModule { }

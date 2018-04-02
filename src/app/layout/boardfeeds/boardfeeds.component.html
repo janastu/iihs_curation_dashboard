@@ -15,6 +15,7 @@
 
     <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};let i=index;">
     <!--Component to display if no view is selected-->
+    <label *ngIf="publishedfeeds[i]==true">published</label>
     <div *ngIf = "view === null"> 
       <app-magazineview [feeds]='feed' [index]='i'></app-magazineview>
     </div>

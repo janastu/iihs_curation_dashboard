@@ -26,6 +26,7 @@ recentlyreadannos:any=[];//variable to store recently read annotations
    }
 
   ngOnInit() {
+    
 this.date = new Date();
     
     this.user = localStorage.getItem('name');
@@ -34,7 +35,7 @@ this.date = new Date();
          this.readlaterannos = res;
          //Highlight the bookmark icon if annotated
          this.readlaterannos.filter(anno=>{
-          // console.log(anno)
+          //console.log(anno)
            if(anno.value.target.value._id === this.feeditem.value._id){
              this.selectedIndex=1;
            }
@@ -145,6 +146,7 @@ this.date = new Date();
   }
  //Click hide to remove the feed and push to trashbox
   hide(){
+    console.log("hid");
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -164,8 +166,9 @@ this.date = new Date();
     //Add a object hide feed with properties hidefeed and hiddenby and update
   else{
     this.feeditem.value.hidefeed={'hidefeed':true,'hiddenby':this.user};
-   // console.log(this.feeditem);
+   
     this.feedService.updatefeed(this.feeditem.value).then(res=>{
+      console.log(res);
       if(res['ok'] == true){
         console.log("de",this.index);
          this.dataservice.addtodatabase(model).then(res=>{
@@ -173,8 +176,8 @@ this.date = new Date();
             //console.log(this.index);
             this.variab.globalfeeds.splice(this.index,1);
             this.variab.boardfeeds.splice(this.index,1);
-            this.readlaterannos.splice(this.index,1);
-            this.recentlyreadannos.splice(this.index,1);
+            this.variab.readlaterfeeds.splice(this.index,1);
+            this.variab.recentlyread.splice(this.index,1);
             this.showDialog = false;
           }
         });

@@ -7,7 +7,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { SourcesRoutingModule } from './sources-routing.module';
 import { SourcesComponent } from './sources.component';
-import { PageHeaderModule } from './../../shared';
+import { PageHeaderModule } from './../../shared/modules/page-header/page-header.module';
 import { StatModule } from '../../shared';
 import { SidebarComponent } from '../../shared'
 

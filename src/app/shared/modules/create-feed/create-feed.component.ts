@@ -115,7 +115,8 @@ ngOnChanges(){
          console.log("add");
          this.feedService.addFeed(doc).then(res=>{
                if(res['ok'] == true){
-                 this.variab.categoryfeeds.push({doc:doc});  
+                 this.variab.categoryfeeds.push({doc:doc}); 
+                 this.feedsnames=this.variab.categoryfeeds;
                  this.visible = false;
                  this.followstatus = true;
                  this.alertempty = false;

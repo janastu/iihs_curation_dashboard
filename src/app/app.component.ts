@@ -22,6 +22,8 @@ export class AppComponent {
 
         //Set up the groups database
         this.dbConfig.dbsetupgroups();
+        //Set up the archives database
+        this.dbConfig.dbsetuparchives();
 
 
     }

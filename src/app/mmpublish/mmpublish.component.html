@@ -1,9 +1,8 @@
-<router-outlet></router-outlet>
 <div [@routerTransition]>
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="pageheading | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
+            <app-page-header (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
         </div>
     </div>
 
@@ -16,10 +15,8 @@
                      
                
                         <div class="container">
-                            
 
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
-<!--Component to display if no view is selected-->
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
@@ -46,11 +43,13 @@
 
 </div>
 </div>
+
                     </div>
                   </div>
                </div>
            
-</div>    
+</div> 
+ 
 <!--<div>
   <button (click)="markallasread()">Mark all as read</button>
 </div>-->

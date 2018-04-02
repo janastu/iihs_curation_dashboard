@@ -5,13 +5,19 @@ import { ModalComponent } from './modal.component';
 import { DialogComponentModule } from '../dialog-component/dialog-component.module';
 import { CreateboardcomponentModule } from '../createboardcomponent/createboardcomponent.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         CreateboardcomponentModule,
         DialogComponentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule
+        
 
     ],
     declarations: [ModalComponent],

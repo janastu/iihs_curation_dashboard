@@ -20,7 +20,7 @@ import {
     TooltipComponent,
     TimepickerComponent,
 } from './components';
-import { PageHeaderModule } from '../../shared';
+import { PageHeaderModule } from '../../shared/modules/page-header/page-header.module';
 
 @NgModule({
     imports: [

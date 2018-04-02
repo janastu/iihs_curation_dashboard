@@ -14,6 +14,7 @@ const routes: Routes = [
     { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordModule' },
     { path: 'choose-group', loadChildren: './join-group/join-group.module#JoinGroupModule'},
     {path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
+    {path: 'mm/:boardname/:date', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
     { path: '**', redirectTo: 'not-found' }
 ];
 
