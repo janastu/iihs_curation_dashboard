@@ -10,7 +10,7 @@ import * as _ from 'lodash'
 import { DatePipe,Location } from '@angular/common';
 import { ArchiveService } from '../services/archive-service';//Import feed service to get feeds
 import { Utilities } from '../shared';//Import utilities to perform sorting and filtering
-
+import { DbConfig } from '../services/db-config';//Import to config db setup when the app loads
 @Component({
   
   selector: 'app-mmpublish',
@@ -32,7 +32,7 @@ view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
-  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location) { }
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
   //On loading Component
   ngOnInit() {
 
@@ -48,13 +48,12 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     this.view = localStorage.getItem('view') || null;
 
 
-
  //Access the query parameter and filter the feeds according to category
       this.route.params
             .subscribe(params => {
-              var parsedDate = Date.parse(params.date);
-               
-              this.archiveService.getPublishedFeeds(parsedDate,params.boardname).then(res=>{
+              var parsedDate = Date.parse(params.date);//parse the date to timestamp
+               let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
+              this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
 
                 this.feeds=res;
                

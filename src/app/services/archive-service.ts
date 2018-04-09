@@ -53,17 +53,23 @@ export class ArchiveService {
 	  //Function to get the published feeds 
 	  getPublishedFeeds(date,board){
 	  	//var queryDate = new Date(date);
-	  	//console.log(date)
+	  	console.log(date)
 	  	return new Promise(resolve=>{
-	  	  this.variab.localarchives.query('archives/archives', {
+	  	/* this.variab.localarchives.query('archives/archives', {
 	  		  key:[date,board]
 	  	  }).then(function (result) {
 	  	    console.log("res",result.rows[0].value);
 	  	  	resolve(result.rows[0].value.feeds);
 	  	  }).catch(function (err) {
 	  	  console.log(err);
-	  	  });
-	  	  
+	  	  });*/
+	  	  var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_view/archives?key=["'+date+'","'+board+'"]';
+	  	  	this.http.get(url).map(res => res.json()).subscribe(data => {
+	  	  		console.log(data);
+	  	  	 	resolve(data.rows[0].value);
+	  	  	}, (err) => {
+	  	  	   console.log(err);
+	  	  	});
 	  	});
 
 	  }
@@ -74,13 +80,8 @@ export class ArchiveService {
 	  	  this.variab.localarchives.query('archives/publishedfeeds', {
 	  		  key:board
 	  	  }).then(function (result) {
-	  	 //console.log("res",result);
-	  	 	allpublishedboard=result.rows;
-	  	 	var feeds = allpublishedboard.map(feed=>{
-	  	 		return feed.value;
-	  	 	})
-	  	 	
-	  	  	resolve(_.flatten(feeds));
+	  	 	console.log(result);
+	  	  	resolve(result.rows[0].value);
 	  	  }).catch(function (err) {
 	  	  console.log(err);
 	  	  });

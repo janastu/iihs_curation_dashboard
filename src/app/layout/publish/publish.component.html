@@ -20,13 +20,13 @@
                      
                
                         <div class="container">
- <form [formGroup]="checkForm" (ngSubmit)="publish()">
+ <form  (ngSubmit)="publish()">
  <button type="submit" class="btn btn-secondary next-buttton">Publish</button> 
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
-<input type="checkbox" (change)="onChange(feed, $event.target.checked)">
-<!--<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title" [checked]="feedstobechecked[i]==true" />-->
+<!--<input type="checkbox" (change)="onChange(feed, $event.target.checked)">-->
+<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title" />
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   

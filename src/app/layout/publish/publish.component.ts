@@ -19,13 +19,12 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 })
 
 export class PublishComponent implements OnInit {
-isCopied1: boolean = false;
+isCopied1: boolean = false;//variable to store the status if the input value is copied or not
 publishingurl:any;//variable to store the publishing url
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
 feedstobechecked:any=[]; //variable to store the feeds of today to be checked
-feedstobepublished:any=[];//variable to store the feeds of today to be published
 checkForm:FormGroup;//variable to store the input of the checkbox form
 boardname:any;//variable to store the input variable name
 view:any;      //variable to store the view state
@@ -38,10 +37,10 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
   ngOnInit() {
 
     //checkbox form builder
-      this.checkForm = this.formBuilder.group({
+     /* this.checkForm = this.formBuilder.group({
               feeds: this.formBuilder.array([])
       });
-      console.log(this.checkForm);
+      console.log(this.checkForm);*/
     this.user =localStorage.getItem('name');
     
     //this.usersview = localStorage.getItem('view');
@@ -81,7 +80,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
 
                   });
                
-                  this.feedstobepublished=_.flatten(datefeed);
+                  //this.feedstobepublished=_.flatten(datefeed);
                   //console.log("annoforboards",datefeed);
                   //Map Annos for Boards to return boolean array
                   //Returns example:[true,false,true] 
@@ -109,7 +108,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
    
   }
   //funvtion on selecting feeds
-  onChange(email:string, isChecked: boolean) {
+  /*onChange(email:string, isChecked: boolean) {
         var feedFormArray = <FormArray>this.checkForm.controls.feeds;
 
         console.log(feedFormArray,this.checkForm.get('checkboxes'));
@@ -119,20 +118,25 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
           let index = feedFormArray.controls.findIndex(x => x.value == email)
           feedFormArray.removeAt(index);
         }
-    }
+  }*/
   publish(){
-    var feeds = this.checkForm.value;
-    var pub_date = new Date();
-    var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');
-    console.log(transform);
+    //console.log(this.feeds);
+    var feeds = this.feeds.filter(feed=>{
+      return feed.Checked;
+    })
+    console.log(feeds);
+    var pub_date = new Date(); //get today's date
+    var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
+    let parsed = Date.parse(transform);//Parse the date to timestamp
+    let isodate = new Date(parsed);//get the date by passing the transformed date
+    //console.log(isodate);
     let doc={
-      'pub_date':Date.parse(transform),
+      'pub_date':isodate.toISOString(),
       'boardname':this.boardname,
       'feeds':feeds
     }
     //console.log(doc);
     
-   
     this.archiveService.addFeed(doc).then(res=>{
       if(res['ok']==true){
 
@@ -142,21 +146,18 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
        this.publishingurl = window.location.origin + this.location.prepareExternalUrl(url);
        console.log(this.publishingurl);
        this.alertPublished=true;
-       setTimeout(() => this.alertNofeeds = false, 2000);
+       setTimeout(() => this.alertPublished = false, 2000);
+       //this.router.navigate(['/boardfeeds',this.boardname]);
       }
     });
-    /*const valueToStore = Object.assign({}, this.checkForm.value, {
-          feeds: this.convertToValue('feeds'),
-          
-        });
-        console.log(valueToStore);*/
+   
    
 
   }
-  convertToValue(key: string) {
+  /*convertToValue(key: string) {
     console.log(this.checkForm.value[key])
     return this.checkForm.value[key].map((x, i) => x && this[key][i]).filter(x => !!x);
-  }
+  }*/
 
 
   //Function to handle view event from page-header component

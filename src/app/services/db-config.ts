@@ -447,7 +447,6 @@ test:any;//chek if pouchdb instance changes
   	})
   }
   dbsetuparchives(){
-    //console.log("called");
     //Create pouchdb instance for boards
     this.variab.localarchives = new PouchDB('archives');
     //Create reomte couchdb instance for boards
@@ -472,15 +471,30 @@ test:any;//chek if pouchdb instance changes
             }
           }
         }
-        console.log(ddoc);
+    //Synch pouchdb with couchdb
+        this.variab.localarchives.sync(this.remotearchives, {
+          live: true,
+          retry:true
+        }).on('change', function (change) {
+          // yo, something changed!
+          console.log("syncchnage",change);
+        }).on('error', function (err) {
+          console.log("syncerr",err);
+          // yo, we got an error! (maybe the user went offline?)
+        })
+    //console.log("called");
+   //return new Promise(resolve=>{
+  
+        //console.log(ddoc);
         this.getArchivesDesigndoc(ddoc).then(res=>{
           console.log("archives",res);
+          //resolve(res);
            if(res['status']==404){
               // save the design doc
               //console.log(ddoc);
-              this.variab.localarchives.put(ddoc).then(res=>{
-                console.log(res);
-                //resolve(res);
+              this.variab.localarchives.put(ddoc).then(result=>{
+                console.log(result);
+                //resolve(result);
               }).catch(function (err) {
                 //console.log(err);
                 if (err.name !== 'conflict') {
@@ -500,18 +514,8 @@ test:any;//chek if pouchdb instance changes
            }
         })
       
-        //Synch pouchdb with couchdb
-        this.variab.localarchives.sync(this.remotearchives, {
-          live: true,
-          retry:true
-        }).on('change', function (change) {
-          // yo, something changed!
-          console.log("syncchnage",change);
-        }).on('error', function (err) {
-          console.log("syncerr",err);
-          // yo, we got an error! (maybe the user went offline?)
-        })
-       
+        
+    //});   
 
   }
   //get annotated feeds design doc update the doc with rev

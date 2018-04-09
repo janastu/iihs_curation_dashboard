@@ -55,8 +55,9 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
     var alreadypublished:any=[];
     this.archiveService.getAlreadyPublishedfeeds(this.boardname).then(res=>{
             alreadypublished=res;
+            //console.log(alreadypublished)
         var datefeed = boardfeeds.map( (board, index) => {
-           
+             
            return  _.filter(alreadypublished,function(o) { 
              //console.log(o)
              if(o.value._id===board.value._id){
