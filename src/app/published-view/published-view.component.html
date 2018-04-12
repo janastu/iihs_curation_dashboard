@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col">
+    <div class="col-sm-6 offset-sm-3">
+         
+        <div class="card-blocks">
+          <div class="row centered">
+            <!--div id="loading">
+              <img src="assets/images/loading.gif">
+            </div-->
+          <table>
+            <div class="col-sm-6 offset-sm-6">
+            <a href="{{url}}"> <img src="assets/images/radio.png" width="
+            50px" height="50px"></a>
+            </div>
+            <div class="" *ngFor="let item of displayPublishedfeeds">
+              
+            
+            <div class="feed-entry" *ngIf="item.value.description != null">
+            <!--Feed Image--> 
+             <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
+              <img [src]="html.extracturl(item.value.description)" class="magazine-image">
+             <!--<div [innerHtml]="extracturl(item.value.desc)" class="magazine-image"></div>-->
+             </div>
+             <div *ngIf="!html.checkimg(item.value.description)" class="desc-image">
+              <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
+            
+             
+             </div>
+
+             <div>
+               <!--Feed Title-->
+                  <a href="{{item.value.link}}">
+                  <h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
+                  <!--Feed Category-->
+                 <a href={{item.value.link}} class="metadata-magazine">
+                   {{item.value.meta.categories}}</a>
+                 <!--Feed Date-->
+                 <a href={{item.value.link}} class="metadata-magazine">
+                   {{item.value.pubDate | date}}
+                 </a>
+                 <!--Feed Desc-->
+                 <div *ngIf="html.checkimg(item.value.description)" class="feed-content">
+                     
+                 </div>
+
+                 <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content">
+                     {{item.value.description.substring(0,100)}}
+
+                 </div>
+                 <div *ngIf="html.checkhtml(item.value.description)" class="feed-content">
+                     {{html.stripHtml(item.value.description).substring(0,100)}}
+
+                 </div>
+                
+             </div>
+            </div> 
+          </div>
+          </table>
+        </div>
+        
+      </div>
+
+    </div> 
+  
+  </div>   
+  
+</div>
