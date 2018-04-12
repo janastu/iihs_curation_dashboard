@@ -36,55 +36,24 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
 
            this.boardname = params.id;
            //Call service function to get board feeds by passing board name as parameter
-           console.log("boa",params.id);
+           
            this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
-                 this.checkForPublished(res);
+                 this.feeds = res;
+                 this.util.checkForPublished(res,params.id).then(res=>{
+                   this.publishedfeeds=res;
+                 });
                 //Get the deleted feeds store and display using feeds variable
-                this.feeds = res;
+                
                 
                });
            });
     });
     
   }
-  //function to check if the feeds in the board are already published
-  checkForPublished(boardfeeds){
-    var alreadypublished:any=[];
-    this.archiveService.getAlreadyPublishedfeeds(this.boardname).then(res=>{
-            alreadypublished=res;
-            //console.log(alreadypublished)
-        var datefeed = boardfeeds.map( (board, index) => {
-             
-           return  _.filter(alreadypublished,function(o) { 
-             //console.log(o)
-             if(o.value._id===board.value._id){
-             return o  ; 
-           }
-           });
 
-        });
-       
-        //this.feedstobepublished=_.flatten(datefeed);
-        //console.log("annoforboards",datefeed);
-        //Map Annos for Boards to return boolean array
-        //Returns example:[true,false,true] 
-        //Index of output == Index of label which means label[0] and label[1] 
-        //is active for above output
-       this.publishedfeeds  =  datefeed.map(anno=>{
-
-            if(anno[0]){
-                return true;
-             }
-              else{
-                return false;
-              
-            }
-        })
-    })
-  }
   //Function to handle view event from page-header component
   public handleView(childView:any){
     this.view = childView;

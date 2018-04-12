@@ -1,0 +1,48 @@
+
+        <nav class="sidebar sidebar-background" [ngClass]="{sidebarPushRight: isActive}">
+        <ul class="list-group list-background">
+   
+
+      <div class="feedname-heading">
+          <i class="fa fa-bars"></i>&nbsp;{{ 'Archived Dates' | translate }}
+      </div>
+      <div class="nested-menu">
+          <li  *ngFor="let n of publisheddates" [ngClass]="{active: isactive(n)}">
+          
+          <div class="feed-list-item">
+          <i class="fa fa-chevron-right onmenu"></i>
+          <span (click)="select(n)" class="onmenu">&nbsp;&nbsp;{{n}}</span>
+          </div>
+        
+                  <ul class="submenu">
+                    <li *ngFor="let item of publishedboards">
+                        
+                            <a  (click)="routetodateboard(n,item.value)" class="onmenu">
+                            <span>&nbsp;{{ item.value }}</span></a>
+                        
+                    </li>
+                  </ul>
+          </li>
+      </div>
+        
+         
+        
+       <!-- <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('pages')">
+                <span> <i class="fa fa-star-o"></i>&nbsp;{{ 'Archived Dates' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages'">
+                <ul class="submenu">
+                    <li *ngFor="let item of publisheddates">
+                      <a (click)="routetodate(item)" class="onmenu">
+                        <span><i class="fa fa-star-o"></i>&nbsp;{{ item | translate }}</span></a>
+                    </li>
+                </ul>
+            </li>
+        </div>-->
+       
+        
+        </ul> 
+        
+        
+        </nav>
