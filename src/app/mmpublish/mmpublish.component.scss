@@ -1,3 +1,112 @@
+/*Css for the layout*/
+.main-container{
+    margin-top: 60px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+@media screen and (max-width: 992px) {
+    .main-container {
+        margin-left: 0px !important;
+    }
+}
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+.main-container{
+    
+    margin-left: 235px;
+    padding: 15px;
+    margin-top:0px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  .main-container{
+    margin-top: 0px;
+    margin-left: -120px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+.main-container{
+    margin-top: 0px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .main-container{
+    margin-top: 0px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1024px) {
+.main-container{
+    margin-top: 0px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+
+}
+@media only screen and (min-width : 1200px) {
+.main-container{
+    margin-top: 0px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+}
+
+
 .spinner-image{
 	background: transparent;
 	width: 500px;

@@ -10,6 +10,7 @@ import * as _ from 'lodash'
 import { DatePipe,Location } from '@angular/common';
 import { ArchiveService } from '../../services/archive-service';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
+
 @Component({
   
   selector: 'app-publish',
@@ -32,10 +33,18 @@ date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertPublished:boolean=false;//alert variable to store boolean values to alert feeds published
 alertNofeeds:boolean=false;//alert variable to store boolean values to alert feeds published
-  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location) { }
+model:any=false;
+showDialog:boolean=false;
+publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
+    public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
+    public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
+    public location:Location) { 
+   
+  }
   //On loading Component
   ngOnInit() {
-
+   
     //checkbox form builder
      /* this.checkForm = this.formBuilder.group({
               feeds: this.formBuilder.array([])
@@ -61,17 +70,19 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
             this.util.checkForDeletedFeeds(res).then(res=>{
              //Get the deleted feeds store and display using feeds variable
              this.feeds = res;
-             
+             this.util.checkForPublished(res,params.id).then(res=>{
+               this.publishedfeeds=res;
+             });
             });
            
            //get the board feeds of today's
            this.dataservice.gettodayBoardFeeds().then(res=>{
-             var todaysFeeds:any=[];
-             todaysFeeds = res;
+             var todayAnnotatedFeeds:any=[];
+             todayAnnotatedFeeds = res;
                
                   var datefeed = this.feeds.map( (board, index) => {
                      
-                     return  _.filter(todaysFeeds,function(o) { 
+                     return  _.filter(todayAnnotatedFeeds,function(o) { 
 
                        if(o.value._id===board.value._id){
                        return o  ; 
@@ -80,8 +91,6 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
 
                   });
                
-                  //this.feedstobepublished=_.flatten(datefeed);
-                  //console.log("annoforboards",datefeed);
                   //Map Annos for Boards to return boolean array
                   //Returns example:[true,false,true] 
                   //Index of output == Index of label which means label[0] and label[1] 
@@ -100,64 +109,86 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
                 
                 
                
-               //console.log("yeno",this.feedstobechecked);
+                 //console.log("yeno",this.feedstobechecked);
               
            })
         });
      });
    
   }
-  //funvtion on selecting feeds
-  /*onChange(email:string, isChecked: boolean) {
-        var feedFormArray = <FormArray>this.checkForm.controls.feeds;
-
-        console.log(feedFormArray,this.checkForm.get('checkboxes'));
-        if(isChecked) {
-          feedFormArray.push(new FormControl(email));
-        } else {
-          let index = feedFormArray.controls.findIndex(x => x.value == email)
-          feedFormArray.removeAt(index);
-        }
-  }*/
+//Function called when clicked on publish
   publish(){
     //console.log(this.feeds);
-    var feeds = this.feeds.filter(feed=>{
-      return feed.Checked;
+    var publishedfeeds = this.feeds.filter(feed=>{
+      return feed.Checked;  
     })
-    console.log(feeds);
+    //console.log(this.variab.publishedfeeds);
+   
     var pub_date = new Date(); //get today's date
     var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
     let parsed = Date.parse(transform);//Parse the date to timestamp
     let isodate = new Date(parsed);//get the date by passing the transformed date
     //console.log(isodate);
+    
+   //Generating publishong url
+    var urltree = this.router.createUrlTree(['mm',this.boardname,transform]);
+    //this.datepipe.transform(pub_date, 'yyyy-MM-dd')]
+    var url = this.urlSerializer.serialize(urltree);
+    this.publishingurl = window.location.origin + this.location.prepareExternalUrl(url);
+  
+    //Data model for storing the published feeds
     let doc={
       'pub_date':isodate.toISOString(),
       'boardname':this.boardname,
-      'feeds':feeds
+      'feeds':publishedfeeds,
+      'publishing_url':this.publishingurl,
+      'modified_pub_date':pub_date,
+      'pub_date_notransform':pub_date
     }
-    //console.log(doc);
-    
-    this.archiveService.addFeed(doc).then(res=>{
-      if(res['ok']==true){
 
-       var urltree = this.router.createUrlTree(['mm',this.boardname,transform]);
-       //this.datepipe.transform(pub_date, 'yyyy-MM-dd')]
-       var url = this.urlSerializer.serialize(urltree);
-       this.publishingurl = window.location.origin + this.location.prepareExternalUrl(url);
-       console.log(this.publishingurl);
-       this.alertPublished=true;
-       setTimeout(() => this.alertPublished = false, 2000);
-       //this.router.navigate(['/boardfeeds',this.boardname]);
+    this.archiveService.getPublishedFeeds(isodate.toISOString(),this.boardname).then(res=>{
+      if(res['length'] == 0){
+
+            this.archiveService.addFeed(doc).then(response=>{
+              if(response['ok']==true){
+                //console.log("inadd",publishedfeeds);
+                localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
+              
+               this.alertPublished=true;
+               setTimeout(() => this.alertPublished = false, 2000);
+               
+                   this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl}});
+               
+              }
+            });
       }
-    });
+      else{
+        publishedfeeds.map(pubfeed=>{
+          //console.log(pubfeed);
+          res['value']['feeds'].push(pubfeed);
+        })    
+          res['value']['modified_pub_date']=pub_date;
+          console.log(res);  
+        this.archiveService.updatedatabase(res['value']).then(response=>{
+          if(response['ok']==true){
+              //console.log("inupdate",res['value']['feeds']);
+             localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
+         
+           this.alertPublished=true;
+           setTimeout(() => this.alertPublished = false, 2000);
+          
+               this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl}});
+             
+          }
+        });
+
+      }
+    })
    
    
 
   }
-  /*convertToValue(key: string) {
-    console.log(this.checkForm.value[key])
-    return this.checkForm.value[key].map((x, i) => x && this[key][i]).filter(x => !!x);
-  }*/
+
 
 
   //Function to handle view event from page-header component

@@ -19,6 +19,8 @@ import { HoverToolbarModule } from '../../shared/modules/hover-toolbar/hover-too
 import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ClipboardModule } from 'ngx-clipboard';
+import { DialogComponentModule } from '../../shared/modules/dialog-component/dialog-component.module';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import { ClipboardModule } from 'ngx-clipboard';
         HoverToolbarModule,
         SharedPipesModule,
         NgxPaginationModule,
-        ClipboardModule
+        ClipboardModule,
+        DialogComponentModule
       
     ],
     declarations: [

@@ -461,33 +461,50 @@ test:any;//chek if pouchdb instance changes
           views: {
             archives: {
               map: function (doc) {
-                 emit([doc.pub_date,doc.boardname], doc.feeds);
+                if (doc.pub_date) {
+                  emit([doc.pub_date,doc.boardname], doc);
+                } 
               }.toString()
             },
             publishedfeeds:{
               map: function (doc) {
-                 emit(doc.boardname, doc.feeds);
+                if(doc.boardname){
+                 emit(doc.boardname, doc);
+                }
+              }.toString()
+            },
+            published_date:{
+              map: function (doc) {
+                if(doc.pub_date){
+                 emit(doc.pub_date, doc.boardname);
+                }
+              }.toString()
+            }
+
+          }
+        }
+        var qdatedoc = {
+          _id: '_design/date',
+          views:{
+            querydate:{
+              map:function(doc){
+               if(doc.pub_date){
+                emit(doc.pub_date,null);
+               }
+              }.toString(),
+              reduce: function (doc) {
+                return null;
               }.toString()
             }
           }
         }
-    //Synch pouchdb with couchdb
-        this.variab.localarchives.sync(this.remotearchives, {
-          live: true,
-          retry:true
-        }).on('change', function (change) {
-          // yo, something changed!
-          console.log("syncchnage",change);
-        }).on('error', function (err) {
-          console.log("syncerr",err);
-          // yo, we got an error! (maybe the user went offline?)
-        })
+    
     //console.log("called");
    //return new Promise(resolve=>{
   
         //console.log(ddoc);
         this.getArchivesDesigndoc(ddoc).then(res=>{
-          console.log("archives",res);
+          //console.log("archives",res);
           //resolve(res);
            if(res['status']==404){
               // save the design doc
@@ -513,7 +530,45 @@ test:any;//chek if pouchdb instance changes
             });
            }
         })
-      
+        this.getArchivesDateDesigndoc(qdatedoc).then(res=>{
+          //console.log("archives",res);
+          //resolve(res);
+           if(res['status']==404){
+              // save the design doc
+              //console.log(ddoc);
+              this.variab.localarchives.put(qdatedoc).then(result=>{
+                console.log("add",result);
+                //resolve(result);
+              }).catch(function (err) {
+                //console.log(err);
+                if (err.name !== 'conflict') {
+                  throw err;
+                }
+                // ignore if doc already exists
+              }); 
+           }
+           else{
+            // save the design doc
+            this.variab.localarchives.put(res).catch(function (err) {
+              console.log(err);
+              if (err.name !== 'conflict') {
+                throw err;
+              }
+              // ignore if doc already exists
+            });
+           }
+        })
+      //Synch pouchdb with couchdb
+          this.variab.localarchives.sync(this.remotearchives, {
+            live: true,
+            retry:true
+          }).on('change', function (change) {
+            // yo, something changed!
+            console.log("syncchnage",change);
+          }).on('error', function (err) {
+            console.log("syncerr",err);
+            // yo, we got an error! (maybe the user went offline?)
+          })
         
     //});   
 
@@ -522,6 +577,16 @@ test:any;//chek if pouchdb instance changes
   getArchivesDesigndoc(ddoc){
     return new Promise(resolve=>{
       this.variab.localarchives.get('_design/archives').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+  getArchivesDateDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localarchives.get('_design/date').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{

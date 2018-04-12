@@ -60,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
 
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},{provide:UrlSerializer,useClass:CustomUrlSerializer},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,ArchiveService,Utilities,HtmlParser],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,ArchiveService,Utilities,HtmlParser],
 
 
     bootstrap: [AppComponent]

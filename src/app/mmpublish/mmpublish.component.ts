@@ -31,6 +31,7 @@ boardname:any;//variable to store the input variable name
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
+
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
   //On loading Component
@@ -40,75 +41,31 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
       this.checkForm = this.formBuilder.group({
               feeds: this.formBuilder.array([])
       });
-      console.log(this.checkForm);
+      //console.log(this.checkForm);
     this.user =localStorage.getItem('name');
     
     //this.usersview = localStorage.getItem('view');
    
     this.view = localStorage.getItem('view') || null;
 
-
  //Access the query parameter and filter the feeds according to category
       this.route.params
             .subscribe(params => {
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
                let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
-              this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
-
-                this.feeds=res;
-               
-              })
+             // console.log(params.boardname);
+              
+              
+                this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
+                    //console.log(res['value']);
+                  this.feeds=res['value'].feeds;
+                 
+                })
+              
      });
    
   }
-  //funvtion on selecting feeds
-  onChange(email:string, isChecked: boolean) {
-        var feedFormArray = <FormArray>this.checkForm.controls.feeds;
 
-        console.log(feedFormArray,this.checkForm.get('checkboxes'));
-        if(isChecked) {
-          feedFormArray.push(new FormControl(email));
-        } else {
-          let index = feedFormArray.controls.findIndex(x => x.value == email)
-          feedFormArray.removeAt(index);
-        }
-    }
-  publish(){
-    console.log("valled",this.checkForm.value,this.feedstobepublished);
-    if(this.checkForm.value.feeds.length==0){
-      var feeds = this.feedstobepublished;
-    }
-    else{
-      feeds = _.union(this.feedstobepublished,this.checkForm.value.feeds)
-    }
-    var pub_date = new Date();
-    
-    let doc={
-      'pub_date':pub_date.toISOString(),
-      'boardname':this.boardname,
-      'feeds':feeds
-    }
-    console.log(doc);
-    var date = new Date();
-    var urltree = this.router.createUrlTree(['mm',this.boardname,this.datepipe.transform(date, 'yyyyMMdd')]);
-    var url = this.urlSerializer.serialize(urltree);
-    let fullUrl = window.location.origin + this.location.prepareExternalUrl(url);
-    console.log(fullUrl);
-    /*this.archiveService.addFeed(doc).then(res=>{
-      if(res['ok']==true){
-        var date = new Date();
-        var url = this.router.createUrlTree(['mm/'+this.boardname+'/'+this.datepipe.transform(date, 'yyyyMMdd')]).toString();
-        console.log(url);
-      }
-    })*/
-    /*const valueToStore = Object.assign({}, this.checkForm.value, {
-          feeds: this.convertToValue('feeds'),
-          
-        });
-        console.log(valueToStore);*/
-   
-
-  }
   convertToValue(key: string) {
     console.log(this.checkForm.value[key])
     return this.checkForm.value[key].map((x, i) => x && this[key][i]).filter(x => !!x);

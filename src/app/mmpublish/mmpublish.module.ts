@@ -18,7 +18,8 @@ import { CardViewModule } from '../shared/view/card-view/card-view.module';
 import { HoverToolbarModule } from '../shared/modules/hover-toolbar/hover-toolbar.module';
 import { SharedPipesModule } from '../shared/pipes/shared-pipes.module';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { SidebarMmpublishComponent } from '../shared/components/sidebar-mmpublish/sidebar-mmpublish.component'
 @NgModule({
     imports: [
         CommonModule,
@@ -36,11 +37,14 @@ import {NgxPaginationModule} from 'ngx-pagination';
         ArticleviewModule,
         HoverToolbarModule,
         SharedPipesModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        TranslateModule
+
       
     ],
     declarations: [
-        MmpublishComponent
+        MmpublishComponent,
+        SidebarMmpublishComponent
         
        
     ],

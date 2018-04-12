@@ -9,7 +9,7 @@
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
 <ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Published</ngb-alert>
       <div *ngIf="publishingurl">
-      <input type="text" #targetString value="{{publishingurl}}">
+      <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
       <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
         [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
       </div>
@@ -26,7 +26,13 @@
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
 <!--<input type="checkbox" (change)="onChange(feed, $event.target.checked)">-->
-<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title" />
+<div *ngIf=publishedfeeds[i]>
+<label>published</label>
+</div>
+<div *ngIf=!publishedfeeds[i]>
+<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title"/>
+</div>
+
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
