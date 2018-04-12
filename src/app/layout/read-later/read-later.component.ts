@@ -17,6 +17,7 @@ globalfeeds:any=[];          //variable to store feeds globally
 date:any;                    //variable to store the state of dates to filters
 user:any;
 p:any;//variable to store the current page
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
   constructor(public dataservice:DataService,public variab:Global,public util:Utilities) {
    }
    
@@ -28,13 +29,17 @@ p:any;//variable to store the current page
 
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
+      this.spinnerState=true;
     this.dataservice.getreadlater(this.user).then(result=>{
       //Set result to global variable as it can be accessed outdside the component
         this.variab.readlaterfeeds=result;
           //this.feeds=this.variab.readlaterfeeds; 
           this.util.checkForDeletedFeeds(this.variab.readlaterfeeds).then(res=>{
-            console.log(res);
+            //console.log(res);
             this.feeds = res;
+            if(this.feeds){
+              this.spinnerState=false;
+            }
           });
     });
     

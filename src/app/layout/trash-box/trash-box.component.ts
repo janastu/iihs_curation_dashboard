@@ -16,7 +16,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 
 export class TrashBoxComponent implements OnInit {
 
-
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
 feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
@@ -29,10 +29,14 @@ p:any;//variable to store the current page
     
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
+      this.spinnerState=true;
      //Fetch the data from service and store in global variable
      this.dataservice.getdeletedfeeds(this.user).then(res=>{
        this.variab.hiddenfeeds = res;
        this.feeds = this.variab.hiddenfeeds;
+         if(this.feeds){
+           this.spinnerState=false;
+         }
      })
      
   }

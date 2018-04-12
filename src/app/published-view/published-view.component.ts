@@ -11,6 +11,8 @@ import { ArchiveService} from '../services/archive-service';
 export class PublishedViewComponent implements OnInit {
 displayPublishedfeeds:any=[];//Published feeds to display to copy to the mailer
 url:any;//published url to link to from the email
+boardname:any;//published boardname to display
+date:any;//published date to display
   constructor(public variab:Global,public html:HtmlParser,public route:ActivatedRoute,public archiveService:ArchiveService) { }
 
   ngOnInit() {
@@ -19,7 +21,8 @@ url:any;//published url to link to from the email
     //console.log(this.displayPublishedfeeds);
   	this.route.queryParams.subscribe(params=>{
   		this.url=params.url;
-        //console.log(params)
+      this.boardname=params.boardname;
+      this.date=params.date;
         
           
   	})

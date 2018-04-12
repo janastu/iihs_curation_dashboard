@@ -3,6 +3,7 @@ import { routerTransition } from '../../../router.animations';
 import { fadeInAnimation } from '../../../fade-in.animation';
 import { HtmlParser } from '../../Utilities/html-parser';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-articleview',
   templateUrl: './articleview.component.html',
@@ -13,7 +14,7 @@ export class ArticleviewComponent implements OnInit {
   @Input('feeds') item:any=[];
   @Input('index') index:any; 
   desc:any;//Parameter to pass with modal component
-  constructor(public html:HtmlParser) {
+  constructor(public html:HtmlParser,public router:Router) {
    }
 
   ngOnInit() {

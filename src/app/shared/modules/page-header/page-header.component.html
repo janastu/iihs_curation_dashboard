@@ -55,7 +55,7 @@
         </div>
       </div>
       <!--Share with team mates-->
-      <div><app-modal #modal></app-modal>
+      <div *ngIf="router.url.includes('/boardfeeds')"><app-modal #modal></app-modal>
         <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
       </div> 
         <!--Team Newsletter

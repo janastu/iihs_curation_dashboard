@@ -143,7 +143,7 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
       'feeds':publishedfeeds,
       'publishing_url':this.publishingurl,
       'modified_pub_date':pub_date,
-      'pub_date_notransform':pub_date
+      'pub_date_time':pub_date
     }
 
     this.archiveService.getPublishedFeeds(isodate.toISOString(),this.boardname).then(res=>{
@@ -157,7 +157,7 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
                this.alertPublished=true;
                setTimeout(() => this.alertPublished = false, 2000);
                
-                   this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl}});
+                   this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl,'boardname':this.boardname,'date':transform}});
                
               }
             });
@@ -177,7 +177,7 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
            this.alertPublished=true;
            setTimeout(() => this.alertPublished = false, 2000);
           
-               this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl}});
+               this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl,'boardname':this.boardname,'date':transform}});
              
           }
         });

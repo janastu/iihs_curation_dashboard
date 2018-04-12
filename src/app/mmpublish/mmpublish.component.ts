@@ -20,27 +20,20 @@ import { DbConfig } from '../services/db-config';//Import to config db setup whe
 })
 
 export class MmpublishComponent implements OnInit {
-
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
-feedstobechecked:any=[]; //variable to store the feeds of today to be checked
-feedstobepublished:any=[];//variable to store the feeds of today to be published
-checkForm:FormGroup;//variable to store the input of the checkbox form
+statefeeds:any=[]; //variable to store the feeds state 
 boardname:any;//variable to store the input variable name
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
-
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
   //On loading Component
   ngOnInit() {
 
-    //checkbox form builder
-      this.checkForm = this.formBuilder.group({
-              feeds: this.formBuilder.array([])
-      });
       //console.log(this.checkForm);
     this.user =localStorage.getItem('name');
     
@@ -53,24 +46,19 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             .subscribe(params => {
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
                let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
-             // console.log(params.boardname);
-              
-              
+                  this.spinnerState=true;
                 this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
                     //console.log(res['value']);
-                  this.feeds=res['value'].feeds;
-                 
+                  this.statefeeds = res['value'].feeds;
+                   this.feeds=this.statefeeds;
+                   if(this.feeds){
+                     this.spinnerState=false;
+                   }
                 })
               
      });
    
   }
-
-  convertToValue(key: string) {
-    console.log(this.checkForm.value[key])
-    return this.checkForm.value[key].map((x, i) => x && this[key][i]).filter(x => !!x);
-  }
-
 
   //Function to handle view event from page-header component
   public handleView(childView:any){
@@ -79,7 +67,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
+    this.util.filterDate(childDates,this.statefeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
         this.alertNofeeds = true;
@@ -94,7 +82,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
-      this.feeds = this.variab.globalfeeds;
+      this.feeds = this.statefeeds;
     }
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
@@ -102,14 +90,14 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
       //If input is latest sort the feeds in the descending order
-      this.util.sortdescending(this.variab.globalfeeds).then(res=>{
+      this.util.sortdescending(this.statefeeds).then(res=>{
         this.feeds = res;
       })
      
     }
     if(childSortLabel === 'Oldest'){
       //If input is oldest sort the feeds in the descending order
-      this.util.sortascending(this.variab.globalfeeds).then(res=>{
+      this.util.sortascending(this.statefeeds).then(res=>{
         this.feeds = res;
       })
     }

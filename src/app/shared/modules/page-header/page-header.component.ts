@@ -3,7 +3,7 @@ import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../../services/feed-service';
 import { Global } from '../../global';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -31,7 +31,7 @@ desc:any;
 checkView:any;
 loading: boolean = false;
 currDate = new Date();
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService) { }
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService,public router:Router) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');

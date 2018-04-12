@@ -18,7 +18,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 })
 
 export class FeedsComponent implements OnInit {
-
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
@@ -41,7 +41,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
-             
+             this.spinnerState=true;
              //To get feeds , filtered according to subcategory 
              //check if the query parameter has subcatgeory property 
               if(params.subcategory){
@@ -52,6 +52,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
                  this.feeds = this.variab.globalfeeds;
+                 if(this.feeds){
+                   this.spinnerState=false;
+                 }
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array  
 
@@ -72,6 +75,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
+                    if(this.feeds){
+                      this.spinnerState=false;
+                    }
                   /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                     this.feeds=res;
                   }); */ 

@@ -550,7 +550,7 @@ test:any;//chek if pouchdb instance changes
            else{
             // save the design doc
             this.variab.localarchives.put(res).catch(function (err) {
-              console.log(err);
+              
               if (err.name !== 'conflict') {
                 throw err;
               }

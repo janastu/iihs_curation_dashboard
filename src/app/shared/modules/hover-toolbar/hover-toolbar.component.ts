@@ -51,11 +51,6 @@ this.date = new Date();
            }
          });
        })
-      
-      
-
-      
-    
 
 
   }
