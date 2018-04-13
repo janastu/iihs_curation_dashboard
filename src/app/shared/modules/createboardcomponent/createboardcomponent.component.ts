@@ -176,14 +176,11 @@ queryString:any;//variable to store the input to find a board name
     }
     //check if board already exists by getting the boards
     else{
-    this.boardservice.getboards().then(res=>{
-      console.log(res);
-      var toCheckrepeatBoards:any =[];
+    
       var boardExists :any = 0;
-      toCheckrepeatBoards =res;
       this.variab.boardupdated.map(boardname=>{
          if(this.boardname.value === boardname.value.label){
-           console.log("boardname exists");
+           //console.log("boardname exists");
            boardExists = 1; 
 
          }
@@ -195,9 +192,9 @@ queryString:any;//variable to store the input to find a board name
       }
       //Add the board to the database
       if(boardExists == 0){
-        console.log("add");
+        //console.log("add");
         this.boardservice.addboard(model).then(res=>{
-          console.log("ew",res);
+          //console.log("ew",res);
               if(res['ok'] == true){
                 this.variab.boardupdated.push({value:model});  
                 this.visible=false;
@@ -206,7 +203,7 @@ queryString:any;//variable to store the input to find a board name
               }
         })
       }
-    })
+    //})
 
 
     
