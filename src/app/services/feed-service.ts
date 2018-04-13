@@ -79,8 +79,15 @@ export class FeedService {
 		        	
 		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
 		        		if(res['ok'] == true){
-		        			resolve(res);
-		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        			
+		        			//PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed);
+		        			this.variab.localfeeds.replicate.to(this.settings.protocol+this.settings.dbfeed).on('complete', function (res) {
+		        			  // yay, we're done!
+		        			  //console.log(res);
+		        			  resolve(res);	
+		        			}).on('error', function (err) {
+		        			  // boo, something went wrong!
+		        			});
 		        		}
 		        	});
 		        }

@@ -186,7 +186,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
           key:[usr]
           
         }).then(function (result) {
-       //console.log("res",result);
+       console.log("res",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);

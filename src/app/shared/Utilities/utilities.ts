@@ -1,5 +1,6 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { DataService } from '../../services/data-service';
+import { FeedService } from '../../services/feed-service';//Import feed service to update feed when removed
 import { ArchiveService } from '../../services/archive-service';
 import * as _ from 'lodash'
 @Injectable()
@@ -7,26 +8,32 @@ import * as _ from 'lodash'
 export class Utilities {
 user:any;     //variable to store the username
 resultFeeds:any=[];//variable to store the intermediate results
-constructor(public dataservice : DataService,public archiveService:ArchiveService) { 
+date:Date;//variable to store the current date
+constructor(public dataservice : DataService,public archiveService:ArchiveService,public feedService:FeedService) { 
+   this.date = new Date();
   this.user = localStorage.getItem('name');
 }
 //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
 // and display the rest of the feeds
 checkForDeletedFeeds(feeds){
-  
+
   let hiddenfeeds:any=[];//local variable to store hidden feeds
   return new Promise(resolve=>{
-  this.dataservice.getdeletedfeeds(this.user).then(res=>{
-   hiddenfeeds=res;
-   console.log(hiddenfeeds)
-   if(hiddenfeeds.length == 0){ 
-     resolve(feeds);
-    // document.getElementById('loading').style.display = 'none';
-     }
+    //Check if feeds is empty or not
+    if(feeds.length==0){
+      resolve(feeds);
+    }
+    //Get the hidden feeds
+    this.dataservice.getdeletedfeeds(this.user).then(res=>{
+       hiddenfeeds=res;//Store the feeds in the local variable
+       //If no hidden feeds return the feeds
+      if(hiddenfeeds.length == 0){ 
+       resolve(feeds);
+      }
     //To do: Manipulate feed data structure hidden true
     //Data structure to represent hidden by user
     //such that design document can filter below condition
-   // console.log("feed",feeds);
+    //Check for the hidden feeds in the annotated feeds and remove the hidden feeds 
     hiddenfeeds.map(feed=>{
        feeds.filter(globalfeed=>{
         //console.log(feed.value._id,globalfeed.value._id)
@@ -84,6 +91,7 @@ checkForPublished(boardfeeds,boardname){
   })
   });
 }
+//Function to filter the feeds on date
 filterDate(date,feeds){
   var date = date;
   //Parse the from and to dates to timestamp to filter
@@ -117,6 +125,7 @@ filterDate(date,feeds){
   resolve(this.resultFeeds);
   })
 }
+//Function to sort the feeds on descending order from latest 
 sortdescending(feeds){
   return new Promise(resolve=>{
     this.resultFeeds = feeds.sort(function(a, b) {   
@@ -125,6 +134,7 @@ sortdescending(feeds){
     resolve(this.resultFeeds);
   });
 }
+//Function to sort the feeds on ascending order from oldest 
 sortascending(feeds){
   return new Promise(resolve=>{
     this.resultFeeds = feeds.sort(function(a, b) {

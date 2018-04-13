@@ -37,18 +37,18 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 
            this.boardname = params.id;
            //Call service function to get board feeds by passing board name as parameter
-             this.spinnerState=true;
+             this.spinnerState=true; //Set the spinner state variable to true
            this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
                  this.feeds = res;
-                   
+                  if(this.feeds){
+                    this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+                  }
                  this.util.checkForPublished(res,params.id).then(res=>{
                    this.publishedfeeds=res;
-                   if(this.feeds && this.publishedfeeds){
-                     this.spinnerState=false;
-                   }
+                   
                  });
                 //Get the deleted feeds store and display using feeds variable
                 
@@ -58,7 +58,6 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
     });
     
   }
-
   //Function to handle view event from page-header component
   public handleView(childView:any){
     this.view = childView;

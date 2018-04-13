@@ -21,7 +21,7 @@
                
                         <div class="container">
  <form  (ngSubmit)="publish()">
- <button type="submit" class="btn btn-secondary next-buttton">Publish</button> 
+ <button type="submit" class="btn btn-md btn-success">Publish</button> 
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
