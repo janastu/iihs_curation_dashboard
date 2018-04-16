@@ -13,7 +13,7 @@ remotegroups:any;//variable to store the remote url of the groups database
 remoteboards:any;//variable to store the remote url of the boards database
 remotearchives:any;//variable to store the remote url of the archives database
 auth:any;//varable to store the auth object
-test:any;//chek if pouchdb instance changes
+//test:any;//chek if pouchdb instance changes
   constructor(private http: Http, private settings:Settings,public variab:Global) {
   	
   	    this.auth={
@@ -25,7 +25,7 @@ test:any;//chek if pouchdb instance changes
   dbsetupfeeds(){
   	//Create pouchdb instance for feeds
   	this.variab.localfeeds = new PouchDB('feeds'); //create a pouchdb
-    this.test = new PouchDB('feeds');
+    //this.test = new PouchDB('feeds');
   	//Create reomte couchdb instance for feeds
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
   		    auth:this.auth
@@ -244,7 +244,8 @@ test:any;//chek if pouchdb instance changes
         }
       });
   	  // save the design doc
-  	  this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
+  	 /* this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
+              console.log("anootations",res);
               if(res['status'] == 404){
                 this.variab.localannotations.put(feedsdoc).catch(function (err) {
                      //console.log(err);
@@ -263,7 +264,7 @@ test:any;//chek if pouchdb instance changes
                      // ignore if doc already exists
                })
               }
-      })
+      })*/
       //Replicate the design doc to the remote
       this.variab.localannotations.replicate.to(this.remoteannos, {
         live: true,

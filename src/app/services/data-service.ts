@@ -96,7 +96,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        view: 'annotatedfeeds/boardfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){*/
+    if(res['ok']==true){
       this.variab.localannotations.query('annotatedfeeds/boardfeeds', {
            key:board
          }).then(function (result) {
@@ -108,7 +108,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
          console.log(err);
        });
       //}
-    //});
+    //});*/
     });
 
   
@@ -125,7 +125,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
          view: 'annotations/readlater'
        }).then(res=>{
       console.log(res);
-      if(res['ok']==true){*/
+      if(res['ok']==true){
     
       this.variab.localannotations.query('annotatedfeeds/readlaterfeeds', {
           key:usr
@@ -136,7 +136,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
         console.log(err);
       });
       //}
-     //});
+     //});*/
     });
 
 
@@ -154,7 +154,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        view: 'annotations/recentlyread'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){*/
+    if(res['ok']==true){
       this.variab.localannotations.query('annotatedfeeds/recentlyreadfeeds', {
           key:usr
         }).then(function (result) {
@@ -164,7 +164,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
         console.log(err);
       });
      //}
-    //});
+    //});*/
     });
 
 
@@ -181,7 +181,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        view: 'annotatedfeeds/deletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){ */
+    if(res['ok']==true){ 
       this.variab.localannotations.query('annotatedfeeds/deletedfeeds', {
           key:[usr]
           
@@ -192,7 +192,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
         console.log(err);
       });
      //}
-    //});
+    //});*/
     });
 
   }
@@ -203,7 +203,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     var endtime  = new Date();
     endtime.setHours(23,59,0);
       return new Promise(resolve => {
-        this.variab.localannotations.query('annotatedfeeds/boardfeedsoftoday', {
+        /*this.variab.localannotations.query('annotatedfeeds/boardfeedsoftoday', {
             startkey:starttime,
             endkey:endtime
             
@@ -214,7 +214,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
           console.log(err);
         });
        //}
-      //});
+      //});*/
       });
 
   }
