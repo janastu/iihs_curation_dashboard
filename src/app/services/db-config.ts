@@ -244,8 +244,8 @@ auth:any;//varable to store the auth object
         }
       });
   	  // save the design doc
-  	 /* this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
-              console.log("anootations",res);
+  	  this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
+              console.log("anootations",res)
               if(res['status'] == 404){
                 this.variab.localannotations.put(feedsdoc).catch(function (err) {
                      //console.log(err);
@@ -264,7 +264,7 @@ auth:any;//varable to store the auth object
                      // ignore if doc already exists
                })
               }
-      })*/
+      })
       //Replicate the design doc to the remote
       this.variab.localannotations.replicate.to(this.remoteannos, {
         live: true,
