@@ -23,6 +23,7 @@ export class Settings{
 	
 	dbfeed:any=environment.dbhost+'/feeds'; //feeds database
 	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
+	dbannotationsbak: any = environment.dbhost +'/iihs_annotation_bak'; //annotations database
 	dbboards: any = environment.dbhost +'/boards';	//boards database
 	dbgroups: any = environment.dbhost +'/groups';	//groups database
 	dbarchives: any = environment.dbhost +'/archives'; //archives database
