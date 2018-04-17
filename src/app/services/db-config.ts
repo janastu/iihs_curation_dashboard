@@ -126,7 +126,7 @@ auth:any;//varable to store the auth object
   	//Create pouchdb instance for annotations
   	 this.variab.localannotations = new PouchDB('iihs_annotation'); //create a pouchdb
   	 //Create reomte couchdb instance for annotations 
-  	 this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
+  	 this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotationsbak,{
   	           auth:this.auth
   	     });
   	 //create design docs
