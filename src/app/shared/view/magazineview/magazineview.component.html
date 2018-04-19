@@ -38,13 +38,13 @@
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item" [index]='chilIndex'></app-modal>
-                     <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
+                      
+                     <a href="{{item.value.link}}" target="_blank"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
-                    <a href={{item.value.url}} class="metadata-magazine">
+                    <a href={{item.value.link}} target="_blank" class="metadata-magazine">
                       {{item.value.meta.categories}}</a>
                     <!--Feed Date-->
-                    <a href={{item.value.url}} class="metadata-magazine">
+                    <a  class="metadata-magazine">
                       {{item.value.pubDate | date}}
                     </a>
                     <!--Feed Desc-->
