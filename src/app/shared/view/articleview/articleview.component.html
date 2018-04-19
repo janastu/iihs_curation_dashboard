@@ -11,17 +11,17 @@
               <div class="feeds-entries">
                 <!--Feed Title-->
                   <div class="row">
-                    <app-modal #modal [item]="item" [index]='index'></app-modal>
-                   <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
+                    
+                   <a href={{item.value.link}} target="_blank"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                    </div>
                   <!--Feed Category-->
                   <div class="row">
-                  <a class="metadata-article">
+                  <a href={{item.value.link}} target="_blank" class="metadata-article">
                           {{item.value.meta.categories}}
                   </a>
                   <!--Feed Date-->
                   
-                  <a href={{item.value.url}} class="metadata-article">
+                  <a  class="metadata-article">
                           {{item.value.pubDate | date}}
                   </a>
                 

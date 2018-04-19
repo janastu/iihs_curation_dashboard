@@ -135,5 +135,10 @@ currDate = new Date();
  onSortlabel(val){
    this.Sortlabel.emit(val);
  }
+ //Function on choosing a board
+ onChooseBoard(board){
+   this.router.navigate(['/publish', board])
+   
+ }
 
 }
