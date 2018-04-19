@@ -1,3 +1,4 @@
+
 import { Injectable,ViewChild } from '@angular/core';
 import { DataService } from '../../services/data-service';
 import { FeedService } from '../../services/feed-service';//Import feed service to update feed when removed
@@ -60,8 +61,8 @@ checkForPublished(boardfeeds,boardname){
           alreadypublished=res;
           //console.log(res);
       var datefeed = boardfeeds.map( (board, index) => {
-           
-         return  _.filter(alreadypublished.feeds,function(o) { 
+          // console.log(alreadypublished,feeds);
+         return  _.filter(alreadypublished,function(o) { 
            //console.log(o)
            if(o.value._id===board.value._id){
              //console.log(o)
