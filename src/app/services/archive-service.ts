@@ -65,7 +65,7 @@ export class ArchiveService {
 	  	  });*/
 	  	  var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_view/archives?key=["'+date+'","'+board+'"]';
 	  	  	this.http.get(url).map(res => res.json()).subscribe(data => {
-	  	  		console.log("da",data);
+	  	  		//console.log("da",data);
 	  	  		if(data.rows.length !=0){
 	  	  	 		resolve(data.rows[0]);
 	  	  	 	}
@@ -86,8 +86,13 @@ export class ArchiveService {
 	  	  this.variab.localarchives.query('archives/publishedfeeds', {
 	  		  key:board
 	  	  }).then(function (result) {
+	  	  		
+	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
+	  	  			return feeds.value.feeds;
+	  	  		})
+	  	  		//console.log(_.flatten(feedsofeverypublish));	
 	  	 	if(result.rows.length!=0){
-	  	  		resolve(result.rows[0].value);
+	  	  		resolve(_.flatten(feedsofeverypublish));
 	  	  	}
 	  	  	else{
 	  	  		resolve(result.rows);
