@@ -55,8 +55,23 @@
         </div>
       </div>
       <!--Share with team mates-->
-      <div *ngIf="router.url.includes('/boardfeeds')"><app-modal #modal></app-modal>
-        <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
+      <div *ngIf="router.url.includes('/boardfeeds')">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn nav-item-filters"  title="Boards to Share" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="fa fa-fw fa-users icon-header"></i>
+          </button>
+                        
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width-share">  
+            <fieldset class="form-group field" *ngFor="let item of variab.boardupdated">
+              <div class="radio">
+                <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.key)"> {{item.key}}
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      <!--<app-modal #modal></app-modal>
+        <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>-->
       </div> 
         <!--Team Newsletter
         <button  class="btn nav-item-filters headerview" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>-->

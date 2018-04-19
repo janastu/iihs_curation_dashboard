@@ -140,12 +140,7 @@ export class ModalComponent {
           // Retrieve the text property of the element (cross-browser support)
           return temporalDivElement.textContent || temporalDivElement.innerText || "";
       }
-      //Function on choosing a board
-      onChooseBoard(board){
-        this.router.navigate(['/publish', board])
-        this.modalRef.close();
-        
-      }
+      
     
   readlater(index: number){
     //console.log("called");
