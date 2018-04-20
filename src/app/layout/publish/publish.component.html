@@ -26,12 +26,7 @@
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
 <!--<input type="checkbox" (change)="onChange(feed, $event.target.checked)">-->
-<div *ngIf=publishedfeeds[i]>
-<label>published</label>
-</div>
-<div *ngIf=!publishedfeeds[i]>
-<input type="checkbox" value="{{feed.value._id}}" [(ngModel)]="feed.Checked" [name]="feed.value.title"/>
-</div>
+
 
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
@@ -39,22 +34,29 @@
 <ng-template #first><app-magazineview [feeds]='feed' [index]='i'></app-magazineview></ng-template>
 
 <!--Component to display if Magazine view is selected-->
-<div *ngIf = "view === 'Magazine'"> 
-  <app-magazineview [feeds]='feed' [index]='i'></app-magazineview>
+<div *ngIf = "view === 'Magazine'">
+  <div *ngIf="publishedfeeds.length>0">
+    <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds' (checkedInput)='handleCheckedInput($event)'></app-magazineview>
+  </div> 
+  
 </div>
 
 <!--Component to display if Article view is selected-->
 <div *ngIf = "view === 'Article'"> 
-  <app-articleview [feeds]='feed' [index]='i'></app-articleview>
+  <div *ngIf="publishedfeeds.length>0">
+    <app-articleview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-articleview>
+  </div>
 </div>
 <!--Component to display if Card view is selected-->
 <div *ngIf = "view === 'Card'"> 
-    <app-card-view [feeds]='feed' [index]='i'></app-card-view>
+  <div *ngIf="publishedfeeds.length>0">
+    <app-card-view [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-card-view>
+  </div>  
 </div>
 <!--Component to display if Title view is selected-->
 <div *ngIf = "view === 'Title'"> 
-<div class="container">
- <app-title-view [feeds]='feed'  [index]='i'></app-title-view>
+<div class="container" *ngIf="publishedfeeds.length>0">
+ <app-title-view [feeds]='feed'  [index]='i' [publishedfeeds]='publishedfeeds'></app-title-view>
 </div>                
 
 </div>

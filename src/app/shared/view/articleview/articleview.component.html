@@ -9,6 +9,22 @@
           <div class="row">
 
               <div class="feeds-entries">
+                <div *ngIf="router.url.includes('/publish')">
+                    <div *ngIf=publishedfeeds[index]>
+                       <label>published</label>
+                    </div>
+                    <div *ngIf=!publishedfeeds[index]>
+                      <input #checkbox type="checkbox" value="{{item.value._id}}" 
+                      (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                    </div>
+                </div>
+                 
+                
+                <div *ngIf="router.url.includes('/boardfeeds')">
+                  <div *ngIf=publishedfeeds[index]>
+                     <label>published</label>
+                  </div>
+                </div>  
                 <!--Feed Title-->
                   <div class="row">
                     
@@ -50,10 +66,10 @@
                           
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content article-feed-content">
-                            {{item.value.description.substring(0,250)}}
+                            {{item.value.description.substring(0,200)}}
                     </div>
                     <div *ngIf="html.checkhtml(item.value.description)" class="feed-content article-feed-content">
-                        {{html.stripHtml(item.value.description).substring(0,100)}}
+                        {{html.stripHtml(item.value.description).substring(0,200)}}
 
                     </div>
                   </div>

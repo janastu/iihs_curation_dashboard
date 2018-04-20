@@ -6,6 +6,7 @@ import { ModalModule } from '../../../shared/modules/modal/modal.module';
 import { MagazineviewComponent } from '../magazineview/magazineview.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 @NgModule({
     imports: [
         CommonModule,
@@ -13,7 +14,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
         HoverToolbarModule,
         ModalModule,
         NgbModule.forRoot(),
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [MagazineviewComponent],
     exports: [MagazineviewComponent]

@@ -42,13 +42,14 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
               this.variab.boardfeeds = res;
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
+                   console.log(res);
                  this.feeds = res;
                   if(this.feeds){
                     this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                   }
                  this.util.checkForPublished(res,params.id).then(res=>{
                    this.publishedfeeds=res;
-                   
+                   console.log(this.publishedfeeds);
                  });
                 //Get the deleted feeds store and display using feeds variable
                 

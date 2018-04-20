@@ -5,13 +5,16 @@ import { HoverToolbarModule } from '../../modules/hover-toolbar/hover-toolbar.mo
 import { ModalModule } from '../../modules/modal/modal.module';
 import { TitleViewComponent } from './title-view.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         HoverToolbarModule,
        	ModalModule,
-       	NgxPaginationModule
+       	NgxPaginationModule,
+       	FormsModule,
+       	ReactiveFormsModule
     ],
     declarations: [TitleViewComponent],
     exports: [TitleViewComponent]

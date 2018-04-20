@@ -36,6 +36,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values to alert fee
 model:any=false;
 showDialog:boolean=false;
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
+checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
     public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
     public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
@@ -72,6 +73,7 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
              this.feeds = res;
              this.util.checkForPublished(res,params.id).then(res=>{
                this.publishedfeeds=res;
+               console.log(this.publishedfeeds);
              });
             });
            
@@ -116,10 +118,14 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
      });
    
   }
+  //Function to handle checked Input values from the child view component
+  handleCheckedInput(event){
+    this.checkedfeeds.push(event);
+  }
 //Function called when clicked on publish
   publish(){
     //console.log(this.feeds);
-    var publishedfeeds = this.feeds.filter(feed=>{
+    var publishedfeeds = this.checkedfeeds.filter(feed=>{
       return feed.Checked;  
     })
     //console.log(this.variab.publishedfeeds);

@@ -5,7 +5,22 @@
               <app-page-header [heading]="'Feeds'"></app-page-header>
         </div>
       </div>-->
-    
+                        <div *ngIf="router.url.includes('/publish')">
+                            <div *ngIf=publishedfeeds[index]>
+                               <label>published</label>
+                            </div>
+                            <div *ngIf=!publishedfeeds[index]>
+                              <input #checkbox type="checkbox" value="{{item.value._id}}" 
+                              (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                            </div>
+                        </div>
+                         
+                        
+                        <div *ngIf="router.url.includes('/boardfeeds')">
+                          <div *ngIf=publishedfeeds[index]>
+                             <label>published</label>
+                          </div>
+                        </div>  
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
                         <!--Feed Category-->     
