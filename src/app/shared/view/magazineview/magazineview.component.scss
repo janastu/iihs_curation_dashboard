@@ -87,6 +87,17 @@
     border: transparent;
     z-index: 1;
 }
+.hover-publishedurl{
+    opacity:0;
+}
+.published{
+    color:black;
+}
+.published:hover .hover-publishedurl{
+    opacity:1;
+    color:#a3a3a2;
+    margin-top:-60px;
+}
 
 /*===============================================================================================
 MEDIA QUERIES

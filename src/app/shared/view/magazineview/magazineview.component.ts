@@ -20,7 +20,6 @@ export class MagazineviewComponent implements OnInit {
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
-//p:any;
   constructor(public html:HtmlParser,public router:Router) {
 
    }

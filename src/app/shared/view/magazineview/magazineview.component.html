@@ -31,7 +31,14 @@
           
               <div *ngIf="router.url.includes('/boardfeeds')">
                 <div *ngIf=publishedfeeds[index]>
-                   <label>published</label>
+                   <label class="published">published
+                   <!--<div class="hover-publishedurl">
+                     <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
+                     <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
+                       [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
+                     
+                   </div>-->
+                   </label>
                 </div>
               </div>  
               <div class="feeds-entries">
