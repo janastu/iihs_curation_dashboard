@@ -9,16 +9,7 @@
           <div class="row">
 
               <div class="feeds-entries">
-                <div *ngIf="router.url.includes('/publish')">
-                    <div *ngIf=publishedfeeds[index]>
-                       <label>published</label>
-                    </div>
-                    <div *ngIf=!publishedfeeds[index]>
-                      <input #checkbox type="checkbox" value="{{item.value._id}}" 
-                      (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
-                    </div>
-                </div>
-                 
+                
                 
                 <div *ngIf="router.url.includes('/boardfeeds')">
                   <div *ngIf=publishedfeeds[index]>
@@ -27,7 +18,16 @@
                 </div>  
                 <!--Feed Title-->
                   <div class="row">
-                    
+                    <div *ngIf="router.url.includes('/publish')">
+                        <div *ngIf=publishedfeeds[index]>
+                           <label>published</label>
+                        </div>
+                        <div *ngIf=!publishedfeeds[index]>
+                          <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                          (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                        </div>
+                    </div>
+                     
                    <a href={{item.value.link}} target="_blank"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                    </div>
                   <!--Feed Category-->

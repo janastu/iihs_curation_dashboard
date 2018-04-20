@@ -6,7 +6,11 @@
         </div>
     </div>-->
 
-
+<div class="row">
+  <div class="col-sm-2 offset-sm-2">
+  
+  </div>
+</div>
 
   <div class="row">
     <div class="col">
@@ -17,30 +21,7 @@
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
-            
-              <div *ngIf="router.url.includes('/publish')">
-                  <div *ngIf=publishedfeeds[index]>
-                     <label>published</label>
-                  </div>
-                  <div *ngIf=!publishedfeeds[index]>
-                    <input #checkbox type="checkbox" value="{{item.value._id}}" 
-                    (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
-                  </div>
-              </div>
-               
-          
-              <div *ngIf="router.url.includes('/boardfeeds')">
-                <div *ngIf=publishedfeeds[index]>
-                   <label class="published">published
-                   <!--<div class="hover-publishedurl">
-                     <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
-                     <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
-                       [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
-                     
-                   </div>-->
-                   </label>
-                </div>
-              </div>  
+             
               <div class="feeds-entries">
                 
               <div class="magazine-hover-control">
@@ -49,6 +30,15 @@
               
 
                <div class="feed-entry" *ngIf="item.value.description != null">
+               <div *ngIf="router.url.includes('/publish')">
+                  <!-- <div *ngIf=publishedfeeds[index]>
+                      <label>published</label>
+                   </div>-->
+                   <div *ngIf=!publishedfeeds[index]>
+                     <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                     (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                   </div>
+               </div>
                <!--Feed Image--> 
                 <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
                  <img [src]="html.extracturl(item.value.description)" class="magazine-image">
