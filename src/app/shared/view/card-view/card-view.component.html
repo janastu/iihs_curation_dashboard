@@ -22,9 +22,9 @@
                     <div class="card-block card-text">
                       <!--Feed Title-->
                       <app-modal #modal [item]="item" [index]='index'></app-modal>
-                      <a (click)="modal.open(desc)"class="feed-title">{{item.value.title.substring(0,60)}}</a>
+                      <a href={{item.value.link}} class="feed-title">{{item.value.title.substring(0,60)}}</a>
                        <!--Feed Category-->
-                      <a href={{item.value.url}} class="feeds-data">{{item.value.meta.categories}}</a>
+                      <a href={{item.value.link}} class="feeds-data">{{item.value.meta.categories}}</a>
                       <!--Feed Date-->
                       <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                       <!--Feed description--> 

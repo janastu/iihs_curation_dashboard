@@ -7,7 +7,7 @@ import { CreateboardcomponentModule } from '../../modules/createboardcomponent/c
 import { ModalModule } from '../../modules/modal/modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -17,7 +17,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
         NgbModule.forRoot(),
        	CreateboardcomponentModule,
        	ModalModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule,
+        ReactiveFormsModule
 
     ],
     declarations: [ArticleviewComponent],

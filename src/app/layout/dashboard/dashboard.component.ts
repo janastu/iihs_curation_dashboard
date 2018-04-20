@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
     this.user = localStorage.getItem('name');
        //Pull new feeds of user subscriptions
        this.userService.pullnewFeeds().then(res=>{
+           //console.log(res);
          if(res['status']==304){
            this.alertupdated=true;
            this.ngAlert.type = 'success';
