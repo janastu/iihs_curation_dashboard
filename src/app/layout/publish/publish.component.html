@@ -8,11 +8,7 @@
     </div>
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
 <ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Published</ngb-alert>
-      <div *ngIf="publishingurl">
-      <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
-      <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
-        [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
-      </div>
+   
 
 <div class="row centered">
       <div class="col">
