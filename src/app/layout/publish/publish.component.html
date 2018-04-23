@@ -7,7 +7,7 @@
         </div>
     </div>
 <ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
-<ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Published</ngb-alert>
+<ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Already Published</ngb-alert>
    
 
 <div class="row centered">
@@ -16,8 +16,12 @@
                      
                
                         <div class="container">
+                        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
+                        (change)="onSelectAll($event)"/>                       
+                        <label>Select All</label>
  <form  (ngSubmit)="publish()">
  <button type="submit" class="btn btn-md btn-success">Publish</button> 
+
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->

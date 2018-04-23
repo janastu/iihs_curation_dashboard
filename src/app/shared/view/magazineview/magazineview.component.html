@@ -8,7 +8,11 @@
 
 <div class="row">
   <div class="col-sm-2 offset-sm-2">
-  
+   <!-- <div *ngIf="publishingurl && !mouseOvered">
+        <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
+        <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
+            [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
+    </div>-->
   </div>
 </div>
 
@@ -27,18 +31,27 @@
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='index' (sendIconState)="handleIcon($event)"></app-hover-toolbar>
               </div>
-              
+                     
+
 
                <div class="feed-entry" *ngIf="item.value.description != null">
                <div *ngIf="router.url.includes('/publish')">
-                  <div *ngIf=publishedfeeds[index]>
-                      <label>published</label>
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox" >
+                      Published
                    </div>
                    <div *ngIf=!publishedfeeds[index]>
                      <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
-                     (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                     (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
                    </div>
                </div>
+               <!--<div *ngIf="router.url.includes('/boardfeeds')">
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                      Published
+                   </div>
+                   <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                   (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                  
+               </div>-->
                <!--Feed Image--> 
                 <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
                  <img [src]="html.extracturl(item.value.description)" class="magazine-image">

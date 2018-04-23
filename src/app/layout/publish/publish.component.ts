@@ -20,7 +20,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 })
 
 export class PublishComponent implements OnInit {
-isCopied1: boolean = false;//variable to store the status if the input value is copied or not
+selectedAll:any;
 publishingurl:any;//variable to store the publishing url
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
@@ -73,12 +73,12 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
              this.feeds = res;
              this.util.checkForPublished(res,params.id).then(res=>{
                this.publishedfeeds=res;
-               console.log(this.publishedfeeds);
+               //console.log(this.feeds);
              });
             });
            
            //get the board feeds of today's
-           this.dataservice.gettodayBoardFeeds().then(res=>{
+          /* this.dataservice.gettodayBoardFeeds().then(res=>{
              var todayAnnotatedFeeds:any=[];
              todayAnnotatedFeeds = res;
                
@@ -113,7 +113,7 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
                
                  //console.log("yeno",this.feedstobechecked);
               
-           })
+           })*/
         });
      });
    
@@ -122,10 +122,27 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
   handleCheckedInput(event){
     this.checkedfeeds.push(event);
   }
+  //function on select all
+  onSelectAll() {
+      //console.log(this.selectedAll)
+
+      for (var i = 0; i < this.feeds.length; i++) {
+        for(var i=0; i< this.publishedfeeds.length;i++){
+          if(this.publishedfeeds[i] == false){
+            this.feeds[i].Checked = this.selectedAll;
+          }
+          else{
+            this.alertPublished=true;
+            setTimeout(() => this.alertPublished = false, 2000);
+          }
+        }
+        
+      }
+  }
 //Function called when clicked on publish
   publish(){
-    //console.log(this.feeds);
-    var publishedfeeds = this.checkedfeeds.filter(feed=>{
+    //console.log(this.checkedfeeds);
+    var publishedfeeds = this.feeds.filter(feed=>{
       return feed.Checked;  
     })
     //console.log(this.variab.publishedfeeds);
@@ -169,8 +186,9 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
             });
       }
       else{
+        console.log(publishedfeeds);
         publishedfeeds.map(pubfeed=>{
-          //console.log(pubfeed);
+            
           res['value']['feeds'].push(pubfeed);
         })    
           res['value']['modified_pub_date']=pub_date;
