@@ -21,7 +21,7 @@ alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
   constructor(public html:HtmlParser,public router:Router) {
-
+      console.log(this.publishedfeeds);
    }
 
   ngOnInit() {
