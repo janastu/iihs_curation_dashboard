@@ -88,22 +88,13 @@
     z-index: 1;
 }
 
-.hover-publishedurl{
-    opacity:0;
-}
-.published{
-    color:black;
-}
-.published:hover .hover-publishedurl{
-    opacity:1;
-    color:#a3a3a2;
-    margin-top:-60px;
-}
-
-
 .publish_checkbox{
-    margin-left: -4rem;
-    margin-top: 37px;
+    margin-left: -8rem;
+    margin-top: 7px;
+    cursor:pointer;
+}
+.published-label{
+    margin-top: 8px;
 }
 
 /*===============================================================================================

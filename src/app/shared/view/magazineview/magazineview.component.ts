@@ -4,6 +4,7 @@ import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { HtmlParser } from '../../Utilities/html-parser';
 import { Router } from '@angular/router';
+import { ArchiveService } from '../../../services/archive-service';
 @Component({
   selector: 'app-magazineview',
   templateUrl: './magazineview.component.html',
@@ -20,15 +21,23 @@ export class MagazineviewComponent implements OnInit {
 alert:boolean=false;
 imgstatus:number=0;
 feedmark:number =0;
-  constructor(public html:HtmlParser,public router:Router) {
+publishingurl:any;//variable to store the publishing url
+isCopied1: boolean = false;//variable to store the status if the input value is copied or not
+mouseOvered:boolean=false;
+  constructor(public html:HtmlParser,public router:Router,public archiveService:ArchiveService) {
 
    }
 
   ngOnInit() {
+
 	}  
   onFilterChange(eve: any) {
-    //console.log(eve,this.item);
-    this.checked.emit(this.item);   
+    console.log("eve",this.item);
+    //this.checked.emit(this.item);   
+  }
+  //handle event select all
+  onSelectAll(eve:any){
+     this.checked.emit(eve); 
   }
   
   handleAlert(sendAlert:any){
@@ -44,7 +53,14 @@ feedmark:number =0;
     //this.feedmark = sendIcon;
     console.log("icon",this.feedmark)
   }
+  //Handle the event on clicking on published
+  OnPublished(feed){
+    this.archiveService.getPublishingUrlofFeed(feed.id).then(res=>{
 
+      this.publishingurl = res[0].value;
+      
+    })
+  }
  
   
 }
