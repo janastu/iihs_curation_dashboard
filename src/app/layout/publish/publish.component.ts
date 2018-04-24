@@ -37,6 +37,7 @@ model:any=false;
 showDialog:boolean=false;
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
 checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
     public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
     public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
@@ -71,6 +72,10 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
             this.util.checkForDeletedFeeds(res).then(res=>{
              //Get the deleted feeds store and display using feeds variable
              this.feeds = res;
+               if(this.feeds){
+                 this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+               }
+             
              this.util.checkForPublished(res,params.id).then(res=>{
                //this.feeds=res;
                this.publishedfeeds=res;
