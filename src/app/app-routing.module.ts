@@ -14,9 +14,9 @@ const routes: Routes = [
     { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordModule' },
     { path: 'choose-group', loadChildren: './join-group/join-group.module#JoinGroupModule'},
     {path:  'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
-    {path:  'mm/:boardname/:date', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
-    {path:  'mm/:date', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
-    { path: 'published-view', loadChildren: './published-view/published-view.module#PublishedViewModule'},
+    {path:  'mm/:boardname/:date/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
+    //{path:  'mm/:boardname/:date', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
+    { path: 'mm/:boardname/:date', loadChildren: './published-view/published-view.module#PublishedViewModule'},
     { path: '**', redirectTo: 'not-found' }
 ];
 

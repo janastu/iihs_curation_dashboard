@@ -72,8 +72,9 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
              //Get the deleted feeds store and display using feeds variable
              this.feeds = res;
              this.util.checkForPublished(res,params.id).then(res=>{
+               //this.feeds=res;
                this.publishedfeeds=res;
-               //console.log(this.feeds);
+               console.log(this.publishedfeeds);
              });
             });
            
@@ -180,28 +181,27 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
                this.alertPublished=true;
                setTimeout(() => this.alertPublished = false, 2000);
                
-                   this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl,'boardname':this.boardname,'date':transform}});
+                   this.router.navigate(['/mm',this.boardname,transform]);
                
               }
             });
       }
       else{
-        console.log(publishedfeeds);
+        //console.log(publishedfeeds);
         publishedfeeds.map(pubfeed=>{
             
           res['value']['feeds'].push(pubfeed);
         })    
           res['value']['modified_pub_date']=pub_date;
-          console.log(res);  
+          //console.log(res);  
+          //this.archiveService.postjsonfile(res,this.boardname,transform);
         this.archiveService.updatedatabase(res['value']).then(response=>{
           if(response['ok']==true){
               //console.log("inupdate",res['value']['feeds']);
              localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
-         
-           this.alertPublished=true;
-           setTimeout(() => this.alertPublished = false, 2000);
+      
           
-               this.router.navigate(['/published-view'],{queryParams:{'url':this.publishingurl,'boardname':this.boardname,'date':transform}});
+               this.router.navigate(['/mm',this.boardname,transform]);
              
           }
         });

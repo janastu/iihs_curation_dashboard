@@ -77,27 +77,22 @@ export class SidebarMmpublishComponent implements OnInit{
             
           })
          //console.log("pubdate",this.publisheddates);
-      })
-
-      
-
-       
+      });
     }
 
    
     //Function called from html to filter the feeds on date
     routetodateboard(date,board){ 
         
-      this.router.navigate(['/mm',board,date]);
+      this.router.navigate(['/mm',board,date,'archives']);
 
     }
     //On choosing a group
-  onChoosegroup(groupname){
-    localStorage.setItem('group',groupname);
-    this.showGroups=false;
-   this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
-   
-  }
+    onChoosegroup(groupname){
+      localStorage.setItem('group',groupname);
+      this.showGroups=false;
+     this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
+    }
     
     
 }

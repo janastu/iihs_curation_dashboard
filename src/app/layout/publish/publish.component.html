@@ -15,13 +15,14 @@
             <div class="mb-3">
                      
                
-                        <div class="container">
-                        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
-                        (change)="onSelectAll($event)"/>                       
-                        <label>Select All</label>
- <form  (ngSubmit)="publish()">
- <button type="submit" class="btn btn-md btn-success">Publish</button> 
+            <div class="container">
+      
 
+ <button type="submit" class="btn btn-md btn-success" (click)="publish()">Publish</button> 
+    <div class="col-sm-6 offset-sm-2 all-checkbox">
+        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" (change)="onSelectAll($event)"/>                       
+        <label>Select All</label>
+    </div>
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
  <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
@@ -62,7 +63,6 @@
 
 </div>
  
-</form>
                     </div>
                   </div>
                </div>
