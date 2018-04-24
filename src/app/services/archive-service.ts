@@ -132,6 +132,20 @@ export class ArchiveService {
 	  	});
 
 	  }
+	  //Api call to get publishing url of feed
+	  getPublishingUrlofFeed(feedid){
+	  	return new Promise(resolve=>{
+	  		//console.log("val");
+	  	  this.variab.localarchives.query('archives/publishing_url_feed', {
+	  		  key:feedid
+	  	  }).then(function (result) {
+	  	 	//console.log(result);
+	  	  	resolve(result.rows);
+	  	  }).catch(function (err) {
+	  	  console.log(err);
+	  	  });
+	  	});
+	  }
 	  //Update database for deleted and modidifed
 	  updatedatabase(doc){
 	  	return new Promise(resolve=>{
@@ -144,7 +158,27 @@ export class ArchiveService {
 	     });
  	    });
 	  }
-
-	
+	  //post to a json
+	  /*postjsonfile(metadata,boardname,date){
+	  	var postdata={
+	  		'data':metadata,
+	  		'boardname':boardname,
+	  		'date':date
+	  	};
+	  var url='http://localhost:3002';
+	  	this.http.post(url,postdata).subscribe((response)=> {
+	  		console.log(response);
+	  	})
+	  }
+	  //Get local json file
+	  getJsonData(date,boardname){
+	  	var check='http://localhost:3002?date='+date+'&boardname='+boardname;
+	  	return new Promise(resolve=>{
+	  		this.http.get(check).map(res=>res.json()).subscribe(result=> {
+	  			resolve(result);
+	  		});
+	  	});
+	  		
+	  }*/
 
 }
