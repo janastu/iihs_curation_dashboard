@@ -14,7 +14,7 @@ export class AppComponent {
         translate.use(browserLang.match(/en|fr|ur|es|it|fa/) ? browserLang : 'en');
 
         //Set up the annotations database
-        this.dbConfig.dbsetupannos();
+       	this.dbConfig.dbsetupannos();
         //Set up the feeds database
         this.dbConfig.dbsetupfeeds();
         //Set up the boards database
