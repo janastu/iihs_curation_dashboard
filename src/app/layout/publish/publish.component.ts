@@ -123,7 +123,7 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
     this.checkedfeeds.push(event);
   }
   //function on select all
-  onSelectAll() {
+  onSelectAll(eve) {
       //console.log(this.selectedAll)
 
       for (var i = 0; i < this.feeds.length; i++) {
