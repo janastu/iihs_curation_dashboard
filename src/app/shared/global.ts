@@ -26,7 +26,6 @@ export class Global {
    localgroups:any;//global variable to store the pouchdb object for groups
    localboards:any;//global variable to store the pouchdb object for boards
    localarchives:any;//global variable to store the pouchdb object for archives
-   pub_date:any;
   constructor(public http: Http) {
   
 

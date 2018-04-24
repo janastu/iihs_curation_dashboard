@@ -18,6 +18,6 @@ export class CustomUrlSerializer implements UrlSerializer {
             }); */
             
         // use your regex to replace as per your requirement.
-        return path.replace(/%20/g,'_');
+        return path.replace(/%20/g,'');
     }
 }
