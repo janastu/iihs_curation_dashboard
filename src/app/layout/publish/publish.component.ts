@@ -178,8 +178,6 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
                 //console.log("inadd",publishedfeeds);
                 localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
               
-               this.alertPublished=true;
-               setTimeout(() => this.alertPublished = false, 2000);
                
                    this.router.navigate(['/mm',this.boardname,transform]);
                
