@@ -480,6 +480,16 @@ auth:any;//varable to store the auth object
                  emit(doc.pub_date, doc.boardname);
                 }
               }.toString()
+            },
+            publishing_url_feed:{
+              map: function (doc) {
+                if(doc.publishing_url){
+                  for(var i in doc.feeds){
+                    emit(doc.feeds[i].id,doc.publishing_url)
+                  }
+                }
+              }.toString()
+
             }
 
           }
