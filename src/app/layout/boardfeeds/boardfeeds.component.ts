@@ -37,6 +37,7 @@ selectedAll:any;
          .subscribe(params => {
 
            this.boardname = params.id;
+           //console.log(this.feeds);
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
            this.dataService.getboardfeeds(params.id).then(res=>{
