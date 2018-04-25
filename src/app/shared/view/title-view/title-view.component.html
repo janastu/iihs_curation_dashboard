@@ -6,10 +6,10 @@
         </div>
       </div>-->
                         <div *ngIf="router.url.includes('/publish')">
-                            <div *ngIf=publishedfeeds[index]>
-                               <label>published</label>
+                            <div *ngIf=publishedfeeds[index] class="col-md-2">
+                               <label>Published</label>
                             </div>
-                            <div *ngIf=!publishedfeeds[index]>
+                            <div *ngIf=!publishedfeeds[index] class="col-md-2">
                               <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox"
                               (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
                             </div>
@@ -18,7 +18,9 @@
                         
                         <div *ngIf="router.url.includes('/boardfeeds')">
                           <div *ngIf=publishedfeeds[index]>
-                             <label>published</label>
+                             <label>Published</label>
+                             <input #checkbox type="checkbox" value="{{item.value._id}}" 
+                             (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
                           </div>
                         </div>  
                         <!--Read Later Button-->
