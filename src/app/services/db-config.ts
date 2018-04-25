@@ -59,6 +59,19 @@ auth:any;//varable to store the auth object
   	    }
   	  }
   	}
+    var filterdoc = {
+          _id: '_design/feedsfilter',
+          _rev:'',
+          filters:{
+            latestoldestcategory: function (doc,req) {
+                if (doc.feednme==req.query.category) {
+
+                  return doc;
+                }
+              }.toString()
+            
+          }
+    }
    /* var linkdoc = {
           _id: '_design/links',
           views: {
@@ -96,18 +109,58 @@ auth:any;//varable to store the auth object
       })
      }
     })
+    this.getFeedFilterDoc(filterdoc).then(res=>{
+      console.log(res);
+     if(res['status'] == 404){
+       this.variab.localfeeds.put(filterdoc).catch(function (err) {
+            //console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+        })
+     }
+     else{
+      this.variab.localfeeds.put(res).catch(function (err) {
+           // console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+      })
+     }
+    })
+    this.variab.localfeeds.replicate.to(this.remotefeeds, {
+      live: true,
+      retry: true,
+      back_off_function: function (delay) {
+        if (delay === 0) {
+          return 1000;
+        }
+        return delay * 3;
+      }
+    });
+     
+    /*this.remotefeeds.replicate.to(this.variab.localfeeds, {
+      filter: 'feedsfilter/latestoldestcategory',
+      query_params: {category:'Times'}
+    }).then((change)=> {
+      // yo, something changed!
+      console.log("syncchnagefeeds",change);
+    });*/
   	//Synch pouchdb with couchdb
-  	this.variab.localfeeds.sync(this.remotefeeds, {
+  	/*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
-  	  retry:true
-  	  
+  	  retry:true, 
+      filter: 'feedsfilter/latestoldestcategory',
+      query_params: {category:'Times'}
   	}).on('change', function (change) {
   	  // yo, something changed!
-  	  console.log("syncchnage",change);
+  	  console.log("syncchnagefeeds",change);
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})
+  	})*/
   }
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){
@@ -115,6 +168,17 @@ auth:any;//varable to store the auth object
       this.variab.localfeeds.get('_design/feeds').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+  //get feeds fiterl doc to update the doc with rev
+  getFeedFilterDoc(filterdoc){
+    return new Promise(resolve=>{
+      this.variab.localfeeds.get('_design/feedsfilter').then(function(doc) {
+           filterdoc._rev = doc._rev;
+           resolve(filterdoc);
        }).catch(err=>{
          resolve(err);
        });
