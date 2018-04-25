@@ -7,7 +7,7 @@
         </div>
     </div>
 
-<ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
+<ngb-alert *ngIf="alertNofeedsinrange" (close)="closeAlert()">No feeds in this range</ngb-alert>
 
 
 <div class="row centered">
@@ -62,6 +62,9 @@
 <!--Pagination Component-->
 
 </div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
+  <h3>Sorry No feeds exist</h3>
+</div> 
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div> 

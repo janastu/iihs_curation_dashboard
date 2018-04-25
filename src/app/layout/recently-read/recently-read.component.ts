@@ -18,6 +18,7 @@ date:any;                    //variable to store the state of dates to filters
 user:any;
 p:any;//variable to store the current page
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
   constructor(public variab:Global,public dataservice:DataService,public util:Utilities) {
    }
    
@@ -36,6 +37,10 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
                     this.feeds = res;
                       if(this.feeds){
                         this.spinnerState=false;
+                      }
+                      this.alertNofeeds=false;//set alertnofeeds value to false
+                      if(this.feeds.length==0){
+                        this.alertNofeeds=true;
                       }
                   });
      
