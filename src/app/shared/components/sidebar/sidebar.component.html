@@ -42,7 +42,7 @@
         </div>-->
 
         <a (click)="showGroups = !showGroups" class="list-group-item onmenu">
-            <i class="fa fa-chevron-down" ></i>
+            <img src="assets/images/radio.png" width="30px" height="30px">
             <!--<div ngbDropdown class="d-inline-block">
               <div class="nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>{{groupname}}</div>
 
@@ -55,7 +55,7 @@
                 </fieldset>
               </div>
             </div>-->
-            <div > {{groupname}}</div>
+            <div class="groupname-align"> {{groupname}}</div>
                 
            
         </a>
@@ -135,6 +135,9 @@
         </a>
         <a [routerLink]="['/trashbox']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Trashbox' | translate }}
+        </a>
+        <a [routerLink]="['/mm/archives']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Archives' | translate }}
         </a>
         
         </ul> 

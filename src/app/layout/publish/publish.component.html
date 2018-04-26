@@ -32,7 +32,7 @@
 
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
-<ng-template #first><app-magazineview [feeds]='feed' [index]='i'></app-magazineview></ng-template>
+<ng-template #first><app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'  (checkedInput)='handleCheckedInput($event)'></app-magazineview></ng-template>
 
 <!--Component to display if Magazine view is selected-->
 <div *ngIf = "view === 'Magazine'">

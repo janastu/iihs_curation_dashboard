@@ -44,6 +44,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.params
             .subscribe(params => {
+              //console.log(params)
+              if(params.date){
+                console.log('va');
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
                let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
                   this.spinnerState=true;
@@ -55,6 +58,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                      this.spinnerState=false;
                    }
                 })
+              }
               
      });
    

@@ -198,8 +198,10 @@ export class FeedService {
 	replicatefeedsdb(category){
 	  return new Promise(resolve=>{	
 		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+			batch_size:10,batches_limit:5,
 		  filter: 'feedsfilter/latestoldestcategory',
-		  query_params: {category: category}
+		  query_params: {category: category},
+		  
 		}).then((change)=> {
 		  // yo, something changed!
 		  console.log("syncchnagefeeds",change);

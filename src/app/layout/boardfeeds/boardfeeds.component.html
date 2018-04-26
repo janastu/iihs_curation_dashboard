@@ -22,7 +22,7 @@
     <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};let i=index;">
     
     <div *ngIf = "view === null"> 
-      <app-magazineview [feeds]='feed' [index]='i'></app-magazineview>
+      <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'  (checkedInput)='handleCheckedInput($event)'></app-magazineview>
     </div>
 
     <!--Component to display if Magazine view is selected-->

@@ -15,7 +15,7 @@ const routes: Routes = [
     { path: 'choose-group', loadChildren: './join-group/join-group.module#JoinGroupModule'},
     {path:  'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     {path:  'mm/:boardname/:date/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
-    //{path:  'mm/:boardname/:date', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
+    {path:  'mm/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
     { path: 'mm/:boardname/:date', loadChildren: './published-view/published-view.module#PublishedViewModule'},
     { path: '**', redirectTo: 'not-found' }
 ];
