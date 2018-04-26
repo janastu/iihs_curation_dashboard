@@ -19,9 +19,10 @@
                         <div *ngIf="router.url.includes('/boardfeeds')">
                           <div *ngIf=publishedfeeds[index]>
                              <label>Published</label>
-                             <input #checkbox type="checkbox" value="{{item.value._id}}" 
-                             (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                             
                           </div>
+                          <input #checkbox type="checkbox" value="{{item.value._id}}" 
+                          (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
                         </div>  
                         <!--Read Later Button-->
                              <!--a class="nav-item items" (click)="readlater(item)"><i class="fa fa-fw fa-bookmark-o" title="Read Later"></i></a-->
