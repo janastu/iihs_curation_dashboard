@@ -76,7 +76,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
             else{
               this.spinnerState=true;
               this.feeds.length=0;
-              console.log(this.spinnerState,this.feeds);
+             // console.log(this.spinnerState,this.feeds);
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
@@ -108,10 +108,18 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
       this.feedService.getlatestfeeds(feedname).then(res=>{
-       
-         //Store the result in the global variable globalfeeds
-           feedsOnFeedname = res;
-           resolve(feedsOnFeedname);            
+           console.log(res);
+           if(res['length'] == 0){
+             this.feedService.replicatefeedsdb(feedname).then(repres=>{
+               resolve(repres);
+             })
+           }
+           else{
+             feedsOnFeedname = res;
+             resolve(feedsOnFeedname);
+           }
+         
+                       
           
       });
     });

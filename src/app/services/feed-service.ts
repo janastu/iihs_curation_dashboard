@@ -154,30 +154,19 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-			//console.log(category);
+		var replicationstatus:boolean=false;
 		return new Promise(resolve => { 
-			this.remotefeeds.replicate.to(this.variab.localfeeds, {
-			  filter: 'feedsfilter/latestoldestcategory',
-			  query_params: {category: category}
-			}).then((change)=> {
-			  // yo, something changed!
-			  console.log("syncchnagefeeds",change);
-			  if(change.ok == true){
-			    this.variab.localfeeds.query('feeds/latestoldestcategory', {
-			      startkey: [category],
-			      endkey: [category, {}]
-			    }).then(function (result) {
-			   		console.log("res",result);
-			    	resolve(result.rows);
-			  	}).catch(function (err) {
-			    console.log(err);
-			  	});
-			  }
+			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
+			    startkey: [category],
+			    endkey: [category, {}]
+			  }).then(function (result) {
+			 		resolve(result.rows);
+			   }).catch(function (err) {
+			  		console.log(err);
 			});
-	 
-	  var d = new Date();
-	  var date = d.getTime();
-	 
+		
+		
+	
 
 	
 	/*this.remote.replicate.to(this.localdb, {
@@ -204,6 +193,30 @@ export class FeedService {
 
 
 	  
+	}
+	//Replicate db feeds
+	replicatefeedsdb(category){
+	  return new Promise(resolve=>{	
+		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+		  filter: 'feedsfilter/latestoldestcategory',
+		  query_params: {category: category}
+		}).then((change)=> {
+		  // yo, something changed!
+		  console.log("syncchnagefeeds",change);
+		  if(change.ok == true){
+		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+		      startkey: [category],
+		      endkey: [category, {}]
+		    }).then(function (result) {
+		   		console.log("res",result);
+		    	resolve(result.rows);
+		  	}).catch(function (err) {
+		    console.log(err);
+		  	});
+		  }
+		});
+	  });
+
 	}
 	//Api service to get recent feeds
 	 getrecentfeeds(){
