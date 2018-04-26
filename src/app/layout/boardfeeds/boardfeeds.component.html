@@ -11,7 +11,14 @@
                 <div class="mb-3">
                          
                             <div class="container">
-
+       <button  class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button> 
+     <div class="col-sm-6 offset-sm-2 all-checkbox">
+       <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
+       (change)="onSelectAll()"/>                       
+       <label>Select All</label>
+     </div>
+       
+               
     <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};let i=index;">
     
     <div *ngIf = "view === null"> 
@@ -23,7 +30,7 @@
       <!--div id="loading">
         <img src="assets/images/loading.gif">
       </div-->
-      <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-magazineview>
+      <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'  (checkedInput)='handleCheckedInput($event)'></app-magazineview>
     </div>
 
     <!--Component to display if Article view is selected-->

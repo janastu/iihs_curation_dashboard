@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class HoverToolbarComponent implements OnInit {
   @Input('item') feeditem:any; 
   @Input('index') index:any;
+  @Input('published') published:any;
   @Output('sendAlert') outgoing:any = new EventEmitter();
   @Output('sendIconState') iconState:any = new EventEmitter();
 selectedIndex: any;//variable to store the status of readlater icon
@@ -141,7 +142,7 @@ this.date = new Date();
   }
  //Click hide to remove the feed and push to trashbox
   hide(){
-    console.log("hid");
+    console.log("hid",this.feeditem);
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -161,7 +162,7 @@ this.date = new Date();
     //Add a object hide feed with properties hidefeed and hiddenby and update
   else{
     this.feeditem.value.hidefeed={'hidefeed':true,'hiddenby':this.user};
-   
+     console.log(this.feeditem.value);  
     this.feedService.updatefeed(this.feeditem.value).then(res=>{
       console.log(res);
       if(res['ok'] == true){

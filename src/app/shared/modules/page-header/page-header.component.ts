@@ -31,6 +31,7 @@ desc:any;
 checkView:any;
 loading: boolean = false;
 currDate = new Date();
+
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService,public router:Router) { }
 
   ngOnInit() {

@@ -34,6 +34,7 @@ p:any;//variable to store the current page
      this.dataservice.getdeletedfeeds(this.user).then(res=>{
        this.variab.hiddenfeeds = res;
        this.feeds = this.variab.hiddenfeeds;
+         //console.log(this.feeds);
          if(this.feeds){
            this.spinnerState=false;
          }
