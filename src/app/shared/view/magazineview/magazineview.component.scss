@@ -44,6 +44,7 @@
     margin-right: 20px;
 }
 .magazine-image{
+    border: 1px solid #efefef;
     width: 130px;
 }
 .magazine-image img{
@@ -53,6 +54,9 @@
 .desc-image magazine-image img{
       width: 130px;
       height: 90px;  
+}
+.hide-image{
+    max-width:0px;
 }
 /*Styles for Feed Metadata*/
 .metadata-magazine{

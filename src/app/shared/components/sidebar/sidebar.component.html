@@ -98,9 +98,14 @@
           
                     <ul class="submenu">
                       <li *ngFor="let child of n.doc.metadata">
+                        <div *ngIf="child.categories.length ==0">
+                            <a (click)="routeto(n.doc.feedname)" class="onmenu">
+                              <span>&nbsp;{{n.doc.feedname}}</span></a>
+                        </div>
                           <div *ngFor="let meta of child.categories">
                               <a  (click)="routetometa(n.doc.feedname,meta)" class="onmenu">
                               <span>&nbsp;{{ meta }}</span></a>
+                              
                           </div>
                       </li>
                     </ul>

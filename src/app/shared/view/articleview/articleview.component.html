@@ -12,15 +12,17 @@
                 
                 
                 <div *ngIf="router.url.includes('/boardfeeds')">
-                  <div *ngIf=publishedfeeds[index]>
-                     <label>published</label>
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                     <label>Published</label>
                   </div>
+                  <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                  (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
                 </div>  
                 <!--Feed Title-->
                   <div class="row">
                     <div *ngIf="router.url.includes('/publish')">
-                        <div *ngIf=publishedfeeds[index]>
-                           <label>published</label>
+                        <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                           <label>Published</label>
                         </div>
                         <div *ngIf=!publishedfeeds[index]>
                           <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
@@ -35,6 +37,8 @@
                   <a href={{item.value.link}} target="_blank" class="metadata-article">
                           {{item.value.meta.categories}}
                   </a>
+                  <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} target="_blank" class="metadata-article">
+                  {{item.value.feednme}}</a>
                   <!--Feed Date-->
                   
                   <a  class="metadata-article">
@@ -57,7 +61,7 @@
                       <img [src]="html.extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description)" class="row">
-                      <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+                      <!--<img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="hide-image">-->
                     
                     </div>
                   <!--Feed Desc-->

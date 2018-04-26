@@ -5,8 +5,8 @@
         </div>
     </div>-->
 <div class="card-magazine">
-      <div class="list-entries lists" >
-        <div class="cardview">
+      <div  class="list-entries lists">
+        <div class="cardview" *ngFor='let item of feeds | paginate: { itemsPerPage: 10, currentPage: p}'>
           <div class="visual mb-3">
           <!--Mouse over for each element-->
             <div class="card-hover-control">
@@ -25,6 +25,7 @@
                       <a href={{item.value.link}} class="feed-title">{{item.value.title.substring(0,60)}}</a>
                        <!--Feed Category-->
                       <a href={{item.value.link}} class="feeds-data">{{item.value.meta.categories}}</a>
+                      <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} class="feeds-data">{{item.value.feednme}}</a>
                       <!--Feed Date-->
                       <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                       <!--Feed description--> 
@@ -40,6 +41,9 @@
         </div>
       </div>
     
+</div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 
 </div>

@@ -159,7 +159,7 @@ export class ArchiveService {
  	    });
 	  }
 	  //post to a json
-	  /*postjsonfile(metadata,boardname,date){
+	 /* postjsonfile(metadata,boardname,date){
 	  	var postdata={
 	  		'data':metadata,
 	  		'boardname':boardname,

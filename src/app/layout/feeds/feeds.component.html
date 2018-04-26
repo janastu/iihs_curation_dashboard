@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<div [@routerTransition]>
+<div [@routerTransition] class="container-height">
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-<ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
+<ngb-alert *ngIf="alertNofeedsinrange" (close)="closeAlert()">No feeds in this range</ngb-alert>
 
 
 <div class="row centered">
@@ -35,9 +35,7 @@
   <app-articleview [feeds]='feed' [index]='i'></app-articleview>
 </div>
 <!--Component to display if Card view is selected-->
-<div *ngIf = "view === 'Card'"> 
-    <app-card-view [feeds]='feed' [index]='i'></app-card-view>
-</div>
+
 <!--Component to display if Title view is selected-->
 <div *ngIf = "view === 'Title'"> 
 <div class="container">
@@ -45,6 +43,11 @@
 </div>                
 
 </div>
+</div>
+<div *ngIf = "view === 'Card'"> 
+ 
+    <app-card-view [feeds]='feeds' [index]='i'></app-card-view>
+ 
 </div>
                     </div>
                   </div>
@@ -62,6 +65,9 @@
 <!--Pagination Component-->
 
 </div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
+  <h3>Sorry No feeds exist</h3>
+</div> 
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div> 

@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Global {
-
+//Migrate to component service architecture
    
    globalfeeds:any=[];//global variable to store feeds in global buffer
    readlaterfeeds:any=[];//global variable to store readlater feeds in global buffer

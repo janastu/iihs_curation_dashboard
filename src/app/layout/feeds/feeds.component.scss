@@ -1,3 +1,6 @@
+.container-height{
+    min-height:100vh;
+}
 .spinner-image{
 	background: transparent;
 	width: 500px;
@@ -82,7 +85,14 @@
 	margin-right: 0.5rem;
 }
 
-
+/*Card view*/
+.card-magazine{
+    max-width: 888px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
 /*hover for feeds elements*/
 
 .list-entries:hover, .list-entries:hover .title-hover-control {

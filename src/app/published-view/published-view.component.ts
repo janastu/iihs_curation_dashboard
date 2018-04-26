@@ -18,17 +18,17 @@ archivesurl:any;//variable to store archives url to navigate to the archives
 
   ngOnInit() {
       
-  	   /*this.route.params
+  	  /* this.route.params
              .subscribe(params => {
                var parsedDate = Date.parse(params.date);//parse the date to timestamp
                 let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
                    //this.spinnerState=true;
-                 this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
+                 /*this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
                      //console.log(res['value']);
                    this.statefeeds = res['value'].feeds;
                     this.displayPublishedfeeds=this.statefeeds;
                    
-                 })
+                 })*/
                  /*this.archiveService.getJsonData(params.date,params.boardname).then(res=>{
                    console.log(res);
                    this.statefeeds = res['value'].feeds;

@@ -9,8 +9,8 @@ import { HtmlParser } from '../../Utilities/html-parser';
   animations: [routerTransition()]
 })
 export class CardViewComponent implements OnInit {
-
-@Input('feeds') item:any=[];
+p:any; //variable to store the current page nuber
+@Input('feeds') feeds:any=[];
 @Input('publishedfeeds') publishedfeeds:any=[];
 @Input('index') index:number;
 @Output('checkedInput') checked:any = new EventEmitter();

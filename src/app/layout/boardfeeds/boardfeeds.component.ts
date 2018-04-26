@@ -25,6 +25,7 @@ publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
 selectedAll:any;
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
   constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService) { }
   //On loading Component
   ngOnInit() {
@@ -37,6 +38,9 @@ selectedAll:any;
          .subscribe(params => {
 
            this.boardname = params.id;
+
+             this.feeds.length=0;//Clear the feeds array 
+
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
            this.dataService.getboardfeeds(params.id).then(res=>{
@@ -48,6 +52,11 @@ selectedAll:any;
                   this.feeds = res;
                     if(this.feeds){
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+                    }
+                    //console.log(this.feeds.length);
+                    this.alertNofeeds=false;//set alertnofeeds value to false
+                    if(this.feeds.length==0){
+                      this.alertNofeeds=true;
                     }
                  
                  this.util.checkForPublished(res,params.id).then(res=>{

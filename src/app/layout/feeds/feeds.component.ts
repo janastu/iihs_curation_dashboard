@@ -25,7 +25,8 @@ feeds:any=[];          //variable to store feeds to display
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
-alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not  
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
@@ -41,11 +42,14 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
+
              this.spinnerState=true;
+             this.feeds.length=0;
+
              //To get feeds , filtered according to subcategory 
              //check if the query parameter has subcatgeory property 
               if(params.subcategory){
-                
+                this.spinnerState=true;
               this.pageheading = params.subcategory;
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
                 this.variab.globalfeeds = val;
@@ -54,6 +58,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                  this.feeds = this.variab.globalfeeds;
                  if(this.feeds){
                    this.spinnerState=false;
+                 }
+                 if(this.feeds.length=0){
+                   this.alertNofeeds=true;
                  }
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array  
@@ -67,6 +74,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             }
             //To get feeds,filtered according to feedname
             else{
+              this.spinnerState=true;
+              this.feeds.length=0;
+              console.log(this.spinnerState,this.feeds);
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
@@ -75,8 +85,12 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
-                    if(this.feeds){
+                   // console.log("every",this.feeds);
+                    if(this.variab.globalfeeds){
                       this.spinnerState=false;
+                    }
+                    else{
+                      this.alertNofeeds=true;
                     }
                   /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                     this.feeds=res;
@@ -128,8 +142,8 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
-        this.alertNofeeds = true;
-        setTimeout(() => this.alertNofeeds = false, 2000);
+        this.alertNofeedsinrange = true;
+        setTimeout(() => this.alertNofeedsinrange = false, 2000);
       }
       else{
         this.feeds = res;
