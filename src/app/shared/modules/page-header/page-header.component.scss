@@ -643,7 +643,7 @@
 }
 } 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
+@media only screen and (min-width : 1200px) and (max-width: 1600px) {
 /*Heading style*/
   .page-header{
       margin-left: -16.2rem;
@@ -737,6 +737,17 @@
   max-width: 100px;
   min-width:200px;
   margin-left: -10rem !important;
+}
+@media only screen and (min-width : 800px) and (max-width:1300px) {
+  .nav-item-filters{
+      background-color: transparent;
+      border-color: transparent;
+      border-radius: 0.2rem;
+      cursor:pointer;
+      color: #757575;
+      padding: 0.5rem 1rem;
+      margin-left: -16px;
+      }
 }
 }
 

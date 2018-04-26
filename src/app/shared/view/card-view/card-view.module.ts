@@ -5,14 +5,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardViewComponent } from './card-view.component';
 import { HoverToolbarModule } from '../../modules/hover-toolbar/hover-toolbar.module';
 import { ModalModule } from '../../modules/modal/modal.module';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         NgbModule.forRoot(),
         HoverToolbarModule,
-        ModalModule
+        ModalModule,
+        NgxPaginationModule
     ],
     declarations: [CardViewComponent],
     exports: [CardViewComponent]

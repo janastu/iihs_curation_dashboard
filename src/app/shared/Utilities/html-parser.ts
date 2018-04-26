@@ -35,7 +35,7 @@ export class HtmlParser {
 	  
 	 
 	   var src = tmp.querySelector('img').getAttribute('src');
-	   
+	   		//this.checkImage(src);
 	   return src;
 	   /*var div = document.createElement('div');
 	   div.innerHTML = src[0];
@@ -49,5 +49,6 @@ export class HtmlParser {
 	   }*/
 	 
 	} 
+
 	
 }
