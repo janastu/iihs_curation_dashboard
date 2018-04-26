@@ -25,6 +25,7 @@
                       <a href={{item.value.link}} class="feed-title">{{item.value.title.substring(0,60)}}</a>
                        <!--Feed Category-->
                       <a href={{item.value.link}} class="feeds-data">{{item.value.meta.categories}}</a>
+                      <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} class="feeds-data">{{item.value.feednme}}</a>
                       <!--Feed Date-->
                       <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
                       <!--Feed description--> 

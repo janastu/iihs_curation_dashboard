@@ -70,6 +70,8 @@
                      <!--Feed Category-->
                     <a href={{item.value.link}} target="_blank" class="metadata-magazine">
                       {{item.value.meta.categories}}</a>
+                      <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} target="_blank" class="metadata-magazine">
+                      {{item.value.feednme}}</a>
                     <!--Feed Date-->
                     <a  class="metadata-magazine">
                       {{item.value.pubDate | date}}
