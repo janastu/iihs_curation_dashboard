@@ -4,7 +4,7 @@ import { Settings } from './settings';
 import { Global } from '../shared/global'
 import PouchDB from 'pouchdb';
 declare function emit(key: any,value:any): void;
-@Injectable()
+@Injectable() 
 
 export class DbConfig {
 remotefeeds:any;//variable to store the remote url of the feeds database
@@ -20,6 +20,8 @@ auth:any;//varable to store the auth object
   			      username:this.settings.couchdbusername,
   			      password:this.settings.couchdbpassword
   	        }
+
+
   }
   //Database setup for feeds before the application loads
   dbsetupfeeds(){
@@ -30,7 +32,7 @@ auth:any;//varable to store the auth object
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
   		    auth:this.auth
   	});
-   
+     console.log(this.auth);
   	//create design docs
   	var ddoc = {
   	  _id: '_design/feeds',
@@ -64,9 +66,10 @@ auth:any;//varable to store the auth object
           _rev:'',
           filters:{
             latestoldestcategory: function (doc,req) {
-                if (doc.feednme==req.query.category) {
-
+                if (doc.feednme==req.query.category ) {
+              
                   return doc;
+              
                 }
               }.toString()
             
@@ -89,7 +92,7 @@ auth:any;//varable to store the auth object
     }*/
     // save and update the design doc
     this.getFeedDesignDoc(ddoc).then(res=>{
-      //console.log(res);
+      console.log(res);
      if(res['status'] == 404){
        this.variab.localfeeds.put(ddoc).catch(function (err) {
             //console.log(err);
@@ -130,7 +133,7 @@ auth:any;//varable to store the auth object
       })
      }
     })
-    this.variab.localfeeds.replicate.to(this.remotefeeds, {
+    /*this.variab.localfeeds.replicate.to(this.remotefeeds, {
       live: true,
       retry: true,
       back_off_function: function (delay) {
@@ -139,7 +142,7 @@ auth:any;//varable to store the auth object
         }
         return delay * 3;
       }
-    });
+    });*/
      
     /*this.remotefeeds.replicate.to(this.variab.localfeeds, {
       filter: 'feedsfilter/latestoldestcategory',
@@ -149,18 +152,16 @@ auth:any;//varable to store the auth object
       console.log("syncchnagefeeds",change);
     });*/
   	//Synch pouchdb with couchdb
-  	/*this.variab.localfeeds.sync(this.remotefeeds, {
+  	this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
-  	  retry:true, 
-      filter: 'feedsfilter/latestoldestcategory',
-      query_params: {category:'Times'}
+  	  retry:true
   	}).on('change', function (change) {
   	  // yo, something changed!
   	  console.log("syncchnagefeeds",change);
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})*/
+  	})
   }
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){

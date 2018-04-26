@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
-declare function emit(key: any,value:any): void;
+declare function emit(key: any,value:any): void; 
 
 @Injectable()
 export class FeedService {
@@ -154,16 +154,43 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-			//console.log(category);
-		return new Promise(resolve => { 
-			this.remotefeeds.replicate.to(this.variab.localfeeds, {
-			  filter: 'feedsfilter/latestoldestcategory',
-			  query_params: {category: category}
-			}).then((change)=> {
-			  // yo, something changed!
-			  console.log("syncchnagefeeds",change);
-			  if(change.ok == true){
-			    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+	
+		return new Promise(resolve => {
+
+		
+				this.remotefeeds.replicate.to(this.variab.localfeeds, {
+				  filter: 'feedsfilter/latestoldestcategory',
+				  query_params: {category: category}
+				}).then((change)=> {
+				  // yo, something changed!
+				  console.log("ad",change.docs_read);
+				  console.log("syncchnagefeeds",change);
+				  if(change.ok == true ){
+				    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+				      startkey: [category],
+				      endkey: [category, {}]
+				    }).then(function (result) {
+				   		console.log("res1",result);
+				    	resolve(result.rows);
+				  	}).catch(function (err) {
+				    console.log(err);
+				  	});
+				  }
+				});
+				
+			
+		
+		});
+			 
+			
+		
+
+		//});
+		
+	
+	 /*else
+	 {
+	 	 this.variab.localfeeds.query('feeds/latestoldestcategory', {
 			      startkey: [category],
 			      endkey: [category, {}]
 			    }).then(function (result) {
@@ -174,9 +201,9 @@ export class FeedService {
 			  	});
 			  }
 			});
+	 }*/
 	 
-	  var d = new Date();
-	  var date = d.getTime();
+
 	 
 
 	
@@ -200,7 +227,7 @@ export class FeedService {
 	//}
 	//});*/
 	  //resolve('er');
-	});
+	//});
 
 
 	  
