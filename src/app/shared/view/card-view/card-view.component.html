@@ -5,8 +5,8 @@
         </div>
     </div>-->
 <div class="card-magazine">
-      <div class="list-entries lists" >
-        <div class="cardview">
+      <div  class="list-entries lists">
+        <div class="cardview" *ngFor='let item of feeds | paginate: { itemsPerPage: 10, currentPage: p}'>
           <div class="visual mb-3">
           <!--Mouse over for each element-->
             <div class="card-hover-control">
@@ -41,6 +41,9 @@
         </div>
       </div>
     
+</div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 
 </div>

@@ -42,12 +42,14 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
+
              this.spinnerState=true;
              this.feeds.length=0;
+
              //To get feeds , filtered according to subcategory 
              //check if the query parameter has subcatgeory property 
               if(params.subcategory){
-                
+                this.spinnerState=true;
               this.pageheading = params.subcategory;
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
                 this.variab.globalfeeds = val;
@@ -72,6 +74,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
             }
             //To get feeds,filtered according to feedname
             else{
+              this.spinnerState=true;
+              this.feeds.length=0;
+              console.log(this.spinnerState,this.feeds);
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
@@ -80,7 +85,8 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
-                    if(this.feeds){
+                   // console.log("every",this.feeds);
+                    if(this.variab.globalfeeds){
                       this.spinnerState=false;
                     }
                     else{
