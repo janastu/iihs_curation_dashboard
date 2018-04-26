@@ -108,7 +108,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
       this.feedService.getlatestfeeds(feedname).then(res=>{
-           console.log(res);
+           //console.log(res);
            if(res['length'] == 0){
              this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
