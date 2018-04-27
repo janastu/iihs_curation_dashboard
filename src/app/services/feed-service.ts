@@ -130,23 +130,25 @@ export class FeedService {
 	  	 
 
 	   return new Promise(resolve => {
-	   	/*this.remote.replicate.to(this.localdb, {
-	   	   filter: '_view',
-	   	   view: 'feeds/metacategories'
-	   	 }).then(res=>{
-	   	console.log(res);
-	   	if(res['ok']==true){*/
+	   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
+	   	console.log(category);	
 	   	this.variab.localfeeds.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
 	   	  }).then(function (result) {
-	   	  //console.log("res",result);
-	   	  resolve(result.rows);
+	   	  console.log("resmeta",result.rows);
+	   	 resolve(result);
 	   	}).catch(function (err) {
 	   	  console.log(err);
 	   	});
-	   	//}
-		//});
+	   	/*this.http.get(check).map(res=>res.json()).subscribe(result=> {
+	   	  console.log(result)
+	   	 resolve(result.rows);
+	   	}, (err) =>{
+	   	  console.log(err);
+	   	});*/
+	   
+	   
 	  });
 
 	    
@@ -160,6 +162,7 @@ export class FeedService {
 			    startkey: [category],
 			    endkey: [category, {}]
 			  }).then(function (result) {
+			  		console.log("resfeeds",result);
 			 		resolve(result.rows);
 			   }).catch(function (err) {
 			  		console.log(err);
@@ -210,7 +213,7 @@ export class FeedService {
 		        startkey: [category],
 		        endkey: [category, {}]
 		      }).then(function (result) {
-		      //console.log("res",result);
+		      console.log("res",result);
 		      resolve(result.rows);
 		    }).catch(function (err) {
 		      console.log(err);

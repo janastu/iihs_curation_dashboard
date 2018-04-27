@@ -46,7 +46,9 @@ auth:any;//varable to store the auth object
   	    metacategories: {
   	      map: function (doc) {
   	        if (doc.meta && !doc.hidefeed) {
+              if(doc.meta.categories[0]!= null){
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
+              }
   	        }
   	      }.toString()
   	    },
@@ -157,9 +159,7 @@ auth:any;//varable to store the auth object
   	//Synch pouchdb with couchdb
   	/*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
-  	  retry:true, 
-      filter: 'feedsfilter/latestoldestcategory',
-      query_params: {category:'Times'}
+  	  retry:true
   	}).on('change', function (change) {
   	  // yo, something changed!
   	  console.log("syncchnagefeeds",change);

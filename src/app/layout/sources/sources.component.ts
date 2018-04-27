@@ -31,12 +31,12 @@ export class SourcesComponent implements OnInit {
   addcontent(){
 
       this.feedService.getNewsrackfeedsFirstTime(this.feedlink).then(res=>{
-        console.log(res);
+        //console.log(res);
       if(res['length']!=0){
       this.metadata = res;
       this.category = this.metadata.categories[0];
       this.createfeed = true;
-      console.log("value",this.metadata,this.createfeed);
+      //console.log("value",this.metadata,this.createfeed);
       }
       else{
         this.alertInvalid=true;

@@ -55,12 +55,12 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
 
                 this.variab.globalfeeds = val;
-
+                
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
                  this.feeds = this.variab.globalfeeds;
                  if(this.feeds){
-                   //console.log("cat",this.feeds);
+                   
                    this.spinnerState=false;
                  }
                  if(this.feeds.length=0){
@@ -84,6 +84,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
+
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
               //Call the checkForDeleted method to check for hidden/removed feeds

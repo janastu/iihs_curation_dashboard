@@ -36,22 +36,17 @@ ngOnChanges(){
     this.feedForm = this.formBuilder.group({
       feedname: this.feedname
     });
-    //Get the feednames from user subscriptions
-    this.userservice.getUserSubscriptions().then(res=>{
-      this.feedsnames = res;
-    });
+   
+
     //Check for link is added to a feedname and user subscriptions
     var linkExists = this.variab.categoryfeeds.map(link=>{
       
       var checkForLink = link.doc.metadata.map(everylink=>{
-
+          //console.log("folloew",everylink)
         if(everylink.link === this.url){
           this.followstatus=true;
-          console.log("folloew",this.followstatus)
+          
           return true;
-        }
-        else{
-          this.followstatus=false;
         }
       })
       return _.compact(checkForLink);
@@ -70,6 +65,34 @@ ngOnChanges(){
     })
 }
   ngOnInit() {
+    this.userservice.getUserSubscriptions().then(res=>{
+      this.feedsnames = res;
+    });
+    //Check for link is added to a feedname and user subscriptions
+    var linkExists = this.variab.categoryfeeds.map(link=>{
+      
+      var checkForLink = link.doc.metadata.map(everylink=>{
+          //console.log("folloew",everylink.link,this.url)
+        if(everylink.link === this.url){
+          this.followstatus=true;
+         // console.log(this.followstatus);
+          return true;
+        }
+      })
+      return _.compact(checkForLink);
+    })
+    //Map link for feeds to return boolean array
+    //Returns example:[true,false,true] 
+    //Index of output == Index of label which means label[0] and label[1] 
+    //is active for above output
+    this.labelForFeeds = linkExists.map(link=>{
+      if(link[0]){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
      
 
 
@@ -116,7 +139,7 @@ ngOnChanges(){
          this.feedService.addFeed(doc).then(res=>{
                if(res['ok'] == true){
                  this.variab.categoryfeeds.push({doc:doc}); 
-                 this.feedsnames=this.variab.categoryfeeds;
+                
                  this.visible = false;
                  this.followstatus = true;
                  this.alertempty = false;

@@ -105,12 +105,29 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     }
     ul.submenu {
         display: none;
-        margin-left: 20px;
+        margin-left: -15px;
+        
+    }
+    ul.onsubmenu {
+        display: none;
+        margin-left: 10px;
         
     }
     & .expand {
         ul.submenu {
             display: block;
+            list-style-type: none;
+            height: auto;
+            li {
+                a {
+                    color: $topnav-color;
+                    padding: 10px;
+                    display: block;
+                }
+            }
+        }
+        ul.onsubmenu {
+            display: none;
             list-style-type: none;
             height: auto;
             li {
@@ -220,4 +237,7 @@ display:block !important;
 /*Group name align style*/
 .groupname-align{
     margin-left:10px;
+}
+.pointer{
+    cursor:pointer;
 }
