@@ -48,6 +48,9 @@ export class FeedService {
 		  this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
 		  	    auth:this.auth
 		  });
+		  var info=this.remotefeeds.info();
+		console.log("inf",info);
+	 
 	}
 
 //Function to get the json feeds when an xml url is given
@@ -140,7 +143,7 @@ export class FeedService {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
 	   	  }).then(function (result) {
-	   	  //console.log("res",result);
+	   	  console.log("res",result);
 	   	  resolve(result.rows);
 	   	}).catch(function (err) {
 	   	  console.log(err);
@@ -154,66 +157,42 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-	
-		return new Promise(resolve => {
 
-		
-				this.remotefeeds.replicate.to(this.variab.localfeeds, {
-				  filter: 'feedsfilter/latestoldestcategory',
-				  query_params: {category: category}
-				}).then((change)=> {
-				  // yo, something changed!
-				  console.log("ad",change.docs_read);
-				  console.log("syncchnagefeeds",change);
-				  if(change.ok == true ){
-				    this.variab.localfeeds.query('feeds/latestoldestcategory', {
-				      startkey: [category],
-				      endkey: [category, {}]
-				    }).then(function (result) {
-				   		console.log("res1",result);
-				    	resolve(result.rows);
-				  	}).catch(function (err) {
-				    console.log(err);
-				  	});
-				  }
-				});
-				
-			
-		
-		});
-			 
-			
-		
-
-		//});
-		
-	
-	 /*else
-	 {
-	 	 this.variab.localfeeds.query('feeds/latestoldestcategory', {
-			      startkey: [category],
-			      endkey: [category, {}]
-			    }).then(function (result) {
-			   		console.log("res",result);
-			    	resolve(result.rows);
-			  	}).catch(function (err) {
-			    console.log(err);
-			  	});
-			  }
+		var replicationstatus:boolean=false;
+		return new Promise(resolve => { 
+			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
+			    startkey: [category],
+			    endkey: [category, {}]
+			  }).then(function (result) {
+			 		resolve(result.rows);
+			   }).catch(function (err) {
+			  		console.log(err);
 			});
-	 }*/
-	 
-
-	 
+		
+		
+	
+      
 
 	
-	/*this.remote.replicate.to(this.localdb, {
-	 filter: '_view',
-	 view: 'feeds/latestoldestcategory'
-	 }).then(res=>{
-	console.log(res)
-	if(res['ok']==true){
-		
+
+
+
+	  
+	});
+}
+	//Replicate db feeds
+	replicatefeedsdb(category){
+		 return new Promise(resolve=>{	
+		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+			batch_size:10,
+		  batches_limit:5,
+		  filter: 'feedsfilter/latestoldestcategory',
+		  query_params: {category: category}
+		  
+		}).then((change)=> {
+		  // yo, something changed!
+		  console.log("syncchnagefeeds",change);
+		  if(change.ok == true){
 		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
 		      startkey: [category],
 		      endkey: [category, {}]
@@ -223,14 +202,10 @@ export class FeedService {
 		  	}).catch(function (err) {
 		    console.log(err);
 		  	});
-	
-	//}
-	//});*/
-	  //resolve('er');
-	//});
+		  }
+		});
+	  });
 
-
-	  
 	}
 	//Api service to get recent feeds
 	 getrecentfeeds(){

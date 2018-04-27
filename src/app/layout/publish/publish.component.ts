@@ -32,7 +32,8 @@ view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertPublished:boolean=false;//alert variable to store boolean values to alert feeds published
-alertNofeeds:boolean=false;//alert variable to store boolean values to alert feeds published
+alertNofeedspublished:boolean=false;//alert variable to store boolean values to alert feeds published
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
 model:any=false;
 showDialog:boolean=false;
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
@@ -74,6 +75,10 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
              this.feeds = res;
                if(this.feeds){
                  this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+               }
+               this.alertNofeeds=false;//set alertnofeeds value to false
+               if(this.feeds.length==0){
+                 this.alertNofeeds=true;
                }
              
              this.util.checkForPublished(res,params.id).then(res=>{
@@ -129,7 +134,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
     this.checkedfeeds.push(event);
   }
   //function on select all
-  onSelectAll() {
+  onSelectAll(eve) {
       //console.log(this.selectedAll)
 
       for (var i = 0; i < this.feeds.length; i++) {
@@ -228,8 +233,8 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
     this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
-        this.alertNofeeds = true;
-        setTimeout(() => this.alertNofeeds = false, 2000);
+        this.alertNofeedspublished = true;
+        setTimeout(() => this.alertNofeedspublished = false, 2000);
       }
       else{
         this.feeds = res;

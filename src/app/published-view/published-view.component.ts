@@ -17,6 +17,29 @@ archivesurl:any;//variable to store archives url to navigate to the archives
   constructor(public variab:Global,public html:HtmlParser,public route:ActivatedRoute,public archiveService:ArchiveService,public router:Router) { }
 
   ngOnInit() {
+
+      this.displayPublishedfeeds = JSON.parse(localStorage.getItem('publishedfeeds'));
+       if(this.displayPublishedfeeds == null){
+         this.route.params
+                      .subscribe(params => {
+                        var parsedDate = Date.parse(params.date);//parse the date to timestamp
+                         let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
+                            //this.spinnerState=true;
+                          this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
+                              //console.log(res['value']);
+                            this.statefeeds = res['value'].feeds;
+                             this.displayPublishedfeeds=this.statefeeds;
+                            
+                          })
+                          /*this.archiveService.getJsonData(params.date,params.boardname).then(res=>{
+                            console.log(res);
+                            this.statefeeds = res['value'].feeds;
+                             this.displayPublishedfeeds=this.statefeeds;
+                          });*/
+                        
+               });
+
+       }
       
   	  /* this.route.params
              .subscribe(params => {
@@ -36,7 +59,7 @@ archivesurl:any;//variable to store archives url to navigate to the archives
                  });
                
       });*/
-    this.displayPublishedfeeds = JSON.parse(localStorage.getItem('publishedfeeds'));
+    
       this.mmurl=window.location.href;
       this.archivesurl=window.location.href+'/archives';
   }

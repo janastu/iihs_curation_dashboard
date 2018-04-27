@@ -54,6 +54,14 @@ mouseOvered:boolean=false;
     console.log("icon",this.feedmark)
   }
 
+  //Handle the event on clicking on published
+ /* OnPublished(feed){
+    this.archiveService.getPublishingUrlofFeed(feed.id).then(res=>{
+
+      this.publishingurl = res[0].value;
+      
+    })
+  }*/
  
   
 }

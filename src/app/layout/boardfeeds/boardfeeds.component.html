@@ -14,7 +14,7 @@
        <button  class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button> 
      <div class="col-sm-6 offset-sm-2 all-checkbox">
        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
-       (change)="onSelectAll($event)"/>                       
+       (change)="onSelectAll()"/>                       
        <label>Select All</label>
      </div>
        
@@ -61,6 +61,9 @@
   <!--img *ngIf="loading" class=" spinner-image" src="assets/images/spinner.gif"  /-->
   <img src="assets/images/loading_spinner.gif">
 </div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
+  <h3>Sorry No feeds in this Board</h3>
+</div> 
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div> 
