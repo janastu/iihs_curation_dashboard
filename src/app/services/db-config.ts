@@ -47,6 +47,7 @@ auth:any;//varable to store the auth object
   	    },
   	    metacategories: {
   	      map: function (doc) {
+            console.log("doc in con",doc);
   	        if (doc.meta && !doc.hidefeed) {
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
   	        }
@@ -151,8 +152,9 @@ auth:any;//varable to store the auth object
       // yo, something changed!
       console.log("syncchnagefeeds",change);
     });*/
-  	//Synch pouchdb with couchdb
-  	this.variab.localfeeds.sync(this.remotefeeds, {
+  	
+    //Synch pouchdb with couchdb
+  	/*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
   	  retry:true
   	}).on('change', function (change) {
@@ -161,7 +163,7 @@ auth:any;//varable to store the auth object
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})
+  	})*/
   }
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){
