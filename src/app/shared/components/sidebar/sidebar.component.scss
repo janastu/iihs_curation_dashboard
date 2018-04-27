@@ -123,6 +123,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
         }
     }
 }
+
 @media screen and (max-width: 992px) {
     .sidebar {
         top: 0px;
@@ -215,4 +216,8 @@ display:block !important;
     margin-left: 0.5rem;
     margin-top: 0.5rem;
     width: 20rem;
+}
+/*Group name align style*/
+.groupname-align{
+    margin-left:10px;
 }

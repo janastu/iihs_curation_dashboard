@@ -20,7 +20,6 @@
 
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
-
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
 <ng-template #first><app-magazineview [feeds]='feed' [index]='i'></app-magazineview></ng-template>

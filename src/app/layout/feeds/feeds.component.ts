@@ -43,8 +43,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
       this.route.queryParams
             .subscribe(params => {
 
-             this.spinnerState=true;
-             this.feeds.length=0;
+             this.spinnerState=true;//Set spinner 
+             this.feeds.length=0;//Clear the feeds array
+             //this.handleClearDate('reset');//Clear the date form
 
              //To get feeds , filtered according to subcategory 
              //check if the query parameter has subcatgeory property 
@@ -52,11 +53,14 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                 this.spinnerState=true;
               this.pageheading = params.subcategory;
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+
                 this.variab.globalfeeds = val;
+
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
                  this.feeds = this.variab.globalfeeds;
                  if(this.feeds){
+                   //console.log("cat",this.feeds);
                    this.spinnerState=false;
                  }
                  if(this.feeds.length=0){
@@ -135,10 +139,18 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     return new Promise(resolve=>{
     //Call the feed service to get the feeds filtered according to subcategory
       this.feedService.getmetacategories(subcategory).then(res=>{
-    
-        //Store the result in the global variable globalfeeds
-        feedsOnSubcategory = res;
-        resolve(feedsOnSubcategory);
+         if(res['length'] == 0){
+           this.feedService.replicatemetafeedsdb(subcategory).then(repres=>{
+
+             resolve(repres);
+           })
+         }
+         else{
+           //Store the result in the global variable globalfeeds
+           feedsOnSubcategory = res;
+           resolve(feedsOnSubcategory);
+         }
+       
       });
     });
   }
