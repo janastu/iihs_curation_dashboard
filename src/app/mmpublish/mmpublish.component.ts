@@ -46,7 +46,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             .subscribe(params => {
               //console.log(params)
               if(params.date){
-                console.log('va');
+                this.feeds.length = 0;
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
                let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
                   this.spinnerState=true;

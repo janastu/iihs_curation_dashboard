@@ -206,6 +206,32 @@ export class FeedService {
 		  // yo, something changed!
 		  console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
+		    this.variab.localfeeds.query('feeds/metacategories', {
+		        startkey: [category],
+		        endkey: [category, {}]
+		      }).then(function (result) {
+		      //console.log("res",result);
+		      resolve(result.rows);
+		    }).catch(function (err) {
+		      console.log(err);
+		    });
+		  }
+		});
+	  });
+
+	}
+	//Replicate db feeds
+	replicatemetafeedsdb(category){
+	  return new Promise(resolve=>{	
+		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+			batch_size:10,batches_limit:5,
+		  filter: 'feedsfilter/metacategories',
+		  query_params: {category: category},
+		  
+		}).then((change)=> {
+		  // yo, something changed!
+		  console.log("syncchnagefeeds",change);
+		  if(change.ok == true){
 		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
 		      startkey: [category],
 		      endkey: [category, {}]

@@ -68,6 +68,12 @@ auth:any;//varable to store the auth object
 
                   return doc;
                 }
+              }.toString(),
+            metacategories: function (doc,req) {
+                if (doc.meta.categories[0]==req.query.category) {
+
+                  return doc;
+                }
               }.toString()
             
           }

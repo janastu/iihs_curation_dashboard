@@ -72,6 +72,7 @@ signupForm: FormGroup;
 
     onregister(){
         this.alertRegistering=true;
+        setTimeout(() => this.alertRegistering = false, 2000);
            // console.log(this.signupForm.controls['username'].value)
         //this.signupForm.controls['firstname'].markAsTouched()
             let doc = {
@@ -90,16 +91,17 @@ signupForm: FormGroup;
                     this.signupForm.reset();
                     setTimeout(() => this.alertsuccess = false, 5000);
                 }
-                if(response['error']){
+               /* if(response['error']){
                     if(response['validationErrors']['password']){
                         console.log("response",response['validationErrors']['password']);
                         this.alertauth=true;
-                        this.errormessage= response['validationErrors']['password'];
+                        this.errormessage= response['validationErrors']['password'][0];
+                        console.log(this.errormessage);
                         this.ngAlert.type = 'danger';
                         setTimeout(() => this.alertauth = false, 2000);
                     }
 
-                }
+                }*/
                 if(response['error'] == 'Validation failed'){
                     console.log("hgfh",response)
                     this.alertauth=true;
@@ -110,6 +112,14 @@ signupForm: FormGroup;
                      this.errormessage = response['validationErrors']['email']
                      this.ngAlert.type = 'danger';
                      setTimeout(() => this.alertsuccess = false, 2000);
+                    }
+                    if(response['validationErrors']['password']){
+                        console.log("response",response['validationErrors']['password']);
+                        this.alertauth=true;
+                        this.errormessage= response['validationErrors']['password'][0];
+                        console.log(this.errormessage);
+                        this.ngAlert.type = 'danger';
+                        setTimeout(() => this.alertauth = false, 2000);
                     }
                 }    
 

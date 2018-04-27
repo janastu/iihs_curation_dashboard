@@ -42,7 +42,6 @@ currDate = new Date();
       fromdate: this.fromdate,
       todate: this.todate
     });
-   
   }
   //function to get date input values annd emit to feed component
   datefilter(){
