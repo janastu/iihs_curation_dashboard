@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
-declare function emit(key: any,value:any): void;
+declare function emit(key: any,value:any): void; 
 
 @Injectable()
 export class FeedService {
@@ -48,6 +48,9 @@ export class FeedService {
 		  this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
 		  	    auth:this.auth
 		  });
+		  var info=this.remotefeeds.info();
+		console.log("inf",info);
+	 
 	}
 
 //Function to get the json feeds when an xml url is given
@@ -156,6 +159,7 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
+
 		var replicationstatus:boolean=false;
 		return new Promise(resolve => { 
 			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
@@ -170,40 +174,25 @@ export class FeedService {
 		
 		
 	
+      
 
 	
-	/*this.remote.replicate.to(this.localdb, {
-	 filter: '_view',
-	 view: 'feeds/latestoldestcategory'
-	 }).then(res=>{
-	console.log(res)
-	if(res['ok']==true){
-		
-		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
-		      startkey: [category],
-		      endkey: [category, {}]
-		    }).then(function (result) {
-		   		console.log("res",result);
-		    	resolve(result.rows);
-		  	}).catch(function (err) {
-		    console.log(err);
-		  	});
-	
-	//}
-	//});*/
-	  //resolve('er');
-	});
+
 
 
 	  
-	}
+	});
+}
 	//Replicate db feeds
 	replicatefeedsdb(category){
-	  return new Promise(resolve=>{	
+		 return new Promise(resolve=>{	
 		this.remotefeeds.replicate.to(this.variab.localfeeds, {
-			batch_size:10,batches_limit:5,
+
+			batch_size:10,
+		  batches_limit:5,
 		  filter: 'feedsfilter/latestoldestcategory',
-		  query_params: {category: category},
+		  query_params: {category: category}
+
 		  
 		}).then((change)=> {
 		  // yo, something changed!
@@ -230,6 +219,7 @@ export class FeedService {
 			batch_size:10,batches_limit:5,
 		  filter: 'feedsfilter/metacategories',
 		  query_params: {category: category},
+
 		  
 		}).then((change)=> {
 		  // yo, something changed!
