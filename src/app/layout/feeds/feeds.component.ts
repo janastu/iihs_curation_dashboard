@@ -204,6 +204,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   public closeAlert() {
       this.alertNofeeds=false;
   }
+  onpage(){
+    window.scroll(0,0);
+  }
    
 
 }

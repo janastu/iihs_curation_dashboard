@@ -209,7 +209,7 @@ export class FeedService {
 		  // yo, something changed!
 		  console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
-		    this.variab.localfeeds.query('feeds/metacategories', {
+		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
 		        startkey: [category],
 		        endkey: [category, {}]
 		      }).then(function (result) {
@@ -235,7 +235,7 @@ export class FeedService {
 		  // yo, something changed!
 		  console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
-		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+		    this.variab.localfeeds.query('feeds/metacategories', {
 		      startkey: [category],
 		      endkey: [category, {}]
 		    }).then(function (result) {

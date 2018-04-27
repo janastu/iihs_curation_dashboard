@@ -68,6 +68,6 @@
   <h3>Sorry No feeds exist</h3>
 </div> 
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
 </div> 
 </div>  
