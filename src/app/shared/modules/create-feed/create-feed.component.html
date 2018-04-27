@@ -7,11 +7,13 @@
              <input class="form-control mr-sm-2" type="text" placeholder="Find a Feed" [(ngModel)]="queryString" name="query">
            </form>
            <div class="feed_names">
-           <div class="field" *ngFor="let feed of feedsnames | FilterPipe: queryString | slice:0:5;let i =index;">
+
+           <div class="field" *ngFor="let feed of variab.categoryfeeds | FilterPipe: queryString | slice:0:5;let i =index;">
            
 
             <div class="board-item">
               <i class="fa fa-rss" aria-hidden="true" title="Save to board"></i>
+
                     {{feed.doc.feedname}}
                     <!--<button   (click)="addtofeed(feed.doc.feedname,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>Add</button>-->
              <!-- <div *ngIf="labelForFeeds">
