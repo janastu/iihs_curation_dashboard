@@ -11,7 +11,9 @@ remotefeeds:any;//variable to store the remote url of the feeds database
 remoteannos:any;//variable to store the remote url of the annotations database
 remotegroups:any;//variable to store the remote url of the groups database
 remoteboards:any;//variable to store the remote url of the boards database
+remotearchives:any;//variable to store the remote url of the archives database
 auth:any;//varable to store the auth object
+//test:any;//chek if pouchdb instance changes
   constructor(private http: Http, private settings:Settings,public variab:Global) {
   	
   	    this.auth={
@@ -23,14 +25,16 @@ auth:any;//varable to store the auth object
   dbsetupfeeds(){
   	//Create pouchdb instance for feeds
   	this.variab.localfeeds = new PouchDB('feeds'); //create a pouchdb
-  
+    //this.test = new PouchDB('feeds');
   	//Create reomte couchdb instance for feeds
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
   		    auth:this.auth
   	});
+   
   	//create design docs
   	var ddoc = {
   	  _id: '_design/feeds',
+      _rev:'',
   	  views: {
   	    categoryfeeds: {
   	      map: function (doc) {
@@ -55,6 +59,25 @@ auth:any;//varable to store the auth object
   	    }
   	  }
   	}
+    var filterdoc = {
+          _id: '_design/feedsfilter',
+          _rev:'',
+          filters:{
+            latestoldestcategory: function (doc,req) {
+                if (doc.feednme==req.query.category) {
+
+                  return doc;
+                }
+              }.toString(),
+            metacategories: function (doc,req) {
+                if (doc.meta.categories[0]==req.query.category) {
+
+                  return doc;
+                }
+              }.toString()
+            
+          }
+    }
    /* var linkdoc = {
           _id: '_design/links',
           views: {
@@ -70,33 +93,104 @@ auth:any;//varable to store the auth object
           }
 
     }*/
-  	// save the design doc
-  	this.variab.localfeeds.put(ddoc).catch(function (err) {
-  	  if (err.name !== 'conflict') {
-  	    throw err;
-  	  }
-  	  // ignore if doc already exists
-  	})
-    // save the design doc
-    /*this.variab.localfeeds.put(linkdoc).catch(function (err) {
-      if (err.name !== 'conflict') {
-        throw err;
+    // save and update the design doc
+    this.getFeedDesignDoc(ddoc).then(res=>{
+      //console.log(res);
+     if(res['status'] == 404){
+       this.variab.localfeeds.put(ddoc).catch(function (err) {
+            //console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+        })
+     }
+     else{
+      this.variab.localfeeds.put(res).catch(function (err) {
+           // console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+      })
+     }
+    })
+    this.getFeedFilterDoc(filterdoc).then(res=>{
+      console.log(res);
+     if(res['status'] == 404){
+       this.variab.localfeeds.put(filterdoc).catch(function (err) {
+            //console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+        })
+     }
+     else{
+      this.variab.localfeeds.put(res).catch(function (err) {
+           // console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+      })
+     }
+    })
+    this.variab.localfeeds.replicate.to(this.remotefeeds, {
+      live: true,
+      retry: true,
+      back_off_function: function (delay) {
+        if (delay === 0) {
+          return 1000;
+        }
+        return delay * 3;
       }
-      // ignore if doc already exists
-    })*/
+    });
+     
+    /*this.remotefeeds.replicate.to(this.variab.localfeeds, {
+      filter: 'feedsfilter/latestoldestcategory',
+      query_params: {category:'Times'}
+    }).then((change)=> {
+      // yo, something changed!
+      console.log("syncchnagefeeds",change);
+    });*/
   	//Synch pouchdb with couchdb
-  	this.variab.localfeeds.sync(this.remotefeeds, {
+  	/*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
-  	  retry:true
-  	  
+  	  retry:true, 
+      filter: 'feedsfilter/latestoldestcategory',
+      query_params: {category:'Times'}
   	}).on('change', function (change) {
   	  // yo, something changed!
-  	  console.log("syncchnage",change);
+  	  console.log("syncchnagefeeds",change);
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})
+  	})*/
   }
+  //get feeds design doc to update the doc with rev
+  getFeedDesignDoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localfeeds.get('_design/feeds').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+  //get feeds fiterl doc to update the doc with rev
+  getFeedFilterDoc(filterdoc){
+    return new Promise(resolve=>{
+      this.variab.localfeeds.get('_design/feedsfilter').then(function(doc) {
+           filterdoc._rev = doc._rev;
+           resolve(filterdoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+  
   //Database setup for annotations before the application loads
   dbsetupannos(){
   	//Create pouchdb instance for annotations
@@ -181,7 +275,16 @@ auth:any;//varable to store the auth object
   	                emit([doc.creator],doc.target);
   	                 }
   	        }.toString()
-  	      }
+  	      },
+          boardfeedsoftoday:{
+            map: function (doc) {
+             if (doc.label && doc.motivation === 'tagging' && !doc.hideboardanno) {
+                         var i =  new Date(doc.created)
+                           var m = i.toISOString();
+                            emit(m, doc.target.value);
+                        }
+              }.toString()
+          }
 
   	    }
   	  }
@@ -189,19 +292,49 @@ auth:any;//varable to store the auth object
 
 
   	  // save the design doc
-  	  this.variab.localannotations.put(ddoc).catch(function (err) {
-  	    if (err.name !== 'conflict') {
-  	      throw err;
-  	    }
-  	    // ignore if doc already exists
-  	  })
+      this.getAnnotationsDesigndoc(ddoc).then(res=>{
+  	    if(res['status'] == 404){
+          //console.log("err");
+          this.variab.localannotations.put(ddoc).catch(function (err) {
+               //console.log(err);
+               if (err.name !== 'conflict') {
+                 throw err;
+               }
+               // ignore if doc already exists
+           })
+        }
+        else{
+         this.variab.localannotations.put(res).catch(function (err) {
+               //console.log(err);
+               if (err.name !== 'conflict') {
+                 throw err;
+               }
+               // ignore if doc already exists
+         })
+        }
+      });
   	  // save the design doc
-  	  this.variab.localannotations.put(feedsdoc).catch(function (err) {
-  	    if (err.name !== 'conflict') {
-  	      throw err;
-  	    }
-  	    // ignore if doc already exists
-  	  });
+  	  this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
+              console.log("anootations",res)
+              if(res['status'] == 404){
+                this.variab.localannotations.put(feedsdoc).catch(function (err) {
+                     //console.log(err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+              }
+              else{
+               this.variab.localannotations.put(res).catch(function (err) {
+                     //console.log(err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+               })
+              }
+      })
       //Replicate the design doc to the remote
       this.variab.localannotations.replicate.to(this.remoteannos, {
         live: true,
@@ -213,8 +346,19 @@ auth:any;//varable to store the auth object
           return delay * 3;
         }
       });
+      this.variab.localannotations.sync(this.remoteannos, {
+        live: true,
+        retry:true,
+        auth:this.auth
+      }).on('change', function (change) {
+        // yo, something changed!
+        console.log("syncchnage",change);
+      }).on('error', function (err) {
+        console.log("syncerr",err);
+        // yo, we got an error! (maybe the user went offline?)
+      })
       //Replicate remote boardfeeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
+      /*this.remoteannos.replicate.to(this.variab.localannotations, {
              filter: '_view',
              view: 'annotatedfeeds/boardfeeds'
       });
@@ -232,26 +376,65 @@ auth:any;//varable to store the auth object
       this.remoteannos.replicate.to(this.variab.localannotations, {
              filter: '_view',
              view: 'annotatedfeeds/deletedfeeds'
-      })
-      //Synch pouchdb with couchdb
-      this.variab.localannotations.sync(this.remoteannos, {
-        live: true,
-        retry:true
-        
-      }).on('change', function (change) {
-        // yo, something changed!
-        console.log("syncchnage",change);
-      }).on('error', function (err) {
-        console.log("syncerr",err);
-        // yo, we got an error! (maybe the user went offline?)
-      })
+      });
+       //Replicate remote deleted feeds to local
+      this.remoteannos.replicate.to(this.variab.localannotations, {
+             filter: '_view',
+             view: 'annotatedfeeds/boardfeedsoftoday'
+      });
+       //Replicate remote deleted feeds to local
+      this.remoteannos.replicate.to(this.variab.localannotations, {
+             filter: '_view',
+             view: 'annotations/boardannotation'
+      });
+       //Replicate remote deleted feeds to local
+      this.remoteannos.replicate.to(this.variab.localannotations, {
+             filter: '_view',
+             view: 'annotation/readlater'
+      });
+      //Replicate remote deleted feeds to local
+      this.remoteannos.replicate.to(this.variab.localannotations, {
+             filter: '_view',
+             view: 'annotation/recentlyread'
+      });
+      //Replicate remote deleted feeds to local
+      this.remoteannos.replicate.to(this.variab.localannotations, {
+             filter: '_view',
+             view: 'annotation/hidden'
+      });*/
+      
 
   }
+   //get annotations design doc to update the doc with rev
+  getAnnotationsDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localannotations.get('_design/annotations').then(function(doc) {
+          ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+
+  }
+  //get annotated feeds design doc update the doc with rev
+  getAnnotatedFeedsDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localannotations.get('_design/annotatedfeeds').then(function(doc) {
+
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+
   //Database setup for groups before app loads
   dbsetupgroups(){
   	//Create pouchdb instance for groups
   	this.variab.localgroups = new PouchDB('groups'); //create a pouchdb 
-  	//Create reomte couchdb instance for groups
+  	//Create reomt  e couchdb instance for groups
   	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups);
   	//Synch pouchdb with couchdb
 
@@ -333,6 +516,164 @@ auth:any;//varable to store the auth object
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
   	})
+  }
+  dbsetuparchives(){
+    //Create pouchdb instance for boards
+    this.variab.localarchives = new PouchDB('archives');
+    //Create reomte couchdb instance for boards
+      this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
+            auth:this.auth
+      });
+      
+    
+    //create the design doc
+        var ddoc = {
+          _id: '_design/archives',
+          views: {
+            archives: {
+              map: function (doc) {
+                if (doc.pub_date) {
+                  emit([doc.pub_date,doc.boardname], doc);
+                } 
+              }.toString()
+            },
+            publishedfeeds:{
+              map: function (doc) {
+                if(doc.boardname){
+                 emit(doc.boardname, doc);
+                }
+              }.toString()
+            },
+            published_date:{
+              map: function (doc) {
+                if(doc.pub_date){
+                 emit(doc.pub_date, doc.boardname);
+                }
+              }.toString()
+            },
+            publishing_url_feed:{
+              map: function (doc) {
+                if(doc.publishing_url){
+                  for(var i in doc.feeds){
+                    emit(doc.feeds[i].id,doc.publishing_url)
+                  }
+                }
+              }.toString()
+
+            }
+
+          }
+        }
+        var qdatedoc = {
+          _id: '_design/date',
+          views:{
+            querydate:{
+              map:function(doc){
+               if(doc.pub_date){
+                emit(doc.pub_date,null);
+               }
+              }.toString(),
+              reduce: function (doc) {
+                return null;
+              }.toString()
+            }
+          }
+        }
+    
+    //console.log("called");
+   //return new Promise(resolve=>{
+  
+        //console.log(ddoc);
+        this.getArchivesDesigndoc(ddoc).then(res=>{
+          //console.log("archives",res);
+          //resolve(res);
+           if(res['status']==404){
+              // save the design doc
+              //console.log(ddoc);
+              this.variab.localarchives.put(ddoc).then(result=>{
+                console.log(result);
+                //resolve(result);
+              }).catch(function (err) {
+                //console.log(err);
+                if (err.name !== 'conflict') {
+                  throw err;
+                }
+                // ignore if doc already exists
+              }); 
+           }
+           else{
+            // save the design doc
+            this.variab.localarchives.put(res).catch(function (err) {
+              if (err.name !== 'conflict') {
+                throw err;
+              }
+              // ignore if doc already exists
+            });
+           }
+        })
+        this.getArchivesDateDesigndoc(qdatedoc).then(res=>{
+          //console.log("archives",res);
+          //resolve(res);
+           if(res['status']==404){
+              // save the design doc
+              //console.log(ddoc);
+              this.variab.localarchives.put(qdatedoc).then(result=>{
+                console.log("add",result);
+                //resolve(result);
+              }).catch(function (err) {
+                //console.log(err);
+                if (err.name !== 'conflict') {
+                  throw err;
+                }
+                // ignore if doc already exists
+              }); 
+           }
+           else{
+            // save the design doc
+            this.variab.localarchives.put(res).catch(function (err) {
+              
+              if (err.name !== 'conflict') {
+                throw err;
+              }
+              // ignore if doc already exists
+            });
+           }
+        })
+      //Synch pouchdb with couchdb
+          this.variab.localarchives.sync(this.remotearchives, {
+            live: true,
+            retry:true
+          }).on('change', function (change) {
+            // yo, something changed!
+            console.log("syncchnage",change);
+          }).on('error', function (err) {
+            console.log("syncerr",err);
+            // yo, we got an error! (maybe the user went offline?)
+          })
+        
+    //});   
+
+  }
+  //get annotated feeds design doc update the doc with rev
+  getArchivesDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localarchives.get('_design/archives').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+  getArchivesDateDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localarchives.get('_design/date').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
   }
  
 }

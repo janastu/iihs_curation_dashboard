@@ -42,7 +42,7 @@
         </div>-->
 
         <a (click)="showGroups = !showGroups" class="list-group-item onmenu">
-            <i class="fa fa-chevron-down" ></i>
+            <img src="assets/images/radio.png" width="30px" height="30px">
             <!--<div ngbDropdown class="d-inline-block">
               <div class="nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>{{groupname}}</div>
 
@@ -55,7 +55,7 @@
                 </fieldset>
               </div>
             </div>-->
-            <div > {{groupname}}</div>
+            <div class="groupname-align"> {{groupname}}</div>
                 
            
         </a>
@@ -98,9 +98,14 @@
           
                     <ul class="submenu">
                       <li *ngFor="let child of n.doc.metadata">
+                        <div *ngIf="child.categories.length ==0">
+                            <a (click)="routeto(n.doc.feedname)" class="onmenu">
+                              <span>&nbsp;{{n.doc.feedname}}</span></a>
+                        </div>
                           <div *ngFor="let meta of child.categories">
                               <a  (click)="routetometa(n.doc.feedname,meta)" class="onmenu">
                               <span>&nbsp;{{ meta }}</span></a>
+                              
                           </div>
                       </li>
                     </ul>
@@ -130,6 +135,9 @@
         </a>
         <a [routerLink]="['/trashbox']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Trashbox' | translate }}
+        </a>
+        <a [routerLink]="['/mm/archives']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Archives' | translate }}
         </a>
         
         </ul> 

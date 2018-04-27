@@ -1,6 +1,8 @@
 import { Component,Input,ViewChild,ElementRef} from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared/global';
 import { DataService } from '../../../services/data-service';
@@ -11,6 +13,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent {
+  modalRef: NgbModalRef;
     @Input() item: any;
     @Input() index: any;
     closeResult: string;
@@ -20,17 +23,19 @@ export class ModalComponent {
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
     val:boolean=false;
-    
+  
     selectedIndex: any;
     selectedIcon: number;
     user:any;
     alertremove:boolean=false
     date:Date;
-
+     myForm: FormGroup;
     showDialog:boolean;
 
-    constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router) {
+    constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public datePipe:DatePipe,private fb: FormBuilder) {
       this.date = new Date();
+      
+      
      
      }
 
@@ -62,7 +67,8 @@ export class ModalComponent {
     }
 
     openshareteam(content) {
-       this.modalService.open(this.teammodal).result.then((result) => {
+       this.modalRef = this.modalService.open(this.teammodal);
+       this.modalRef.result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -134,6 +140,8 @@ export class ModalComponent {
           // Retrieve the text property of the element (cross-browser support)
           return temporalDivElement.textContent || temporalDivElement.innerText || "";
       }
+      
+    
   readlater(index: number){
     //console.log("called");
      if(this.selectedIndex == index){

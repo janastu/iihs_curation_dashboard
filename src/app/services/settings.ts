@@ -25,6 +25,7 @@ export class Settings{
 	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
 	dbboards: any = environment.dbhost +'/boards';	//boards database
 	dbgroups: any = environment.dbhost +'/groups';	//groups database
+	dbarchives: any = environment.dbhost +'/archives'; //archives database
 	dbusers: any = environment.dbhost +'/sl-users';//users database
 	couchdbusername: any =environment.dbuser; //couchdb username
 	couchdbpassword:any=environment.dbpassword;	//couchdb password

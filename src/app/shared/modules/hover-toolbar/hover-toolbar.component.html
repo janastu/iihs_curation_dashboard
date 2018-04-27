@@ -1,6 +1,5 @@
-
         
-        <div class="ago">
+        <div class="ago" *ngIf="!router.url.includes('/mm')">
             <app-createboardcomponent [feeditem]='feeditem' class="createboard"></app-createboardcomponent>
         
         <a class="nav-item" (click)="readlater(1)">

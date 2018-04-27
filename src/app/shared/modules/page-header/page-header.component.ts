@@ -3,7 +3,7 @@ import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../../services/feed-service';
 import { Global } from '../../global';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -31,7 +31,8 @@ desc:any;
 checkView:any;
 loading: boolean = false;
 currDate = new Date();
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService) { }
+
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService,public router:Router) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');
@@ -41,7 +42,6 @@ currDate = new Date();
       fromdate: this.fromdate,
       todate: this.todate
     });
-   
   }
   //function to get date input values annd emit to feed component
   datefilter(){
@@ -134,6 +134,11 @@ currDate = new Date();
  }
  onSortlabel(val){
    this.Sortlabel.emit(val);
+ }
+ //Function on choosing a board
+ onChooseBoard(board){
+   this.router.navigate(['/publish', board])
+   
  }
 
 }

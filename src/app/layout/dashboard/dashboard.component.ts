@@ -13,6 +13,7 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
+    spinnerState:boolean=false;//state variable to store the status of the spinner to display
 	  feeds:any=[]; //Local Variable to store recentfeeds
     user:any;     //Local Variable to store the user name 
     alertupdated:boolean=false//alert variable to store the status of feeds updated
@@ -25,13 +26,20 @@ export class DashboardComponent implements OnInit {
     this.user = localStorage.getItem('name');
        //Pull new feeds of user subscriptions
        this.userService.pullnewFeeds().then(res=>{
-         if(res['status']==304 || res['status'] == 201 ){
+           //console.log(res);
+         if(res['status']==304){
            this.alertupdated=true;
            this.ngAlert.type = 'success';
            setTimeout(() => this.alertupdated = false, 2000);
          }
+         else if(res['status'] == 201){
+           this.alertupdating=true;
+           this.ngAlert.type = 'success';
+           setTimeout(() => this.alertupdating = false, 2000);
+
+         }
        });
-     
+         this.spinnerState=true;
        //Get recent feeds
         this.service.getrecentfeeds().then(res=>{
           
@@ -39,6 +47,9 @@ export class DashboardComponent implements OnInit {
             if(this.variab.recentdocs.length > 0) {
               this.variab.recentdocs.map(val=>{
                 this.feeds.push({value:val});
+                if(this.feeds){
+                  this.spinnerState=false;
+                }
               });
             }
            

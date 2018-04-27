@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FormRoutingModule } from './form-routing.module';
 import { FormComponent } from './form.component';
-import { PageHeaderModule } from './../../shared';
+import { PageHeaderModule } from './../../shared/modules/page-header/page-header.module';
 
 @NgModule({
     imports: [

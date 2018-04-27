@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col col-xl-6 col-lg-6 col-md-6">
           <ngb-alert *ngIf="alertupdating" (close)="closeAlert()" class="alert-width">Updating feeds</ngb-alert>
-          <ngb-alert *ngIf="alertupdated" (close)="closeAlert()" class="alert-width">Feeds Updated</ngb-alert>
+          <ngb-alert *ngIf="alertupdated" (close)="closeAlert()" class="alert-width">Feeds Up to date</ngb-alert>
             <!--Heading Category-->
                 <div class="card-header" >
                    Categories
@@ -35,7 +35,7 @@
     	     <div class="card-block table-responsive">
                 <table class="table">
                 <!--Block to disply spinner if recentfeeds not loaded-->
-                   <div id="loading" *ngIf="feeds.length==0">
+                   <div id="loading" *ngIf="spinnerState">
                       <img src="assets/images/loading_spinner.gif">
                     </div>    
                     <!--Display recent feeds-->

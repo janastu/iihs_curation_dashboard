@@ -68,6 +68,10 @@
 .dropdown-width{
   max-width: 100px;
 }
+/*.dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+}*/
 
 
 
@@ -165,6 +169,11 @@
     margin-top: 20px;
     font-size: 9px;
     }
+  .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+  margin-left: 1.5rem !important;
+}
 }
 
 /* Extra Small Devices, Phones */ 
@@ -256,6 +265,10 @@
     margin-top: -10px;
     font-size: 14px;
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+}
 }
 
 @media only screen and (min-width : 576px) {
@@ -344,6 +357,11 @@
     padding: 0.5rem 1rem;
     /*margin: 0px 5px 0px 0px;*/
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+  margin-left: -10rem !important;
+}
 }
 
 /* Small Devices, Tablets */
@@ -436,6 +454,11 @@
     padding: 0.5rem 1rem;
     /*margin: 0px 5px 0px 0px;*/
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+  margin-left: 1.5rem !important;
+}
 }
 
 /* Medium Devices, Desktops */
@@ -527,6 +550,10 @@
     color: #757575;
     /*margin: 0px 5px 0px 0px;*/
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+}
 }
 @media only screen and (min-width : 1024px) {
 /*Heading style*/
@@ -619,9 +646,16 @@
     padding: 0.5rem 1rem;
     /*margin: 0px 5px 0px 0px;*/
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+  margin-left: -10rem !important;
+}
 } 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
+
+@media only screen and (min-width : 1200px) and (max-width:1600px) {
+
 /*Heading style*/
   .page-header{
       margin-left: -16.2rem;
@@ -716,6 +750,22 @@
     padding: 0.5rem 1rem;
     /*margin: 0px 5px 0px 0px;*/
     }
+    .dropdown-width-share{
+  max-width: 100px;
+  min-width:200px;
+  margin-left: -10rem !important;
+}
+@media only screen and (min-width : 800px) and (max-width:1300px) {
+  .nav-item-filters{
+      background-color: transparent;
+      border-color: transparent;
+      border-radius: 0.2rem;
+      cursor:pointer;
+      color: #757575;
+      padding: 0.5rem 1rem;
+      margin-left: -16px;
+      }
+}
 }
 
 /*hover style*/

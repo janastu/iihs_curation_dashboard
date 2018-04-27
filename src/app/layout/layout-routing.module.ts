@@ -22,7 +22,8 @@ const routes: Routes = [
             { path: 'management', loadChildren: './views/management/management.module#ManagementModule'},
             { path: 'profile', loadChildren: './views/profile/profile.module#ProfileModule'},
             { path: 'preferences', loadChildren: './views/preferences/preferences.module#PreferencesModule'},
-            { path: 'trashbox', loadChildren: './trash-box/trash-box.module#TrashBoxModule'}
+            { path: 'trashbox', loadChildren: './trash-box/trash-box.module#TrashBoxModule'},
+            { path: 'publish/:id', loadChildren: './publish/publish.module#PublishModule'}
             //{ path: 'articleview', loadChildren: './feeds/articleview/articleview.module#ArticleviewModule' },
             //{ path: 'magazineview', loadChildren: './feeds/magazineview/magazineview.module#MagazineviewModule' },
             //{ path: 'title-view', loadChildren: './feeds/title-view/title-view.module#TitleViewModule' }, 

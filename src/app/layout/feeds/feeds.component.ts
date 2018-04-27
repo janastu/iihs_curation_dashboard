@@ -18,14 +18,15 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 })
 
 export class FeedsComponent implements OnInit {
-
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
-alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not  
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
@@ -41,17 +42,30 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
-             
+
+             this.spinnerState=true;//Set spinner 
+             this.feeds.length=0;//Clear the feeds array
+             //this.handleClearDate('reset');//Clear the date form
+
              //To get feeds , filtered according to subcategory 
              //check if the query parameter has subcatgeory property 
               if(params.subcategory){
-                
+                this.spinnerState=true;
               this.pageheading = params.subcategory;
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+
                 this.variab.globalfeeds = val;
+
                 //Reverse the filter to sort according to latest feeds
                  this.variab.globalfeeds.reverse();
                  this.feeds = this.variab.globalfeeds;
+                 if(this.feeds){
+                   //console.log("cat",this.feeds);
+                   this.spinnerState=false;
+                 }
+                 if(this.feeds.length=0){
+                   this.alertNofeeds=true;
+                 }
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array  
 
@@ -64,6 +78,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             }
             //To get feeds,filtered according to feedname
             else{
+              this.spinnerState=true;
+              this.feeds.length=0;
+             // console.log(this.spinnerState,this.feeds);
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
@@ -72,6 +89,13 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
+                   // console.log("every",this.feeds);
+                    if(this.variab.globalfeeds){
+                      this.spinnerState=false;
+                    }
+                    else{
+                      this.alertNofeeds=true;
+                    }
                   /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                     this.feeds=res;
                   }); */ 
@@ -88,10 +112,18 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
       this.feedService.getlatestfeeds(feedname).then(res=>{
-       
-         //Store the result in the global variable globalfeeds
-           feedsOnFeedname = res;
-           resolve(feedsOnFeedname);            
+           //console.log(res);
+           if(res['length'] == 0){
+             this.feedService.replicatefeedsdb(feedname).then(repres=>{
+               resolve(repres);
+             })
+           }
+           else{
+             feedsOnFeedname = res;
+             resolve(feedsOnFeedname);
+           }
+         
+                       
           
       });
     });
@@ -104,10 +136,18 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     return new Promise(resolve=>{
     //Call the feed service to get the feeds filtered according to subcategory
       this.feedService.getmetacategories(subcategory).then(res=>{
-    
-        //Store the result in the global variable globalfeeds
-        feedsOnSubcategory = res;
-        resolve(feedsOnSubcategory);
+         if(res['length'] == 0){
+           this.feedService.replicatemetafeedsdb(subcategory).then(repres=>{
+
+             resolve(repres);
+           })
+         }
+         else{
+           //Store the result in the global variable globalfeeds
+           feedsOnSubcategory = res;
+           resolve(feedsOnSubcategory);
+         }
+       
       });
     });
   }
@@ -122,8 +162,8 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
     this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
-        this.alertNofeeds = true;
-        setTimeout(() => this.alertNofeeds = false, 2000);
+        this.alertNofeedsinrange = true;
+        setTimeout(() => this.alertNofeedsinrange = false, 2000);
       }
       else{
         this.feeds = res;

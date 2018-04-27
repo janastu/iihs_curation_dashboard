@@ -65,7 +65,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
    });
 
   }
-  //Api service to get recently read annotations
+  //Api service to get rece  ntly read annotations
   getrecentlyreadannotations(){ 
     
 
@@ -102,7 +102,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
          }).then(function (result) {
         //
 
-        // console.log("res",result);
+        console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -186,7 +186,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
           key:[usr]
           
         }).then(function (result) {
-       //console.log("res",result);
+       console.log("res",result);
         resolve(result.rows);
       }).catch(function (err) {
         console.log(err);
@@ -194,6 +194,28 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      //}
     //});
     });
+
+  }
+  //Api Service to get today's board feeds
+  gettodayBoardFeeds(){
+    var starttime  = new Date();
+    starttime.setHours(0,0,0);
+    var endtime  = new Date();
+    endtime.setHours(23,59,0);
+      return new Promise(resolve => {
+        this.variab.localannotations.query('annotatedfeeds/boardfeedsoftoday', {
+            startkey:starttime,
+            endkey:endtime
+            
+          }).then(function (result) {
+         //console.log("res",result);
+          resolve(result.rows);
+        }).catch(function (err) {
+          console.log(err);
+        });
+       //}
+      //});
+      });
 
   }
   //Update database for deleted and modidifed
@@ -206,6 +228,17 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     });
 
   }
-
- 
+  //Function to add the board feeds to a local json
+  addFeedstoJson(data) {
+    
+     let headers = new Headers();
+      headers.append( 'Content-Type', 'application/json')
+       headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
+     let options = new RequestOptions({ headers: headers });
+     this.http.post(this.settings.feedparserUrl,data,options).map(res=>res.json()).subscribe((response)=> {
+       console.log(response);
+     },(err)=>{
+      console.log(err); 
+   });
+   }
 }

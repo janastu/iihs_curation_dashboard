@@ -1,5 +1,5 @@
 export * from './stat/stat.module';
-export * from './page-header/page-header.module';
+//export * from './page-header/page-header.module';
 /*export * from './hover-toolbar/hover-toolbar.module';
 export * from './modal/modal.module';
 export * from './createboardcomponent/createboardcomponent.module';

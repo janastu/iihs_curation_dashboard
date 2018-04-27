@@ -113,54 +113,30 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                         <div class="col-sm-8 offset-sm-2">
+                        
+                         <div class="col-sm-6 offset-sm-2">
                           <div class="card-blocks">
-                            <div class="row">
-                                <div class="row">
-                                  <h1 class="team-heading"><strong>What is your team's name?</strong></h1>
-                                </div>
-                                <div class="heading-sub"><p>Let's create a private space where you and your team can keep up with improtant industry trends</p></div>
-                                <div class="row">
-                                <form class="form team-info">
-                                <!--Company name-->
-                                  <div class="field">
-                                    <label class="company-name">Company Name</label>
-                                    <div class="fx-input text-field">
-                                      <input type="text">
-                                      <div class="hint">
-                                        <span class="error">Minimum 4 characters</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <!--Team name-->
-                                  <div class="field">
-                                    <label class="company-name">Team Name</label>
-                                    <div class="fx-input text-field">
-                                      <input type="text">
-                                    </div>
-                                  </div>
-                                  <!--Team size-->
-                                  <div class="field">
-                                    <label class="company-name">Team Size</label>
-                                    <div class="fx-input user-list">
-                                      <label><input type="radio" name="team-size" value="on">1 user/solo</label>
-                                      <label><input type="radio" name="team-size" value="on">2 users</label>
-                                      <label><input type="radio" name="team-size" value="on">3-10 users</label>
-                                      <label><input type="radio" name="team-size" value="on">10+ users</label>
-                                      <label><input type="radio" name="team-size" value="on">Unknown</label>
-                                    </div>
-                                  </div>
-                                </form>
-                                </div>
-                                <div class="row">
-                                      <button type="button" class="btn btn-secondary next-buttton" ng-click="myFunc()">Next</button>
-                                </div>
+                            <div class="row"> 
+                              <h1 class="team-heading"><strong>Pick the board</strong></h1>
+                               
                             </div>
+                              
+                              <div class="row" *ngIf="variab.boardupdated.length!=0">
+                                <div clas="col-sm-6">
+                                  <fieldset class="field" *ngFor="let item of variab.boardupdated">
+                                    <div class="radio">
+                                      <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.key)"> {{item.key}}
+                                      </label>
+                                    </div>
+                                  </fieldset> 
+                                </div>
+                              </div>
+                  
                           </div>
                           </div> 
                           </div>
                       </div>
-
+                     </ng-template>
 
                       <!--Modal for share items-->
                       <ng-template  #shareitems let-c="close" let-d="dismiss">

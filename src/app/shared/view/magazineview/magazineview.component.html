@@ -6,7 +6,15 @@
         </div>
     </div>-->
 
-
+<div class="row">
+  <div class="col-sm-2 offset-sm-2">
+   <!-- <div *ngIf="publishingurl && !mouseOvered">
+        <input type="text" #targetString value="{{publishingurl}}" readonly="isCopied1">
+        <button class="btn btn-default" [class.btn-success]= "isCopied1" type="button" 
+            [ngxClipboard]="targetString"  (cbOnSuccess)="isCopied1 = true">Copy</button>
+    </div>-->
+  </div>
+</div>
 
   <div class="row">
     <div class="col">
@@ -17,34 +25,55 @@
               <!--div id="loading">
                 <img src="assets/images/loading.gif">
               </div-->
+             
               <div class="feeds-entries">
                 
               <div class="magazine-hover-control">
-              <app-hover-toolbar [item]='item' [index]='childIndex' (sendAlert)="handleAlert($event)" (sendIconState)="handleIcon($event)"></app-hover-toolbar>
+              <app-hover-toolbar [item]='item' [index]='index' (sendIconState)="handleIcon($event)"></app-hover-toolbar>
               </div>
-              
+                     
+
 
                <div class="feed-entry" *ngIf="item.value.description != null">
+               <div *ngIf="router.url.includes('/publish')">
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox" >
+                      Published
+                   </div>
+                   <div *ngIf=!publishedfeeds[index]>
+                     <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                     (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                   </div>
+               </div>
+               <div *ngIf="router.url.includes('/boardfeeds')">
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                      Published
+                   </div>
+                   <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                   (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                  
+               </div>
                <!--Feed Image--> 
                 <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
                  <img [src]="html.extracturl(item.value.description)" class="magazine-image">
                 <!--<div [innerHtml]="extracturl(item.value.desc)" class="magazine-image"></div>-->
                 </div>
                 <div *ngIf="!html.checkimg(item.value.description)" class="desc-image">
-                 <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image">
+                 <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image hide-image">
                
                 
                 </div>
 
                 <div>
                   <!--Feed Title-->
-                      <app-modal #modal [item]="item" [index]='chilIndex'></app-modal>
-                     <a (click)="modal.open(desc)"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
+                      
+                     <a href="{{item.value.link}}" target="_blank"><h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                      <!--Feed Category-->
-                    <a href={{item.value.url}} class="metadata-magazine">
+                    <a href={{item.value.link}} target="_blank" class="metadata-magazine">
                       {{item.value.meta.categories}}</a>
+                      <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} target="_blank" class="metadata-magazine">
+                      {{item.value.feednme}}</a>
                     <!--Feed Date-->
-                    <a href={{item.value.url}} class="metadata-magazine">
+                    <a  class="metadata-magazine">
                       {{item.value.pubDate | date}}
                     </a>
                     <!--Feed Desc-->
@@ -53,11 +82,11 @@
                     </div>
 
                     <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content">
-                        {{item.value.description.substring(0,100)}}
+                        {{item.value.description.substring(0,200)}}
 
                     </div>
                     <div *ngIf="html.checkhtml(item.value.description)" class="feed-content">
-                        {{html.stripHtml(item.value.description).substring(0,100)}}
+                        {{html.stripHtml(item.value.description).substring(0,200)}}
 
                     </div>
                    

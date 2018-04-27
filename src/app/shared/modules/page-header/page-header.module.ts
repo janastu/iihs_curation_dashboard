@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageHeaderComponent } from './page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from '../../../shared/modules/modal/modal.module';
+import {ModalModule } from '../modal/modal.module'
 
 
 @NgModule({
@@ -13,8 +13,8 @@ import { ModalModule } from '../../../shared/modules/modal/modal.module';
         RouterModule,
         NgbModule.forRoot(),
         FormsModule,
-        ModalModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ModalModule
     ],
     declarations: [PageHeaderComponent],
     exports: [PageHeaderComponent]

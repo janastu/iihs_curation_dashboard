@@ -16,23 +16,33 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 
 export class TrashBoxComponent implements OnInit {
 
-
+spinnerState:boolean=false;//state variable to store the status of the spinner to display
 feeds:any=[];          //variable to store feeds to display
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
 catname:any;
 p:any;//variable to store the current page
+alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
   constructor(public variab:Global,public dataservice:DataService,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
     
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
+      this.spinnerState=true;
      //Fetch the data from service and store in global variable
      this.dataservice.getdeletedfeeds(this.user).then(res=>{
        this.variab.hiddenfeeds = res;
        this.feeds = this.variab.hiddenfeeds;
+         //console.log(this.feeds);
+         if(this.feeds){
+           this.spinnerState=false;
+         }
+         this.alertNofeeds=false;//set alertnofeeds value to false
+         if(this.feeds.length==0){
+           this.alertNofeeds=true;
+         }
      })
      
   }

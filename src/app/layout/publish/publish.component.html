@@ -1,0 +1,89 @@
+<router-outlet></router-outlet>
+<div [@routerTransition] class="container-height">
+  <!--Page Header-->
+    <div class="row">
+        <div class="col-sm-9 offset-sm-3">
+            <app-page-header [heading]="'Confirm Publish' | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)'  (childSortLabel)='handleSort($event)' (childrefresh)='handleRefresh($event)' (clearDates)='handleClearDate($event)'></app-page-header>
+        </div>
+    </div>
+<ngb-alert *ngIf="alertNofeeds" (close)="closeAlert()">No feeds in this range</ngb-alert>
+<ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Already Published</ngb-alert>
+   
+
+<div class="row centered">
+      <div class="col">
+            <div class="mb-3">
+                     
+               
+            <div class="container">
+      
+
+ <button type="submit" class="btn btn-md btn-success" (click)="publish()">Publish</button> 
+    <div class="col-sm-6 offset-sm-2 all-checkbox">
+        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" (change)="onSelectAll($event)"/>                       
+        <label>Select All</label>
+    </div>
+<div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
+<!--Component to display if no view is selected-->
+ <!-- <input type="checkbox" [formControlName]="i" [checked]="feedstobechecked[i]==true">-->
+<!--<input type="checkbox" (change)="onChange(feed, $event.target.checked)">-->
+
+
+
+<ng-container *ngIf = "view === null;then first"></ng-container> 
+  
+<ng-template #first><app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'  (checkedInput)='handleCheckedInput($event)'></app-magazineview></ng-template>
+
+<!--Component to display if Magazine view is selected-->
+<div *ngIf = "view === 'Magazine'">
+  <div *ngIf="publishedfeeds.length>0">
+    <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds' (checkedInput)='handleCheckedInput($event)'></app-magazineview>
+  </div> 
+  
+</div>
+
+<!--Component to display if Article view is selected-->
+<div *ngIf = "view === 'Article'"> 
+  <div *ngIf="publishedfeeds.length>0">
+    <app-articleview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-articleview>
+  </div>
+</div>
+<!--Component to display if Card view is selected-->
+<div *ngIf = "view === 'Card'"> 
+  <div *ngIf="publishedfeeds.length>0">
+    <app-card-view [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-card-view>
+  </div>  
+</div>
+<!--Component to display if Title view is selected-->
+<div *ngIf = "view === 'Title'"> 
+<div class="container" *ngIf="publishedfeeds.length>0">
+ <app-title-view [feeds]='feed'  [index]='i' [publishedfeeds]='publishedfeeds'></app-title-view>
+</div>                
+</div>
+
+</div>
+ 
+                    </div>
+                  </div>
+               </div>
+           
+</div> 
+ 
+<!--<div>
+  <button (click)="markallasread()">Mark all as read</button>
+</div>-->
+
+<!--Progress-Spinner-->
+<div  class= "col-sm-6 offset-sm-3" *ngIf="spinnerState">
+  <!--img *ngIf="loading" class=" spinner-image" src="assets/images/spinner.gif"  /-->
+  <img src="assets/images/loading_spinner.gif">
+<!--Pagination Component-->
+
+</div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
+  <h3>Sorry No feeds to publish</h3>
+</div>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div> 
+</div>  

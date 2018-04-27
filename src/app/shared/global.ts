@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Global {
-
+//Migrate to component service architecture
    
    globalfeeds:any=[];//global variable to store feeds in global buffer
    readlaterfeeds:any=[];//global variable to store readlater feeds in global buffer
@@ -25,6 +25,7 @@ export class Global {
    localannotations:any;//global variable to store the pouchdb object for annotations
    localgroups:any;//global variable to store the pouchdb object for groups
    localboards:any;//global variable to store the pouchdb object for boards
+   localarchives:any;//global variable to store the pouchdb object for archives
   constructor(public http: Http) {
   
 

@@ -4,7 +4,7 @@ import { ChartsModule as Ng2Charts } from 'ng2-charts';
 
 import { ChartsRoutingModule } from './charts-routing.module';
 import { ChartsComponent } from './charts.component';
-import { PageHeaderModule } from '../../shared';
+import { PageHeaderModule } from '../../shared/modules/page-header/page-header.module';
 
 @NgModule({
     imports: [

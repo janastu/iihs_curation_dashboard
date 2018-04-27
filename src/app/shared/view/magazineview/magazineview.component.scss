@@ -35,6 +35,7 @@
     font-size:14px;
     font-family: 'Slab Serif', sans-serif;
     color: #9e9e9e;
+    text-align: justify;
 }
 /*Styles for Feed Image*/
 .desc-image{
@@ -43,7 +44,9 @@
     margin-right: 20px;
 }
 .magazine-image{
+    border: 1px solid #efefef;
     width: 130px;
+    max-height: 130%;
 }
 .magazine-image img{
     max-width: 137px !important;
@@ -52,6 +55,9 @@
 .desc-image magazine-image img{
       width: 130px;
       height: 90px;  
+}
+.hide-image{
+    max-width:0px;
 }
 /*Styles for Feed Metadata*/
 .metadata-magazine{
@@ -67,7 +73,7 @@
     opacity:1 !important;
 }
 .feeds-entries{
-    width: 100%;
+    min-width: 120%;
 }
 .magazine-hover-control {
     opacity: 0;
@@ -85,6 +91,15 @@
     text-align: center; 
     border: transparent;
     z-index: 1;
+}
+
+.publish_checkbox{
+    margin-left: -8rem;
+    margin-top: 7px;
+    cursor:pointer;
+}
+.published-label{
+    margin-top: 8px;
 }
 
 /*===============================================================================================

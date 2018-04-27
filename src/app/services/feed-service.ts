@@ -14,7 +14,13 @@ export class FeedService {
 	username:any;
 	password:any;
 	feedNewsrack:any=[];
+	remotefeeds:any;
+	auth:any;//varable to store the auth object
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
+		 this.auth={
+  			      username:this.settings.couchdbusername,
+  			      password:this.settings.couchdbpassword
+  	        }
 		  //Create pouchdb instance for feeds
 		/*  this.localdb = new PouchDB('feeds'); //create a pouchdb 
 		  //Create reomte couchdb instance for feeds
@@ -39,7 +45,9 @@ export class FeedService {
 		  //function call to create design docs
 		  this.createDesignDocs();*/
 
-
+		  this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
+		  	    auth:this.auth
+		  });
 	}
 
 //Function to get the json feeds when an xml url is given
@@ -79,8 +87,15 @@ export class FeedService {
 		        	
 		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
 		        		if(res['ok'] == true){
-		        			resolve(res);
-		        			PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed );
+		        			
+		        			//PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed);
+		        			this.variab.localfeeds.replicate.to(this.settings.protocol+this.settings.dbfeed).on('complete', function (res) {
+		        			  // yay, we're done!
+		        			  //console.log(res);
+		        			  resolve(res);	
+		        			}).on('error', function (err) {
+		        			  // boo, something went wrong!
+		        			});
 		        		}
 		        	});
 		        }
@@ -139,37 +154,97 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
+		var replicationstatus:boolean=false;
+		return new Promise(resolve => { 
+			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
+			    startkey: [category],
+			    endkey: [category, {}]
+			  }).then(function (result) {
+			 		resolve(result.rows);
+			   }).catch(function (err) {
+			  		console.log(err);
+			});
+		
+		
 	
-	 
-	  var d = new Date();
-	  var date = d.getTime();
-	 
 
-	return new Promise(resolve => { 
+	
 	/*this.remote.replicate.to(this.localdb, {
 	 filter: '_view',
 	 view: 'feeds/latestoldestcategory'
 	 }).then(res=>{
 	console.log(res)
-	if(res['ok']==true){*/
+	if(res['ok']==true){
 		
 		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
 		      startkey: [category],
 		      endkey: [category, {}]
 		    }).then(function (result) {
-		   		//console.log("res",result);
+		   		console.log("res",result);
 		    	resolve(result.rows);
 		  	}).catch(function (err) {
 		    console.log(err);
 		  	});
 	
 	//}
-	//});
-	  
+	//});*/
+	  //resolve('er');
 	});
 
 
 	  
+	}
+	//Replicate db feeds
+	replicatefeedsdb(category){
+	  return new Promise(resolve=>{	
+		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+			batch_size:10,batches_limit:5,
+		  filter: 'feedsfilter/latestoldestcategory',
+		  query_params: {category: category},
+		  
+		}).then((change)=> {
+		  // yo, something changed!
+		  console.log("syncchnagefeeds",change);
+		  if(change.ok == true){
+		    this.variab.localfeeds.query('feeds/metacategories', {
+		        startkey: [category],
+		        endkey: [category, {}]
+		      }).then(function (result) {
+		      //console.log("res",result);
+		      resolve(result.rows);
+		    }).catch(function (err) {
+		      console.log(err);
+		    });
+		  }
+		});
+	  });
+
+	}
+	//Replicate db feeds
+	replicatemetafeedsdb(category){
+	  return new Promise(resolve=>{	
+		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+			batch_size:10,batches_limit:5,
+		  filter: 'feedsfilter/metacategories',
+		  query_params: {category: category},
+		  
+		}).then((change)=> {
+		  // yo, something changed!
+		  console.log("syncchnagefeeds",change);
+		  if(change.ok == true){
+		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+		      startkey: [category],
+		      endkey: [category, {}]
+		    }).then(function (result) {
+		   		console.log("res",result);
+		    	resolve(result.rows);
+		  	}).catch(function (err) {
+		    console.log(err);
+		  	});
+		  }
+		});
+	  });
+
 	}
 	//Api service to get recent feeds
 	 getrecentfeeds(){

@@ -1,0 +1,291 @@
+/*Styles for layout*/
+.main-container{
+    margin-top: 0px;
+    margin-left: 60px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+
+}
+/*Styles for Feed*/
+.magazine-list{
+    margin-bottom: 3rem;
+}
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+/*Styles for Feed Heading*/
+.feed-heading-unmark{
+    font-size:16px;
+    font-family: sans-serif;
+    color:#333333;
+    cursor:pointer;
+}
+.feed-heading-mark{
+    font-size:16px;
+    font-family: sans-serif;
+    color:#4d4d4d;
+    cursor:pointer;
+}
+/*Styles for Feed Code*/
+.feed-content{
+    font-size:14px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+/*Styles for Feed Image*/
+.desc-image{
+    border-radius: 0.2rem;
+    height: 91px;
+    margin-right: 20px;
+}
+.magazine-image{
+    width: 130px;
+}
+.magazine-image img{
+    max-width: 137px !important;
+    max-height: 135px !important;
+}
+.desc-image magazine-image img{
+      width: 130px;
+      height: 90px;  
+}
+.hide-image{
+    max-width:0px;
+}
+/*Styles for Feed Metadata*/
+.metadata-magazine{
+    font-size: 12px;
+    font-family: 'Slab Serif', sans-serif;
+    color: #9e9e9e;
+}
+
+/*hover for feeds elements*/
+
+.feeds-entries:hover, .feeds-entries:hover .magazine-hover-control {
+    background-color: #f6f6f6;
+    opacity:1 !important;
+}
+.feeds-entries{
+    width: 100%;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 440px;
+}
+.ago{
+    font-size: 11px;
+    position: absolute;   
+    margin-top: 4px;  
+    transition: opacity .35s ease;   
+}
+.ago a{
+    color: #a3a3a2; 
+    font-size: 15px;
+    text-align: center; 
+    border: transparent;
+    z-index: 1;
+}
+/*Styles for media monitor,archive image*/
+.archive-image-position{
+    float:right;
+}
+.font-icon{
+    font-size: 2.5rem;
+}
+
+/*===============================================================================================
+MEDIA QUERIES
+
+To change breakpoint for nav collapse
+==============================================================================================*/
+
+
+
+@media  (max-width: 480px) {
+ 
+
+}
+
+
+
+@media (max-width: 767px) {
+  
+}
+
+@media (max-width: 995px) {
+  
+}
+
+
+/*========================================================
+  
+Bootstrap 3 Media Queries
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 75px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 229px !important;
+}
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 357px !important;
+}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 576px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 65px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 202px !important;
+}   
+}
+
+@media only screen and (min-width : 768px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 303px !important;
+}   
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 293px !important;
+}   
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1024px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 327px !important;
+}
+}
+@media only screen and (min-width : 1200px) {
+.feed-entry{
+    border-bottom: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-top: 0;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: 15px;
+    margin-top: 23px;
+    max-width: 624px;
+    padding-left: 12px;
+    max-height:100px;
+}
+.magazine-hover-control {
+    opacity: 0;
+    margin-left: 399px !important;
+}
+
+}

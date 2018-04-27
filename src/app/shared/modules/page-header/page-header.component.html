@@ -18,19 +18,15 @@
     </form>
   </div>
 <!--Header Menu-->
+  <!--<div class="form-group">
+       <label>Selects</label>
+          <select class="form-control" [(ngModel)]="selectedCity" (ngModelChange)="onChange($event)">
+            <option>Published</option>
+            <option>Not Published</option>
+          </select>
+    </div>-->
   <div class="col-sm-6">
     <div class="nav navbar-nav navbar-right page-header-nav">
-    <!--Categories-->
-      <!--<div ngbDropdown class="d-inline-block">
-        <input type="text" class="form-control categories-input" placegolder="Selected Categories" value="{{selectedVal}}">
-        <button class="btn nav-item-filters" title="Categories" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-angle-down icon-header"></i></button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group categories">
-            <select #cat multiple="" class="form-control" [(ngModel)]="selectedVal" 
-            (change)="onCate(cat)" >
-              <option *ngFor="let disp of variab.categoryupdated">{{disp.doc.feedname}}</option>
-            </select>
-          </div>
-      </div>-->
       <!--Four Views-->
       <div ngbDropdown class="d-inline-block">
         <button class="btn nav-item-filters"  title="Change Layout" id="dropdownBasic1" ngbDropdownToggle>
@@ -66,10 +62,31 @@
         </div>
       </div>
       <!--Share with team mates-->
-      <!--<div><app-modal #modal></app-modal>
-        <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>
+      <div *ngIf="router.url.includes('/boardfeeds') || router.url.includes('/publish')">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn nav-item-filters"  title="Boards to Share" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="fa fa-fw fa-users icon-header"></i>
+          </button>
+                        
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width-share">  
+            <fieldset class="form-group field" *ngFor="let item of variab.boardupdated">
+              <div class="radio">
+                <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.key)"> {{item.key}}
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      <!--<app-modal #modal></app-modal>
+        <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>-->
       </div> 
-        Team Newsletter
+      <!--test-->
+    
+            
+            <!--<div class="border-more" >
+              <label class="checkbox-inline"><input type="checkbox" checked="">Unread</label>
+            </div>-->
+        <!--Team Newsletter
         <button  class="btn nav-item-filters headerview" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>-->
         <!--Refresh button-->
         <button (click)="refresh()" class="btn nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i>

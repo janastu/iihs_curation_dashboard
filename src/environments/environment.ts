@@ -14,9 +14,9 @@ export const environment = {
  authHost:'localhost:3001',
  authPort:'3001',
 
- feedParserHost:'localhost:3000',
+ feedParserHost:'localhost:3500',
 
- feedParserPort:'3000' 
+ feedParserPort:'3500' 
 
 
  /*dbprotocol:'http://',

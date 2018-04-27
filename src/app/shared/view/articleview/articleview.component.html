@@ -9,26 +9,46 @@
           <div class="row">
 
               <div class="feeds-entries">
+                
+                
+                <div *ngIf="router.url.includes('/boardfeeds')">
+                  <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                     <label>Published</label>
+                  </div>
+                  <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                  (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                </div>  
                 <!--Feed Title-->
                   <div class="row">
-                    <app-modal #modal [item]="item" [index]='index'></app-modal>
-                   <a (click)="modal.open(desc)"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
+                    <div *ngIf="router.url.includes('/publish')">
+                        <div *ngIf=publishedfeeds[index] class="publish_checkbox published-label">
+                           <label>Published</label>
+                        </div>
+                        <div *ngIf=!publishedfeeds[index]>
+                          <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                          (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                        </div>
+                    </div>
+                     
+                   <a href={{item.value.link}} target="_blank"><h4 class="feed-heading"><strong>{{item.value.title}}</strong></h4></a>
                    </div>
                   <!--Feed Category-->
                   <div class="row">
-                  <a class="metadata-article">
+                  <a href={{item.value.link}} target="_blank" class="metadata-article">
                           {{item.value.meta.categories}}
                   </a>
+                  <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} target="_blank" class="metadata-article">
+                  {{item.value.feednme}}</a>
                   <!--Feed Date-->
                   
-                  <a href={{item.value.url}} class="metadata-article">
+                  <a  class="metadata-article">
                           {{item.value.pubDate | date}}
                   </a>
                 
                  
                   </div>
                   <!--Feed Toolbar-->
-                  <div class="row">
+                  <div class="row" *ngIf="!router.url.includes('/mm')">
 
                     <app-article-toolbar [item]='item' [index]='index'></app-article-toolbar>
                   
@@ -41,7 +61,7 @@
                       <img [src]="html.extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description)" class="row">
-                      <img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="article-image">
+                      <!--<img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="hide-image">-->
                     
                     </div>
                   <!--Feed Desc-->
@@ -50,10 +70,10 @@
                           
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content article-feed-content">
-                            {{item.value.description.substring(0,250)}}
+                            {{item.value.description.substring(0,200)}}
                     </div>
                     <div *ngIf="html.checkhtml(item.value.description)" class="feed-content article-feed-content">
-                        {{html.stripHtml(item.value.description).substring(0,100)}}
+                        {{html.stripHtml(item.value.description).substring(0,200)}}
 
                     </div>
                   </div>

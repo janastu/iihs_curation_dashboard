@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { DatePipe } from '@angular/common';
 import { HtmlParser } from '../../Utilities/html-parser';
@@ -9,9 +9,11 @@ import { HtmlParser } from '../../Utilities/html-parser';
   animations: [routerTransition()]
 })
 export class CardViewComponent implements OnInit {
-
-@Input('feeds') item:any=[];
-@Input('index') index:any;
+p:any; //variable to store the current page nuber
+@Input('feeds') feeds:any=[];
+@Input('publishedfeeds') publishedfeeds:any=[];
+@Input('index') index:number;
+@Output('checkedInput') checked:any = new EventEmitter();
   constructor(public html : HtmlParser) { }
 
   ngOnInit() {

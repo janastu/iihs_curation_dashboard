@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit{
     selected:any;
     groups:any=[];
     showGroups:any;
+    archivesurl:any;
     eventCalled() {
         this.isActive = !this.isActive;
     }

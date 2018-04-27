@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ArticleviewComponent } from '../articleview/articleview.component';
 import { ArticleToolbarModule } from '../../../shared/modules/article-toolbar/article-toolbar.module';
-import { CreateboardcomponentModule } from '../../../shared/modules/createboardcomponent/createboardcomponent.module'
-import { ModalModule } from '../../../shared/modules/modal/modal.module';
+import { CreateboardcomponentModule } from '../../modules/createboardcomponent/createboardcomponent.module'
+import { ModalModule } from '../../modules/modal/modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -17,7 +17,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
         NgbModule.forRoot(),
        	CreateboardcomponentModule,
        	ModalModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule,
+        ReactiveFormsModule
 
     ],
     declarations: [ArticleviewComponent],

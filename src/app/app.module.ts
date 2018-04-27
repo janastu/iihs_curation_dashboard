@@ -18,6 +18,7 @@ import { DbConfig } from './services/db-config';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { GroupService } from './services/group-service';
 import { FeedService } from './services/feed-service';
+import { ArchiveService } from './services/archive-service';
 import { Userservice } from './services/userservice';
 import { Utilities } from './shared';
 import { HtmlParser } from './shared';
@@ -59,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
 
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},{provide:UrlSerializer,useClass:CustomUrlSerializer},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,Utilities,HtmlParser],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,ArchiveService,Utilities,HtmlParser],
 
 
     bootstrap: [AppComponent]
