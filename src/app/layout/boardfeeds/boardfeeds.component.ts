@@ -147,5 +147,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
         this.feeds[i].Checked = this.selectedAll;
       }
   }
+  onpage(){
+    window.scroll(0,0);
+  }
+   
 
 }

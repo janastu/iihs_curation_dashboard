@@ -87,6 +87,10 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
       this.feeds = this.variab.hiddenfeeds;
     }
   }
+  onpage(){
+    window.scroll(0,0);
+  }
+   
    
 
 }

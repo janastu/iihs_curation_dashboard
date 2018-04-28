@@ -274,6 +274,10 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
   public closeAlert() {
       this.alertPublished=false;
   }
+  onpage(){
+    window.scroll(0,0);
+  }
+   
    
 
 }
