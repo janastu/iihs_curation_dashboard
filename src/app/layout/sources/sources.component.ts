@@ -1,28 +1,32 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Global } from '../../shared/global';
 import { CategoryService } from '../../services/category-service';
 import { FeedService } from '../../services/feed-service';
 import { Userservice } from '../../services/userservice';
 import { routerTransition } from '../../router.animations';
+
 @Component({
   selector: 'app-sources',
   templateUrl: './sources.component.html',
   styleUrls: ['./sources.component.scss'],
   animations: [routerTransition()]
 })
+
 export class SourcesComponent implements OnInit {
+@ViewChild('link') link: ElementRef;
   catvalue;
   metadata:any=[];
   category:any;
   feedlink:any;
   createfeed:boolean=false;
   alertInvalid:boolean=false;
+   
   constructor(public categoryService:CategoryService,public variab:Global,public feedService:FeedService,public userService:Userservice) { 
     
   }
 
   ngOnInit() {
-   
+   console.log(this.link);
   }
   onselectingcategory(category){
   	
