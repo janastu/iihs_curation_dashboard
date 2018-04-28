@@ -43,16 +43,20 @@
 
 </div>
 </div>
+
+                    </div>
+                  </div>
+               </div>
+        <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0 && view !== 'Card'">
+        <div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+        </div> 
+           
+</div>    
 <div *ngIf = "view === 'Card'"> 
  
     <app-card-view [feeds]='feeds' [index]='i'></app-card-view>
  
 </div>
-                    </div>
-                  </div>
-               </div>
-           
-</div>    
 <!--<div>
   <button (click)="markallasread()">Mark all as read</button>
 </div>-->
@@ -67,7 +71,6 @@
 <div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
   <h3>Sorry No feeds exist</h3>
 </div> 
-<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
-<div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
-</div> 
+
+
 </div>  
