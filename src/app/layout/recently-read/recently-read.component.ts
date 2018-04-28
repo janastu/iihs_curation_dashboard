@@ -34,14 +34,17 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                        this.variab.recentlyread=result;
                        
                   this.util.checkForDeletedFeeds(this.variab.recentlyread).then(res=>{
-                    this.feeds = res;
-                      if(this.feeds){
-                        this.spinnerState=false;
-                      }
-                      this.alertNofeeds=false;//set alertnofeeds value to false
-                      if(this.feeds.length==0){
-                        this.alertNofeeds=true;
-                      }
+                    this.util.sortdescending(res).then(sorted=>{
+                      this.feeds = res;
+                        if(this.feeds){
+                          this.spinnerState=false;
+                        }
+                        this.alertNofeeds=false;//set alertnofeeds value to false
+                        if(this.feeds.length==0){
+                          this.alertNofeeds=true;
+                        }
+                    })
+                    
                   });
      
     });

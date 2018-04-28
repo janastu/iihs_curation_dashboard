@@ -48,8 +48,12 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               //this.handlePublished();
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
-                  //Get the deleted feeds store and display using feeds variable
-                  this.feeds = res;
+                  // this.util.sortdescending(res).then(sorted=>{
+                     //Get the deleted and feeds store and display using feeds variable
+                     this.feeds = res;
+                   
+                  
+                  
                     if(this.feeds){
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                     }
@@ -65,7 +69,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                    
                  });
                 
-                
+            //  })  
                 
                });
            });
