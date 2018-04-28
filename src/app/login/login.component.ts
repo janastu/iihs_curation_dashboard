@@ -6,6 +6,8 @@ import { Userservice } from '../services/userservice';
 import { GroupService } from '../services/group-service';
 import { Global } from '../shared';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -89,6 +91,7 @@ export class LoginComponent implements OnInit {
                 this.alertsuccess=true;
                 this.ngAlert.type = 'success';
                 setTimeout(() => this.alertsuccess = false, 2000);
+                Cookie.set('isLoggedin', 'true');
                localStorage.setItem('isLoggedin', 'true');
                localStorage.setItem('name', this.loginForm.controls['username'].value);
                //check if member is partof any group or groups
