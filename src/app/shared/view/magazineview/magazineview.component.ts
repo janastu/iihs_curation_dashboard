@@ -29,10 +29,10 @@ mouseOvered:boolean=false;
    }
 
   ngOnInit() {
-    //console.log(this.item);  
+    //console.log(this.feedstobechecked);  
 	}  
   onFilterChange(eve: any) {
-    console.log("eve",this.item);
+    //console.log("eve",this.item);
     //this.checked.emit(this.item);   
   }
   //handle event select all

@@ -40,8 +40,8 @@
                       Published
                    </div>
                    <div *ngIf=!publishedfeeds[index]>
-                     <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
-                     (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
+                     <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked" [checked]="item.Checked"/>
+                      
                    </div>
                </div>
                <div *ngIf="router.url.includes('/boardfeeds')">

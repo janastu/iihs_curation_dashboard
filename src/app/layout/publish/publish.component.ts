@@ -89,11 +89,21 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
             });
            
            //get the board feeds of today's
-          /* this.dataservice.gettodayBoardFeeds().then(res=>{
+          this.dataservice.gettodayBoardFeeds().then(res=>{
              var todayAnnotatedFeeds:any=[];
              todayAnnotatedFeeds = res;
+               for (var i = 0; i < this.feeds.length; ++i) {
+                 // code...
+                 for (var j = 0; j < todayAnnotatedFeeds.length; ++j) {
+                   // code...
+                   //console.log(this.feeds[i].value,todayAnnotatedFeeds[i]);
+                   if(this.feeds[i].value._id == todayAnnotatedFeeds[j].value._id){
+                     this.feeds[i].Checked = true;
+                   }
+                 }
+               }
                
-                  var datefeed = this.feeds.map( (board, index) => {
+               /*   var datefeed = this.feeds.map( (board, index) => {
                      
                      return  _.filter(todayAnnotatedFeeds,function(o) { 
 
@@ -117,14 +127,14 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
                           return false;
                         
                       }
-                  })
+                  })*/
 
                 
                 
                
                  //console.log("yeno",this.feedstobechecked);
               
-           })*/
+           })
         });
      });
    
@@ -142,10 +152,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
           if(this.publishedfeeds[i] == false){
             this.feeds[i].Checked = this.selectedAll;
           }
-          else{
-            this.alertPublished=true;
-            setTimeout(() => this.alertPublished = false, 2000);
-          }
+          
         }
         
       }
@@ -156,9 +163,9 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
     var publishedfeeds = this.feeds.filter(feed=>{
       return feed.Checked;  
     })
-    //console.log(this.variab.publishedfeeds);
+   // console.log(publishedfeeds);
    
-    var pub_date = new Date(); //get today's date
+   var pub_date = new Date(); //get today's date
     var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
     let parsed = Date.parse(transform);//Parse the date to timestamp
     let isodate = new Date(parsed);//get the date by passing the transformed date
@@ -187,7 +194,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
               if(response['ok']==true){
                 //console.log("inadd",publishedfeeds);
                 localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
-              
+                   // window.open('#/')
                
                    this.router.navigate(['/mm',this.boardname,transform]);
                
