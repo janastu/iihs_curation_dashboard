@@ -47,7 +47,7 @@ auth:any;//varable to store the auth object
   	    },
   	    metacategories: {
   	      map: function (doc) {
-            console.log("doc in con",doc);
+            //console.log("doc in con",doc);
   	        if (doc.meta && !doc.hidefeed) {
               if(doc.meta.categories[0]!= null){
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
@@ -76,6 +76,7 @@ auth:any;//varable to store the auth object
                 }
               }.toString(),
             metacategories: function (doc,req) {
+
                 if (doc.meta.categories[0]==req.query.category) {
 
                   return doc;
