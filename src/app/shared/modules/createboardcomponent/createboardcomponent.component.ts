@@ -76,14 +76,16 @@ queryString:any;//variable to store the input to find a board name
           
    
         });
-        //console.log("annotations",annotatedarray,this.variab.boardupdated);
+        //console.log("annotations",annotatedarray);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.variab.boardupdated)
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
             
             return  _.filter(annotatedarray,function(o) { 
+             //console.log(o.key,board.value.label);
               if(o.key===board.value.label){
+                //console.log(o);
               return o  ; 
             }
             });
@@ -125,7 +127,7 @@ queryString:any;//variable to store the input to find a board name
   }
   //Function called from Create board block to save the feed to the board
   savetoboard(title,i){ 
-   
+     console.log(title);
       this.labelForBoards[i] = true;
       this.selectedstar=1;
       let update = {
@@ -149,7 +151,8 @@ queryString:any;//variable to store the input to find a board name
   //Function called from Create new board block to create new board by giving a board name 
   createboard(){
 //   var model;
-  // console.log('mem',this.variab.groupname);
+
+ // console.log('mem',title,this.labelForBoards);
   if(this.groupname){
     var model={
      
@@ -196,12 +199,15 @@ queryString:any;//variable to store the input to find a board name
         this.boardservice.addboard(model).then(res=>{
           //console.log("ew",res);
               if(res['ok'] == true){
-                this.variab.boardupdated.push({value:model});  
+                this.variab.boardupdated.push({value:model});
                 this.visible=false;
                 this.alertempty = false;
-                this.alertexists = false; 
+                this.alertexists = false;
+              
+                
               }
         })
+
       }
     //})
 
