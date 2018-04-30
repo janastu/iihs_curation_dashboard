@@ -16,7 +16,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
   styleUrls: ['./feeds.component.scss'],
   animations: [routerTransition()]
 })
-
+ 
 export class FeedsComponent implements OnInit {
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
