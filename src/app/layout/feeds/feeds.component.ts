@@ -27,6 +27,7 @@ date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not  
+ singlevalue:any=[];
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
@@ -52,13 +53,16 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               if(params.subcategory){
                 this.spinnerState=true;
               this.pageheading = params.subcategory;
+              console.log("subca",params.subcategory);
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
 
                 this.variab.globalfeeds = val;
 
                 //Reverse the filter to sort according to latest feeds
-                 this.variab.globalfeeds.reverse();
-                 this.feeds = this.variab.globalfeeds;
+                 //this.variab.globalfeeds.reverse();
+                 this.feeds = this.variab.globalfeeds.rows[0].value;
+                 this.singlevalue=this.variab.globalfeeds.rows[0];
+                 console.log("feedstohtml",this.singlevalue);
                  if(this.feeds){
                    //console.log("cat",this.feeds);
                    this.spinnerState=false;
@@ -79,13 +83,13 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
             //To get feeds,filtered according to feedname
             else{
               this.spinnerState=true;
-              this.feeds.length=0;
+              //this.feeds.length=0;
              // console.log(this.spinnerState,this.feeds);
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
                 //Reverse the filter to sort according to latest feeds
-                 this.variab.globalfeeds.reverse();
+                 //this.variab.globalfeeds.reverse();
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
@@ -111,6 +115,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     var feedsOnFeedname:any=[];
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
+
       this.feedService.getlatestfeeds(feedname).then(res=>{
            //console.log(res);
            if(res['length'] == 0){
@@ -135,10 +140,12 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   }
   //Get feeds filtered on subcategory
   getfeedsOnSubcategory(subcategory){
-    var feedsOnSubcategory:any=[];
+     var feedsOnSubcategory:any=[];
     return new Promise(resolve=>{
+
     //Call the feed service to get the feeds filtered according to subcategory
       this.feedService.getmetacategories(subcategory).then(res=>{
+      console.log("sis",res);
          if(res['length'] == 0){
            this.feedService.replicatemetafeedsdb(subcategory).then(repres=>{
 
@@ -147,7 +154,10 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
          }
          else{
            //Store the result in the global variable globalfeeds
+           console.log("newinesle",res);
            feedsOnSubcategory = res;
+         console.log("newinesle",feedsOnSubcategory.rows);
+           
            resolve(feedsOnSubcategory);
          }
        

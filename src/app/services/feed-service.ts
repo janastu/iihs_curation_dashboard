@@ -130,29 +130,63 @@ export class FeedService {
 	  }
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
-	  	 
+	  	return new Promise(resolve => {
+	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
+	  		   	console.log(category);	
+	  		   	this.variab.localfeeds.query('feeds/metacategories', {
+	  		   	    startkey: [category],
+	  		   	    endkey: [category, {}]
+	  		   	  }).then(function (result) {
+	  		   	  console.log("resmeta",result.rows);
+	  		   	 resolve(result);
+	  		   	}).catch(function (err) {
+	  		   	  console.log(err);
+	  		   	});
+	  		   	/*this.http.get(check).map(res=>res.json()).subscribe(result=> {
+	  		   	  console.log(result)
+	  		   	 resolve(result.rows);
+	  		   	}, (err) =>{
+	  		   	  console.log(err);
+	  		   	});*/
+	  		   
+	  		   
+	  		  });
 
-	   return new Promise(resolve => {
+	   	 
+	  
 	   	/*this.remote.replicate.to(this.localdb, {
 	   	   filter: '_view',
 	   	   view: 'feeds/metacategories'
 	   	 }).then(res=>{
 	   	console.log(res);
 	   	if(res['ok']==true){*/
-	   	this.variab.localfeeds.query('feeds/metacategories', {
+	   	
+	   	//}
+		//});
+
+
+	 
+
+	    
+	  }
+
+	  getViewFeeds(category)
+	  {
+	  	 return new Promise(resolve => {
+	  	this.variab.localfeeds.query('feeds/metacategories', {
 	   	    startkey: [category],
 	   	    endkey: [category, {}]
 	   	  }).then(function (result) {
 	   	  console.log("res",result);
-	   	  resolve(result.rows);
+	   	 
+	
+	   	 console.log("As",result);
+	   	 resolve(result);
+	   	  //resolve(result.rows);
 	   	}).catch(function (err) {
-	   	  console.log(err);
+	   	  console.log("kb",err);
 	   	});
-	   	//}
-		//});
-	  });
-
-	    
+	   });
 	  }
 
 	 //Function to get the latest feeds by making a get request to the design view end point

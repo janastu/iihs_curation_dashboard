@@ -1,4 +1,8 @@
 <router-outlet></router-outlet>
+                    
+
+{{this.singlevalue}}
+  
 <div [@routerTransition] class="container-height">
   <!--Page Header-->
     <div class="row">
@@ -16,8 +20,7 @@
                      
                
                         <div class="container">
-                            
-
+        
 <div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <!--Component to display if no view is selected-->
 <ng-container *ngIf = "view === null;then first"></ng-container> 
