@@ -2,6 +2,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
 import { Global } from '../../../shared/global';
 import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
@@ -16,6 +17,7 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateboardcomponentComponent implements OnInit {
   @Input('feeditem') feeditem:any;
+  @Input('index') index:any;
 selectedstar: number;//Status variable to store the status of star icon
 visible:boolean;//variale to store the status to show th create board block
 boardForm:FormGroup;//variable to store the form input
@@ -28,7 +30,7 @@ alertexists:boolean=false;//alert variable to store the status if board already 
 alertempty:boolean=false;//alert variable to store the status if board name is empty
 groupname:any;//variable to store the groupname
 queryString:any;//variable to store the input to find a board name
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public router:Router,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
 
      
  
@@ -209,9 +211,6 @@ queryString:any;//variable to store the input to find a board name
         })
 
       }
-    //})
-
-
     
   }
 
@@ -228,7 +227,10 @@ queryString:any;//variable to store the input to find a board name
            anno.value.modified = this.date.getTime();
            anno.value.hideboardanno = true; 
            this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
-            
+           //console.log("in boards",this.router.url);
+           if(this.router.url.includes('/boardfeeds')){
+             this.variab.boardfeeds.splice(this.index,1);
+           }
       }
     })
     

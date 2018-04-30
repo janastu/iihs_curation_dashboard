@@ -32,8 +32,7 @@ mouseOvered:boolean=false;
     //console.log(this.feedstobechecked);  
 	}  
   onFilterChange(eve: any) {
-    //console.log("eve",this.item);
-    //this.checked.emit(this.item);   
+    this.checked.emit(this.item);   
   }
   //handle event select all
   onSelectAll(eve:any){

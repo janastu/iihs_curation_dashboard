@@ -26,6 +26,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
 selectedAll:any;
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
+checkedtodelete:boolean=false; //state variable to store the status variable of delete button
   constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService) { }
   //On loading Component
   ngOnInit() {
@@ -46,9 +47,11 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
            this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
               //this.handlePublished();
+              console.log(this.variab.boardfeeds);
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
-                  // this.util.sortdescending(res).then(sorted=>{
+                  this.util.sortdescending(res).then(sorted=>{
+
                      //Get the deleted and feeds store and display using feeds variable
                      this.feeds = res;
                    
@@ -69,7 +72,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                    
                  });
                 
-            //  })  
+                 })  
                 
                });
            });
@@ -123,8 +126,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   }
   //Function to handle checked Input values from the child view component
   handleCheckedInput(event){
-    this.checkedfeeds.push(event);
-    //
+    this.checkedtodelete = event.Checked;
   }
   //Function to delete checked feeds
   deleteChecked(){
@@ -149,6 +151,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
       //console.log(this.selectedAll)
       for (var i = 0; i < this.variab.boardfeeds.length; i++) {
         this.feeds[i].Checked = this.selectedAll;
+        this.checkedtodelete = this.selectedAll;
       }
   }
   onpage(){

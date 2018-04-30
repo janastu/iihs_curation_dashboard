@@ -138,7 +138,7 @@ export class FeedService {
 	  		   	    endkey: [category, {}]
 	  		   	  }).then(function (result) {
 	  		   	  console.log("resmeta",result.rows);
-	  		   	 resolve(result);
+	  		   	 resolve(result.rows);
 	  		   	}).catch(function (err) {
 	  		   	  console.log(err);
 	  		   	});

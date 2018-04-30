@@ -23,6 +23,8 @@ feedsnames:any=[];//variable to store the feed names
 followstatus:boolean=false;//boolean variable to store the status of the feed following or not
 alertexists:boolean=false;
 alertempty:boolean=false;
+alertsucess:boolean=false;
+spinnerstate:boolean=false;
 user:any;     //variable to store the username
 queryString:any;//variable to store the input given to find a feed name
 @Input('data') data:any;
@@ -100,7 +102,7 @@ ngOnChanges(){
   //Create a new feed name and add the feed name and metadata to user subscriptions
  createfeed(i){
    var date = new Date();
-   
+   this.spinnerstate=true;
    //Data model of the user subscription
    let doc={
          "feedname":this.feedname.value,
@@ -122,16 +124,17 @@ ngOnChanges(){
         
        this.feedsnames.map(feedname=>{
           if(this.feedname.value === feedname.doc.feedname){
-            //console.log("boardname exists");
+            console.log("boardname exists");
             feednameExists = 1; 
           }
         })
        //Check if feedname already exists in the user subscriptions
        if(feednameExists == 1){
-         console.log("exit");
+         //console.log("exit");
          this.alertexists = true;
          this.ngAlert.type = 'warning';
          setTimeout(() => this.alertexists = false, 2000);
+         this.spinnerstate = false;
        }
        //Add the feed model to the database
        if(feednameExists == 0){
@@ -139,7 +142,10 @@ ngOnChanges(){
          this.feedService.addFeed(doc).then(res=>{
                if(res['ok'] == true){
                  this.variab.categoryfeeds.push({doc:doc}); 
-                
+                 this.alertsucess=true;
+                 this.ngAlert.type = 'success';
+                 setTimeout(() => this.alertexists = false, 2000);
+                 this.spinnerstate = false;
                  this.visible = false;
                  this.followstatus = true;
                  this.alertempty = false;

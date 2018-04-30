@@ -47,7 +47,7 @@ auth:any;//varable to store the auth object
   	    },
   	    metacategories: {
   	      map: function (doc) {
-            console.log("doc in con",doc);
+            //console.log("doc in con",doc);
   	        if (doc.meta && !doc.hidefeed) {
               if(doc.meta.categories[0]!= null){
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
@@ -495,20 +495,39 @@ auth:any;//varable to store the auth object
       views: {
         boards: {
           map: function (doc) {
-            if(doc.label && doc.motivation === 'identifying'){
+            if(doc.label && doc.motivation === 'identifying' && !doc.hidden){
                emit(doc.label,doc);  
            }
           }.toString()
         }
       }
     }
-
-    // save the design doc
-    this.variab.localboards.put(ddoc).catch(function (err) {
-      if (err.name !== 'conflict') {
-        throw err;
-      }
-      // ignore if doc already exists
+    this.getBoardsDesigndoc(ddoc).then(res=>{
+      console.log("boards",res);
+      //resolve(res);
+       if(res['status']==404){
+          // save the design doc
+          console.log(ddoc);
+          this.variab.localboards.put(ddoc).then(result=>{
+            console.log("boa",result);
+            //resolve(result);
+          }).catch(function (err) {
+            //console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+          }); 
+       }
+       else{
+        // save the design doc
+        this.variab.localboards.put(res).catch(function (err) {
+          if (err.name !== 'conflict') {
+            throw err;
+          }
+          // ignore if doc already exists
+        });
+       }
     })
   	//Synch pouchdb with couchdb
   	this.variab.localboards.sync(this.remoteboards, {
@@ -516,12 +535,25 @@ auth:any;//varable to store the auth object
   	  retry:true
   	}).on('change', function (change) {
   	  // yo, something changed!
-  	  console.log("syncchnage",change);
+  	  console.log("syncchnageboards",change);
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
   	})
   }
+  //get annotated feeds design doc update the doc with rev
+  getBoardsDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.variab.localboards.get('_design/board').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         resolve(err);
+       });
+    });
+  }
+
+
   dbsetuparchives(){
     //Create pouchdb instance for boards
     this.variab.localarchives = new PouchDB('archives');

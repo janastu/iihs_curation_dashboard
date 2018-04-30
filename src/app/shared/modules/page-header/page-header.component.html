@@ -1,7 +1,11 @@
  <div class="row">
-    <div class="col-sm-6 page-header"><h2 >{{heading  | capitalize:true}}</h2></div>
+    <div class="col-sm-6 page-header"><h2 >{{heading  | capitalize:true}}
+    <!--<button *ngIf="router.url.includes('/boardfeeds')" class="btn btn-sm btn-success" (click)="onDeleteBoard()">Delete Board</button> -->
+    </h2></div>
+
 </div>
 
+ <ngb-alert *ngIf="alertNavigating" (close)="closeAlert()">Board Deleted Sucessfully and Navigating to Dashboard</ngb-alert>
 <div class="row">
 <!--Date filter form-->
   <div class="col-sm-6 form-item">
@@ -89,7 +93,7 @@
         <!--Team Newsletter
         <button  class="btn nav-item-filters headerview" title="Create Team Newsletter"> <i class="fa fa-fw fa-envelope icon-header" ></i></button>-->
         <!--Refresh button-->
-        <button (click)="refresh()" class="btn nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i>
+        <button *ngIf="router.url.includes('/feeds')" (click)="refresh()" class="btn nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i>
         <!--img src="assets/images/loading.gif"--></button>
       <!--More Options-->         
       <div ngbDropdown class="d-inline-block headerview">

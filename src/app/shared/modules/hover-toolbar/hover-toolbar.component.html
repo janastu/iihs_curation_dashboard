@@ -1,6 +1,6 @@
         
         <div class="ago" *ngIf="!router.url.includes('/mm')">
-            <app-createboardcomponent [feeditem]='feeditem' class="createboard"></app-createboardcomponent>
+            <app-createboardcomponent [feeditem]='feeditem' [index]='index' class="createboard"></app-createboardcomponent>
         
         <a class="nav-item" (click)="readlater(1)">
             <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 

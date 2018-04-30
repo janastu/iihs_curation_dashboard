@@ -84,4 +84,17 @@ export class BoardService {
 		});
 
 	}
+	//Update database for deleted and modidifed
+	updateboard(doc){
+	 return new Promise(resolve=>{
+	 	this.variab.localboards.put(doc).then(function (response) {
+	 	  resolve(response);
+	 	}).catch(function (err) {
+	 	  console.log(err);
+	 	});
+
+	 });	
+	  
+
+	}
 }

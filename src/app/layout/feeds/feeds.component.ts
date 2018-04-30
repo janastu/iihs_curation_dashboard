@@ -17,7 +17,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
   styleUrls: ['./feeds.component.scss'],
   animations: [routerTransition()]
 })
-
+ 
 export class FeedsComponent implements OnInit {
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
@@ -27,91 +27,101 @@ view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
-alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not  
- singlevalue:any=[];
+
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,public userService:Userservice,private route: ActivatedRoute,public util:Utilities) { }
+
   //On loading Component
   ngOnInit() {
-
     this.user =localStorage.getItem('name');
-    
-    //this.usersview = localStorage.getItem('view');
- 
-    this.view = localStorage.getItem('view') || null;
+        
+        //this.usersview = localStorage.getItem('view');
+     
+        this.view = localStorage.getItem('view') || null;
 
 
 
- //Access the query parameter and filter the feeds according to category
-      this.route.queryParams
-            .subscribe(params => {
+     //Access the query parameter and filter the feeds according to category
+          this.route.queryParams
+                .subscribe(params => {
 
-             this.spinnerState=true;//Set spinner 
-             this.feeds.length=0;//Clear the feeds array
-             //this.handleClearDate('reset');//Clear the date form
+                 this.spinnerState=true;//Set spinner 
+                 this.feeds.length=0;//Clear the feeds array
 
-             //To get feeds , filtered according to subcategory 
-             //check if the query parameter has subcatgeory property 
-              if(params.subcategory){
-                this.spinnerState=true;
-              this.pageheading = params.subcategory;
-              console.log("subca",params.subcategory);
-              this.getfeedsOnSubcategory(params.subcategory).then(val=>{
-
-                this.variab.globalfeeds = val;
-                
-                //Reverse the filter to sort according to latest feeds
-                 //this.variab.globalfeeds.reverse();
-                 this.feeds = this.variab.globalfeeds.rows[0].value;
-                 this.singlevalue=this.variab.globalfeeds.rows[0];
-                 console.log("feedstohtml",this.singlevalue);
-                 if(this.feeds){
+                 //this.handleClearDate('reset');//Clear the date form
+                 //To get feeds , filtered according to subcategory 
+                 //check if the query parameter has subcatgeory property 
+                  if(params.subcategory){
+                    this.spinnerState=true;
+                  this.pageheading = params.subcategory;
+                  console.log("subca",params.subcategory);
+                  this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+                    
+                   // console.log("Debuginfeed",val);
+                    //console.log("Debuginfeedvar",this.variab.globalfeeds);
                    
-                   this.spinnerState=false;
-                 }
-                 if(this.feeds.length=0){
-                   this.alertNofeeds=true;
-                 }
-              //Call the checkForDeleted method to check for hidden/removed feeds
-              //and remove those feeds from the display array  
+                    //this.feeds.length=0;
+                    //this.feeds = val;
 
-               /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
-                 this.feeds = res;
-               });  */ 
+                    //console.log("Debuginfeedfedsafter",this.localfeeds);
+                    //this.feeds=this.localfeeds
+                     console.log("Debuginfeedfeds",this.feeds);
+                    //Reverse the filter to sort according to latest feeds
+                     this.variab.globalfeeds=val;
+                     this.variab.globalfeeds.reverse();
+                     this.feeds = this.variab.globalfeeds;
+                     
+                     
+                     if(this.feeds){
+                       
+                       this.spinnerState=false;
+                     }
 
-              });
-              
-            }
-            //To get feeds,filtered according to feedname
-            else{
-              this.spinnerState=true;
-              //this.feeds.length=0;
-             // console.log(this.spinnerState,this.feeds);
-              this.pageheading = params.feedname;
-              this.getfeedsOnFeedname(params.feedname).then(val=>{
-                this.variab.globalfeeds = val;
+                     /*
+                     if(this.localfeeds.length=0){
+                       this.alertNofeeds=true;
+                     }
+                     */
+                  //Call the checkForDeleted method to check for hidden/removed feeds
+                  //and remove those feeds from the display array  
+                   /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
+                     this.feeds = res;
+                   });  */ 
 
-                //Reverse the filter to sort according to latest feeds
-                 this.variab.globalfeeds.reverse();
-              //Call the checkForDeleted method to check for hidden/removed feeds
-              //and remove those feeds from the display array
-                    this.feeds=this.variab.globalfeeds;
-                   // console.log("every",this.feeds);
-                    if(this.variab.globalfeeds){
-                      this.spinnerState=false;
-                    }
-                    else{
-                      this.alertNofeeds=true;
-                    }
-                  /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
-                    this.feeds=res;
-                  }); */ 
+                  });
+                  
+                }
+                //To get feeds,filtered according to feedname
+                else{
+                  
+                  this.spinnerState=true;
+                  //this.feeds.length=0;
+                 // console.log(this.spinnerState,this.feeds);
+                  this.pageheading = params.feedname;
+                  this.getfeedsOnFeedname(params.feedname).then(val=>{
+                    this.variab.globalfeeds = val;
 
-              });
-            }
+                    //Reverse the filter to sort according to latest feeds
+                     this.variab.globalfeeds.reverse();
+                  //Call the checkForDeleted method to check for hidden/removed feeds
+                  //and remove those feeds from the display array
+                        this.feeds=this.variab.globalfeeds;
+                       // console.log("every",this.feeds);
+                        if(this.variab.globalfeeds){
+                          this.spinnerState=false;
+                        }
+                        
+                      /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
+                        this.feeds=res;
+                      }); */
 
-     });
-   
-  }
+                  });
+
+                }
+
+         });
+
+      }
+
   //Get feeds filtered on feedname
   getfeedsOnFeedname(feedname){
     var feedsOnFeedname:any=[];
@@ -128,9 +138,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
            else{
              feedsOnFeedname = res;
              resolve(feedsOnFeedname);
-             /*this.feedService.replicatefeedsdb(feedname).then(repres=>{
-               resolve(repres);
-             })*/
+             this.feedService.replicatefeedsdb(feedname);
            }
          
                        
@@ -156,9 +164,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
          }
          else{
            //Store the result in the global variable globalfeeds
-           console.log("newinesle",res);
+           //console.log("newinesle",res);
            feedsOnSubcategory = res;
-         console.log("newinesle",feedsOnSubcategory.rows);
+        
            
            resolve(feedsOnSubcategory);
          }
@@ -213,15 +221,28 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   handleRefresh(childrefresh:any){
     this.userService.pullnewFeeds().then(res=>{
      });
-      if(childrefresh == 'refresh'){
-        this.ngOnInit();
-      }
+    this.getfeedsOnFeedname(childrefresh).then(val=>{
+      this.variab.globalfeeds = val;
+
+      //Reverse the filter to sort according to latest feeds
+       this.variab.globalfeeds.reverse();
+    //Call the checkForDeleted method to check for hidden/removed feeds
+    //and remove those feeds from the display array
+          this.feeds=this.variab.globalfeeds;
+         // console.log("every",this.feeds);
+          if(this.variab.globalfeeds){
+            this.spinnerState=false;
+          }
+          
+        /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
+          this.feeds=res;
+        }); */
+
+    });
 
   }
-  //Function to close alerts
-  public closeAlert() {
-      this.alertNofeeds=false;
-  }
+  
+ 
   onpage(){
     window.scroll(0,0);
   }

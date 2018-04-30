@@ -34,12 +34,13 @@
 
           <div *ngIf="visible" class="form-group savetoboard">
           <ngb-alert *ngIf="alertexists" (close)="closeAlert()">Feedname already Exists</ngb-alert>
-           <ngb-alert *ngIf="alertempty" (close)="closeAlert()">Feedname Cannot be Empty</ngb-alert>
+          <ngb-alert *ngIf="alertempty" (close)="closeAlert()">Feedname Cannot be Empty</ngb-alert>
+          <ngb-alert *ngIf="alertsucess" (close)="closeAlert()">Feed Added sucessfuly</ngb-alert>
             <form [formGroup]="feedForm" class="form-inline form-group create-feed">
               <input class="form-control mr-sm-2" type="text" formControlName="feedname" placeholder="Enter Feed Name">
             </form>
 
-            
+             <img class="create-feed-spinner" *ngIf="spinnerstate" src="assets/images/loading_spinner.gif">
             <div class="create-feed-buttons">
               <button (click)="createfeed()" class="btn btn-sm btn-success">Create a Feed</button>
               <button (click)="cancelfeed()" class="btn btn-sm btn-success">Cancel</button>

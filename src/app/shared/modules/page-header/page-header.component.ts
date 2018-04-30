@@ -2,8 +2,10 @@ import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../../services/feed-service';
+import { BoardService } from '../../../services/board-service';
 import { Global } from '../../global';
 import { Router } from '@angular/router';
+import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-page-header',
     templateUrl: './page-header.component.html',
@@ -31,12 +33,13 @@ desc:any;
 checkView:any;
 loading: boolean = false;
 currDate = new Date();
-
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,public router:Router) { }
+user:any;//variable to store the username of loggied in user
+alertNavigating:boolean=false;
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,public router:Router,public boardService:BoardService,public ngAlert:NgbAlertConfig) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');
-    console.log("cehc",this.checkView);
+     this.user = localStorage.getItem('name');
     this.loginForm = this.formBuilder.group({
 
       fromdate: this.fromdate,
@@ -111,7 +114,7 @@ currDate = new Date();
  //function to reload the page
  refresh(): void{
   
-    this.Refresh.emit('refresh');
+    this.Refresh.emit(this.heading);
 
    //this.service.getrecentfeeds()
    //$route.reload();
@@ -130,6 +133,21 @@ currDate = new Date();
  onChooseBoard(board){
    this.router.navigate(['/publish', board])
    
+ }
+ onDeleteBoard(){
+   this.variab.boardupdated.map(boardname=>{
+     if(boardname.key === this.heading){
+       boardname.value.hidden = {'hidefeed':true,'hiddenby':this.user};
+       this.boardService.updateboard(boardname.value).then(res=>{
+         if(res['ok'] == true){
+           this.alertNavigating=true;
+           setTimeout(() => this.alertNavigating = false, 5000);
+           //console.log(this.alertNavigating);
+           this.router.navigate(['/dashboard']);
+         }
+       })
+      }
+   })
  }
 
 }

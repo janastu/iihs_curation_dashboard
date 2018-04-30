@@ -3,7 +3,7 @@
   <!--Page Header-->
     <div class="row">
         <div class="col-sm-9 offset-sm-3">
-            <app-page-header [heading]="boardname | capitalize:true" (childView)='handleView($event)' (childDates)='handleDate($event)' (childSortLabel)='handleSort($event)' (clearDates)='handleClearDate($event)'></app-page-header>
+            <app-page-header [heading]="boardname" (childView)='handleView($event)' (childDates)='handleDate($event)' (childSortLabel)='handleSort($event)' (clearDates)='handleClearDate($event)'></app-page-header>
         </div>
     </div>
     <div class="row centered">
@@ -11,7 +11,7 @@
                 <div class="mb-3">
                          
                             <div class="container">
-       <button  class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button> 
+    <button *ngIf="checkedtodelete" class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button> 
      <div class="col-sm-6 offset-sm-2 all-checkbox">
        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
        (change)="onSelectAll()"/>                       

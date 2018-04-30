@@ -97,6 +97,11 @@ $saveboardbackground:#fff;
 .create-feed-buttons button{
     margin-left: 15px;
 }
+.create-feed-spinner{
+    max-width:25%;
+    max-height:25%;
+    margin-left:3rem;
+}
 /*hover style*/
 .follow:hover{
     transform: translateY(-1px);
