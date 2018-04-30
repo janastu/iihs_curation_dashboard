@@ -8,6 +8,7 @@ import { Global } from '../../shared/global';//Import Global to use global varia
 import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../services/feed-service';//Import feed service to get feeds
+import { Userservice } from '../../services/userservice';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
   
@@ -28,7 +29,7 @@ user:any;     //variable to store the username
 alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not  
  singlevalue:any=[];
-  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,private route: ActivatedRoute,public util:Utilities) { }
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,public userService:Userservice,private route: ActivatedRoute,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
 
@@ -90,7 +91,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                 this.variab.globalfeeds = val;
 
                 //Reverse the filter to sort according to latest feeds
-                 //this.variab.globalfeeds.reverse();
+                 this.variab.globalfeeds.reverse();
               //Call the checkForDeleted method to check for hidden/removed feeds
               //and remove those feeds from the display array
                     this.feeds=this.variab.globalfeeds;
@@ -127,9 +128,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
            else{
              feedsOnFeedname = res;
              resolve(feedsOnFeedname);
-             this.feedService.replicatefeedsdb(feedname).then(repres=>{
+             /*this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
-             })
+             })*/
            }
          
                        
@@ -210,9 +211,12 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    if(childrefresh == 'refresh'){
-      this.ngOnInit();
-    }
+    this.userService.pullnewFeeds().then(res=>{
+     });
+      if(childrefresh == 'refresh'){
+        this.ngOnInit();
+      }
+
   }
   //Function to close alerts
   public closeAlert() {
