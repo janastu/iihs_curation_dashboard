@@ -26,7 +26,7 @@
                         </div>
                         <div *ngIf=!publishedfeeds[index]>
                           <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
-                          (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title"/>
+                          (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title" [checked]="item.Checked"/>
                         </div>
                     </div>
                      

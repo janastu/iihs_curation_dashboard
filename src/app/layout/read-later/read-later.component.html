@@ -13,7 +13,7 @@
                             <div class="container">
                                 
 
-    <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};let i=index;">
+    <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i;">
     <!--Component to display if no view is selected-->
     <div *ngIf = "view === null"> 
       <app-magazineview [feeds]='feed' [index]='i'></app-magazineview>
@@ -31,12 +31,7 @@
     <div *ngIf = "view === 'Article'" > 
       <app-articleview [feeds]='feed' [index]='i'></app-articleview>
     </div>
-    <!--Component to display if Card view is selected-->
-    <span *ngIf = "view === 'Card'" class="card-parent"> 
-
-      <app-card-view [feeds]='feed' [index]='i'></app-card-view>
-
-    </span>
+    
     <!--Component to display if Title view is selected-->
     <div *ngIf = "view === 'Title'"> 
     <div class="container">
@@ -45,6 +40,12 @@
 
     </div>
     </div>
+    <!--Component to display if Card view is selected-->
+    <span *ngIf = "view === 'Card'" class="card-parent"> 
+
+      <app-card-view [feeds]='feeds' [index]='i'></app-card-view>
+
+    </span>
                         </div>
                       </div>
                    </div>
@@ -58,7 +59,7 @@
 <div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
   <h3>Sorry No feeds in Readlater</h3>
 </div>
-<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0 && view !== 'Card'">
+<div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
 </div> 
 </div>  

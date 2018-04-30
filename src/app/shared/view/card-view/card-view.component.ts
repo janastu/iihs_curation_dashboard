@@ -17,8 +17,9 @@ p:any; //variable to store the current page nuber
   constructor(public html : HtmlParser) { }
 
   ngOnInit() {
-  
+  	//console.log("iye",this.item);
   }
-
-
+  onpage(){
+    window.scroll(0,0);
+  }
 }

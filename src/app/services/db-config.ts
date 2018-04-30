@@ -32,7 +32,7 @@ auth:any;//varable to store the auth object
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
   		    auth:this.auth
   	});
-     console.log(this.auth);
+    // console.log(this.auth);
   	//create design docs
   	var ddoc = {
   	  _id: '_design/feeds',
@@ -49,7 +49,9 @@ auth:any;//varable to store the auth object
   	      map: function (doc) {
             console.log("doc in con",doc);
   	        if (doc.meta && !doc.hidefeed) {
+              if(doc.meta.categories[0]!= null){
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
+              }
   	        }
   	      }.toString()
   	    },

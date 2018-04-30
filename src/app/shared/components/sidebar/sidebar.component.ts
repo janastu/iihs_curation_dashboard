@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit{
     isActive = false;
     showMenu = '';
     selected:any;
+    selectedlevel:any;
     groups:any=[];
     showGroups:any;
     archivesurl:any;
@@ -52,6 +53,12 @@ export class SidebarComponent implements OnInit{
      isactive(item){
        return this.selected === item;
      }
+     selectlevel(item){
+          this.selectedlevel = (this.selectedlevel === item ? null : item);
+       }
+       isactivelevel(item){
+         return this.selectedlevel === item;
+       }
 
 
     
@@ -195,6 +202,9 @@ export class SidebarComponent implements OnInit{
     this.showGroups=false;
    this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
    
+  }
+  openarchives(){
+    window.open('#/mm/archives');
   }
     
     

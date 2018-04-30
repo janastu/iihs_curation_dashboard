@@ -12,13 +12,13 @@
         
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" placeholder="Username" formControlName="username" id="username" name="username">
+                        <input #user type="text" ng-model="name" class="form-control input-underline input-lg" placeholder="Username" formControlName="username" id="username" name="username">
                         <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched" 
                                   class="help-block"> Please enter user name</span>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg"  placeholder="Password" formControlName="password" id="password" name="password">
+                        <input #password type="password" class="form-control input-underline input-lg"  placeholder="Password" formControlName="password" id="password" name="password">
                         <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="help-block"> Please enter password</span>
                     </div>
                 </div>
@@ -30,9 +30,9 @@
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
                 &nbsp;
-         
+        
 
-                 <a [routerLink]="['/forgetpassword']" class="btn btn-link forgetpassword">Forgot Password??</a>
+                 <a [routerLink]="['/forgetpassword']" class="btn btn-link forgetpassword">Forgot Password?</a>
 
             </form>
         </div>

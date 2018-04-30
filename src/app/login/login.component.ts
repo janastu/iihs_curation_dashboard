@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { FormBuilder,Validators, FormGroup, FormControl} from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
@@ -6,6 +6,8 @@ import { Userservice } from '../services/userservice';
 import { GroupService } from '../services/group-service';
 import { Global } from '../shared';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -13,8 +15,10 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
     animations: [routerTransition()],
     providers: [NgbAlertConfig]
 })
+ 
 export class LoginComponent implements OnInit {
-
+@ViewChild('user') user: ElementRef;
+@ViewChild('password') pwd: ElementRef;
     loginForm:FormGroup;
     username=this.formBuilder.control('', /*[Validators.required]*/);
     password=this.formBuilder.control('',/* [Validators.required]*/);
@@ -24,6 +28,7 @@ export class LoginComponent implements OnInit {
     errormessage:any;
     showDialog:boolean;
     groups:any=[];
+    
 
     constructor(public router: Router,public route:ActivatedRoute,public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global,public groupService:GroupService) {
               
@@ -31,8 +36,8 @@ export class LoginComponent implements OnInit {
             }
 
     ngOnInit() {
-        
-
+      this.user.nativeElement.focus();
+      this.pwd.nativeElement.focus();
         this.loginForm = new FormGroup({
             'username': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'password': new FormControl(null, [Validators.required])
@@ -89,6 +94,7 @@ export class LoginComponent implements OnInit {
                 this.alertsuccess=true;
                 this.ngAlert.type = 'success';
                 setTimeout(() => this.alertsuccess = false, 2000);
+                Cookie.set('isLoggedin', 'true');
                localStorage.setItem('isLoggedin', 'true');
                localStorage.setItem('name', this.loginForm.controls['username'].value);
                //check if member is partof any group or groups

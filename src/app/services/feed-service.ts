@@ -142,51 +142,7 @@ export class FeedService {
 	  		   	}).catch(function (err) {
 	  		   	  console.log(err);
 	  		   	});
-	  		   	/*this.http.get(check).map(res=>res.json()).subscribe(result=> {
-	  		   	  console.log(result)
-	  		   	 resolve(result.rows);
-	  		   	}, (err) =>{
-	  		   	  console.log(err);
-	  		   	});*/
-	  		   
-	  		   
-	  		  });
-
-	   	 
-	  
-	   	/*this.remote.replicate.to(this.localdb, {
-	   	   filter: '_view',
-	   	   view: 'feeds/metacategories'
-	   	 }).then(res=>{
-	   	console.log(res);
-	   	if(res['ok']==true){*/
-	   	
-	   	//}
-		//});
-
-
-	 
-
-	    
-	  }
-
-	  getViewFeeds(category)
-	  {
-	  	 return new Promise(resolve => {
-	  	this.variab.localfeeds.query('feeds/metacategories', {
-	   	    startkey: [category],
-	   	    endkey: [category, {}]
-	   	  }).then(function (result) {
-	   	  console.log("res",result);
-	   	 
-	
-	   	 console.log("As",result);
-	   	 resolve(result);
-	   	  //resolve(result.rows);
-	   	}).catch(function (err) {
-	   	  console.log("kb",err);
-	   	});
-	   });
+	  });
 	  }
 
 	 //Function to get the latest feeds by making a get request to the design view end point
@@ -198,6 +154,7 @@ export class FeedService {
 			    startkey: [category],
 			    endkey: [category, {}]
 			  }).then(function (result) {
+			  		console.log("resfeeds",result);
 			 		resolve(result.rows);
 			   }).catch(function (err) {
 			  		console.log(err);
@@ -233,7 +190,7 @@ export class FeedService {
 		        startkey: [category],
 		        endkey: [category, {}]
 		      }).then(function (result) {
-		      //console.log("res",result);
+		      console.log("res",result);
 		      resolve(result.rows);
 		    }).catch(function (err) {
 		      console.log(err);

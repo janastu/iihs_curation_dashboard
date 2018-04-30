@@ -49,11 +49,7 @@
   </div>
 </div>
 <!--Component to display if Card view is selected-->
-<div *ngIf = "view === 'Card'"> 
-  <div *ngIf="publishedfeeds.length>0">
-    <app-card-view [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'></app-card-view>
-  </div>  
-</div>
+
 <!--Component to display if Title view is selected-->
 <div *ngIf = "view === 'Title'"> 
 <div class="container" *ngIf="publishedfeeds.length>0">
@@ -61,6 +57,11 @@
 </div>                
 </div>
 
+</div>
+<div *ngIf = "view === 'Card'"> 
+  <div *ngIf="publishedfeeds.length>0">
+    <app-card-view [feeds]='feeds' [index]='i' [publishedfeeds]='publishedfeeds'></app-card-view>
+  </div>  
 </div>
  
                     </div>
@@ -83,7 +84,7 @@
 <div  class= "col-sm-6 offset-sm-3" *ngIf="alertNofeeds">
   <h3>Sorry No feeds to publish</h3>
 </div>
-<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0 && view !== 'Card'">
+<div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
 </div> 
 </div>  

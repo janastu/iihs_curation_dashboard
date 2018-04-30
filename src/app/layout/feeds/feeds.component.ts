@@ -57,14 +57,14 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               this.getfeedsOnSubcategory(params.subcategory).then(val=>{
 
                 this.variab.globalfeeds = val;
-
+                
                 //Reverse the filter to sort according to latest feeds
                  //this.variab.globalfeeds.reverse();
                  this.feeds = this.variab.globalfeeds.rows[0].value;
                  this.singlevalue=this.variab.globalfeeds.rows[0];
                  console.log("feedstohtml",this.singlevalue);
                  if(this.feeds){
-                   //console.log("cat",this.feeds);
+                   
                    this.spinnerState=false;
                  }
                  if(this.feeds.length=0){
@@ -88,6 +88,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
               this.pageheading = params.feedname;
               this.getfeedsOnFeedname(params.feedname).then(val=>{
                 this.variab.globalfeeds = val;
+
                 //Reverse the filter to sort according to latest feeds
                  //this.variab.globalfeeds.reverse();
               //Call the checkForDeleted method to check for hidden/removed feeds
@@ -126,9 +127,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
            else{
              feedsOnFeedname = res;
              resolve(feedsOnFeedname);
-             this.feedService.replicatefeedsdb(feedname).then(repres=>{
+             /*this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
-             })
+             })*/
            }
          
                        
@@ -215,6 +216,9 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   //Function to close alerts
   public closeAlert() {
       this.alertNofeeds=false;
+  }
+  onpage(){
+    window.scroll(0,0);
   }
    
 
