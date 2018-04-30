@@ -32,7 +32,7 @@ checkView:any;
 loading: boolean = false;
 currDate = new Date();
 
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public service:FeedService,public router:Router) { }
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,public router:Router) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');
@@ -110,17 +110,8 @@ currDate = new Date();
 
  //function to reload the page
  refresh(): void{
-   var recentdocs:any=[];
-   var refreshedDocs:any=[];
-   console.log("called");
-    this.loading = true;
-    this.service.getrecentfeeds().then(res=>{
-      recentdocs=res;
-        recentdocs.map(val=>{
-          refreshedDocs.push({value:val});
-          this.Refresh.emit(refreshedDocs);
-        });  
-      });
+  
+    this.Refresh.emit('refresh');
 
    //this.service.getrecentfeeds()
    //$route.reload();

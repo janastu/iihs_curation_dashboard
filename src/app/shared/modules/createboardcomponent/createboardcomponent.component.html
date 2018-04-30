@@ -8,7 +8,7 @@
       <form class="form-inline form-group">
         <input class="form-control mr-sm-2" type="text" id="search" placeholder="Find a board" [(ngModel)]="queryString" name="query">
       </form>
-      <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString | slice:0:5;let i=index;">
+      <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString | slice:0:5;index as i">
       
         <div class="board-item">
           <!--Star icon on board name which will toggle if the feed is annotated to a paricular board-->

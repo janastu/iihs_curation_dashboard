@@ -136,9 +136,9 @@ localfeeds:any=[];
            else{
              feedsOnFeedname = res;
              resolve(feedsOnFeedname);
-             /*this.feedService.replicatefeedsdb(feedname).then(repres=>{
+             this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
-             })*/
+             })
            }
          
                        
@@ -219,8 +219,9 @@ localfeeds:any=[];
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.pageheading = 'Recent feeds'
-    this.feeds = childrefresh;
+    if(childrefresh == 'refresh'){
+      this.ngOnInit();
+    }
   }
   
  
