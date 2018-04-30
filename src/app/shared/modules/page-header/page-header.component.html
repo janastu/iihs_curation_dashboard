@@ -1,6 +1,6 @@
- <div class="row">
+   <div class="row">
     <div class="col-sm-6 page-header"><h2 >{{heading  | capitalize:true}}
-    <!--<button *ngIf="router.url.includes('/boardfeeds')" class="btn btn-sm btn-success" (click)="onDeleteBoard()">Delete Board</button> -->
+    <button *ngIf="router.url.includes('/boardfeeds')" class="btn btn-sm btn-success" (click)="showDialog = !showDialog">Delete Board</button> 
     </h2></div>
 
 </div>
@@ -75,7 +75,7 @@
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width-share">  
             <fieldset class="form-group field" *ngFor="let item of variab.boardupdated">
               <div class="radio">
-                <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.key)"> {{item.key}}
+                <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.value)"> {{item.key}}
                 </label>
               </div>
             </fieldset>
@@ -124,4 +124,12 @@
   </div>
     
 </div>
+ <app-dialog class="alert-dialogbox" [visible]="showDialog">
+            <h3>Do you confirm to delete the board</h3>
+            <div class="dialog-buttons">
+                <button (click)="showDialog = !showDialog" class="btn btn-sm btn-success">Cancel</button>
+                <button (click)="onDeleteBoard()" class="btn btn-sm btn-success dialog-ok">Ok</button>
+            </div>
+            <ngb-alert *ngIf="alertremove" (close)="closeAlert()">Cannot remove from trashbox</ngb-alert>
+  </app-dialog>
 

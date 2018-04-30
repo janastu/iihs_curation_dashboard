@@ -87,3 +87,8 @@ $saveboardbackground:#fff;
 .dropdown-toggle::after {
    display:none ! important;
 }
+/*scroll*/
+.scroll{
+    max-height:300px;
+    overflow-y:scroll;
+}

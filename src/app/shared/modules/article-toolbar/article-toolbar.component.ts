@@ -71,7 +71,7 @@ alertremove:boolean=false;
             var annosForBoards = this.variab.boardupdated.map( (board, index) => {
                //console.log("anoo",board,annotatedarray)
                return  _.filter(annotatedarray,function(o) { 
-                 if(o.key===board.value.label){
+                 if(o.key===board.value._id){
                  return o  ; 
                }
                });
@@ -133,7 +133,7 @@ alertremove:boolean=false;
         "generated": this.date.getTime(),
         "target": this.feeditem,
         "motivation":"tagging",
-        "label":[title.label]
+        "label":[title._id]
       }
       this.createboardstore.dispatch('ADD_ITEMS',update);
     
@@ -185,7 +185,9 @@ alertremove:boolean=false;
             console.log("add");
             this.boardservice.addboard(model).then(res=>{
                   if(res['ok'] == true){
-                    this.variab.boardupdated.push({value:model});  
+                    this.boardservice.getboards().then(val=>{
+                      this.variab.boardupdated = val;
+                    })  
                     this.visible=false; 
                     this.alertempty = false;
                     this.alertexists = false;

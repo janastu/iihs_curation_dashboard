@@ -6,7 +6,7 @@ import { PageHeaderComponent } from './page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ModalModule } from '../modal/modal.module'
 import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
-
+import { DialogComponentModule } from '../dialog-component/dialog-component.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -15,7 +15,8 @@ import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
         FormsModule,
         ReactiveFormsModule,
         ModalModule,
-        SharedPipesModule
+        SharedPipesModule,
+        DialogComponentModule
     ],
     declarations: [PageHeaderComponent],
     exports: [PageHeaderComponent]

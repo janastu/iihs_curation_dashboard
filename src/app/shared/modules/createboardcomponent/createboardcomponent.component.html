@@ -6,9 +6,12 @@
   <!--Display list of boards to save to a board-->
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group create-board">
       <form class="form-inline form-group">
-        <input class="form-control mr-sm-2" type="text" id="search" placeholder="Find a board" [(ngModel)]="queryString" name="query">
+        <input class="form-control mr-sm-2" type="text" id="search" placeholder="Find a board" [(ngModel)]="queryString" name="query" autocomplete="off">
       </form>
-      <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString | slice:0:5;index as i">
+      <div class="scroll">
+        
+      
+      <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;index as i">
       
         <div class="board-item">
           <!--Star icon on board name which will toggle if the feed is annotated to a paricular board-->
@@ -22,6 +25,7 @@
          </div>
       
       </div>
+    </div>
       <!-- button to toogle create new board block-->
       <div class="border-board" >
         <a (click)="opencreateboard()"><i class="fa fa-fw fa-plus"></i>Create a Board</a>

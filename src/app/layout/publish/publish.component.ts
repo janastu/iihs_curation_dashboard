@@ -62,9 +62,9 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 
 
  //Access the query parameter and filter the feeds according to category
-      this.route.params
+      this.route.queryParams
             .subscribe(params => {
-             //console.log("para",params);
+             //console.log("paraparams);
            //get the board feeds
            this.boardname=params.id;
            this.dataservice.getboardfeeds(params.id).then(res=>{
@@ -75,10 +75,6 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
              this.feeds = res;
                if(this.feeds){
                  this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
-               }
-               this.alertNofeeds=false;//set alertnofeeds value to false
-               if(this.feeds.length==0){
-                 this.alertNofeeds=true;
                }
              
              this.util.checkForPublished(res,params.id).then(res=>{

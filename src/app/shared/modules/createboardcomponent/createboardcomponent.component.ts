@@ -85,8 +85,8 @@ queryString:any;//variable to store the input to find a board name
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
             
             return  _.filter(annotatedarray,function(o) { 
-             //console.log(o.key,board.value.label);
-              if(o.key===board.value.label){
+             //console.log(o.key,board.value._id);
+              if(o.key===board.value._id){
                 //console.log(o);
               return o  ; 
             }
@@ -142,7 +142,7 @@ queryString:any;//variable to store the input to find a board name
         "generated": this.date.getTime(),
         "target": this.feeditem,
         "motivation":"tagging",
-        "label":[title.label]
+        "label":[title._id]
       }
       this.createboardstore.dispatch('ADD_ITEMS',update);
     
@@ -201,7 +201,10 @@ queryString:any;//variable to store the input to find a board name
         this.boardservice.addboard(model).then(res=>{
           //console.log("ew",res);
               if(res['ok'] == true){
-                this.variab.boardupdated.push({value:model});
+                this.boardservice.getboards().then(res=>{
+                  this.variab.boardupdated = res;
+                })
+                
                 this.visible=false;
                 this.alertempty = false;
                 this.alertexists = false;

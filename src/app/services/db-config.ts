@@ -76,6 +76,7 @@ auth:any;//varable to store the auth object
                 }
               }.toString(),
             metacategories: function (doc,req) {
+
                 if (doc.meta.categories[0]==req.query.category) {
 
                   return doc;

@@ -33,21 +33,24 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
     //Get the user name from local storage and store in a local variable
     this.user =localStorage.getItem('name');
     this.view = localStorage.getItem('view');
-     
+     this.route.params
+          .subscribe(params => {
+            this.boardname = params.id;
+            //console.log(params);
+     })  
     //Get the boardname from query parameters
-    this.route.params
+    this.route.queryParams
          .subscribe(params => {
 
-           this.boardname = params.id;
-
+           
              this.feeds.length=0;//Clear the feeds array 
 
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
-           this.dataService.getboardfeeds(params.id).then(res=>{
+              this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
               //this.handlePublished();
-              console.log(this.variab.boardfeeds);
+              //console.log(this.variab.boardfeeds);
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
                   this.util.sortdescending(res).then(sorted=>{

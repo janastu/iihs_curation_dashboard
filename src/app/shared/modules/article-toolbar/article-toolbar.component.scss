@@ -12,8 +12,10 @@ $saveboardbackground:#fff;
     margin-left: 2px;
 
 }
+.color-button{
+    color:black;
+}
 .article-tool-bar a{
-    color: $articletoolbarcolor;
     margin-left: 10px;
 }
 
@@ -224,4 +226,9 @@ $saveboardbackground:#fff;
     margin-left: 17.5rem
 }
 
+}
+/*scroll*/
+.scroll{
+    max-height:300px;
+    overflow-y:scroll;
 }

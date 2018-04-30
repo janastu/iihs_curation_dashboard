@@ -38,7 +38,8 @@
                <div class="feed-entry" *ngIf="item.value.description != null">
                <div *ngIf="router.url.includes('/publish')">
                   <div *ngIf=publishedfeeds[index] class="publish_checkbox" >
-                      Published
+                    Published
+                     <!-- <img src="/assets/images/published.png">-->
                    </div>
                    <div *ngIf=!publishedfeeds[index]>
                      <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked" [checked]="item.Checked"/>

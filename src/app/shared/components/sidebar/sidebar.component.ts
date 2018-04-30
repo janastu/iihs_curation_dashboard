@@ -126,7 +126,7 @@ export class SidebarComponent implements OnInit{
     }
     getBoardsOngroups(){
       this.boardservice.getboards().then(res=>{
-
+        console.log(res);
         this.variab.boardupdated = res;
        // console.log("boards",this.variab.boardupdated)
        /* boardsOnGroup.push(res);
@@ -191,9 +191,9 @@ export class SidebarComponent implements OnInit{
              this.componentsService.alertboards(board,res); 
   
      });*/
-       //console.log(this.variab.groupname);
+      console.log(board);
         //this.router.navigate(['/boardfeeds', this.variab.groupname],{queryParams:{boardname:board}});
-        this.router.navigate(['/boardfeeds', board],{queryParams:{memberof:this.groupname}})
+        this.router.navigate(['/boardfeeds', board.label],{queryParams:{id:board._id,memberof:this.groupname}})
 
     }
     //On choosing a group

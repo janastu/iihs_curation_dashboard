@@ -41,8 +41,6 @@ export class BoardService {
 	//Api service to get boards from pouchdb
 	getboards(){
 
-
-
 	return new Promise(resolve => {
 	  this.variab.localboards.query('board/boards', {
 	     

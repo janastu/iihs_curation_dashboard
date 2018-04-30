@@ -154,7 +154,7 @@ export class FeedService {
 			    startkey: [category],
 			    endkey: [category, {}]
 			  }).then(function (result) {
-			  		console.log("resfeeds",result);
+			  		//console.log("resfeeds",result);
 			 		resolve(result.rows);
 			   }).catch(function (err) {
 			  		console.log(err);
@@ -176,7 +176,7 @@ export class FeedService {
 		 return new Promise(resolve=>{	
 		this.remotefeeds.replicate.to(this.variab.localfeeds, {
 
-			batch_size:10,
+			batch_size:5,
 		  batches_limit:5,
 		  filter: 'feedsfilter/latestoldestcategory',
 		  query_params: {category: category}
@@ -184,7 +184,7 @@ export class FeedService {
 		  
 		}).then((change)=> {
 		  // yo, something changed!
-		  console.log("syncchnagefeeds",change);
+		  //console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
 		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
 		        startkey: [category],
@@ -202,25 +202,26 @@ export class FeedService {
 	}
 	//Replicate db feeds
 	replicatemetafeedsdb(category){
+		//console.log("thisis called",category);
 	  return new Promise(resolve=>{	
 		this.remotefeeds.replicate.to(this.variab.localfeeds, {
-			batch_size:10,batches_limit:5,
+			batch_size:5,batches_limit:5,
 		  filter: 'feedsfilter/metacategories',
 		  query_params: {category: category},
 
 		  
 		}).then((change)=> {
 		  // yo, something changed!
-		  console.log("syncchnagefeeds",change);
+		 // console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
 		    this.variab.localfeeds.query('feeds/metacategories', {
 		      startkey: [category],
 		      endkey: [category, {}]
 		    }).then(function (result) {
-		   		console.log("res",result);
+		   		//console.log("res",result);
 		    	resolve(result.rows);
 		  	}).catch(function (err) {
-		    console.log(err);
+		    //console.log(err);
 		  	});
 		  }
 		});
@@ -247,7 +248,7 @@ export class FeedService {
 	       var recentDocs = _.compact(changesdoc)
 	       resolve(recentDocs);
 	     }, (err) =>{
-	       console.log(err);
+	       //console.log(err);
 	     });
 	   });
 

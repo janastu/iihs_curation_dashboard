@@ -34,6 +34,7 @@ checkView:any;
 loading: boolean = false;
 currDate = new Date();
 user:any;//variable to store the username of loggied in user
+showDialog:boolean;//variable to store the status to show the dialog component when hide is called
 alertNavigating:boolean=false;
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,public router:Router,public boardService:BoardService,public ngAlert:NgbAlertConfig) { }
 
@@ -131,7 +132,7 @@ alertNavigating:boolean=false;
  }
  //Function on choosing a board
  onChooseBoard(board){
-   this.router.navigate(['/publish', board])
+   this.router.navigate(['/publish',board.label],{queryParams:{id:board._id}})
    
  }
  onDeleteBoard(){

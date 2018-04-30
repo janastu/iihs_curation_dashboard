@@ -53,18 +53,14 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                   if(params.subcategory){
                     this.spinnerState=true;
                   this.pageheading = params.subcategory;
-                  console.log("subca",params.subcategory);
-                  this.getfeedsOnSubcategory(params.subcategory).then(val=>{
-                    
-                   // console.log("Debuginfeed",val);
-                    //console.log("Debuginfeedvar",this.variab.globalfeeds);
-                   
-                    //this.feeds.length=0;
-                    //this.feeds = val;
+                  //console.log("subca",params.feedname);
+                  //console.log("ca",params.subcategory);
+                  this.getfeedsOnSubcategory(params.subcategory,params.feedname).then(val=>{
+
 
                     //console.log("Debuginfeedfedsafter",this.localfeeds);
                     //this.feeds=this.localfeeds
-                     console.log("Debuginfeedfeds",this.feeds);
+                     //console.log("Debuginfeedfeds",this.feeds);
                     //Reverse the filter to sort according to latest feeds
                      this.variab.globalfeeds=val;
                      this.variab.globalfeeds.reverse();
@@ -124,20 +120,22 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   //Get feeds filtered on feedname
   getfeedsOnFeedname(feedname){
-    var feedsOnFeedname:any=[];
+   
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
 
       this.feedService.getlatestfeeds(feedname).then(res=>{
            //console.log(res);
            if(res['length'] == 0){
+             //console.log('working in replicate');
              this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
              })
            }
            else{
-             feedsOnFeedname = res;
-             resolve(feedsOnFeedname);
+             //console.log('not working replicate');
+             //feedsOnFeedname = ;
+             resolve(res);
              this.feedService.replicatefeedsdb(feedname);
            }
          
@@ -149,31 +147,50 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   }
   //Get feeds filtered on subcategory
-  getfeedsOnSubcategory(subcategory){
-     var feedsOnSubcategory:any=[];
-    return new Promise(resolve=>{
+  getfeedsOnSubcategory(subcategory,feedname){
+    
+        return new Promise(resolve=>{
+        //Call the feed service to get the feeds filtered according to subcategory
+          this.feedService.getmetacategories(subcategory).then(res=>{
+          //console.log("sis",res);
 
-    //Call the feed service to get the feeds filtered according to subcategory
-      this.feedService.getmetacategories(subcategory).then(res=>{
-      console.log("sis",res);
-         if(res['length'] == 0){
-           this.feedService.replicatemetafeedsdb(subcategory).then(repres=>{
+             if(res['length'] == 0){
+               this.getfeedsOnFeedname(feedname).then(val=>{
+                 resolve(val);
+               })
 
-             resolve(repres);
-           })
-         }
-         else{
-           //Store the result in the global variable globalfeeds
-           //console.log("newinesle",res);
-           feedsOnSubcategory = res;
-        
+             }
+
+               /*
+               this.feedService.getlatestfeeds(feedname).then(resmain=>{
+                              
+                    console.log("sf",resmain);
+                    resolve(resmain);
+                    /*
+                    if(resmain['length'] != 0){
+                      console.log('working in replicate');
+                      this.feedService.replicatefeedsdb(feedname).then(repres=>{
+                       
+                          resolve(repres);
+               
+               })
+               }
+               */
+
+               
+                     
+                    
+                    
+               
+             
+             else{        
+               resolve(res);
+             }
+
            
-           resolve(feedsOnSubcategory);
-         }
-       
-      });
-    });
-  }
+          });
+        });
+}
 
   //Function to handle view event from page-header component
   public handleView(childView:any){

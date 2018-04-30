@@ -8,7 +8,10 @@
         <form class="form-inline form-group">
           <input class="form-control mr-sm-2" type="text" placeholder="Find a board" [(ngModel)]="queryString" name="query">
         </form>
-        <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;let i = index;">
+        <div class="scroll">
+          
+        
+        <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;index as i">
 
          <div class="board-item"><i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] == false || labelForBoards[i]== undefined, 'fa-star': labelForBoards[i] == true}" aria-hidden="true" title="Save to board"></i>
           <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
@@ -22,9 +25,9 @@
            </div>
          
         </div>
-        
-        <div class="border-board" >
-          <a (click)="visible =!visible"><i class="fa fa-fw fa-plus"></i>Create a Board</a>
+        </div>
+        <div class="border-board " >
+          <a (click)="visible =!visible" class="color-button"><i class="fa fa-fw fa-plus "></i>Create a Board</a>
         </div>
        
         <div *ngIf="visible" class="form-group savetoboard" ng-hide="checked">
