@@ -120,12 +120,12 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   //Get feeds filtered on feedname
   getfeedsOnFeedname(feedname){
-   console.log("feedsinfeedname",feedname);
+   //console.log("feedsinfeedname",feedname);
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
 
       this.feedService.getlatestfeeds(feedname).then(res=>{
-           console.log("sdf",res);
+           //console.log("sdf",res);
            if(res['length'] == 0){
              //console.log('working in replicate');
              this.feedService.replicatefeedsdb(feedname).then(repres=>{
@@ -239,12 +239,12 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
     /*this.userService.pullnewFeeds().then(res=>{
      });
     */
-    console.log("DS",childrefresh);
+   // console.log("DS",childrefresh);
     //this.getfeedsOnFeedname(childrefresh).then(val=>{
     
     this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
       
-      console.log("ds",val);
+     // console.log("ds",val);
       this.variab.globalfeeds = val;
 
       //Reverse the filter to sort according to latest feeds
