@@ -120,12 +120,12 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   //Get feeds filtered on feedname
   getfeedsOnFeedname(feedname){
-   
+   console.log("feedsinfeedname",feedname);
     return new Promise(resolve=>{
      //Call the feed service to get the feeds filtered according to feedname
 
       this.feedService.getlatestfeeds(feedname).then(res=>{
-           //console.log(res);
+           console.log("sdf",res);
            if(res['length'] == 0){
              //console.log('working in replicate');
              this.feedService.replicatefeedsdb(feedname).then(repres=>{
@@ -236,18 +236,24 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.userService.pullnewFeeds().then(res=>{
+    /*this.userService.pullnewFeeds().then(res=>{
      });
-    this.getfeedsOnFeedname(childrefresh).then(val=>{
+    */
+    console.log("DS",childrefresh);
+    //this.getfeedsOnFeedname(childrefresh).then(val=>{
+    
+    this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
+      
+      console.log("ds",val);
       this.variab.globalfeeds = val;
 
       //Reverse the filter to sort according to latest feeds
        this.variab.globalfeeds.reverse();
     //Call the checkForDeleted method to check for hidden/removed feeds
     //and remove those feeds from the display array
-          this.feeds=this.variab.globalfeeds;
+         this.feeds=this.variab.globalfeeds;
          // console.log("every",this.feeds);
-          if(this.variab.globalfeeds){
+         if(this.variab.globalfeeds){
             this.spinnerState=false;
           }
           
