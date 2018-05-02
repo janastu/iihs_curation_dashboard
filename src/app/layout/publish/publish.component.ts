@@ -59,14 +59,17 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
    
     this.view = localStorage.getItem('view') || null;
 
-
+    this.route.params
+          .subscribe(params => {
+            this.boardname=params.id;
+          });
 
  //Access the query parameter and filter the feeds according to category
       this.route.queryParams
             .subscribe(params => {
              //console.log("paraparams);
            //get the board feeds
-           this.boardname=params.id;
+           
            this.dataservice.getboardfeeds(params.id).then(res=>{
              //console.log(res);
             //Function call to check for the deleted feeds

@@ -236,30 +236,47 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    /*this.userService.pullnewFeeds().then(res=>{
+    this.userService.pullnewFeeds().then(res=>{
      });
-    */
-   // console.log("DS",childrefresh);
-    //this.getfeedsOnFeedname(childrefresh).then(val=>{
-    
-    this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
-      
-     // console.log("ds",val);
-      this.variab.globalfeeds = val;
+    this.spinnerState=true;
+    this.feeds.length = 0;
+    this.getfeedsOnFeedname(childrefresh).then(val=>{
+      if(val['length']==0){
+            this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
+                  this.variab.globalfeeds = val;
 
-      //Reverse the filter to sort according to latest feeds
-       this.variab.globalfeeds.reverse();
-    //Call the checkForDeleted method to check for hidden/removed feeds
-    //and remove those feeds from the display array
-         this.feeds=this.variab.globalfeeds;
-         // console.log("every",this.feeds);
-         if(this.variab.globalfeeds){
-            this.spinnerState=false;
-          }
+                  //Reverse the filter to sort according to latest feeds
+                   this.variab.globalfeeds.reverse();
+                //Call the checkForDeleted method to check for hidden/removed feeds
+                //and remove those feeds from the display array
+                      this.feeds=this.variab.globalfeeds;
+                     // console.log("every",this.feeds);
+                      if(this.variab.globalfeeds){
+                        this.spinnerState=false;
+                      }
+            });
+
+
+      }
+      else{
+          this.variab.globalfeeds = val;
+
+          //Reverse the filter to sort according to latest feeds
+           this.variab.globalfeeds.reverse();
+        //Call the checkForDeleted method to check for hidden/removed feeds
+        //and remove those feeds from the display array
+              this.feeds=this.variab.globalfeeds;
+             // console.log("every",this.feeds);
+              if(this.variab.globalfeeds){
+                this.spinnerState=false;
+              }
+      }
+    
+    //this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
+      
+     
           
-        /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
-          this.feeds=res;
-        }); */
+        
 
     });
 
