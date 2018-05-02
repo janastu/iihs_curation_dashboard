@@ -71,8 +71,6 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                  
                  this.util.checkForPublished(res,this.boardname).then(res=>{
                   this.publishedfeeds=res;
-                  //console.log(this.publishedfeeds);
-                   
                  });
                 
                  })  

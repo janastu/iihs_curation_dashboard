@@ -18,7 +18,7 @@
             <div class="container">
 
 
-   <button *ngIf="checkedtopublish" type="submit" class="btn btn-md btn-success" (click)="publish()">Publish</button> 
+   <button  type="submit" class="btn btn-md btn-success" (click)="publish()">Publish</button> 
       <div *ngIf="view === 'Magazine'" class="col-sm-6 offset-sm-2 all-checkbox-magazine">
         <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
         (change)="onSelectAll()"/>                       
