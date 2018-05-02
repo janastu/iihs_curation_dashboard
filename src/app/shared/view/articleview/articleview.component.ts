@@ -22,5 +22,11 @@ export class ArticleviewComponent implements OnInit {
   ngOnInit() {
  
 	}
+  onFilterChange(eve: any) {
+    this.checked.emit(this.item);   
+  }
+  onSelectAll(eve:any){
+     this.checked.emit(eve); 
+  }
 
 }

@@ -39,6 +39,7 @@ showDialog:boolean=false;
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
 checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
+checkedtopublish:boolean=false; //state variable to store the status variable of publish button
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
     public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
     public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
@@ -83,7 +84,6 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
              this.util.checkForPublished(res,this.boardname).then(res=>{
                //this.feeds=res;
                this.publishedfeeds=res;
-               //console.log(this.publishedfeeds);
              });
             });
            
@@ -140,7 +140,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
   }
   //Function to handle checked Input values from the child view component
   handleCheckedInput(event){
-    this.checkedfeeds.push(event);
+    this.checkedtopublish = event.Checked;
   }
   //function on select all
   onSelectAll(eve) {
@@ -150,6 +150,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
         for(var i=0; i< this.publishedfeeds.length;i++){
           if(this.publishedfeeds[i] == false){
             this.feeds[i].Checked = this.selectedAll;
+            this.checkedtopublish = this.selectedAll;
           }
           
         }

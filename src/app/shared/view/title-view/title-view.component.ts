@@ -23,7 +23,12 @@ desc:any;//Parameter to pass with modal component
   ngOnInit() {
    
   }
- 
+   onFilterChange(eve: any) {
+    this.checked.emit(this.item);   
+  }
+  onSelectAll(eve:any){
+     this.checked.emit(eve); 
+  }
   
 
 }
