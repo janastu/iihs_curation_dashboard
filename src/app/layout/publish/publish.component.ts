@@ -80,10 +80,10 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
                  this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                }
              
-             this.util.checkForPublished(res,params.id).then(res=>{
+             this.util.checkForPublished(res,this.boardname).then(res=>{
                //this.feeds=res;
                this.publishedfeeds=res;
-               console.log(this.publishedfeeds);
+               //console.log(this.publishedfeeds);
              });
             });
            
