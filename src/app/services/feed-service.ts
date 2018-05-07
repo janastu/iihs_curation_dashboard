@@ -132,7 +132,7 @@ export class FeedService {
 	  getmetacategories(category){
 	  	return new Promise(resolve => {
 	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
-	  		   	console.log(category);	
+	  		   //	console.log(category);	
 	  		   	this.variab.localfeeds.query('feeds/metacategories', {
 	  		   	    startkey: [category],
 	  		   	    endkey: [category, {}]
@@ -148,7 +148,7 @@ export class FeedService {
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
 
-		var replicationstatus:boolean=false;
+		//var replicationstatus:boolean=false;
 		return new Promise(resolve => { 
 			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
 			    startkey: [category],
