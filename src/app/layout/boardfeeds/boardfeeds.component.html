@@ -11,7 +11,12 @@
                 <div class="mb-3">
                          
                             <div class="container">
-    <button *ngIf="checkedtodelete" class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button> 
+    <button *ngIf="checkedtodelete" class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button>
+      <div *ngIf="view === null" class="col-sm-6 offset-sm-2 all-checkbox-magazine">
+        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
+        (change)="onSelectAll()"/>                       
+        <label>Select All</label>
+      </div> 
      <div *ngIf="view === 'Magazine'" class="col-sm-6 offset-sm-2 all-checkbox-magazine">
        <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox" 
        (change)="onSelectAll()"/>                       

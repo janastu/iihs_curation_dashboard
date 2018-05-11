@@ -203,6 +203,13 @@ queryString:any;//variable to store the input to find a board name
               if(res['ok'] == true){
                 this.boardservice.getboards().then(res=>{
                   this.variab.boardupdated = res;
+                  this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
+                   if(board.value.group){
+                      
+                     return board.value.group === this.groupname;
+                   }
+                  
+                  })
                 })
                 
                 this.visible=false;
