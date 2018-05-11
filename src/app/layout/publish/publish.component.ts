@@ -74,12 +74,17 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
            this.dataservice.getboardfeeds(params.id).then(res=>{
              //console.log(res);
             //Function call to check for the deleted feeds
-            this.util.checkForDeletedFeeds(res).then(res=>{
-             //Get the deleted feeds store and display using feeds variable
-             this.feeds = res;
-               if(this.feeds){
-                 this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
-               }
+            this.util.checkForDeletedFeeds(res).then(resdel=>{
+              //Get the deleted feeds store and pass the feeds to sort
+                this.util.sortdescending(resdel).then(ressort=>{
+                  //Get sorted data and store in the feeds variable to display
+                  this.feeds = res;
+                    if(this.feeds){
+                      this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+                    }
+                })
+             
+             
              
              this.util.checkForPublished(res,this.boardname).then(res=>{
                //this.feeds=res;
