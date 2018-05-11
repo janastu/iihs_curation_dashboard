@@ -20,19 +20,20 @@ alertnote:boolean=false;
 
   ngOnInit() {
 
-      this.displayPublishedfeeds = JSON.parse(localStorage.getItem('publishedfeeds'));
-      this.alertnote = true;
+     // this.displayPublishedfeeds = JSON.parse(localStorage.getItem('publishedfeeds'));
+      //this.alertnote = true;
         //console.log(this.alertnote);
-      setTimeout(() => this.alertnote = false, 5000);
-       if(this.displayPublishedfeeds == null){
+      //setTimeout(() => this.alertnote = false, 5000);
+       //if(this.displayPublishedfeeds == null){
          this.route.params
                       .subscribe(params => {
                         var parsedDate = Date.parse(params.date);//parse the date to timestamp
                          let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
                             //this.spinnerState=true;
                          if(params.date && params.boardname != '*'){
+                           console.log(params.date,params.boardname)
                           this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
-                              //console.log(res['value']);
+                              console.log(res['value']);
                             this.statefeeds = res['value'].feeds;
                              this.displayPublishedfeeds=this.statefeeds;
                               this.alertnote = true;
@@ -68,7 +69,7 @@ alertnote:boolean=false;
                });
           
 
-       }
+      // }
       
   	  /* this.route.params
              .subscribe(params => {

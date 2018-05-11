@@ -41,7 +41,7 @@ export class ArchiveService {
 	   		this.variab.localarchives.post(feed, function callback(err, result) {
 		
 			  if (!err) {
-	            //console.log('Successfully posted a todo!',result);
+	            console.log('Successfully posted a todo!',result);
 	            resolve(result);
 	          }
 
@@ -55,17 +55,22 @@ export class ArchiveService {
 	  	//var queryDate = new Date(date);
 	  	//console.log(date)
 	  	return new Promise(resolve=>{
-	  	/* this.variab.localarchives.query('archives/archives', {
+	  	this.variab.localarchives.query('archives/archives', {
 	  		  key:[date,board]
 	  	  }).then(function (result) {
-	  	    console.log("res",result.rows[0].value);
-	  	  	resolve(result.rows[0].value.feeds);
+	  	    console.log("res",result.rows);
+	  	  		if(result.rows.length !=0){
+	  	  	 		resolve(result.rows[0]);
+	  	  	 	}
+	  	  	 	else{
+	  	  	 		resolve(result.rows);
+	  	  	 	}
 	  	  }).catch(function (err) {
 	  	  console.log(err);
-	  	  });*/
-	  	  var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_view/archives?key=["'+date+'","'+board+'"]';
+	  	  });
+	  	  /*var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_view/archives?key=["'+date+'","'+board+'"]';
 	  	  	this.http.get(url).map(res => res.json()).subscribe(data => {
-	  	  		//console.log("da",data);
+	  	  		console.log("da",data);
 	  	  		if(data.rows.length !=0){
 	  	  	 		resolve(data.rows[0]);
 	  	  	 	}
@@ -75,7 +80,7 @@ export class ArchiveService {
 	  	  	}, (err) => {
 	  	  	   console.log(err);
 	  	  	   //resolve(err);
-	  	  	});
+	  	  	});*/
 	  	});
 
 	  }
@@ -110,7 +115,7 @@ export class ArchiveService {
 	  		  reduce:true,
 	  		  group_level:1
 	  	  }).then(function (result) {
-	  	 	//console.log(result);
+	  	 	console.log(result);
 	  	  	resolve(result.rows);
 	  	  }).catch(function (err) {
 	  	  console.log(err);

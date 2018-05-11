@@ -49,9 +49,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
               this.datepublished = isodate.toISOString();
               this.boardnamepublished = params.boardname;
               if(params.date && params.boardname != '*'){
-                this.feeds.length = 0;
-                
-                  this.spinnerState=true;
+                this.feeds.length = 0;//set the feeds array as empty to display the feeds
+                   this.spinnerState=true;//set the spinner state as true
+                   console.log("feesd",params.boardname,isodate.toISOString());
                 this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
                     console.log(res['value']);
                   this.statefeeds = res['value'].feeds;
@@ -67,6 +67,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                   boards = res;
                   boards.map(board=>{
                     this.statefeeds.length=0;
+                    console.log("feesd",params.boardname,isodate.toISOString());
                     this.archiveService.getPublishedFeeds(isodate.toISOString(),board.value).then(res=>{
                       this.statefeeds.push(res['value'].feeds);
                       this.util.sortdescending(_.flatten(this.statefeeds)).then(res=>{
