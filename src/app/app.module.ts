@@ -26,7 +26,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Settings } from './services/settings';
 import { UrlSerializer } from '@angular/router';
 import { CustomUrlSerializer } from './CustomUrlSerializer';
-
+import { DatePipe } from '@angular/common';
 
 
 // AoT requires an exported function for factories
@@ -60,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
 
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,ArchiveService,Utilities,HtmlParser],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},AuthGuard,Global,HttpClient,JsonConvert,BoardService,CategoryService,DataService,ComponentsService,DbConfig,Settings,Userservice,FeedService,GroupService,ArchiveService,Utilities,HtmlParser,DatePipe],
 
 
     bootstrap: [AppComponent]
