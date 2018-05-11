@@ -14,7 +14,7 @@
     </div>-->
     <div class="col-sm-6 offset-sm-3">
         
-          
+          <ngb-alert *ngIf="alertnote" (close)="closeAlert()"><h6><b>Note</b>:To send mail,Copy the content and paste in your mail (Press Ctrl+A to select all,Ctrl+C to copy and Ctrl+v to paste)</h6></ngb-alert>
         <div class="card-blocks">
           <div class="row centered">
             <!--div id="loading">
