@@ -138,6 +138,9 @@
         <a [routerLink]="['/trashbox']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Trashbox' | translate }}
         </a>
+        <a (click)=opentodaysarchives() class="list-group-item pointer">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Todays Archives' | translate }}
+        </a>
         <a (click)=openarchives() class="list-group-item pointer">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Archives' | translate }}
         </a>

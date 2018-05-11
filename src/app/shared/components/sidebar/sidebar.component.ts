@@ -7,6 +7,7 @@ import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
 import * as _ from 'lodash';
+import { DatePipe,Location } from '@angular/common';
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -62,7 +63,7 @@ export class SidebarComponent implements OnInit{
 
 
     
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public groupService:GroupService,public route:ActivatedRoute){
+    constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public groupService:GroupService,public route:ActivatedRoute){
    
 
     }
@@ -205,6 +206,11 @@ export class SidebarComponent implements OnInit{
   }
   openarchives(){
     window.open('#/mm/archives');
+  }
+  opentodaysarchives(){
+    var pub_date = new Date(); //get today's date
+    var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
+    window.open('#/mm/*/'+transform+'/archives');
   }
     
     
