@@ -17,6 +17,7 @@ const routes: Routes = [
     {path:  'mm/:boardname/:date/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
     {path:  'mm/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule' },
     { path: 'mm/:boardname/:date', loadChildren: './published-view/published-view.module#PublishedViewModule'},
+    { path: 'mm/*/:date/archives', loadChildren: './mmpublish/mmpublish.module#MmpublishModule'},
     { path: '**', redirectTo: 'not-found' }
 ];
 

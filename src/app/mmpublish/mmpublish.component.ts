@@ -25,9 +25,9 @@ p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
 statefeeds:any=[]; //variable to store the feeds state 
-boardname:any;//variable to store the input variable name
+boardnamepublished:any;//variable to store the input variable name
 view:any;      //variable to store the view state
-date:any;      //variable to store the state of dates to filters
+datepublished:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
@@ -44,19 +44,40 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
  //Access the query parameter and filter the feeds according to category
       this.route.params
             .subscribe(params => {
-              //console.log(params)
-              if(params.date){
-                this.feeds.length = 0;
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
-               let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
+              var isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
+              this.datepublished = isodate.toISOString();
+              this.boardnamepublished = params.boardname;
+              if(params.date && params.boardname != '*'){
+                this.feeds.length = 0;
+                
                   this.spinnerState=true;
                 this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
-                    //console.log(res['value']);
+                    console.log(res['value']);
                   this.statefeeds = res['value'].feeds;
                    this.feeds=this.statefeeds;
                    if(this.feeds){
                      this.spinnerState=false;
                    }
+                })
+              }
+              if(params.boardname == '*'){
+                this.archiveService.getPublishedboardsOnDates(isodate.toISOString()).then(res=>{
+                  var boards:any=[];
+                  boards = res;
+                  boards.map(board=>{
+                    this.statefeeds.length=0;
+                    this.archiveService.getPublishedFeeds(isodate.toISOString(),board.value).then(res=>{
+                      this.statefeeds.push(res['value'].feeds);
+                      this.util.sortdescending(_.flatten(this.statefeeds)).then(res=>{
+                        this.feeds = res;
+                        if(this.feeds){
+                          this.spinnerState=false;
+                        }
+                      });
+
+                    })
+                  })
                 })
               }
               

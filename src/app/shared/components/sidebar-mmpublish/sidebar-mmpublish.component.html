@@ -10,8 +10,8 @@
           <li  *ngFor="let n of publisheddates" [ngClass]="{active: isactive(n)}">
           
           <div class="feed-list-item">
-          <i class="fa fa-chevron-right onmenu"></i>
-          <span (click)="select(n)" class="onmenu">&nbsp;&nbsp;{{n}}</span>
+          <i class="fa fa-chevron-right onmenu" (click)="select(n)"></i>
+          <span (click)="opentodaysarchives(n)"  class="onmenu">&nbsp;&nbsp;{{n}}</span>
           </div>
         
                   <ul class="submenu">

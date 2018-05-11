@@ -4,7 +4,7 @@ import { Global } from '../../global';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { ArchiveService } from '../../../services/archive-service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
+import { DatePipe,Location } from '@angular/common';
 @Component({
     selector: 'app-sidebar-mmpublish',
     templateUrl: './sidebar-mmpublish.component.html',
@@ -61,7 +61,8 @@ export class SidebarMmpublishComponent implements OnInit{
 
 
     
-    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public archiveService:ArchiveService,public route:ActivatedRoute,public datepipe:DatePipe){
+    constructor(public router:Router,public variab:Global,config: NgbDropdownConfig,public archiveService:ArchiveService,
+      public route:ActivatedRoute,public datepipe:DatePipe,public location:Location){
    
 
     }
@@ -83,7 +84,7 @@ export class SidebarMmpublishComponent implements OnInit{
    
     //Function called from html to filter the feeds on date
     routetodateboard(date,board){ 
-        
+        console.log(board,date)
       this.router.navigate(['/mm',board,date,'archives']);
 
     }
@@ -93,6 +94,8 @@ export class SidebarMmpublishComponent implements OnInit{
       this.showGroups=false;
      this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
     }
-    
+    opentodaysarchives(n){
+      this.router.navigate(['mm','*',n,'archives'])
+    }
     
 }
