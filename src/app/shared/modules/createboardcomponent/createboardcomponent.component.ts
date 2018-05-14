@@ -199,9 +199,10 @@ queryString:any;//variable to store the input to find a board name
       if(boardExists == 0){
         //console.log("add");
         this.boardservice.addboard(model).then(res=>{
-          //console.log("ew",res);
+         
               if(res['ok'] == true){
                 this.boardservice.getboards().then(res=>{
+                  console.log("ew",res);
                   this.variab.boardupdated = res;
                   this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
                    if(board.value.group){

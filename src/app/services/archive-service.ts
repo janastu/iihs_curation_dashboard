@@ -10,13 +10,20 @@ declare function emit(key: any,value:any): void;
 @Injectable()
 export class ArchiveService {
 	localdb:any;
-	remote:any;
+	remotearchives:any;
 	username:any;
 	password:any;
 	feedNewsrack:any=[];
+	auth:any;
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
-
-
+		    this.auth={
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
+		this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
+		      auth:this.auth,
+		      adapter:'http'
+		});
 	}
 
 	//Api service to add feed name to user's database and also add the feeds to the database
@@ -38,7 +45,7 @@ export class ArchiveService {
 	//Function adds the published feeds to pouchdbdb
 	 addtopouch(feed){
 	 	return new Promise(resolve => {
-	   		this.variab.localarchives.post(feed, function callback(err, result) {
+	   		this.remotearchives.post(feed, function callback(err, result) {
 		
 			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
@@ -55,7 +62,7 @@ export class ArchiveService {
 	  	//var queryDate = new Date(date);
 	  	//console.log(date)
 	  	return new Promise(resolve=>{
-	  	this.variab.localarchives.query('archives/archives', {
+	  	this.remotearchives.query('archives/archives', {	
 	  		  key:[date,board]
 	  	  }).then(function (result) {
 	  	    console.log("res",result.rows);
@@ -88,8 +95,8 @@ export class ArchiveService {
 	  getAlreadyPublishedfeeds(board){
 	  	var allpublishedboard:any=[];
 	  	return new Promise(resolve=>{
-	  	  this.variab.localarchives.query('archives/publishedfeeds', {
-	  		  key:board
+	  	  this.remotearchives.query('archives/publishedfeeds', {
+	  		  key:board,
 	  	  }).then(function (result) {
 	  	  		
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
@@ -111,9 +118,10 @@ export class ArchiveService {
 	  getPublishedDates(){
 	  	return new Promise(resolve=>{
 	  		//console.log("val");
-	  	  this.variab.localarchives.query('date/querydate', {
+	  	  this.remotearchives.query('date/querydate', {
 	  		  reduce:true,
-	  		  group_level:1
+	  		  group_level:1,
+	  	
 	  	  }).then(function (result) {
 	  	 	console.log(result);
 	  	  	resolve(result.rows);
@@ -126,8 +134,9 @@ export class ArchiveService {
 	  getPublishedboardsOnDates(date){
 	  	return new Promise(resolve=>{
 	  		console.log("val");
-	  	  this.variab.localarchives.query('archives/published_date', {
-	  		  key:date
+	  	  this.remotearchives.query('archives/published_date', {
+	  		  key:date,
+	  		  
 	  	  }).then(function (result) {
 	  	 	//console.log(result);
 	  	  	resolve(result.rows);
@@ -141,8 +150,9 @@ export class ArchiveService {
 	  getPublishingUrlofFeed(feedid){
 	  	return new Promise(resolve=>{
 	  		//console.log("val");
-	  	  this.variab.localarchives.query('archives/publishing_url_feed', {
-	  		  key:feedid
+	  	  this.remotearchives.query('archives/publishing_url_feed', {
+	  		  key:feedid,
+	  		  stale: 'update_after'
 	  	  }).then(function (result) {
 	  	 	//console.log(result);
 	  	  	resolve(result.rows);
@@ -154,7 +164,7 @@ export class ArchiveService {
 	  //Update database for deleted and modidifed
 	  updatedatabase(doc){
 	  	return new Promise(resolve=>{
-	     this.variab.localarchives.put(doc).then(function (response) {
+	     this.remotearchives.put(doc).then(function (response) {
 	       // handle response
 	       resolve(response);
 	      // console.log(response)

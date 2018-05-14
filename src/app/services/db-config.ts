@@ -26,7 +26,7 @@ auth:any;//varable to store the auth object
   //Database setup for feeds before the application loads
   dbsetupfeeds(){
   	//Create pouchdb instance for feeds
-  	this.variab.localfeeds = new PouchDB('feeds'); //create a pouchdb
+  	this.variab.localfeeds = new PouchDB('feeds',{auto_compaction: true,adapter:'http'}); //create a pouchdb
     //this.test = new PouchDB('feeds');
   	//Create reomte couchdb instance for feeds
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
@@ -85,6 +85,20 @@ auth:any;//varable to store the auth object
             
           }
     }
+    
+    var testdoc = this.createDesignDoc('feeds_filter', function (doc) {
+      emit(doc.pubdate, doc);
+    });
+    console.log(testdoc);
+    this.variab.localfeeds.put(testdoc).catch(function (err) {
+         //console.log(err);
+         if (err.name !== 'conflict') {
+           throw err;
+         }
+         // ignore if doc already exists
+     })
+    
+    
    /* var linkdoc = {
           _id: '_design/links',
           views: {
@@ -100,9 +114,10 @@ auth:any;//varable to store the auth object
           }
 
     }*/
+   
     // save and update the design doc
     this.getFeedDesignDoc(ddoc).then(res=>{
-      console.log(res);
+      //console.log(res);
      if(res['status'] == 404){
        this.variab.localfeeds.put(ddoc).catch(function (err) {
             //console.log(err);
@@ -163,9 +178,11 @@ auth:any;//varable to store the auth object
     });*/
   	
     //Synch pouchdb with couchdb
-  	/*this.variab.localfeeds.sync(this.remotefeeds, {
+  /*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
-  	  retry:true
+  	  retry:true,
+      filter: '_view',
+      view: 'feeds_filter/feeds_filter'
   	}).on('change', function (change) {
   	  // yo, something changed!
   	  console.log("syncchnagefeeds",change);
@@ -174,6 +191,17 @@ auth:any;//varable to store the auth object
   	  // yo, we got an error! (maybe the user went offline?)
   	})*/
   }
+  createDesignDoc(name, mapFunction) {
+    var ddoc = {
+      _id: '_design/' + name,
+      views: {
+      }
+    };
+    ddoc.views[name] = { map: mapFunction.toString() };
+    return ddoc;
+  }
+  
+
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){
     return new Promise(resolve=>{
@@ -185,7 +213,7 @@ auth:any;//varable to store the auth object
        });
     });
   }
-  //get feeds fiterl doc to update the doc with rev
+  //get feeds filter doc to update the doc with rev
   getFeedFilterDoc(filterdoc){
     return new Promise(resolve=>{
       this.variab.localfeeds.get('_design/feedsfilter').then(function(doc) {
@@ -199,11 +227,15 @@ auth:any;//varable to store the auth object
   
   //Database setup for annotations before the application loads
   dbsetupannos(){
+
   	//Create pouchdb instance for annotations
-  	 this.variab.localannotations = new PouchDB('iihs_annotation'); //create a pouchdb
-  	 //Create reomte couchdb instance for annotations 
+  	 this.variab.localannotations = new PouchDB('iihs_annotation',{auto_compaction: true}); //create a pouchdb
+  	   this.variab.localannotations.viewCleanup();
+     //Create reomte couchdb instance for annotations 
   	 this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
-  	           auth:this.auth
+  	           auth:this.auth,
+               adapter:'http',
+               auto_compaction: true
   	     });
   	 //create design docs
 
@@ -352,7 +384,7 @@ auth:any;//varable to store the auth object
           return delay * 3;
         }
       });
-      this.variab.localannotations.sync(this.remoteannos, {
+     /* this.variab.localannotations.sync(this.remoteannos, {
         live: true,
         retry:true,
         auth:this.auth
@@ -362,52 +394,8 @@ auth:any;//varable to store the auth object
       }).on('error', function (err) {
         console.log("syncerr",err);
         // yo, we got an error! (maybe the user went offline?)
-      })
-      //Replicate remote boardfeeds to local
-      /*this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotatedfeeds/boardfeeds'
-      });
-      //Replicate remote readlaterfeeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-               filter: '_view',
-               view: 'annotations/readlater'
-       })
-      //Replicate remote recently read to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotations/recentlyread'
-      });
-      //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotatedfeeds/deletedfeeds'
-      });
-       //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotatedfeeds/boardfeedsoftoday'
-      });
-       //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotations/boardannotation'
-      });
-       //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotation/readlater'
-      });
-      //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotation/recentlyread'
-      });
-      //Replicate remote deleted feeds to local
-      this.remoteannos.replicate.to(this.variab.localannotations, {
-             filter: '_view',
-             view: 'annotation/hidden'
-      });*/
+      })*/
+      
       
 
   }
@@ -439,7 +427,7 @@ auth:any;//varable to store the auth object
   //Database setup for groups before app loads
   dbsetupgroups(){
   	//Create pouchdb instance for groups
-  	this.variab.localgroups = new PouchDB('groups'); //create a pouchdb 
+  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true,adapter:'http'}); //create a pouchdb 
   	//Create reomt  e couchdb instance for groups
   	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups);
   	//Synch pouchdb with couchdb
@@ -469,7 +457,7 @@ auth:any;//varable to store the auth object
       })
       
       
-  	this.variab.localgroups.sync(this.remotegroups, {
+  	/*this.variab.localgroups.sync(this.remotegroups, {
   	  live: true,
   	  retry:true,
   	  auth:this.auth
@@ -479,16 +467,17 @@ auth:any;//varable to store the auth object
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})	
+  	})*/	
 
   }
   //Database setup for boards before app loads
   dbsetupboards(){
   	//Create pouchdb instance for boards
-  	this.variab.localboards = new PouchDB('boards');
+  	this.variab.localboards = new PouchDB('boards',{auto_compaction: true});
   	//Create reomte couchdb instance for boards
   	this.remoteboards = new PouchDB(this.settings.protocol+this.settings.dbboards,{
-  	  	    auth:this.auth
+  	  	    auth:this.auth,
+            adapter:'http'  
   	  });
     //create the design doc
     var ddoc = {
@@ -531,7 +520,7 @@ auth:any;//varable to store the auth object
        }
     })
   	//Synch pouchdb with couchdb
-  	this.variab.localboards.sync(this.remoteboards, {
+  	/*this.variab.localboards.sync(this.remoteboards, {
   	  live: true,
   	  retry:true
   	}).on('change', function (change) {
@@ -540,7 +529,7 @@ auth:any;//varable to store the auth object
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})
+  	})*/
   }
   //get annotated feeds design doc update the doc with rev
   getBoardsDesigndoc(ddoc){
@@ -557,7 +546,7 @@ auth:any;//varable to store the auth object
 
   dbsetuparchives(){
     //Create pouchdb instance for boards
-    this.variab.localarchives = new PouchDB('archives');
+    this.variab.localarchives = new PouchDB('archives',{auto_compaction: true,adapter:'http'});
     //Create reomte couchdb instance for boards
       this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
             auth:this.auth
@@ -678,7 +667,7 @@ auth:any;//varable to store the auth object
            }
         })
       //Synch pouchdb with couchdb
-          this.variab.localarchives.sync(this.remotearchives, {
+          /*this.variab.localarchives.sync(this.remotearchives, {
             live: true,
             retry:true
           }).on('change', function (change) {
@@ -687,7 +676,7 @@ auth:any;//varable to store the auth object
           }).on('error', function (err) {
             console.log("syncerr",err);
             // yo, we got an error! (maybe the user went offline?)
-          })
+          })*/
         
     //});   
 

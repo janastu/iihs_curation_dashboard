@@ -147,10 +147,8 @@ export class SidebarComponent implements OnInit{
     getGroups(){
       //Get the groups the user is memberof
       this.userservice.getAuser(this.user).then(res=>{
-        this.groups = res['memberof'];
-        this.groups.map(gr=>{
-          //console.log(gr,this.groupname);
-        });
+        //console.log(res);
+        this.variab.groups = res['memberof'];
       })
     }
     //Function called from html to navigate to feeds component with category name variable

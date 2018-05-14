@@ -154,22 +154,29 @@ logout(){
 //Api service to get the user subscriptions
 getUserSubscriptions(){
   let url = localStorage.getItem('url');
-  //console.log("url",url);
+  console.log("url",url);
 
 // let url = 'http://localhost:5984/supertest$vinutha/_all_docs?include_docs=true'
   
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
-  let options = new RequestOptions({ headers: headers });
+  let options = new RequestOptions({ headers: headers});
+ // options.cache=true;
   console.log("auth",options);
   return new Promise(resolve => {
+      if(url){
         this.http.get(url+'/_all_docs?include_docs=true',options).map(res=>res.json()).subscribe((response)=> {
           //console.log(response)
           resolve(response.rows);
         }, (err) => {
           console.log("er",err);
         }); 
+      }
+      else{
+        console.log("usernot loggedif");
+
+      }
   });
 
 }
@@ -230,7 +237,7 @@ updateAuser(user){
   let headers = new Headers();
    headers.append( 'Content-Type', 'application/json')
    headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
-  let options = new RequestOptions({ headers: headers });
+  let options = new RequestOptions({ headers: headers});
     
         this.http.put(url,user,options).map(res=>res.json()).subscribe((response)=> {
           

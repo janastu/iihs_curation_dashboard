@@ -11,8 +11,18 @@ export class BoardService {
 	remote:any;
 	username:any;
 	password:any;
+	auth:any;
+	remoteboards:any;
 
 	constructor(private http: Http,private settings:Settings,public variab:Global) { 
+		this.auth={
+		      username:this.settings.couchdbusername,
+		      password:this.settings.couchdbpassword
+		    }
+		    this.remoteboards = new PouchDB(this.settings.protocol+this.settings.dbboards,{
+		      	    auth:this.auth,
+		      	    adapter:'http'
+		      });
 		//Create pouchdb instance for boards
 		/*this.localdb = new PouchDB('boards');
 		//Create reomte couchdb instance for boards
@@ -42,11 +52,10 @@ export class BoardService {
 	getboards(){
 
 	return new Promise(resolve => {
-	  this.variab.localboards.query('board/boards', {
-	     
-	      
+	  this.remoteboards.query('board/boards', {
+	  	
 	    }).then(function (result) {
-	  // console.log("res",result.rows);
+	   console.log("res",result.rows);
 	    resolve(result.rows);
 	  }).catch(function (err) {
 	    console.log(err);
@@ -56,11 +65,13 @@ export class BoardService {
 	}
 	//Api service to add board to pouchdb and replicate to coudhdb
 	addboard(res){
+
 	return new Promise(resolve => {
 		this.addtopouch(res).then(response=>{
-			//console.log(response);
+			console.log(response);
 			if(response['ok'] === true){
 				PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
+				
 				resolve(response);
 			}
 		});
@@ -69,13 +80,13 @@ export class BoardService {
 	}
 	//Api service to add board to pouch db
 	addtopouch(res){
-			
+			var self = this;
 		return new Promise(resolve => {
-			this.variab.localboards.post(res, function callback(err, result) {
+			this.remoteboards.post(res, function callback(err, result) {
 			    if (!err) {
 			      //console.log('Successfully posted a todo!',result);
 
-			        
+			       //self.getboards(); 
 			      resolve(result);
 			    }
 			  });
@@ -85,7 +96,7 @@ export class BoardService {
 	//Update database for deleted and modidifed
 	updateboard(doc){
 	 return new Promise(resolve=>{
-	 	this.variab.localboards.put(doc).then(function (response) {
+	 	this.remoteboards.put(doc).then(function (response) {
 	 	  resolve(response);
 	 	}).catch(function (err) {
 	 	  console.log(err);

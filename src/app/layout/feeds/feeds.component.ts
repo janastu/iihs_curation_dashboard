@@ -122,21 +122,27 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   getfeedsOnFeedname(feedname){
    //console.log("feedsinfeedname",feedname);
     return new Promise(resolve=>{
+      var firstDay = new Date();
+       var previousweek= new Date(firstDay.getTime() - 7 * 24 * 60 * 60 * 1000);
      //Call the feed service to get the feeds filtered according to feedname
-
+     this.feedService.getPostsSince(previousweek.toISOString());
       this.feedService.getlatestfeeds(feedname).then(res=>{
            //console.log("sdf",res);
            if(res['length'] == 0){
-             //console.log('working in replicate');
-             this.feedService.replicatefeedsdb(feedname).then(repres=>{
+             console.log('no feeds in pouch');
+            /* this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
-             })
+             })*/
            }
            else{
              //console.log('not working replicate');
              //feedsOnFeedname = ;
              resolve(res);
-             this.feedService.replicatefeedsdb(feedname);
+             /*this.feedService.replicatefeedsdb(feedname).then(replicateres=>{
+               resolve(replicateres);
+             })*/
+             
+             
            }
          
                        

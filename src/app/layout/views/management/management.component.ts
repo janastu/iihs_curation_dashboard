@@ -62,14 +62,14 @@ export class ManagementComponent implements OnInit {
        this.groups.filter(group=>{
          if(group.key === this.groupname){
           this.displayMembers =  group.value.members;  
-           console.log("mem",this.displayMembers);
+           //console.log("mem",this.displayMembers);
          }
           
         });
        this.mygroups = this.groups.filter(group=>{
          return group.value.owner == this.user;
        })
-       console.log(this.mygroups);
+      // console.log("my group",this.mygroups);
     });
 
     
@@ -235,9 +235,16 @@ export class ManagementComponent implements OnInit {
             else{
               this.groupService.addGroupDb(doc).then(result => {
 
-                          console.log('resofgroup', result)
+                          //console.log('resofgroup', result)
                           if (result ===true) {
-                            this.groups.push({ value: doc });
+                            this.groupService.getgroups().then(res=>{
+                              this.groups = res;
+                                this.mygroups = this.groups.filter(group=>{
+                                  return group.value.owner == this.user;
+                                })
+                            })
+                            
+                            //this.groups.push({ value: doc });
                             this.alertsuccess=true;
                             this.ngAlert.type = 'success';
                             this.groupname='';
@@ -246,14 +253,16 @@ export class ManagementComponent implements OnInit {
                                 user['memberof'].push(this.gpname.value);
                                 console.log("ass",user);
                                this.userService.updateAuser(user);
+                                 
                               }
                               else{
                               user['memberof']=[];
                               user['memberof'].push(this.gpname.value);
                               console.log("na",user);
                               this.userService.updateAuser(user);
+                                
                               } 
-                              //console.log(user);
+                              this.variab.groups = user['memberof'];
                               
                             })  
                           }

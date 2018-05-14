@@ -60,7 +60,7 @@
            
         </a>
        <div *ngIf="showGroups" class="show-group">
-                    <fieldset class="field" *ngFor="let item of groups">
+                    <fieldset class="field" *ngFor="let item of variab.groups">
                       <div class="radio">
                         <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChoosegroup(item)" [checked]="this.groupname === item"> {{item}}
                         </label>

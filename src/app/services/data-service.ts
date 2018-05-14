@@ -1,5 +1,5 @@
 import { Injectable,ViewChild } from '@angular/core';
-import { Http,RequestOptions,Headers  }       from '@angular/http';
+import { Http,RequestOptions,Headers  } from '@angular/http';
 import PouchDB from 'pouchdb';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
@@ -9,19 +9,37 @@ declare function emit(key: any,value:any): void;
 
 export class DataService {
   localdb:any;
-  remote:any;
+  remoteannos:any;
   username:any;
   password:any;
+  auth:any;
 constructor(private http: Http,private settings:Settings,public variab:Global) { 
-
+        this.auth={
+              username:this.settings.couchdbusername,
+              password:this.settings.couchdbpassword
+            }
+    this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
+              auth:this.auth,
+              adapter:'http'
+    });
   }
   //Api service to add annotatioins to pouchdb
   addtodatabase(payload){
-    console.log("called");
+    var self = this;
+    console.log("called",payload);
     return new Promise(resolve=>{
-     this.variab.localannotations.post(payload, function callback(err, result) {
+     this.remoteannos.post(payload, function callback(err, result) {
        if (!err) {
-         //console.log('Successfully posted a todo!',result);
+         console.log('Successfully posted a todo!',result);
+           if(result['ok'] == true){
+             self.getannotations();
+              if (payload.label) {
+                // code...
+                self.getboardfeeds(payload.label[0]);
+              }
+             
+           }
+
           resolve(result);
        }
        
@@ -37,8 +55,8 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
    return new Promise(resolve => {
    
-     this.variab.localannotations.query('annotations/boardannotation', {
-           
+     this.remoteannos.query('annotations/boardannotation', {
+           stale: 'update_after'
          }).then(function (result) {
          // console.log("res",result);
          resolve(result.rows);
@@ -54,8 +72,8 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
    return new Promise(resolve => {
    
-     this.variab.localannotations.query('annotations/readlater', {
-           
+     this.remoteannos.query('annotations/readlater', {
+           stale: 'update_after'
          }).then(function (result) {
          //console.log("res",result);
          resolve(result.rows);
@@ -71,8 +89,8 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
    return new Promise(resolve => {
    
-     this.variab.localannotations.query('annotations/recentlyread', {
-           
+     this.remoteannos.query('annotations/recentlyread', {
+           stale: 'update_after'
          }).then(function (result) {
          // console.log("res",result);
          resolve(result.rows);
@@ -97,8 +115,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      }).then(res=>{
     console.log(res);
     if(res['ok']==true){*/
-      this.variab.localannotations.query('annotatedfeeds/boardfeeds', {
-           key:board
+      this.remoteannos.query('annotatedfeeds/boardfeeds', {
+           key:board,
+           stale: 'update_after'
          }).then(function (result) {
         //
 
@@ -127,8 +146,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
       console.log(res);
       if(res['ok']==true){*/
     
-      this.variab.localannotations.query('annotatedfeeds/readlaterfeeds', {
-          key:usr
+      this.remoteannos.query('annotatedfeeds/readlaterfeeds', {
+          key:usr,
+          stale: 'update_after'
         }).then(function (result) {
        //console.log("res readlater",result);
         resolve(result.rows);
@@ -155,8 +175,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      }).then(res=>{
     console.log(res);
     if(res['ok']==true){*/
-      this.variab.localannotations.query('annotatedfeeds/recentlyreadfeeds', {
-          key:usr
+      this.remoteannos.query('annotatedfeeds/recentlyreadfeeds', {
+          key:usr,
+          stale: 'update_after'
         }).then(function (result) {
        // console.log("res",result);
         resolve(result.rows);
@@ -182,8 +203,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      }).then(res=>{
     console.log(res);
     if(res['ok']==true){ */
-      this.variab.localannotations.query('annotatedfeeds/deletedfeeds', {
-          key:[usr]
+      this.remoteannos.query('annotatedfeeds/deletedfeeds', {
+          key:[usr],
+          stale: 'update_after'
           
         }).then(function (result) {
        console.log("res",result);
@@ -203,9 +225,10 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     var endtime  = new Date();
     endtime.setHours(23,59,0);
       return new Promise(resolve => {
-        this.variab.localannotations.query('annotatedfeeds/boardfeedsoftoday', {
+        this.remoteannos.query('annotatedfeeds/boardfeedsoftoday', {
             startkey:starttime,
-            endkey:endtime
+            endkey:endtime,
+            stale: 'update_after'
             
           }).then(function (result) {
          //console.log("res",result);
@@ -220,7 +243,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   }
   //Update database for deleted and modidifed
   updatedatabase(doc){
-    this.variab.localannotations.put(doc).then(function (response) {
+    this.remoteannos.put(doc).then(function (response) {
       // handle response
      // console.log(response)
     }).catch(function (err) {

@@ -9,10 +9,10 @@ declare function emit(key: any,value:any): void;
 @Injectable()
 export class GroupService {
 	localdb:any;
-	remote:any;
+	remotegroups:any;
 	username:any;
 	password:any;
-
+	auth:any;
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
 		//Create pouchdb instance for groups
 		/*this.localdb = new PouchDB('groups'); //create a pouchdb 
@@ -35,6 +35,14 @@ export class GroupService {
 		})	
 		//function call to create design docs
 		this.createDesignDocs();*/
+		    this.auth={
+				      username:this.settings.couchdbusername,
+				      password:this.settings.couchdbpassword
+		        }
+		        this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups,{
+		        	auth:this.auth,
+		        	adapter:'http'
+		        });
 
 	  }
 	  //create designdocs
@@ -42,14 +50,17 @@ export class GroupService {
 
  	//Api service add group to the pouchdb
 	addGroupDb(metadata){
+		var self = this;
 		return new Promise(resolve => {
-			this.variab.localgroups.post(metadata, function callback(err, result) {
+			this.remotegroups.post(metadata, function callback(err, result) {
 				if (!err) {
 					//console.log('Successfully posted a todo!', result);
-				}
-				resolve(result.ok);
+					self.getgroups();
+					resolve(result.ok);
+			}
 				//console.log('as', result.ok);
 			});
+
 
 		});
 
@@ -57,7 +68,7 @@ export class GroupService {
 	//Api service update group to pouchdb
 	update(metadata){
 	  return new Promise(resolve=>{
-		this.variab.localgroups.put(metadata).then(function (response) {
+		this.remotegroups.put(metadata).then(function (response) {
 		  // handle response
 		  resolve(response);
 		  //console.log(response)
@@ -71,8 +82,7 @@ export class GroupService {
 	getgroups(){
 		//var url = this.settings.protocol+this.settings.host+this.settings.dbgroups+'/_design/groups/_view/allgroups';
 		return new Promise(resolve => {
-		  this.variab.localgroups.query('groups/groups', {
-		      
+		  this.remotegroups.query('groups/groups', {
 		      
 		    }).then(function (result) {
 		   // console.log("res",result);

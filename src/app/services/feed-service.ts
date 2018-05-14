@@ -46,7 +46,8 @@ export class FeedService {
 		  this.createDesignDocs();*/
 
 		  this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
-		  	    auth:this.auth
+		  	    auth:this.auth,
+		  	    adapter:'http'
 		  });
 		  var info=this.remotefeeds.info();
 		console.log("inf",info);
@@ -92,7 +93,7 @@ export class FeedService {
 		        		if(res['ok'] == true){
 		        			
 		        			//PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed);
-		        			this.variab.localfeeds.replicate.to(this.settings.protocol+this.settings.dbfeed).on('complete', function (res) {
+		        			this.remotefeeds.replicate.to(this.settings.protocol+this.settings.dbfeed).on('complete', function (res) {
 		        			  // yay, we're done!
 		        			  //console.log(res);
 		        			  resolve(res);	
@@ -109,11 +110,31 @@ export class FeedService {
 			});
 
 	}
+	 getPostsSince(when) {
+	 	console.log(when);
+	  return new Promise(resolve=>{
+	  	this.remotefeeds.query('feeds_filter', {startkey: when}).then(res=>{
+	  		console.log(res);
+	  	});
+	  	/*this.remotefeeds.replicate.to(this.remotefeeds, {
+	  	  filter: 'feedsfilter/feedsfilter'
+
+	  	  
+	  	}).then((change)=> {
+	  	  // yo, something changed!
+	  	  console.log("syncchnagefeeds",change);
+	  	  
+	  	});*/
+	  }) 
+	  
+	}
+	
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getcategoryfeeds(category){
 
 	   return new Promise(resolve => {
-	   	this.variab.localfeeds.query('feeds/categoryfeeds', {
+	   	this.remotefeeds.query('feeds/categoryfeeds', {
+	   		stale: 'update_after',
 	   		limit:20,
 	   	    key:category,
 	   	    descending:true
@@ -133,7 +154,8 @@ export class FeedService {
 	  	return new Promise(resolve => {
 	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
 	  		   //	console.log(category);	
-	  		   	this.variab.localfeeds.query('feeds/metacategories', {
+	  		   	this.remotefeeds.query('feeds/metacategories', {
+	  		   		stale: 'update_after',
 	  		   	    startkey: [category],
 	  		   	    endkey: [category, {}]
 	  		   	  }).then(function (result) {
@@ -150,7 +172,8 @@ export class FeedService {
 
 		//var replicationstatus:boolean=false;
 		return new Promise(resolve => { 
-			  this.variab.localfeeds.query('feeds/latestoldestcategory', {
+			  //this.remotefeeds.query('feeds/latestoldestcategory', {
+			  	this.remotefeeds.query('feeds/latestoldestcategory', {
 			    startkey: [category],
 			    endkey: [category, {}]
 			  }).then(function (result) {
@@ -173,20 +196,23 @@ export class FeedService {
 }
 	//Replicate db feeds
 	replicatefeedsdb(category){
+		console.log(category);
 		 return new Promise(resolve=>{	
-		this.remotefeeds.replicate.to(this.variab.localfeeds, {
-
-			batch_size:5,
-		  batches_limit:5,
-		  filter: 'feedsfilter/latestoldestcategory',
-		  query_params: {category: category}
+		this.remotefeeds.replicate.to(this.remotefeeds, {
+		  	  batch_size:5,
+		  	  batches_limit:5,
+		  	  filter: '_view',
+		  	  view: 'feeds_filter/feeds_filter'
+		  	  //filter: 'feedsfilter/latestoldestcategory',
+		  	  //query_params: {category: category}
 
 		  
 		}).then((change)=> {
 		  // yo, something changed!
-		  //console.log("syncchnagefeeds",change);
+		  console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
-		    this.variab.localfeeds.query('feeds/latestoldestcategory', {
+		    this.remotefeeds.query('feeds/latestoldestcategory', {
+		    	stale: 'update_after',
 		        startkey: [category],
 		        endkey: [category, {}]
 		      }).then(function (result) {
@@ -204,7 +230,7 @@ export class FeedService {
 	replicatemetafeedsdb(category){
 		//console.log("thisis called",category);
 	  return new Promise(resolve=>{	
-		this.remotefeeds.replicate.to(this.variab.localfeeds, {
+		this.remotefeeds.replicate.to(this.remotefeeds, {
 			batch_size:5,batches_limit:5,
 		  filter: 'feedsfilter/metacategories',
 		  query_params: {category: category},
@@ -214,7 +240,7 @@ export class FeedService {
 		  // yo, something changed!
 		 // console.log("syncchnagefeeds",change);
 		  if(change.ok == true){
-		    this.variab.localfeeds.query('feeds/metacategories', {
+		    this.remotefeeds.query('feeds/metacategories', {
 		      startkey: [category],
 		      endkey: [category, {}]
 		    }).then(function (result) {
@@ -262,7 +288,7 @@ export class FeedService {
 	      res.feednme = feedname;
 
 	      
-	      this.variab.localfeeds.post(res, function callback(err, result) {
+	      this.remotefeeds.post(res, function callback(err, result) {
 		
 			  if (!err) {
 	            //console.log('Successfully posted a todo!',result);
@@ -307,7 +333,7 @@ export class FeedService {
 	//update feed document 
 	updatefeed(model){
 	  return new Promise(resolve=>{	;
-		this.variab.localfeeds.put(model).then(function (response) {
+		this.remotefeeds.put(model).then(function (response) {
 		  resolve(response);
 		}).catch(function (err) {
 		  resolve(err);
