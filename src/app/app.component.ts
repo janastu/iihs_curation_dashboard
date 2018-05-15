@@ -14,16 +14,16 @@ export class AppComponent {
         translate.use(browserLang.match(/en|fr|ur|es|it|fa/) ? browserLang : 'en');
 
         //Set up the annotations database
-       //	this.dbConfig.dbsetupannos();
+           this.dbConfig.dbsetupannos();
         //Set up the feeds database
-        //this.dbConfig.dbsetupfeeds();
+            this.dbConfig.dbsetupfeeds();
         //Set up the boards database
-        //this.dbConfig.dbsetupboards();
+            this.dbConfig.dbsetupboards();
 
         //Set up the groups database
-        //this.dbConfig.dbsetupgroups();
+            this.dbConfig.dbsetupgroups();
         //Set up the archives database
-        //this.dbConfig.dbsetuparchives();
+            this.dbConfig.dbsetuparchives();
 
 
     }

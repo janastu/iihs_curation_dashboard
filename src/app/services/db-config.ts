@@ -109,10 +109,17 @@ auth:any;//varable to store the auth object
    
     // save and update the design doc
     this.getFeedDesignDoc(ddoc).then(res=>{
-      //console.log(res);
-     if(res['status'] == 404){
-         console.log("dd",ddoc);
-       this.variab.localfeeds.put(ddoc).catch(function (err) {
+      console.log("response",res);
+      this.remotefeeds.put(res).catch(function (err) {
+           // console.log(err);
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+      })
+     /*if(res['status'] == 404){
+        // console.log("dd",ddoc);
+       this.remotefeeds.put(ddoc).catch(function (err) {
             console.log("feedsst",err);
             if (err.name !== 'conflict') {
               throw err;
@@ -121,14 +128,16 @@ auth:any;//varable to store the auth object
         })
      }
      else{
-      this.variab.localfeeds.put(res).catch(function (err) {
+      this.remotefeeds.put(res).catch(function (err) {
            // console.log(err);
             if (err.name !== 'conflict') {
               throw err;
             }
             // ignore if doc already exists
       })
-     }
+     }*/
+    }).catch(err=>{
+      console.log(err);
     })
    /* this.getFeedFilterDoc(filterdoc).then(res=>{
       console.log(res);
@@ -198,11 +207,22 @@ auth:any;//varable to store the auth object
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localfeeds.get('_design/feeds').then(function(doc) {
+      this.remotefeeds.get('_design/feeds').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         //console.log(err.status);
+         if(err.status == 404){
+                 console.log("dd",ddoc);
+                this.remotefeeds.put(ddoc).catch(function (err) {
+                     console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
        });
     });
   }
@@ -212,7 +232,7 @@ auth:any;//varable to store the auth object
       this.variab.localfeeds.get('_design/feedsfilter').then(function(doc) {
            filterdoc._rev = doc._rev;
            resolve(filterdoc);
-       }).catch(err=>{
+       }).catch(err=>{ 
          resolve(err);
        });
     });
@@ -324,9 +344,16 @@ auth:any;//varable to store the auth object
 
   	  // save the design doc
       this.getAnnotationsDesigndoc(ddoc).then(res=>{
-  	    if(res['status'] == 404){
+        this.remoteannos.put(res).catch(function (err) {
+              //console.log(err);
+              if (err.name !== 'conflict') {
+                throw err;
+              }
+              // ignore if doc already exists
+        })
+  	    /*if(res['status'] == 404){
           //console.log("err");
-          this.variab.localannotations.put(ddoc).catch(function (err) {
+          this.remoteannos.put(ddoc).catch(function (err) {
                //console.log(err);
                if (err.name !== 'conflict') {
                  throw err;
@@ -335,20 +362,28 @@ auth:any;//varable to store the auth object
            })
         }
         else{
-         this.variab.localannotations.put(res).catch(function (err) {
+         this.remoteannos.put(res).catch(function (err) {
                //console.log(err);
                if (err.name !== 'conflict') {
                  throw err;
                }
                // ignore if doc already exists
          })
-        }
+        }*/
       });
   	  // save the design doc
   	  this.getAnnotatedFeedsDesigndoc(feedsdoc).then(res=>{
+
               console.log("anootations",res)
-              if(res['status'] == 404){
-                this.variab.localannotations.put(feedsdoc).catch(function (err) {
+              this.remoteannos.put(res).catch(function (err) {
+                    //console.log(err);
+                    if (err.name !== 'conflict') {
+                      throw err;
+                    }
+                    // ignore if doc already exists
+              })
+             /* if(res['status'] == 404){
+                this.remoteannos.put(feedsdoc).catch(function (err) {
                      //console.log(err);
                      if (err.name !== 'conflict') {
                        throw err;
@@ -357,17 +392,17 @@ auth:any;//varable to store the auth object
                  })
               }
               else{
-               this.variab.localannotations.put(res).catch(function (err) {
+               this.remoteannos.put(res).catch(function (err) {
                      //console.log(err);
                      if (err.name !== 'conflict') {
                        throw err;
                      }
                      // ignore if doc already exists
                })
-              }
+              }*/
       })
       //Replicate the design doc to the remote
-      this.variab.localannotations.replicate.to(this.remoteannos, {
+      /*this.variab.localannotations.replicate.to(this.remoteannos, {
         live: true,
         retry: true,
         back_off_function: function (delay) {
@@ -377,7 +412,7 @@ auth:any;//varable to store the auth object
           return delay * 3;
         }
       });
-     /* this.variab.localannotations.sync(this.remoteannos, {
+     this.variab.localannotations.sync(this.remoteannos, {
         live: true,
         retry:true,
         auth:this.auth
@@ -395,11 +430,21 @@ auth:any;//varable to store the auth object
    //get annotations design doc to update the doc with rev
   getAnnotationsDesigndoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localannotations.get('_design/annotations').then(function(doc) {
+      this.remoteannos.get('_design/annotations').then(function(doc) {
           ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remoteannos.put(ddoc).catch(function (err) {
+                     console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
        });
     });
 
@@ -407,12 +452,22 @@ auth:any;//varable to store the auth object
   //get annotated feeds design doc update the doc with rev
   getAnnotatedFeedsDesigndoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localannotations.get('_design/annotatedfeeds').then(function(doc) {
+      this.remoteannos.get('_design/annotatedfeeds').then(function(doc) {
 
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remoteannos.put(ddoc).catch(function (err) {
+                     console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
        });
     });
   }
@@ -422,7 +477,9 @@ auth:any;//varable to store the auth object
   	//Create pouchdb instance for groups
   	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb 
   	//Create reomt  e couchdb instance for groups
-  	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups);
+  	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups,{
+      auth:this.auth
+    });
   	//Synch pouchdb with couchdb
 
     
@@ -442,13 +499,39 @@ auth:any;//varable to store the auth object
       }
 
       // save the design doc
-      this.variab.localgroups.put(ddoc).catch(function (err) {
-        if (err.name !== 'conflict') {
-          throw err;
-        }
-        // ignore if doc already exists
+      this.getGroupsDesigndoc(ddoc).then(res=>{
+        //console.log("boards",res);
+        //resolve(res);
+        this.remotegroups.put(res).catch(function (err) {
+          if (err.name !== 'conflict') {
+            throw err;
+          }
+          // ignore if doc already exists
+        });
+         /*if(res['status']==404){
+            // save the design doc
+            //console.log(ddoc);
+            this.remotegroups.put(ddoc).then(result=>{
+              //console.log("boa",result);
+              //resolve(result);
+            }).catch(function (err) {
+              //console.log(err);
+              if (err.name !== 'conflict') {
+                throw err;
+              }
+              // ignore if doc already exists
+            }); 
+         }
+         else{
+          // save the design doc
+          this.remotegroups.put(res).catch(function (err) {
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+          });
+         }*/
       })
-      
       
   	/*this.variab.localgroups.sync(this.remotegroups, {
   	  live: true,
@@ -463,6 +546,28 @@ auth:any;//varable to store the auth object
   	})*/	
 
   }
+  //get groups design doc update the doc with rev
+  getGroupsDesigndoc(ddoc){
+    return new Promise(resolve=>{
+      this.remotegroups.get('_design/groups').then(function(doc) {
+           ddoc._rev = doc._rev;
+           resolve(ddoc);
+       }).catch(err=>{
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remotegroups.put(ddoc).catch(function (err) {
+                     //console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
+       });
+    });
+  }
+
   //Database setup for boards before app loads
   dbsetupboards(){
   	//Create pouchdb instance for boards
@@ -487,11 +592,17 @@ auth:any;//varable to store the auth object
     }
     this.getBoardsDesigndoc(ddoc).then(res=>{
       console.log("boards",res);
+      this.remoteboards.put(res).catch(function (err) {
+        if (err.name !== 'conflict') {
+          throw err;
+        }
+        // ignore if doc already exists
+      });
       //resolve(res);
-       if(res['status']==404){
+      /* if(res['status']==404){
           // save the design doc
           console.log(ddoc);
-          this.variab.localboards.put(ddoc).then(result=>{
+          this.remoteboards.put(ddoc).then(result=>{
             console.log("boa",result);
             //resolve(result);
           }).catch(function (err) {
@@ -504,14 +615,14 @@ auth:any;//varable to store the auth object
        }
        else{
         // save the design doc
-        this.variab.localboards.put(res).catch(function (err) {
+        this.remoteboards.put(res).catch(function (err) {
           if (err.name !== 'conflict') {
             throw err;
           }
           // ignore if doc already exists
         });
-       }
-    })
+       }*/
+    });
   	//Synch pouchdb with couchdb
   	/*this.variab.localboards.sync(this.remoteboards, {
   	  live: true,
@@ -527,11 +638,21 @@ auth:any;//varable to store the auth object
   //get annotated feeds design doc update the doc with rev
   getBoardsDesigndoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localboards.get('_design/board').then(function(doc) {
+      this.remoteboards.get('_design/board').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remoteboards.put(ddoc).catch(function (err) {
+                     //console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+        // resolve(err);
        });
     });
   }
@@ -607,10 +728,16 @@ auth:any;//varable to store the auth object
         this.getArchivesDesigndoc(ddoc).then(res=>{
           //console.log("archives",res);
           //resolve(res);
-           if(res['status']==404){
+          this.remotearchives.put(res).catch(function (err) {
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+          });
+          /* if(res['status']==404){
               // save the design doc
               //console.log(ddoc);
-              this.variab.localarchives.put(ddoc).then(result=>{
+              this.remotearchives.put(ddoc).then(result=>{
                 console.log(result);
                 //resolve(result);
               }).catch(function (err) {
@@ -623,21 +750,28 @@ auth:any;//varable to store the auth object
            }
            else{
             // save the design doc
-            this.variab.localarchives.put(res).catch(function (err) {
+            this.remotearchives.put(res).catch(function (err) {
               if (err.name !== 'conflict') {
                 throw err;
               }
               // ignore if doc already exists
             });
-           }
+           }*/
         })
         this.getArchivesDateDesigndoc(qdatedoc).then(res=>{
           //console.log("archives",res);
           //resolve(res);
-           if(res['status']==404){
+          this.remotearchives.put(res).catch(function (err) {
+            
+            if (err.name !== 'conflict') {
+              throw err;
+            }
+            // ignore if doc already exists
+          });
+           /*if(res['status']==404){
               // save the design doc
               //console.log(ddoc);
-              this.variab.localarchives.put(qdatedoc).then(result=>{
+              this.remotearchives.put(qdatedoc).then(result=>{
                 console.log("add",result);
                 //resolve(result);
               }).catch(function (err) {
@@ -650,14 +784,14 @@ auth:any;//varable to store the auth object
            }
            else{
             // save the design doc
-            this.variab.localarchives.put(res).catch(function (err) {
+            this.remotearchives.put(res).catch(function (err) {
               
               if (err.name !== 'conflict') {
                 throw err;
               }
               // ignore if doc already exists
             });
-           }
+           }*/
         })
       //Synch pouchdb with couchdb
           /*this.variab.localarchives.sync(this.remotearchives, {
@@ -677,21 +811,41 @@ auth:any;//varable to store the auth object
   //get annotated feeds design doc update the doc with rev
   getArchivesDesigndoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localarchives.get('_design/archives').then(function(doc) {
+      this.remotearchives.get('_design/archives').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remotearchives.put(ddoc).catch(function (err) {
+                     //console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
        });
     });
   }
   getArchivesDateDesigndoc(ddoc){
     return new Promise(resolve=>{
-      this.variab.localarchives.get('_design/date').then(function(doc) {
+      this.remotearchives.get('_design/date').then(function(doc) {
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         resolve(err);
+         if(err.status == 404){
+                 //console.log("dd",ddoc);
+                this.remotearchives.put(ddoc).catch(function (err) {
+                     //console.log("feedsst",err);
+                     if (err.name !== 'conflict') {
+                       throw err;
+                     }
+                     // ignore if doc already exists
+                 })
+           }
+         //resolve(err);
        });
     });
   }

@@ -64,7 +64,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                     }
                     //console.log(this.feeds.length);
-                    this.alertNofeeds=false;//set alertnofeeds value to false
+                    this.alertNofeeds=false;//set alertnofeed  s value to false
                     if(this.feeds.length==0){
                       this.alertNofeeds=true;
                     }
