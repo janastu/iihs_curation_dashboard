@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Userservice } from '../../../services/userservice';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
         localStorage.removeItem('isLoggedin');
         localStorage.removeItem('url');
         localStorage.removeItem('group');
+        Cookie.delete('isLoggedin');
         this.userService.logout();
     }
 

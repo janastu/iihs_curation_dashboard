@@ -148,7 +148,7 @@ return new Promise(resolve => {
  //Superlogin Api service to logout
 logout(){
   superlogin.logout('message').then(res=>{
-    //console.log(res);
+    console.log(res);
   })
 }
 //Api service to get the user subscriptions
