@@ -154,9 +154,11 @@ filterDate(date,feeds){
 //Function to sort the feeds on descending order from latest 
 sortdescending(feeds){
   return new Promise(resolve=>{
-    this.resultFeeds = feeds.sort(function(a, b) {   
-      return new Date(b.value.date).getTime() - new Date(a.value.date).getTime()
+    this.resultFeeds = feeds.sort(function(a, b) {
+      console.log("datea",a,b)   
+      return new Date(b.value.date || b.value.value.date).getTime() - new Date(a.value.date || a.value.value.date).getTime()
     });
+    console.log("sorted util",this.resultFeeds)
     resolve(this.resultFeeds);
   });
 }

@@ -34,9 +34,14 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
      //Fetch the data from service and store in global variable
      this.dataservice.getdeletedfeeds(this.user).then(res=>{
        this.variab.hiddenfeeds = res;
-       
-       this.util.sortdescending(this.variab.hiddenfeeds).then(sorted=>{
+        var sanitizedHidden = this.variab.hiddenfeeds.map(function(feed){
+                                  if(feed.value && !feed.value.value ) return feed
+                                  return feed.value
+                                });
+       //console.log("hideen",this.variab.hiddenfeeds,testhide);
+       this.util.sortdescending(sanitizedHidden).then(sorted=>{
          this.feeds = sorted
+         console.log("display",this.feeds)
          if(this.feeds){
            this.spinnerState=false;
          }
