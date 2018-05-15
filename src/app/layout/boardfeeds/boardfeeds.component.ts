@@ -142,6 +142,10 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
          if(res['ok']==true){
            this.variab.boardfeeds= this.variab.boardfeeds.filter(item=> item.value._id!== feed.value._id);
            this.feeds=this.variab.boardfeeds;
+             this.util.checkForPublished(this.variab.boardfeeds,this.boardname).then(res=>{
+              this.publishedfeeds=res;
+                //console.log()
+             });
            this.selectedAll=false;
          }
        });
