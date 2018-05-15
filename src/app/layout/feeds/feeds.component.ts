@@ -133,6 +133,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
             /* this.feedService.replicatefeedsdb(feedname).then(repres=>{
                resolve(repres);
              })*/
+              resolve(res);
            }
            else{
              //console.log('not working replicate');
@@ -158,34 +159,12 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
           this.feedService.getmetacategories(subcategory).then(res=>{
-          //console.log("sis",res);
+         // console.log("sis",res);
 
              if(res['length'] == 0){
-               this.getfeedsOnFeedname(feedname).then(val=>{
-                 resolve(val);
-               })
+               
 
              }
-
-               /*
-               this.feedService.getlatestfeeds(feedname).then(resmain=>{
-                              
-                    console.log("sf",resmain);
-                    resolve(resmain);
-                    /*
-                    if(resmain['length'] != 0){
-                      console.log('working in replicate');
-                      this.feedService.replicatefeedsdb(feedname).then(repres=>{
-                       
-                          resolve(repres);
-               
-               })
-               }
-               */
-
-               
-                     
-                    
                     
                
              

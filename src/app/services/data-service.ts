@@ -10,10 +10,11 @@ declare function emit(key: any,value:any): void;
 export class DataService {
   localdb:any;
   remoteannos:any;
-  username:any;
+  user:any;
   password:any;
   auth:any;
 constructor(private http: Http,private settings:Settings,public variab:Global) { 
+    this.user = localStorage.getItem('name');
         this.auth={
               username:this.settings.couchdbusername,
               password:this.settings.couchdbpassword
@@ -33,6 +34,12 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
              self.getannotations();
+             self.getreadlaterannotations();
+             self.getrecentlyreadannotations();
+             //console.log(this.user);
+             self.getreadlater(self.user);
+             self.getrecentlyread(self.user);
+             self.getdeletedfeeds(self.user);
               if (payload.label) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
@@ -243,16 +250,20 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   }
   //Update database for deleted and modidifed
   updatedatabase(doc){
+    var self = this;
     this.remoteannos.put(doc).then(function (response) {
       // handle response
      // console.log(response)
+     if(response['ok']==true){
+       self.getdeletedfeeds(self.user);
+     }
     }).catch(function (err) {
       console.log(err);
     });
 
   }
   //Function to add the board feeds to a local json
-  addFeedstoJson(data) {
+ /* addFeedstoJson(data) {
     
      let headers = new Headers();
       headers.append( 'Content-Type', 'application/json')
@@ -263,5 +274,5 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      },(err)=>{
       console.log(err); 
    });
-   }
+   }*/
 }

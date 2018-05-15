@@ -127,7 +127,7 @@ export class SidebarComponent implements OnInit{
     }
     getBoardsOngroups(){
       this.boardservice.getboards().then(res=>{
-        console.log(res);
+        //console.log(res);
         this.variab.boardupdated = res;
        // console.log("boards",this.variab.boardupdated)
        /* boardsOnGroup.push(res);
