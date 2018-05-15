@@ -154,7 +154,7 @@ logout(){
 //Api service to get the user subscriptions
 getUserSubscriptions(){
   let url = localStorage.getItem('url');
-  console.log("url",url);
+ // console.log("url",url);
 
 // let url = 'http://localhost:5984/supertest$vinutha/_all_docs?include_docs=true'
   
@@ -163,7 +163,7 @@ getUserSubscriptions(){
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers});
  // options.cache=true;
-  console.log("auth",options);
+  //console.log("auth",options);
   return new Promise(resolve => {
       if(url){
         this.http.get(url+'/_all_docs?include_docs=true',options).map(res=>res.json()).subscribe((response)=> {
@@ -252,16 +252,21 @@ updateAuser(user){
 pullnewFeeds(){
   let url = localStorage.getItem('url');
   return new Promise(resolve=>{
-    var newsrack = this.settings.feedparserUrl+'/?user='+url;
-    //console.log(newsrack);
-    this.http.get(newsrack).subscribe((response)=> {
-       console.log("response",response);
-       resolve(response);
-    },(err)=>{
-      console.log(err);
+    if(url){
+      var feedparserurl = this.settings.feedparserUrl+'/?user='+url;
+      //console.log(newsrack);
+      this.http.get(feedparserurl).subscribe((response)=> {
+         //  console.log("response",response);
+         resolve(response);
+      },(err)=>{
+        //console.log(err);
       resolve(err);
       
-    });
+      });
+    }
+    else{
+
+    }
 
   });
     

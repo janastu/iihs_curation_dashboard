@@ -55,7 +55,7 @@ export class BoardService {
 	  this.remoteboards.query('board/boards', {
 	  	
 	    }).then(function (result) {
-	   console.log("res",result.rows);
+	   //console.log("res",result.rows);
 	    resolve(result.rows);
 	  }).catch(function (err) {
 	    console.log(err);
@@ -68,7 +68,7 @@ export class BoardService {
 
 	return new Promise(resolve => {
 		this.addtopouch(res).then(response=>{
-			console.log(response);
+			//console.log(response);
 			if(response['ok'] === true){
 				PouchDB.replicate('boards',this.settings.protocol+this.settings.dbboards );
 				

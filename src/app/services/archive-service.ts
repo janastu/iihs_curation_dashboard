@@ -65,7 +65,7 @@ export class ArchiveService {
 	  	this.remotearchives.query('archives/archives', {	
 	  		  key:[date,board]
 	  	  }).then(function (result) {
-	  	    console.log("res",result.rows);
+	  	    //console.log("res",result.rows);
 	  	  		if(result.rows.length !=0){
 	  	  	 		resolve(result.rows[0]);
 	  	  	 	}

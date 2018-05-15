@@ -26,11 +26,11 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   //Api service to add annotatioins to pouchdb
   addtodatabase(payload){
     var self = this;
-    console.log("called",payload);
+    //console.log("called",payload);
     return new Promise(resolve=>{
      this.remoteannos.post(payload, function callback(err, result) {
        if (!err) {
-         console.log('Successfully posted a todo!',result);
+         //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
              self.getannotations();
               if (payload.label) {

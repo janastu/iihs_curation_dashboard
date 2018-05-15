@@ -49,8 +49,8 @@ export class FeedService {
 		  	    auth:this.auth,
 		  	    adapter:'http'
 		  });
-		  var info=this.remotefeeds.info();
-		console.log("inf",info);
+		  //var info=this.remotefeeds.info();
+		//console.log("inf",info);
 	 
 	}
 
