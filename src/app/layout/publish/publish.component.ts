@@ -198,7 +198,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
             this.archiveService.addFeed(doc).then(response=>{
               if(response['ok']==true){
                 //console.log("inadd",publishedfeeds);
-                localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
+               // localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
                    // window.open('#/')
                
                    this.router.navigate(['/mm',this.boardname,transform]);
@@ -218,7 +218,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
         this.archiveService.updatedatabase(res['value']).then(response=>{
           if(response['ok']==true){
               //console.log("inupdate",res['value']['feeds']);
-             localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
+             //localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
       
           
                this.router.navigate(['/mm',this.boardname,transform]);
