@@ -26,7 +26,7 @@ auth:any;//varable to store the auth object
   //Database setup for feeds before the application loads
   dbsetupfeeds(){
   	//Create pouchdb instance for feeds
-  	this.variab.localfeeds = new PouchDB('feeds',{auto_compaction: true,adapter:'http'}); //create a pouchdb
+  	this.variab.localfeeds = new PouchDB('feeds',{auto_compaction: true}); //create a pouchdb
     //this.test = new PouchDB('feeds');
   	//Create reomte couchdb instance for feeds
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
@@ -36,15 +36,7 @@ auth:any;//varable to store the auth object
   	//create design docs
   	var ddoc = {
   	  _id: '_design/feeds',
-      _rev:'',
   	  views: {
-  	    categoryfeeds: {
-  	      map: function (doc) {
-  	        if (doc.feednme) {
-  	          emit(doc.feednme,doc);
-  	        }
-  	      }.toString()
-  	    },
   	    metacategories: {
   	      map: function (doc) {
             //console.log("doc in con",doc);
@@ -119,8 +111,9 @@ auth:any;//varable to store the auth object
     this.getFeedDesignDoc(ddoc).then(res=>{
       //console.log(res);
      if(res['status'] == 404){
+         console.log("dd",ddoc);
        this.variab.localfeeds.put(ddoc).catch(function (err) {
-            //console.log(err);
+            console.log("feedsst",err);
             if (err.name !== 'conflict') {
               throw err;
             }
@@ -137,7 +130,7 @@ auth:any;//varable to store the auth object
       })
      }
     })
-    this.getFeedFilterDoc(filterdoc).then(res=>{
+   /* this.getFeedFilterDoc(filterdoc).then(res=>{
       console.log(res);
      if(res['status'] == 404){
        this.variab.localfeeds.put(filterdoc).catch(function (err) {
@@ -157,7 +150,7 @@ auth:any;//varable to store the auth object
             // ignore if doc already exists
       })
      }
-    })
+    })*/
     /*this.variab.localfeeds.replicate.to(this.remotefeeds, {
       live: true,
       retry: true,
@@ -427,7 +420,7 @@ auth:any;//varable to store the auth object
   //Database setup for groups before app loads
   dbsetupgroups(){
   	//Create pouchdb instance for groups
-  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true,adapter:'http'}); //create a pouchdb 
+  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb 
   	//Create reomt  e couchdb instance for groups
   	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups);
   	//Synch pouchdb with couchdb
@@ -546,7 +539,7 @@ auth:any;//varable to store the auth object
 
   dbsetuparchives(){
     //Create pouchdb instance for boards
-    this.variab.localarchives = new PouchDB('archives',{auto_compaction: true,adapter:'http'});
+    this.variab.localarchives = new PouchDB('archives',{auto_compaction: true});
     //Create reomte couchdb instance for boards
       this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
             auth:this.auth
