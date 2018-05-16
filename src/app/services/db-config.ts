@@ -37,6 +37,20 @@ auth:any;//varable to store the auth object
   	var ddoc = {
   	  _id: '_design/feeds',
   	  views: {
+        categoryfeeds: {
+                map: function (doc) {
+                  if (doc.feednme) {
+                    emit(doc.feednme,doc);
+                  }
+                }.toString()
+        },
+        metacategoryfeeds: {
+                map: function (doc) {
+                  if (doc.meta) {
+                    emit(doc.meta.categories[0],doc);
+                  }
+                }.toString()
+        },
   	    metacategories: {
   	      map: function (doc) {
             //console.log("doc in con",doc);

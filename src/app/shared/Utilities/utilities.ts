@@ -155,10 +155,10 @@ filterDate(date,feeds){
 sortdescending(feeds){
   return new Promise(resolve=>{
     this.resultFeeds = feeds.sort(function(a, b) {
-      console.log("datea",a,b)   
+     // console.log("datea",a,b)   
       return new Date(b.value.date || b.value.value.date).getTime() - new Date(a.value.date || a.value.value.date).getTime()
     });
-    console.log("sorted util",this.resultFeeds)
+    //console.log("sorted util",this.resultFeeds)
     resolve(this.resultFeeds);
   });
 }
@@ -173,7 +173,7 @@ sortascending(feeds){
 }
 //Click hide to remove the feed and push to trashbox
  hide(feeditem,index){
-   //console.log("hid",this.feeditem);
+   console.log("hid",feeditem);
    let model = {
      "@context": "http://www.w3.org/ns/anno.jsonld",
      "type": "Annotation",
@@ -194,11 +194,11 @@ sortascending(feeds){
  else{*/
   return new Promise(resolve=>{ 
   feeditem.hidefeed={'hidefeed':true,'hiddenby':this.user};
-    console.log(feeditem);  
+    //console.log(feeditem);  
    this.feedService.updatefeed(feeditem).then(res=>{
-     console.log(res);
+     //console.log(res);
      if(res['ok'] == true){
-       console.log("de",index);
+      // console.log("de",index);
         this.dataservice.addtodatabase(model).then(res=>{
          if(res['ok'] == true){
            resolve(res);

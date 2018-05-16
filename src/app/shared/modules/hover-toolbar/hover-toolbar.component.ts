@@ -4,6 +4,7 @@ import { Global } from '../../../shared';
 import { DataService } from '../../../services/data-service';//Import dataservice to get annotations
 import { FeedService } from '../../../services/feed-service';//Import feed service to update feed when removed
 import { Router } from '@angular/router';
+import { Utilities } from '../../../shared';//Import utilities to perform sorting and filtering
 @Component({
   selector: 'app-hover-toolbar',
   templateUrl: './hover-toolbar.component.html',
@@ -23,7 +24,7 @@ date:Date;//variable to store the current date
 alertremove:boolean=false;//alert variable to store the status to show the alert to remove from trashbox
 readlaterannos:any=[];//variable to store read later annotations
 recentlyreadannos:any=[];//variable to store recently read annotations
-  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService) {
+  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService,public util:Utilities) {
    }
 
   ngOnInit() {
@@ -142,7 +143,23 @@ this.date = new Date();
   }
  //Click hide to remove the feed and push to trashbox
   hide(){
-    console.log("hid",this.feeditem);
+    this.util.hide(this.feeditem.value,this.index).then(res=>{
+      if(res['ok']==true){
+        this.variab.globalfeeds.splice(this.index,1);
+        this.variab.boardfeeds.splice(this.index,1);
+        this.variab.readlaterfeeds.splice(this.index,1);
+        this.variab.recentlyread.splice(this.index,1);
+        this.showDialog = false;
+        //this.variab.globalfeeds= this.variab.globalfeeds.filter(item=> item.value._id!== feed.value._id);
+        //this.feeds=this.global.boardfeeds;
+          /*this.util.checkForPublished(this.variab.boardfeeds,this.boardname).then(res=>{
+           this.publishedfeeds=res;
+             //console.log()
+          });
+        this.selectedAll=false;*/
+      }
+    });
+    /*console.log("hid",this.feeditem);
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
       "type": "Annotation",
@@ -183,7 +200,7 @@ this.date = new Date();
    //
    
    
-   }
+   }*/
 
   }
   public closeAlert() {

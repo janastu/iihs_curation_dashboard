@@ -100,14 +100,16 @@ export class LoginComponent implements OnInit {
                //check if member is partof any group or groups
                this.userService.getAuser(this.loginForm.controls['username'].value).then(userDoc=>{
                  var groupname = userDoc['memberof'];
-                 console.log(groupname);
+                 //console.log("router",this.router.url);
                   if(groupname){
                    if(groupname.length == 0){
+                     console.log("router1",this.router.url);
                      this.router.navigate(['/dashboard'])
                     // 
                      //this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
                    }   
                    else if(groupname.length == 1){
+                     console.log("router2",this.router.url);
                      var gname = userDoc['memberof'][0];
                      this.router.navigate(['/dashboard'],{queryParams:{memberof:gname}});
                      localStorage.setItem('group',gname);
@@ -117,7 +119,7 @@ export class LoginComponent implements OnInit {
                      //this.router.navigate(['/dashboard'],{queryParams:{memberof:gname}});
                      //console.log("you are part of many groups,choose 1");
                      //this.router.navigate(['/choose-group'])
-
+                     console.log("router3",this.router.url);
                      this.groups=userDoc['memberof'];
                      this.showDialog=true;
                      console.log(this.showDialog);
@@ -133,7 +135,7 @@ export class LoginComponent implements OnInit {
                           email:userDoc['email'],
                           type:'user'
                       }
-                      console.log(doc);
+                      //console.log(doc);
                       this.groupService.getgroups().then(res=>{
                           var groups:any=[];
                           groups=res;
@@ -144,6 +146,7 @@ export class LoginComponent implements OnInit {
                                  group.value.members.push(doc);
                                  this.groupService.update(group.value).then(res=>{
                                      //console.log(res);
+                                     console.log("router4",this.router.url);
                                      if(res['ok']== true){
                                        localStorage.setItem('group','default');
                                          this.router.navigate(['/dashboard'],{queryParams:{memberof:'default'}});
