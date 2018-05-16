@@ -1,15 +1,40 @@
 /*Styles for layout*/
 .main-container{
-    margin-top: 0px;
+
     padding: 15px;
-    -ms-overflow-x: hidden;
-    overflow-x: hidden;
-    overflow-y: scroll;
+   
     position: relative;
-    overflow: hidden;
+    max-width: 100%; 
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top:25px;
 
 }
-/*Styles for Feed*/
+/*Styles for Feed Image*/
+.desc-image{
+    border-radius: 0.2rem;
+    height: auto;
+    max-height:100%;
+    margin-right: 20px;
+}
+.magazine-image{
+    width: 130px;
+}
+
+
+.hide-image{
+    max-width:0px;
+    height:15px;
+}
+/*Styles feed*/
+.feed-entry{
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    display: inline-flex;
+    margin-top:15px;
+}
+/*Styles for Feed
 .magazine-list{
     margin-bottom: 3rem;
 }
@@ -27,7 +52,7 @@
     padding-left: 12px;
     max-height:100px;
 }
-/*Styles for Feed Heading*/
+/*Styles for Feed Heading
 .feed-heading-unmark{
     font-size:16px;
     font-family: sans-serif;
@@ -40,13 +65,13 @@
     color:#4d4d4d;
     cursor:pointer;
 }
-/*Styles for Feed Code*/
+/*Styles for Feed Code
 .feed-content{
     font-size:14px;
     font-family: 'Slab Serif', sans-serif;
     color: #9e9e9e;
 }
-/*Styles for Feed Image*/
+/*Styles for Feed Image
 .desc-image{
     border-radius: 0.2rem;
     height: 91px;
@@ -66,14 +91,14 @@
 .hide-image{
     max-width:0px;
 }
-/*Styles for Feed Metadata*/
+/*Styles for Feed Metadata
 .metadata-magazine{
     font-size: 12px;
     font-family: 'Slab Serif', sans-serif;
     color: #9e9e9e;
 }
 
-/*hover for feeds elements*/
+/*hover for feeds elements
 
 .feeds-entries:hover, .feeds-entries:hover .magazine-hover-control {
     background-color: #f6f6f6;
@@ -99,7 +124,7 @@
     border: transparent;
     z-index: 1;
 }
-/*Styles for media monitor,archive image*/
+/*Styles for media monitor,archive image
 .archive-image-position{
     float:right;
 }
@@ -111,7 +136,7 @@
 MEDIA QUERIES
 
 To change breakpoint for nav collapse
-==============================================================================================*/
+==============================================================================================
 
 
 
@@ -135,9 +160,9 @@ To change breakpoint for nav collapse
   
 Bootstrap 3 Media Queries
 
-/*==========  Mobile First Method  ==========*/
+/*==========  Mobile First Method  ==========
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina  
 @media only screen and (min-width : 320px) {
 .feed-entry{
     border-bottom: 0;
@@ -159,7 +184,7 @@ Bootstrap 3 Media Queries
 }
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones  
 @media only screen and (min-width : 480px) {
 .feed-entry{
     border-bottom: 0;
@@ -181,7 +206,7 @@ Bootstrap 3 Media Queries
 }
 }
 
-/* Small Devices, Tablets */
+/* Small Devices, Tablets 
 @media only screen and (min-width : 576px) {
 .feed-entry{
     border-bottom: 0;
@@ -224,7 +249,7 @@ Bootstrap 3 Media Queries
 }   
 }
 
-/* Medium Devices, Desktops */
+/* Medium Devices, Desktops 
 @media only screen and (min-width : 992px) {
 .feed-entry{
     border-bottom: 0;
@@ -246,7 +271,7 @@ Bootstrap 3 Media Queries
 }   
 }
 
-/* Large Devices, Wide Screens */
+/* Large Devices, Wide Screens 
 @media only screen and (min-width : 1024px) {
 .feed-entry{
     border-bottom: 0;
@@ -287,4 +312,4 @@ Bootstrap 3 Media Queries
     margin-left: 399px !important;
 }
 
-}
+}*/
