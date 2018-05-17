@@ -16,6 +16,7 @@ statefeeds:any=[]; //variable to store the feeds state
 mmurl:any;//published url to link to from the email
 archivesurl:any;//variable to store archives url to navigate to the archives
 alertnote:boolean=false;
+  boards:any=[];
   constructor(public variab:Global,public util:Utilities,public html:HtmlParser,public route:ActivatedRoute,public archiveService:ArchiveService,public router:Router) { }
 
   ngOnInit() {
@@ -48,15 +49,20 @@ alertnote:boolean=false;
                         }
                       if(params.boardname == '*'){
                         this.archiveService.getPublishedboardsOnDates(isodate.toISOString()).then(res=>{
-                          var boards:any=[];
-                          boards = res;
-                          boards.map(board=>{
+                        
+                          this.boards = res;
+                          this.boards.map(board=>{
                             this.statefeeds.length=0;
+                            console.log(board.value);
                             this.archiveService.getPublishedFeeds(isodate.toISOString(),board.value).then(res=>{
-                              this.statefeeds.push(res['value'].feeds);
-                              this.util.sortdescending(_.flatten(this.statefeeds)).then(res=>{
-                                this.displayPublishedfeeds = res;
-                                 // console.log("alert",this.alertnote);
+                              console.log("board name feeds",res['value'].feeds,board.value);
+                              //this.statefeeds = res['value'].feeds;
+                              //this.statefeeds.push(res['value'].feeds);
+                              console.log("stae",this.statefeeds);
+                              this.util.sortdescending(_.flatten(res['value'].feeds)).then(res=>{
+                                /*this.displayPublishedfeeds = */
+                                this.statefeeds.push({board: board.value, data:res});
+                                 console.log("alert",this.statefeeds);
                                 setTimeout(() => this.alertnote = false, 2000);
                               });
 
@@ -93,6 +99,26 @@ alertnote:boolean=false;
       this.mmurl=window.location.href;
       this.archivesurl=window.location.href+'/archives';
   }
+  /*feedsFromBoards(boardname){
+    console.log(boardname)
+    this.route.params
+                 .subscribe(params => {
+                   var parsedDate = Date.parse(params.date);//parse the date to timestamp
+                    let isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
+    this.archiveService.getPublishedFeeds(isodate.toISOString(),boardname).then(res=>{
+      console.log(res['value'].feeds);
+      this.statefeeds = res['value'].feeds;
+      //this.statefeeds.push(res['value'].feeds);
+      this.util.sortdescending(_.flatten(this.statefeeds)).then(res=>{
+        //this.displayPublishedfeeds = res;
+         console.log("alert",this.displayPublishedfeeds);
+        setTimeout(() => this.alertnote = false, 2000);
+      });
+
+    })
+   });
+  }*/
+
   //Function to close alerts
   public closeAlert() {
       this.alertnote=false;
