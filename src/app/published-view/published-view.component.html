@@ -35,10 +35,13 @@
               
             
            <div class="body-table">
-            <div class="body-wrap"> 
-            <div class="" *ngFor="let item of displayPublishedfeeds">
-              
             
+            <div class="body-wrap"> 
+            <div class="" *ngFor="let feed of statefeeds">
+              <div class="board-heading">
+              <h2 class="text-center">{{feed.board}}</h2>
+            </div>
+            <div *ngFor="let item of feed.data">
             <div class="feed-entry" *ngIf="item.value.description != null">
             <!--Feed Image--> 
              <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
@@ -57,12 +60,13 @@
                   <a href="{{item.value.link}}">
                   <h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
                   <!--Feed Category-->
-                 <a href={{item.value.link}} class="metadata-magazine">
-                   {{item.value.meta.categories}}</a>
+
+                 <span class="metadata-magazine">
+                   {{item.value.meta.categories}}</span>
                  <!--Feed Date-->
-                 <a href={{item.value.link}} class="metadata-magazine">
+                 <span class="metadata-magazine">
                    {{item.value.pubDate | date}}
-                 </a>
+                 </span>
                  <!--Feed Desc-->
                  <div *ngIf="html.checkimg(item.value.description)" class="feed-content">
                      
@@ -80,6 +84,7 @@
              </div>
             </div> 
           </div>
+        </div>
           </div>
           </div>
           </div>
