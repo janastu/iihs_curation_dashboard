@@ -35,8 +35,9 @@ alertnote:boolean=false;
                            console.log(params.date,params.boardname)
                           this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
                               console.log(res['value']);
-                            this.statefeeds = res['value'].feeds;
-                             this.displayPublishedfeeds=this.statefeeds;
+                            //this.statefeeds = res['value'].feeds;
+                             this.statefeeds.push({board: params.boardname, data:res['value'].feeds});
+
                               this.alertnote = true;
                               //console.log(this.alertnote);
                             setTimeout(() => this.alertnote = false, 2000);
