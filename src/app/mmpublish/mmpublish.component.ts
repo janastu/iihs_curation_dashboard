@@ -57,7 +57,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                 this.archiveService.getPublishedFeeds(isodate.toISOString(),params.boardname).then(res=>{
                     console.log(res['value']);
                   this.statefeeds = res['value'].feeds;
-                   this.feeds=this.statefeeds;
+                   this.feeds.push({board: params.boardname, data:this.statefeeds});
                    if(this.feeds){
                      this.spinnerState=false;
                    }
