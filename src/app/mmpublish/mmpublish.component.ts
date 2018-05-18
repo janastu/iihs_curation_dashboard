@@ -46,7 +46,9 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
             .subscribe(params => {
               var parsedDate = Date.parse(params.date);//parse the date to timestamp
               var isodate = new Date(parsedDate);//get the date by passing the timestamp to get the iso conversion
-              this.datepublished = isodate.toISOString();
+              //console.log(isodate,parsedDate,params.date);
+              this.datepublished = params.date;
+              console.log(this.datepublished);
               this.boardnamepublished = params.boardname;
               if(params.date && params.boardname != '*'){
                 this.feeds.length = 0;//set the feeds array as empty to display the feeds
