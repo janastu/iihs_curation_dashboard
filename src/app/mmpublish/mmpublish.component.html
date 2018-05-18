@@ -45,14 +45,14 @@
 
 </div>
 </div>
-</div>
+
 <!--Component to display if Card view is selected-->
 <div *ngIf = "view === 'Card'"> 
- 
-    <app-card-view [feeds]='feeds' [index]='i'></app-card-view>
- 
-</div>
+  
+    <app-card-view [feeds]='item.data' [index]='i'></app-card-view>
 
+</div>
+</div>
                     </div>
                   </div>
                </div>
@@ -71,7 +71,7 @@
 
 </div>
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0 && view !== 'Card'">
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
 </div> 
 </div>  
 </section>
