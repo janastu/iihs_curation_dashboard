@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 
   
     onLoggedin() {
-        console.log(this.username)
+        //console.log(this.username)
         let credentials = {
             'username':this.loginForm.controls['username'].value,
             'password':this.loginForm.controls['password'].value
@@ -103,26 +103,29 @@ export class LoginComponent implements OnInit {
                  //console.log("router",this.router.url);
                   if(groupname){
                    if(groupname.length == 0){
-                     console.log("router1",this.router.url);
+                     //console.log("router1",this.router.url);
                      this.router.navigate(['/dashboard'])
                     // 
                      //this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
                    }   
                    else if(groupname.length == 1){
-                     console.log("router2",this.router.url);
+                     //console.log("router2",this.router.url);
                      var gname = userDoc['memberof'][0];
                      this.router.navigate(['/dashboard'],{queryParams:{memberof:gname}});
                      localStorage.setItem('group',gname);
                     // this.router.navigate(['/dashboard']);
                    }
                    else if(groupname.length>1){
-                     //this.router.navigate(['/dashboard'],{queryParams:{memberof:gname}});
-                     //console.log("you are part of many groups,choose 1");
-                     //this.router.navigate(['/choose-group'])
-                     console.log("router3",this.router.url);
-                     this.groups=userDoc['memberof'];
-                     this.showDialog=true;
-                     console.log(this.showDialog);
+                     //console.log(localStorage.getItem('group'))
+                     if(localStorage.getItem('group')){
+                       this.router.navigate(['/dashboard'],{queryParams:{memberof:localStorage.getItem('group')}});
+                     }
+                     else{
+                       this.groups=userDoc['memberof'];
+                       this.showDialog=true;
+                     }
+                     
+                     //console.log(this.showDialog);
                    }
                   }
                   else{

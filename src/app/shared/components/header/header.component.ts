@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit {
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
         localStorage.removeItem('url');
-        localStorage.removeItem('group');
         Cookie.delete('isLoggedin');
         this.userService.logout();
     }

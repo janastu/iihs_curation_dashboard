@@ -66,12 +66,13 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                   var boards:any=[];
                   boards = res;
                   boards.map(board=>{
-                    this.statefeeds.length=0;
-                    console.log("feesd",params.boardname,isodate.toISOString());
+                    this.feeds.length=0;
+                    //console.log("feesd",params.boardname,isodate.toISOString());
                     this.archiveService.getPublishedFeeds(isodate.toISOString(),board.value).then(res=>{
-                      this.statefeeds.push(res['value'].feeds);
-                      this.util.sortdescending(_.flatten(this.statefeeds)).then(res=>{
-                        this.feeds = res;
+                      //this.statefeeds.push(res['value'].feeds);
+                      this.util.sortdescending(_.flatten(res['value'].feeds)).then(res=>{
+                        this.feeds.push({board: board.value, data:res});
+                        //this.feeds = res;
                         if(this.feeds){
                           this.spinnerState=false;
                         }

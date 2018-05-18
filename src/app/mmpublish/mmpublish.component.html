@@ -20,8 +20,9 @@
                <button class="btn btn-md btn-success" [routerLink]="['/mm',boardnamepublished,datepublished]" [routerLinkActive]="['router-link-active']">Send mail</button> 
                         <div class="container">
 
-<div *ngFor='let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
-
+<div *ngFor='let item of feeds '>
+  <h2 class="text-center">{{item.board}}</h2>
+  <div *ngFor='let feed of item.data | paginate: { itemsPerPage: 10, currentPage: p};index as i'>
 <ng-container *ngIf = "view === null;then first"></ng-container> 
   
 <ng-template #first><app-magazineview [feeds]='feed' [index]='i'></app-magazineview></ng-template>
@@ -42,6 +43,7 @@
  <app-title-view [feeds]='feed'  [index]='i'></app-title-view>
 </div>                
 
+</div>
 </div>
 </div>
 <!--Component to display if Card view is selected-->

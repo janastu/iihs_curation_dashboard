@@ -67,7 +67,20 @@ auth:any;//varable to store the auth object
   	    	    emit([doc.feednme,doc.pubDate],doc);
   	    	  }
   	    	}.toString()
-  	    }
+  	    },
+        link: {
+          map: function (doc) {
+            if(doc.meta.xmlurl==null){
+                                    emit([doc.meta.link, doc.feednme], doc.title);
+                      }
+            else{
+              emit([doc.meta.xmlurl,doc.feednme],doc.title)
+            }
+          }.toString(),
+          reduce: function (doc) {
+            return doc.feednme;
+          }.toString()
+        }
   	  }
   	}
     var filterdoc = {
