@@ -17,7 +17,7 @@
       <div class="col">
             <div class="mb-3">
                      
-               <button class="btn btn-md btn-success" [routerLink]="['/mm',boardnamepublished,datepublished]" [routerLinkActive]="['router-link-active']">Send mail</button> 
+               <button class="btn btn-md btn-success" (click)="sendInnewTab()">Send mail</button> 
                         <div class="container">
 
 <div *ngFor='let item of feeds '>

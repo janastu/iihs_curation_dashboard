@@ -75,6 +75,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
                       //this.statefeeds.push(res['value'].feeds);
                       this.util.sortdescending(_.flatten(res['value'].feeds)).then(res=>{
                         this.feeds.push({board: board.value, data:res});
+                        this.feeds.sort(function(a,b) {return (a.board > b.board) ? 1 : ((b.board > a.board) ? -1 : 0);} );
                         //this.feeds = res;
                         if(this.feeds){
                           this.spinnerState=false;
@@ -141,7 +142,10 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   public closeAlert() {
       this.alertNofeeds=false;
   }
-   
+   //Send in new tabs
+   sendInnewTab(){
+     window.open('#/mm/'+this.boardnamepublished+'/'+this.datepublished);
+   }
 
 }
 
