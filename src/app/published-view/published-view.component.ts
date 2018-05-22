@@ -37,7 +37,7 @@ alertnote:boolean=false;
                               console.log(res['value']);
                             //this.statefeeds = res['value'].feeds;
                              this.statefeeds.push({board: params.boardname, data:res['value'].feeds});
-
+                               
                               this.alertnote = true;
                               //console.log(this.alertnote);
                             setTimeout(() => this.alertnote = false, 2000);
@@ -64,6 +64,8 @@ alertnote:boolean=false;
                                 /*this.displayPublishedfeeds = */
                                 this.statefeeds.push({board: board.value, data:res});
                                  console.log("alert",this.statefeeds);
+                                  this.statefeeds.sort(function(a,b) {return (a.board > b.board) ? 1 : ((b.board > a.board) ? -1 : 0);} );
+                                 
                                 setTimeout(() => this.alertnote = false, 2000);
                               });
 
