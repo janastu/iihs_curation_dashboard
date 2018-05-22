@@ -144,7 +144,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
   }
    //Send in new tabs
    sendInnewTab(){
-     window.open('#/mm/'+this.boardnamepublished+'/'+this.datepublished);
+     //window.open('#/mm/'+this.boardnamepublished+'/'+this.datepublished);
    }
 
 }
