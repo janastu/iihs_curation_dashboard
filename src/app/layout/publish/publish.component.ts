@@ -201,8 +201,8 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                // localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
                    // window.open('#/')
                
-                   this.router.navigate(['/mm',this.boardname,transform]);
-               
+                   //this.router.navigate(['/mm',this.boardname,transform]);
+                   window.open('#/mm/'+this.boardname+'/'+transform);
               }
             });
       }
@@ -221,8 +221,8 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
              //localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
       
           
-               this.router.navigate(['/mm',this.boardname,transform]);
-             
+               //this.router.navigate(['/mm',this.boardname,transform]);
+             window.open('#/mm/'+this.boardname+'/'+transform);
           }
         });
 
