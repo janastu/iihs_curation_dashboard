@@ -30,6 +30,7 @@ view:any;      //variable to store the view state
 datepublished:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
+url:any;  
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
   //On loading Component
   ngOnInit() {
@@ -50,6 +51,7 @@ alertNofeeds:boolean=false;//alert variable to store boolean values if the given
               this.datepublished = params.date;
               console.log(this.datepublished);
               this.boardnamepublished = params.boardname;
+              this.url='#/mm/'+this.boardnamepublished+'/'+this.datepublished;
               if(params.date && params.boardname != '*'){
                 this.feeds.length = 0;//set the feeds array as empty to display the feeds
                    this.spinnerState=true;//set the spinner state as true
