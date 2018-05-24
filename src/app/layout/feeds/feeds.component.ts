@@ -33,7 +33,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   //On loading Component
   ngOnInit() {
     this.user =localStorage.getItem('name');
-        
+          
         //this.usersview = localStorage.getItem('view');
      
         this.view = localStorage.getItem('view') || null;
@@ -43,7 +43,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
      //Access the query parameter and filter the feeds according to category
           this.route.queryParams
                 .subscribe(params => {
-
+                  this.p=0;
                  this.spinnerState=true;//Set spinner 
                  this.feeds.length=0;//Clear the feeds array
 

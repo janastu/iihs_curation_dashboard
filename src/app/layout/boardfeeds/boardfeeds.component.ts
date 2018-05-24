@@ -42,7 +42,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
     this.route.queryParams
          .subscribe(params => {
 
-           
+             this.p=0;
              this.feeds.length=0;//Clear the feeds array 
 
            //Call service function to get board feeds by passing board name as parameter
