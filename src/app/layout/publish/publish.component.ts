@@ -12,7 +12,7 @@ import { ArchiveService } from '../../services/archive-service';//Import feed se
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 
 @Component({
-  
+
   selector: 'app-publish',
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.scss'],
@@ -37,27 +37,27 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
 model:any=false;
 showDialog:boolean=false;
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
-checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
+checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 checkedtopublish:boolean=false; //state variable to store the status variable of publish button
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
     public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
     public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
-    public location:Location) { 
-   
+    public location:Location) {
+
   }
   //On loading Component
   ngOnInit() {
-   
+
     //checkbox form builder
      /* this.checkForm = this.formBuilder.group({
               feeds: this.formBuilder.array([])
       });
       console.log(this.checkForm);*/
     this.user =localStorage.getItem('name');
-    
+
     //this.usersview = localStorage.getItem('view');
-   
+
     this.view = localStorage.getItem('view') || null;
 
     this.route.params
@@ -70,7 +70,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
             .subscribe(params => {
              //console.log("paraparams);
            //get the board feeds
-           
+
            this.dataservice.getboardfeeds(params.id).then(res=>{
              //console.log(res);
             //Function call to check for the deleted feeds
@@ -83,15 +83,15 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                     }
                 })
-             
-             
-             
+
+
+
              this.util.checkForPublished(res,this.boardname).then(res=>{
                //this.feeds=res;
                this.publishedfeeds=res;
              });
             });
-           
+
            //get the board feeds of today's
           this.dataservice.gettodayBoardFeeds().then(res=>{
              var todayAnnotatedFeeds:any=[];
@@ -106,21 +106,21 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                    }
                  }
                }
-               
+
                /*   var datefeed = this.feeds.map( (board, index) => {
-                     
-                     return  _.filter(todayAnnotatedFeeds,function(o) { 
+
+                     return  _.filter(todayAnnotatedFeeds,function(o) {
 
                        if(o.value._id===board.value._id){
-                       return o  ; 
+                       return o  ;
                      }
                      });
 
                   });
-               
+
                   //Map Annos for Boards to return boolean array
-                  //Returns example:[true,false,true] 
-                  //Index of output == Index of label which means label[0] and label[1] 
+                  //Returns example:[true,false,true]
+                  //Index of output == Index of label which means label[0] and label[1]
                   //is active for above output
                  this.feedstobechecked  =  datefeed.map(anno=>{
 
@@ -129,19 +129,19 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                        }
                         else{
                           return false;
-                        
+
                       }
                   })*/
 
-                
-                
-               
+
+
+
                  //console.log("yeno",this.feedstobechecked);
-              
+
            })
         });
      });
-   
+
   }
   //Function to handle checked Input values from the child view component
   handleCheckedInput(event){
@@ -157,31 +157,31 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
             this.feeds[i].Checked = this.selectedAll;
             this.checkedtopublish = this.selectedAll;
           }
-          
+
         }
-        
+
       }
   }
 //Function called when clicked on publish
   publish(){
     //console.log(this.checkedfeeds);
     var publishedfeeds = this.feeds.filter(feed=>{
-      return feed.Checked;  
+      return feed.Checked;
     })
    // console.log(publishedfeeds);
-   
+
    var pub_date = new Date(); //get today's date
     var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
     let parsed = Date.parse(transform);//Parse the date to timestamp
     let isodate = new Date(parsed);//get the date by passing the transformed date
     //console.log(isodate);
-    
+
    //Generating publishong url
     var urltree = this.router.createUrlTree(['mm',this.boardname,transform]);
     //this.datepipe.transform(pub_date, 'yyyy-MM-dd')]
     var url = this.urlSerializer.serialize(urltree);
     this.publishingurl = window.location.origin + this.location.prepareExternalUrl(url);
-  
+
     //Data model for storing the published feeds
     let doc={
       'pub_date':isodate.toISOString(),
@@ -200,36 +200,39 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                 //console.log("inadd",publishedfeeds);
                // localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
                    // window.open('#/')
-               
+                    this.alertPublished = true;
+                    setTimeout(() => this.alertPublished = false, 2000);
+                    this.ngOnInit();
                    //this.router.navigate(['/mm',this.boardname,transform]);
-                   window.open('#/mm/'+this.boardname+'/'+transform);
+                   window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
               }
             });
       }
       else{
         //console.log(publishedfeeds);
         publishedfeeds.map(pubfeed=>{
-            
+
           res['value']['feeds'].push(pubfeed);
-        })    
+        })
           res['value']['modified_pub_date']=pub_date;
-          //console.log(res);  
+          //console.log(res);
           //this.archiveService.postjsonfile(res,this.boardname,transform);
         this.archiveService.updatedatabase(res['value']).then(response=>{
           if(response['ok']==true){
               //console.log("inupdate",res['value']['feeds']);
              //localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
-      
-          
+                this.alertPublished = true;
+                setTimeout(() => this.alertPublished = false, 2000);
+                this.ngOnInit();
                //this.router.navigate(['/mm',this.boardname,transform]);
-             window.open('#/mm/'+this.boardname+'/'+transform);
+             window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
           }
         });
 
       }
     })
-   
-   
+
+
 
   }
 
@@ -252,7 +255,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
         this.feeds = res;
       }
     })
-  
+
   }
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
@@ -268,7 +271,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
       this.util.sortdescending(this.variab.globalfeeds).then(res=>{
         this.feeds = res;
       })
-     
+
     }
     if(childSortLabel === 'Oldest'){
       //If input is oldest sort the feeds in the descending order
@@ -289,11 +292,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
   onpage(){
     window.scroll(0,0);
   }
-   
-   
+
+
 
 }
-
-
-
-
