@@ -30,6 +30,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
       this.spinnerState=true;
     //Fetch the data from service and store in global variable
   	this.dataservice.getrecentlyread(this.user).then(result=>{
+                      this.p=0;
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
                        

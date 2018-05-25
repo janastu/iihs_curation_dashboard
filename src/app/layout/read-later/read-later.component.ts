@@ -32,6 +32,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     this.view = localStorage.getItem('view');
       this.spinnerState=true;
     this.dataservice.getreadlater(this.user).then(result=>{
+      this.p=0;
       //Set result to global variable as it can be accessed outdside the component
         this.variab.readlaterfeeds=result;
           //this.feeds=this.variab.readlaterfeeds; 

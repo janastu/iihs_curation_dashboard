@@ -30,6 +30,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
+    this.p=0;
       this.spinnerState=true;
      //Fetch the data from service and store in global variable
      this.dataservice.getdeletedfeeds(this.user).then(res=>{

@@ -73,11 +73,11 @@
                  </div>
 
                  <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content">
-                     {{item.value.description.substring(0,100)}}
+                     {{item.value.description.substring(0,100)}}..
 
                  </div>
                  <div *ngIf="html.checkhtml(item.value.description)" class="feed-content">
-                     {{html.stripHtml(item.value.description).substring(0,100)}}
+                     {{html.stripHtml(item.value.description).substring(0,100)}}..
 
                  </div>
                 
