@@ -202,7 +202,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
                    // window.open('#/')
                
                    //this.router.navigate(['/mm',this.boardname,transform]);
-                   window.open('#/mm/'+this.boardname+'/'+transform);
+                   window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
               }
             });
       }
@@ -222,7 +222,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
       
           
                //this.router.navigate(['/mm',this.boardname,transform]);
-             window.open('#/mm/'+this.boardname+'/'+transform);
+             window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
           }
         });
 
