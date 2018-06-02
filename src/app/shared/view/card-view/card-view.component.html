@@ -21,26 +21,26 @@
                 </div>
                     <div class="card-block card-text">
                       <!--Feed Title-->
-                    
+
                       <a href={{item.value.link}} target="_blank" class="feed-title">{{item.value.title.substring(0,60)}}</a>
                        <!--Feed Category-->
                       <a href={{item.value.link}} class="feeds-data">{{item.value.meta.categories}}</a>
                       <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} class="feeds-data">{{item.value.feednme}}</a>
                       <!--Feed Date-->
-                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date}}</small>
-                      <!--Feed description--> 
-                      <p *ngIf="html.checkimg(item.value.description)" class="feed-desc"></p> 
+                      <small class="text-muted card-ago"><i class="fa fa-clock"></i> {{item.value.pubDate | date:'dd MMM yyyy'}}</small>
+                      <!--Feed description-->
+                      <p *ngIf="html.checkimg(item.value.description)" class="feed-desc"></p>
                       <p *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-desc">{{item.value.description.substring(0,85)}}..</p>
                       <p *ngIf="html.checkhtml(item.value.description)" class="feed-desc">
                           {{html.stripHtml(item.value.description).substring(0,100)}}..
 
                       </p>
                     </div>
-                </div>    
+                </div>
           </div>
         </div>
       </div>
-    
+
 </div>
 <div  class= "col-sm-6 offset-sm-3" *ngIf="feeds.length != 0">
 <!--<div (click)="onpage()"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>-->

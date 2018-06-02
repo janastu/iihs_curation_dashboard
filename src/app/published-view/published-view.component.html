@@ -3,17 +3,17 @@
     <!--<div class="=row">
       <div class="col-sm-9 offset-sm-1">
       <a href="{{mmurl}}"> <img src="assets/images/radio.png" width="
-      50px" height="50px">        
+      50px" height="50px">
       </a>
-    
-        <a href="{{archivesurl}}" class="archive-image-position"> 
+
+        <a href="{{archivesurl}}" class="archive-image-position">
           <i class="fa fa-fw fa-archive font-icon"></i>
           Archives
         </a>
       </div>
     </div>-->
     <div >
-      
+
           <ngb-alert *ngIf="alertnote" (close)="closeAlert()"><h6><b>Note</b>:To send mail,Copy the content and paste in your mail (Press Ctrl+A to select all,Ctrl+C to copy and Ctrl+v to paste)</h6></ngb-alert>
         <div class="card-blocks">
           <div class="row centered">
@@ -23,27 +23,27 @@
           <div class="offset-md-2 col-md-8">
           <div class="header-table clearfix">
             <div class="pull-left">
-              <a href="{{mmurl}}"> <img src="assets/images/radio.png" width="50px" height="50px">       
+              <a href="{{mmurl}}"> <img src="assets/images/radio.png" width="50px" height="50px">
              </a>
             </div>
             <div class="pull-right">
-              <a href="{{archivesurl}}" target="_blank" class="archive-image-position"> 
+              <a href="{{archivesurl}}" target="_blank" class="archive-image-position">
                 Archives
               </a>
             </div>
           </div>
-              
-            
+
+
            <div class="body-table">
-            
-            <div class="body-wrap"> 
+
+            <div class="body-wrap">
             <div class="" *ngFor="let feed of statefeeds">
               <div class="board-heading">
               <h2 class="text-center">{{feed.board}}</h2>
             </div>
             <div *ngFor="let item of feed.data">
             <div class="feed-entry" *ngIf="item.value.description != null">
-            <!--Feed Image--> 
+            <!--Feed Image-->
              <div *ngIf="html.checkimg(item.value.description)" class="desc-image">
               <img [src]="html.extracturl(item.value.description)" class="magazine-image">
              <!--<div [innerHtml]="extracturl(item.value.desc)" class="magazine-image"></div>-->
@@ -52,7 +52,7 @@
               <div class="desc-image hide-image">
               <img  src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" class="magazine-image hide-image">
               </div>
-             
+
              </div>
 
              <div>
@@ -65,11 +65,11 @@
                    {{item.value.meta.categories}}</span>
                  <!--Feed Date-->
                  <span class="metadata-magazine">
-                   {{item.value.pubDate | date}}
+                   {{item.value.pubDate | date:'dd MMM yyyy'}}
                  </span>
                  <!--Feed Desc-->
                  <div *ngIf="html.checkimg(item.value.description)" class="feed-content">
-                     
+
                  </div>
 
                  <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content">
@@ -80,20 +80,20 @@
                      {{html.stripHtml(item.value.description).substring(0,100)}}..
 
                  </div>
-                
+
              </div>
-            </div> 
+            </div>
           </div>
         </div>
           </div>
           </div>
           </div>
         </div>
-        
+
       </div>
 
-    </div> 
-  
-  </div>   
-  
+    </div>
+
+  </div>
+
 </div>

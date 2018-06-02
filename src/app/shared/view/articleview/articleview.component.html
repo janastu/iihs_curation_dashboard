@@ -1,7 +1,7 @@
 <div [@routerTransition]>
-  
+
   <div class="row">
-    
+
     <div class="col-sm-6 offset-sm-3">
 
         <div class="card-blocks">
@@ -9,23 +9,23 @@
           <div class="row">
 
               <div class="feeds-entries">
-                
+
                 <div class="row">
                 <div *ngIf="router.url.includes('/boardfeeds')">
                   <div *ngIf=publishedfeeds[index] class="publish_checkbox">
                      <label>Published</label>
                   </div>
-                  <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                  <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox"
                   (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked"/>
-                </div>  
-               
-                  
+                </div>
+
+
                     <div *ngIf="router.url.includes('/publish')">
                         <div *ngIf=publishedfeeds[index] class="publish_checkbox">
                            <label>Published</label>
                         </div>
                         <div *ngIf=!publishedfeeds[index]>
-                          <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" 
+                          <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox"
                           (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title" [checked]="item.Checked"/>
                         </div>
                     </div>
@@ -40,34 +40,34 @@
                   <a *ngIf="!item.value.meta.categories[0]" href={{item.value.link}} target="_blank" class="metadata-article">
                   {{item.value.feednme}}</a>
                   <!--Feed Date-->
-                  
+
                   <a  class="metadata-article">
-                          {{item.value.pubDate | date}}
+                          {{item.value.pubDate | date:'dd MMM yyyy'}}
                   </a>
-                
-                 
+
+
                   </div>
                   <!--Feed Toolbar-->
                   <div class="row" *ngIf="!router.url.includes('/mm')">
 
                     <app-article-toolbar [item]='item' [index]='index'></app-article-toolbar>
-                  
+
 
                   </div>
                   <!--Feed Image-->
-                  
+
                     <div *ngIf="html.checkimg(item.value.description)" class="row">
                     <!--<div [innerHtml]="extracturl(item.value.desc)" class="article-image"></div>-->
                       <img [src]="html.extracturl(item.value.description)" data-image-enhancer="larger than 578" class="article-image">
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description)" class="row">
                       <!--<img src="http://drpattydental.com/wp-content/uploads/2017/05/placeholder.png" data-image-enhancer="larger than 578" class="hide-image">-->
-                    
+
                     </div>
                   <!--Feed Desc-->
                   <div class="row" *ngIf="item.value.description != null">
                     <div *ngIf="html.checkimg(item.value.description)" class="feed-content article-feed-content">
-                          
+
                     </div>
                     <div *ngIf="!html.checkimg(item.value.description) && !html.checkhtml(item.value.description)" class="feed-content article-feed-content">
                             {{item.value.description.substring(0,200)}}..
@@ -77,7 +77,7 @@
 
                     </div>
                   </div>
-                  
+
 
               </div>
 
@@ -87,7 +87,5 @@
 
     </div>
   </div>
-       
+
 </div>
-
-
