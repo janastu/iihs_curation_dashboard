@@ -4,7 +4,7 @@ import { Settings } from './settings';
 import { Global } from '../shared/global'
 import PouchDB from 'pouchdb';
 declare function emit(key: any,value:any): void;
-@Injectable() 
+@Injectable()
 
 export class DbConfig {
 remotefeeds:any;//variable to store the remote url of the feeds database
@@ -15,7 +15,7 @@ remotearchives:any;//variable to store the remote url of the archives database
 auth:any;//varable to store the auth object
 //test:any;//chek if pouchdb instance changes
   constructor(private http: Http, private settings:Settings,public variab:Global) {
-  	
+
   	    this.auth={
   			      username:this.settings.couchdbusername,
   			      password:this.settings.couchdbpassword
@@ -44,11 +44,9 @@ auth:any;//varable to store the auth object
                   }
                 }.toString()
         },
-        metacategoryfeeds: {
+        feedsondate: {
                 map: function (doc) {
-                  if (doc.meta) {
-                    emit(doc.meta.categories[0],doc);
-                  }
+                 emit([doc.pubdate],{link:doc.link,feedname:doc.feednme});
                 }.toString()
         },
   	    metacategories: {
@@ -89,9 +87,9 @@ auth:any;//varable to store the auth object
           filters:{
             latestoldestcategory: function (doc,req) {
                 if (doc.feednme==req.query.category ) {
-              
+
                   return doc;
-              
+
                 }
               }.toString(),
             metacategories: function (doc,req) {
@@ -101,10 +99,10 @@ auth:any;//varable to store the auth object
                   return doc;
                 }
               }.toString()
-            
+
           }
     }
-    
+
     var testdoc = this.createDesignDoc('feeds_filter', function (doc) {
       emit(doc.pubdate, doc);
     });
@@ -116,8 +114,8 @@ auth:any;//varable to store the auth object
          }
          // ignore if doc already exists
      })
-    
-    
+
+
    /* var linkdoc = {
           _id: '_design/links',
           views: {
@@ -129,11 +127,9 @@ auth:any;//varable to store the auth object
                 return null;
               }.toString()
             }
-
           }
-
     }*/
-   
+
     // save and update the design doc
     this.getFeedDesignDoc(ddoc).then(res=>{
       console.log("response",res);
@@ -197,7 +193,7 @@ auth:any;//varable to store the auth object
         return delay * 3;
       }
     });*/
-     
+
     /*this.remotefeeds.replicate.to(this.variab.localfeeds, {
       filter: 'feedsfilter/latestoldestcategory',
       query_params: {category:'Times'}
@@ -205,7 +201,7 @@ auth:any;//varable to store the auth object
       // yo, something changed!
       console.log("syncchnagefeeds",change);
     });*/
-  	
+
     //Synch pouchdb with couchdb
   /*this.variab.localfeeds.sync(this.remotefeeds, {
   	  live: true,
@@ -229,7 +225,7 @@ auth:any;//varable to store the auth object
     ddoc.views[name] = { map: mapFunction.toString() };
     return ddoc;
   }
-  
+
 
   //get feeds design doc to update the doc with rev
   getFeedDesignDoc(ddoc){
@@ -259,33 +255,32 @@ auth:any;//varable to store the auth object
       this.variab.localfeeds.get('_design/feedsfilter').then(function(doc) {
            filterdoc._rev = doc._rev;
            resolve(filterdoc);
-       }).catch(err=>{ 
+       }).catch(err=>{
          resolve(err);
        });
     });
   }
-  
+
   //Database setup for annotations before the application loads
   dbsetupannos(){
 
   	//Create pouchdb instance for annotations
   	 this.variab.localannotations = new PouchDB('iihs_annotation',{auto_compaction: true}); //create a pouchdb
   	   this.variab.localannotations.viewCleanup();
-     //Create reomte couchdb instance for annotations 
+     //Create reomte couchdb instance for annotations
   	 this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
   	           auth:this.auth,
                adapter:'http',
                auto_compaction: true
   	     });
   	 //create design docs
-
   	  var ddoc = {
   	    _id: '_design/annotations',
   	    views: {
   	      boardannotation: {
   	        map: function (doc) {
   	          if (doc.label && doc.motivation ==='tagging' && !doc.hideboardanno) {
-  	                   
+
   	                    emit(doc.label[0],doc);
   	                  }
   	        }.toString()
@@ -366,7 +361,7 @@ auth:any;//varable to store the auth object
 
   	    }
   	  }
-  	  
+
 
 
   	  // save the design doc
@@ -450,8 +445,8 @@ auth:any;//varable to store the auth object
         console.log("syncerr",err);
         // yo, we got an error! (maybe the user went offline?)
       })*/
-      
-      
+
+
 
   }
    //get annotations design doc to update the doc with rev
@@ -502,16 +497,14 @@ auth:any;//varable to store the auth object
   //Database setup for groups before app loads
   dbsetupgroups(){
   	//Create pouchdb instance for groups
-  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb 
+  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb
   	//Create reomt  e couchdb instance for groups
   	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups,{
       auth:this.auth
     });
   	//Synch pouchdb with couchdb
 
-    
       //create design docs
-
       var ddoc = {
         _id: '_design/groups',
         views: {
@@ -547,7 +540,7 @@ auth:any;//varable to store the auth object
                 throw err;
               }
               // ignore if doc already exists
-            }); 
+            });
          }
          else{
           // save the design doc
@@ -559,7 +552,7 @@ auth:any;//varable to store the auth object
           });
          }*/
       })
-      
+
   	/*this.variab.localgroups.sync(this.remotegroups, {
   	  live: true,
   	  retry:true,
@@ -570,7 +563,7 @@ auth:any;//varable to store the auth object
   	}).on('error', function (err) {
   		console.log("syncerr",err);
   	  // yo, we got an error! (maybe the user went offline?)
-  	})*/	
+  	})*/
 
   }
   //get groups design doc update the doc with rev
@@ -602,7 +595,7 @@ auth:any;//varable to store the auth object
   	//Create reomte couchdb instance for boards
   	this.remoteboards = new PouchDB(this.settings.protocol+this.settings.dbboards,{
   	  	    auth:this.auth,
-            adapter:'http'  
+            adapter:'http'
   	  });
     //create the design doc
     var ddoc = {
@@ -611,7 +604,7 @@ auth:any;//varable to store the auth object
         boards: {
           map: function (doc) {
             if(doc.label && doc.motivation === 'identifying' && !doc.hidden){
-               emit(doc.label,doc);  
+               emit(doc.label,doc);
            }
           }.toString()
         }
@@ -638,7 +631,7 @@ auth:any;//varable to store the auth object
               throw err;
             }
             // ignore if doc already exists
-          }); 
+          });
        }
        else{
         // save the design doc
@@ -692,8 +685,8 @@ auth:any;//varable to store the auth object
       this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
             auth:this.auth
       });
-      
-    
+
+
     //create the design doc
         var ddoc = {
           _id: '_design/archives',
@@ -702,7 +695,7 @@ auth:any;//varable to store the auth object
               map: function (doc) {
                 if (doc.pub_date) {
                   emit([doc.pub_date,doc.boardname], doc);
-                } 
+                }
               }.toString()
             },
             publishedfeeds:{
@@ -747,10 +740,10 @@ auth:any;//varable to store the auth object
             }
           }
         }
-    
+
     //console.log("called");
    //return new Promise(resolve=>{
-  
+
         //console.log(ddoc);
         this.getArchivesDesigndoc(ddoc).then(res=>{
           //console.log("archives",res);
@@ -773,7 +766,7 @@ auth:any;//varable to store the auth object
                   throw err;
                 }
                 // ignore if doc already exists
-              }); 
+              });
            }
            else{
             // save the design doc
@@ -789,7 +782,7 @@ auth:any;//varable to store the auth object
           //console.log("archives",res);
           //resolve(res);
           this.remotearchives.put(res).catch(function (err) {
-            
+
             if (err.name !== 'conflict') {
               throw err;
             }
@@ -807,12 +800,12 @@ auth:any;//varable to store the auth object
                   throw err;
                 }
                 // ignore if doc already exists
-              }); 
+              });
            }
            else{
             // save the design doc
             this.remotearchives.put(res).catch(function (err) {
-              
+
               if (err.name !== 'conflict') {
                 throw err;
               }
@@ -831,9 +824,8 @@ auth:any;//varable to store the auth object
             console.log("syncerr",err);
             // yo, we got an error! (maybe the user went offline?)
           })*/
-        
-    //});   
 
+    //});
   }
   //get annotated feeds design doc update the doc with rev
   getArchivesDesigndoc(ddoc){
@@ -876,5 +868,5 @@ auth:any;//varable to store the auth object
        });
     });
   }
- 
+
 }
