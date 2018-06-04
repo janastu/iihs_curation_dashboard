@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 */
 @Injectable()
 export class Settings{
- 
+
 	constructor(){
 
 
@@ -20,8 +20,8 @@ export class Settings{
 	protocol: any = environment.dbprotocol;
 
 	//host:any='login.test.openrun.net';
-	
-	dbfeed:any=environment.dbhost+'/feeds'; //feeds database
+
+	dbfeed:any=environment.dbhost+'/feeds_new'; //feeds database
 	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
 	dbboards: any = environment.dbhost +'/boards';	//boards database
 	dbgroups: any = environment.dbhost +'/groups';	//groups database
@@ -32,5 +32,5 @@ export class Settings{
 	superloginserverUrl:any= environment.dbprotocol+environment.authHost; // super login server url
     //superloginserverUrl:any='http://192.168.99.100:3000'
 	feedparserUrl: any = environment.dbprotocol+environment.feedParserHost;  // super login  s erv er url
-	
+
 }
