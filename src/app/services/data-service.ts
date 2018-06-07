@@ -13,7 +13,7 @@ export class DataService {
   user:any;
   password:any;
   auth:any;
-constructor(private http: Http,private settings:Settings,public variab:Global) { 
+constructor(private http: Http,private settings:Settings,public variab:Global) {
     this.user = localStorage.getItem('name');
         this.auth={
               username:this.settings.couchdbusername,
@@ -44,24 +44,24 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
               }
-             
+
            }
 
           resolve(result);
        }
-       
+
      });
     });
 
 
   }
- 
+
   //Api service to get board annotations
-  getannotations(){ 
-    
+  getannotations(){
+
 
    return new Promise(resolve => {
-   
+
      this.remoteannos.query('annotations/boardannotation', {
            stale: 'update_after'
          }).then(function (result) {
@@ -74,11 +74,11 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get read later annotations
-  getreadlaterannotations(){ 
-    
+  getreadlaterannotations(){
+
 
    return new Promise(resolve => {
-   
+
      this.remoteannos.query('annotations/readlater', {
            stale: 'update_after'
          }).then(function (result) {
@@ -91,11 +91,11 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get rece  ntly read annotations
-  getrecentlyreadannotations(){ 
-    
+  getrecentlyreadannotations(){
+
 
    return new Promise(resolve => {
-   
+
      this.remoteannos.query('annotations/recentlyread', {
            stale: 'update_after'
          }).then(function (result) {
@@ -137,7 +137,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     //});
     });
 
-  
+
 
 
   }
@@ -152,7 +152,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        }).then(res=>{
       console.log(res);
       if(res['ok']==true){*/
-    
+
       this.remoteannos.query('annotatedfeeds/readlaterfeeds', {
           key:usr,
           stale: 'update_after'
@@ -197,7 +197,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
 
   }
- 
+
   //Api service to get deleted feeds
   getdeletedfeeds(usr){
 
@@ -211,9 +211,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     console.log(res);
     if(res['ok']==true){ */
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
-          key:[usr],
-          stale: 'update_after'
-          
+
         }).then(function (result) {
        console.log("res",result);
         resolve(result.rows);
@@ -236,7 +234,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
             startkey:starttime,
             endkey:endtime,
             stale: 'update_after'
-            
+
           }).then(function (result) {
          //console.log("res",result);
           resolve(result.rows);
@@ -264,7 +262,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   }
   //Function to add the board feeds to a local json
  /* addFeedstoJson(data) {
-    
+
      let headers = new Headers();
       headers.append( 'Content-Type', 'application/json')
        headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -272,7 +270,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      this.http.post(this.settings.feedparserUrl,data,options).map(res=>res.json()).subscribe((response)=> {
        console.log(response);
      },(err)=>{
-      console.log(err); 
+      console.log(err);
    });
    }*/
 }

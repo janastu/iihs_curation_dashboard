@@ -23,7 +23,8 @@ boardname:any;         //Variable to store the board name to display in the page
 user:any;              //Variable to store user name of the logged in user
 publishedfeeds:any=[]; //Variable to sotre the values of already published feeds
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
-checkedfeeds:any=[]; //Variable to sotre the feeds that are checked 
+spinnerstatedelete:boolean=false;
+checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
 selectedAll:any;
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
 checkedtodelete:boolean=false; //state variable to store the status variable of delete button
@@ -37,13 +38,13 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
           .subscribe(params => {
             this.boardname = params.id;
             //console.log(params);
-     })  
+     })
     //Get the boardname from query parameters
     this.route.queryParams
          .subscribe(params => {
 
              this.p=0;
-             this.feeds.length=0;//Clear the feeds array 
+             this.feeds.length=0;//Clear the feeds array
 
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
@@ -57,9 +58,9 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
 
                      //Get the deleted and feeds store and display using feeds variable
                      this.feeds = res;
-                   
-                  
-                  
+
+
+
                     if(this.feeds){
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                     }
@@ -68,19 +69,19 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                     if(this.feeds.length==0){
                       this.alertNofeeds=true;
                     }
-                 
+
                  this.util.checkForPublished(res,this.boardname).then(res=>{
                   this.publishedfeeds=res;
                  });
-                
-                 })  
-                
+
+                 })
+
                });
            });
-            
+
     });
 
-    
+
   }
   //Function to handle published and non published feed
   /*public handlePublished(){
@@ -110,13 +111,13 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
           this.feeds = res;
           console.log(this.feeds)
         })
-    
+
     }
     if(childSortLabel === 'Oldest'){
       this.util.sortascending(this.variab.boardfeeds).then(res=>{
         this.feeds = res;
       })
-  
+
     }
   }
   //Function to handle clear Date event from page-header component
@@ -131,7 +132,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   }
   //Function to delete checked feeds
   deleteChecked(){
-    
+      this.spinnerstatedelete=true;
       this.checkedfeeds=this.feeds.filter(everyfeed=>{
         return everyfeed.Checked;
       })
@@ -147,6 +148,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                 //console.log()
              });
            this.selectedAll=false;
+           this.spinnerstatedelete=false
          }
        });
     })
@@ -162,6 +164,6 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   onpage(){
     window.scroll(0,0);
   }
-   
+
 
 }
