@@ -66,13 +66,13 @@ auth:any;//varable to store the auth object
   	    	  }
   	    	}.toString()
   	    },
-        deleteonview:{
+        /*deleteonview:{
           map: function (doc) {
   	    	  if (doc.feednme == "1") {
   	    	    emit(doc.feednme,doc);
   	    	  }
   	    	}.toString()
-        },
+        },*/
         link: {
           map: function (doc) {
             if(doc.meta.xmlurl==null){
@@ -170,7 +170,7 @@ auth:any;//varable to store the auth object
     }).catch(err=>{
       console.log(err);
     })
-    this.removeUnwanted();
+    //this.removeUnwanted();
 
   }
   createDesignDoc(name, mapFunction) {
@@ -218,7 +218,7 @@ auth:any;//varable to store the auth object
     });
   }
   //Temrorry remove unwanted
-  removeUnwanted(){
+/*  removeUnwanted(){
 	var scope = this;
 	this.remotefeeds.query('feeds/deleteonview', {
 
@@ -241,7 +241,7 @@ auth:any;//varable to store the auth object
 			  		console.log(err);
 			});
 
-}
+}*/
 
   //Database setup for annotations before the application loads
   dbsetupannos(){
