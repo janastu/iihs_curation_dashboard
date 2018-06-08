@@ -66,6 +66,13 @@ auth:any;//varable to store the auth object
   	    	  }
   	    	}.toString()
   	    },
+        deleteonview:{
+          map: function (doc) {
+  	    	  if (doc.feednme == "1") {
+  	    	    emit(doc.feednme,doc);
+  	    	  }
+  	    	}.toString()
+        },
         link: {
           map: function (doc) {
             if(doc.meta.xmlurl==null){
@@ -103,7 +110,7 @@ auth:any;//varable to store the auth object
           }
     }
 
-    var testdoc = this.createDesignDoc('feeds_filter', function (doc) {
+    /*var testdoc = this.createDesignDoc('feeds_filter', function (doc) {
       emit(doc.pubdate, doc);
     });
     console.log(testdoc);
@@ -113,7 +120,7 @@ auth:any;//varable to store the auth object
            throw err;
          }
          // ignore if doc already exists
-     })
+     })*/
 
 
    /* var linkdoc = {
@@ -138,6 +145,7 @@ auth:any;//varable to store the auth object
             if (err.name !== 'conflict') {
               throw err;
             }
+
             // ignore if doc already exists
       })
      /*if(res['status'] == 404){
@@ -162,59 +170,8 @@ auth:any;//varable to store the auth object
     }).catch(err=>{
       console.log(err);
     })
-   /* this.getFeedFilterDoc(filterdoc).then(res=>{
-      console.log(res);
-     if(res['status'] == 404){
-       this.variab.localfeeds.put(filterdoc).catch(function (err) {
-            //console.log(err);
-            if (err.name !== 'conflict') {
-              throw err;
-            }
-            // ignore if doc already exists
-        })
-     }
-     else{
-      this.variab.localfeeds.put(res).catch(function (err) {
-           // console.log(err);
-            if (err.name !== 'conflict') {
-              throw err;
-            }
-            // ignore if doc already exists
-      })
-     }
-    })*/
-    /*this.variab.localfeeds.replicate.to(this.remotefeeds, {
-      live: true,
-      retry: true,
-      back_off_function: function (delay) {
-        if (delay === 0) {
-          return 1000;
-        }
-        return delay * 3;
-      }
-    });*/
+    this.removeUnwanted();
 
-    /*this.remotefeeds.replicate.to(this.variab.localfeeds, {
-      filter: 'feedsfilter/latestoldestcategory',
-      query_params: {category:'Times'}
-    }).then((change)=> {
-      // yo, something changed!
-      console.log("syncchnagefeeds",change);
-    });*/
-
-    //Synch pouchdb with couchdb
-  /*this.variab.localfeeds.sync(this.remotefeeds, {
-  	  live: true,
-  	  retry:true,
-      filter: '_view',
-      view: 'feeds_filter/feeds_filter'
-  	}).on('change', function (change) {
-  	  // yo, something changed!
-  	  console.log("syncchnagefeeds",change);
-  	}).on('error', function (err) {
-  		console.log("syncerr",err);
-  	  // yo, we got an error! (maybe the user went offline?)
-  	})*/
   }
   createDesignDoc(name, mapFunction) {
     var ddoc = {
@@ -260,6 +217,31 @@ auth:any;//varable to store the auth object
        });
     });
   }
+  //Temrorry remove unwanted
+  removeUnwanted(){
+	var scope = this;
+	this.remotefeeds.query('feeds/deleteonview', {
+
+			  }).then(function (result) {
+			  		console.log("resfeeds",result.rows);
+						var storeinter:any=[];
+						storeinter = result.rows;
+						storeinter.map(removefeed=>{
+							//scope.delete(removefeed);
+							scope.remotefeeds.remove(removefeed.value._id, removefeed.value._rev, function(err) {
+				   			if (err) {
+				      		return console.log(err);
+				   		} else {
+								//resolve({ok:true})
+				      	console.log("Document deleted successfully");
+				   		}
+						});
+						})
+			   }).catch(function (err) {
+			  		console.log(err);
+			});
+
+}
 
   //Database setup for annotations before the application loads
   dbsetupannos(){
