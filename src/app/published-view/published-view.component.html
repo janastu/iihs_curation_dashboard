@@ -39,7 +39,7 @@
             <div class="body-wrap">
             <div class="" *ngFor="let feed of statefeeds">
               <div class="board-heading">
-              <h2 class="text-center">{{feed.board}}</h2>
+              <h2>{{feed.board | capitalize:true}}</h2>
             </div>
             <div *ngFor="let item of feed.data">
             <div class="feed-entry" *ngIf="item.value.description != null">

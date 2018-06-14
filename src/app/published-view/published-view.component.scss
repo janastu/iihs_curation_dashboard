@@ -2,14 +2,15 @@
 
 .board-heading{
     margin-top:30px;
+    margin-left: 20px;
 }
 .main-container{
 
     padding: 15px;
-   
+
     position: relative;
-    max-width: 100%; 
-    margin-left: auto; 
+    max-width: 100%;
+    margin-left: auto;
     margin-right: auto;
     margin-top:25px;
 
@@ -91,7 +92,7 @@
 }
 .desc-image magazine-image img{
       width: 130px;
-      height: 90px;  
+      height: 90px;
 }
 .hide-image{
     max-width:0px;
@@ -118,14 +119,14 @@
 }
 .ago{
     font-size: 11px;
-    position: absolute;   
-    margin-top: 4px;  
-    transition: opacity .35s ease;   
+    position: absolute;
+    margin-top: 4px;
+    transition: opacity .35s ease;
 }
 .ago a{
-    color: #a3a3a2; 
+    color: #a3a3a2;
     font-size: 15px;
-    text-align: center; 
+    text-align: center;
     border: transparent;
     z-index: 1;
 }
@@ -146,28 +147,28 @@ To change breakpoint for nav collapse
 
 
 @media  (max-width: 480px) {
- 
+
 
 }
 
 
 
 @media (max-width: 767px) {
-  
+
 }
 
 @media (max-width: 995px) {
-  
+
 }
 
 
 /*========================================================
-  
+
 Bootstrap 3 Media Queries
 
 /*==========  Mobile First Method  ==========
 
-/* Custom, iPhone Retina  
+/* Custom, iPhone Retina
 @media only screen and (min-width : 320px) {
 .feed-entry{
     border-bottom: 0;
@@ -189,7 +190,7 @@ Bootstrap 3 Media Queries
 }
 }
 
-/* Extra Small Devices, Phones  
+/* Extra Small Devices, Phones
 @media only screen and (min-width : 480px) {
 .feed-entry{
     border-bottom: 0;
@@ -211,7 +212,7 @@ Bootstrap 3 Media Queries
 }
 }
 
-/* Small Devices, Tablets 
+/* Small Devices, Tablets
 @media only screen and (min-width : 576px) {
 .feed-entry{
     border-bottom: 0;
@@ -230,7 +231,7 @@ Bootstrap 3 Media Queries
 .magazine-hover-control {
     opacity: 0;
     margin-left: 202px !important;
-}   
+}
 }
 
 @media only screen and (min-width : 768px) {
@@ -251,10 +252,10 @@ Bootstrap 3 Media Queries
 .magazine-hover-control {
     opacity: 0;
     margin-left: 303px !important;
-}   
+}
 }
 
-/* Medium Devices, Desktops 
+/* Medium Devices, Desktops
 @media only screen and (min-width : 992px) {
 .feed-entry{
     border-bottom: 0;
@@ -273,10 +274,10 @@ Bootstrap 3 Media Queries
 .magazine-hover-control {
     opacity: 0;
     margin-left: 293px !important;
-}   
+}
 }
 
-/* Large Devices, Wide Screens 
+/* Large Devices, Wide Screens
 @media only screen and (min-width : 1024px) {
 .feed-entry{
     border-bottom: 0;
