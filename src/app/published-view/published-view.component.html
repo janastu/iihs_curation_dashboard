@@ -39,7 +39,7 @@
             <div class="body-wrap">
             <div class="" *ngFor="let feed of statefeeds">
               <div class="board-heading">
-              <h2>{{feed.board | capitalize:true}}</h2>
+              <h4>{{feed.board | capitalize:true}}</h4>
             </div>
             <div *ngFor="let item of feed.data">
             <div class="feed-entry" *ngIf="item.value.description != null">
@@ -58,7 +58,7 @@
              <div>
                <!--Feed Title-->
                   <a href="{{item.value.link}}">
-                  <h4 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h4></a>
+                  <h5 [ngClass]="{'feed-heading-unmark': feedmark != 1, 'feed-heading-mark': feedmark == 1}"><strong>{{item.value.title}}</strong></h5></a>
                   <!--Feed Category-->
 
                  <span class="metadata-magazine">
