@@ -6,6 +6,7 @@ import { BoardService } from '../../../services/board-service';
 import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
+import { Utilities } from '../../Utilities/utilities';//Import utilities to perform sorting and filtering
 import * as _ from 'lodash';
 import { DatePipe,Location } from '@angular/common';
 @Component({
@@ -16,7 +17,7 @@ import { DatePipe,Location } from '@angular/common';
 })
 
 export class SidebarComponent implements OnInit{
-  
+
     user:any;
     groupname:any;
     isActive = false;
@@ -37,17 +38,17 @@ export class SidebarComponent implements OnInit{
         }
     }
     addFeedClass(element: any) {
-        
+
         if (element === this.showMenu) {
-          
-            this.showMenu = '0';  
+
+            this.showMenu = '0';
         } else {
-            
+
             this.showMenu = element;
 
         }
     }
-   
+
    select(item){
         this.selected = (this.selected === item ? null : item);
      }
@@ -62,19 +63,21 @@ export class SidebarComponent implements OnInit{
        }
 
 
-    
-    constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,public groupService:GroupService,public route:ActivatedRoute){
-   
+
+    constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,
+      public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,
+      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities){
+
 
     }
     ngOnInit(){
 
-      
+
 
       this.user = localStorage.getItem('name');
 
       this.route.queryParams.subscribe(params=>{
-        
+
         if(params.memberof == undefined){
           this.groupname = localStorage.getItem('group');
             //console.log("lo",this.groupname)
@@ -89,21 +92,21 @@ export class SidebarComponent implements OnInit{
 
       })
      /* this.userservice.getAuser(this.user).then(user=>{
-               this.variab.groupname = user['memberof'];  
+               this.variab.groupname = user['memberof'];
       });*/
 
         //Get board annotations
                    this.dataservice.getannotations().then(res=>{
                      //Set result to global variable as it can be accessed outdside the component
                     this.variab.annotations=res;
-                    
+
                     });
              //Get readlater annotations
 
                    this.dataservice.getreadlater(this.user).then(result=>{
                      //Set result to global variable as it can be accessed outdside the component
                        this.variab.readlaterfeeds=result;
-                      
+
                    });
               //Get recently read annotaions
                    this.dataservice.getrecentlyread(this.user).then(result=>{
@@ -118,30 +121,33 @@ export class SidebarComponent implements OnInit{
            //Set result to global variable as it can be accessed outdside the component
           this.variab.categoryfeeds=res;
         //  console.log(this.variab.categoryupdated)
-          
+
         });
 
-        
 
-       
+
+
     }
     getBoardsOngroups(){
-      this.boardservice.getboards().then(res=>{
+      this.util.boardsOnGroup(this.groupname).then(res=>{
+        this.variab.boardupdated=res;
+      })
+      /*this.boardservice.getboards().then(res=>{
         //console.log(res);
         this.variab.boardupdated = res;
        // console.log("boards",this.variab.boardupdated)
        /* boardsOnGroup.push(res);
-        this.variab.boardupdated = _.flatten(boardsOnGroup)*/ 
+        this.variab.boardupdated = _.flatten(boardsOnGroup)
 
         this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
          if(board.value.group){
-            
+
            return board.value.group === this.groupname;
          }
-        
+
         })
         //console.log("boars",this.variab.boardupdated)
-      });
+      });*/
 
     }
     getGroups(){
@@ -153,7 +159,7 @@ export class SidebarComponent implements OnInit{
     }
     //Function called from html to navigate to feeds component with category name variable
     routeto(category){
-        
+
         console.log("lc",category.toLowerCase())
         this.router.navigate(['/feeds'], { queryParams: { feedname: category } })
        // console.log(category);
@@ -161,14 +167,14 @@ export class SidebarComponent implements OnInit{
                  this.variab.globalcatname = category;
                    this.variab.globalfeeds=res;
                      //console.log(this.variab.globalfeeds);
-                 this.componentsService.alert(category,res); 
-        
+                 this.componentsService.alert(category,res);
+
         });*/
 
     }
     //Function called from html to navigate to feeds component with category name in the meta data
     routetometa(category,meta){
-        
+
         this.router.navigate(['/feeds'], { queryParams: { feedname: category , subcategory:meta } });
         //this.router.navigate(['/feeds',category,{subcategory:meta}])
        // console.log(category);
@@ -176,19 +182,19 @@ export class SidebarComponent implements OnInit{
                  this.variab.globalcatname = category;
                    this.variab.globalfeeds=res;
                      //console.log(this.variab.globalfeeds);
-                 this.componentsService.alert(category,res); 
-        
+                 this.componentsService.alert(category,res);
+
         });*/
 
     }
     //Function called from html to navigate to boardfeeds component with boardname name variable
-    routetoboard(board){ 
-      
+    routetoboard(board){
+
        /*this.dataservice.getboardfeeds(board).then(res=>{
            this.variab.boardfeeds = res;
            this.variab.globalboardname = board;
-             this.componentsService.alertboards(board,res); 
-  
+             this.componentsService.alertboards(board,res);
+
      });*/
       console.log(board);
         //this.router.navigate(['/boardfeeds', this.variab.groupname],{queryParams:{boardname:board}});
@@ -200,7 +206,7 @@ export class SidebarComponent implements OnInit{
     localStorage.setItem('group',groupname);
     this.showGroups=false;
    this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
-   
+
   }
   openarchives(){
     window.open('#/mm/archives');
@@ -210,6 +216,6 @@ export class SidebarComponent implements OnInit{
     var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
     window.open('#/mm/*/'+transform+'/archives');
   }
-    
-    
+
+
 }

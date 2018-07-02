@@ -106,7 +106,7 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
     ul.submenu {
         display: none;
         margin-left: 20px;
-        
+
     }
     & .expand {
         ul.submenu {
@@ -123,6 +123,11 @@ $sidecontentcolor:rgba(0, 0, 0, 0.63);
         }
     }
 }
+ul li{cursor:pointer;list-style-type: none}
+.active{
+  color:$topnav-color;
+}
+.active ul{display:block !important;}
 @media screen and (max-width: 992px) {
     .sidebar {
         top: 0px;
@@ -178,11 +183,11 @@ display:block !important;
     color: $topnav-color;
     text-decoration: none;
     margin-left: 19px;
-    
+
 }
 .feed-list-item:hover{
     background: darken($topnav-background-color, 5%);
-            color: $onhover;   
+            color: $onhover;
 }
 .feedname-heading{
     margin-left: 13px;

@@ -1,32 +1,62 @@
 
         <nav class="sidebar sidebar-background" [ngClass]="{sidebarPushRight: isActive}">
         <ul class="list-group list-background">
-   
+
 
       <div class="feedname-heading">
           <i class="fa fa-bars"></i>&nbsp;{{ 'Archived Dates' | translate }}
       </div>
       <div class="nested-menu">
-          <li  *ngFor="let n of publisheddates" [ngClass]="{active: isactive(n)}">
-          
+
+    <ul>
+      <li *ngFor="let n of publishedmonths"  (click)="select(n)" [ngClass]="{active: isactive(n)}">
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;&nbsp;<span>{{n.month}}</span>
+          <ul style="display:none;">
+            <li *ngFor="let child of n.items"  [ngClass]="{active: isactiveboard(child.date)}">
+              <i class="fa fa-chevron-right" (click)="selectboard(child.date)"></i>&nbsp;&nbsp;<span (click)="opentodaysarchives(child.date)"  class="onmenu">&nbsp;{{child.date}}</span>
+              <ul style="display:none;">
+                <li *ngFor="let board of child.boards">
+                  <!--<ngb-alert *ngIf="alertNoboard"  class="alert-width">No Boards on this date</ngb-alert>-->
+                  <span  (click)="routetodateboard(child.date,board.key)">{{board.key}}</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+      </li>
+    </ul>
+
+        <!--<li  *ngFor="let n of publishedmonths" [ngClass]="{active: isactive(n)}">
+
           <div class="feed-list-item">
           <i class="fa fa-chevron-right onmenu" (click)="select(n)"></i>
-          <span (click)="opentodaysarchives(n)"  class="onmenu">&nbsp;&nbsp;{{n}}</span>
+          <span  class="onmenu">&nbsp;&nbsp;{{n.month}}</span>
           </div>
-        
+
                   <ul class="submenu">
-                    <li *ngFor="let item of publishedboards">
-                        
-                            <a  (click)="routetodateboard(n,item.value)" class="onmenu">
-                            <span>&nbsp;{{ item.value }}</span></a>
-                        
+                    <div class="nested-menu">
+                    <li *ngFor="let item of n.items" [ngClass]="{active: isactiveboard(item)}">
+                      <div class="feed-list-item">
+                            <i class="fa fa-chevron-right onmenu" (click)="selectboard(item)"></i>
+                            <span (click)="opentodaysarchives(n)"  class="onmenu">&nbsp;{{ item }}</span>
+                          </div>
+                            <ul class="submenu">
+                              <ngb-alert *ngIf="alertNoboard"  class="alert-width">No Boards on this date</ngb-alert>
+                              <li *ngFor="let board of publishedboards">
+
+                                    <a  (click)="routetodateboard(n,item.key)" class="onmenu">
+                                      <span>&nbsp;{{ board.key }}</span></a>
+
+                              </li>
+                            </ul>
                     </li>
+                  </div>
                   </ul>
-          </li>
+          </li>-->
+
       </div>
-        
-         
-        
+
+
+
        <!-- <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <span> <i class="fa fa-star-o"></i>&nbsp;{{ 'Archived Dates' | translate }}</span>
@@ -40,9 +70,9 @@
                 </ul>
             </li>
         </div>-->
-       
-        
-        </ul> 
-        
-        
+
+
+        </ul>
+
+
         </nav>
