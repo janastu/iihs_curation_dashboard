@@ -11,13 +11,13 @@ import { FeedService } from '../../services/feed-service';//Import feed service 
 import { Userservice } from '../../services/userservice';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
-  
+
   selector: 'app-feeds',
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.scss'],
   animations: [routerTransition()]
 })
- 
+
 export class FeedsComponent implements OnInit {
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
@@ -33,9 +33,9 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   //On loading Component
   ngOnInit() {
     this.user =localStorage.getItem('name');
-          
+
         //this.usersview = localStorage.getItem('view');
-     
+
         this.view = localStorage.getItem('view') || null;
 
 
@@ -44,12 +44,13 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
           this.route.queryParams
                 .subscribe(params => {
                   this.p=0;
-                 this.spinnerState=true;//Set spinner 
+
+                 this.spinnerState=true;//Set spinner
                  this.feeds.length=0;//Clear the feeds array
 
                  //this.handleClearDate('reset');//Clear the date form
-                 //To get feeds , filtered according to subcategory 
-                 //check if the query parameter has subcatgeory property 
+                 //To get feeds , filtered according to subcategory
+                 //check if the query parameter has subcatgeory property
                   if(params.subcategory){
                     this.spinnerState=true;
                   this.pageheading = params.subcategory;
@@ -65,10 +66,10 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                      this.variab.globalfeeds=val;
                      this.variab.globalfeeds.reverse();
                      this.feeds = this.variab.globalfeeds;
-                     
-                     
+
+
                      if(this.feeds){
-                       
+
                        this.spinnerState=false;
                      }
 
@@ -78,17 +79,17 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                      }
                      */
                   //Call the checkForDeleted method to check for hidden/removed feeds
-                  //and remove those feeds from the display array  
+                  //and remove those feeds from the display array
                    /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                      this.feeds = res;
-                   });  */ 
+                   });  */
 
                   });
-                  
+
                 }
                 //To get feeds,filtered according to feedname
                 else{
-                  
+
                   this.spinnerState=true;
                   //this.feeds.length=0;
                  // console.log(this.spinnerState,this.feeds);
@@ -105,7 +106,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                         if(this.variab.globalfeeds){
                           this.spinnerState=false;
                         }
-                        
+
                       /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                         this.feeds=res;
                       }); */
@@ -142,12 +143,12 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
              /*this.feedService.replicatefeedsdb(feedname).then(replicateres=>{
                resolve(replicateres);
              })*/
-             
-             
+
+
            }
-         
-                       
-          
+
+
+
       });
     });
 
@@ -155,24 +156,24 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   }
   //Get feeds filtered on subcategory
   getfeedsOnSubcategory(subcategory,feedname){
-    
+
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
           this.feedService.getmetacategories(subcategory).then(res=>{
          // console.log("sis",res);
 
              if(res['length'] == 0){
-               
+
 
              }
-                    
-               
-             
-             else{        
+
+
+
+             else{
                resolve(res);
              }
 
-           
+
           });
         });
 }
@@ -194,7 +195,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
         this.feeds = res;
       }
     })
-  
+
   }
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
@@ -210,7 +211,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
       this.util.sortdescending(this.variab.globalfeeds).then(res=>{
         this.feeds = res;
       })
-     
+
     }
     if(childSortLabel === 'Oldest'){
       //If input is oldest sort the feeds in the descending order
@@ -256,25 +257,22 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                 this.spinnerState=false;
               }
       }
-    
+
     //this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
-      
-     
-          
-        
+
+
+
+
 
     });
 
   }
-  
- 
+
+
   onpage(){
+  //  console.log(this.feeds);
     window.scroll(0,0);
   }
-   
+
 
 }
-
-
-
-

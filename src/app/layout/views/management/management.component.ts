@@ -205,7 +205,8 @@ export class ManagementComponent implements OnInit {
       'groupname':this.gpname.value,
       'owner':this.user,
       'members':[],
-      'boards':[]
+      'boards':[],
+      'subscriptions':[]
 
     }
     var groupExists:any

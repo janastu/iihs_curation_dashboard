@@ -11,7 +11,7 @@ import { Utilities } from '../../../shared';//Import utilities to perform sortin
   styleUrls: ['./hover-toolbar.component.scss']
 })
 export class HoverToolbarComponent implements OnInit {
-  @Input('item') feeditem:any; 
+  @Input('item') feeditem:any;
   @Input('index') index:any;
   @Input('published') published:any;
   @Output('sendAlert') outgoing:any = new EventEmitter();
@@ -28,9 +28,9 @@ recentlyreadannos:any=[];//variable to store recently read annotations
    }
 
   ngOnInit() {
-    
+
 this.date = new Date();
-    
+
     this.user = localStorage.getItem('name');
        //Get the read later annos
        this.dataservice.getreadlaterannotations().then(res=>{
@@ -60,13 +60,13 @@ this.date = new Date();
   readlater(index: number){
     //if the bookmark is highlighted then remove the readlater annotation
      if(this.selectedIndex == index){
-       
-       
+
+
        this.readlaterannos.map(anno=>{
          if(anno.value.target.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
-          // console.log(anno.value); 
+          // console.log(anno.value);
 
            this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
            this.selectedIndex = -1;
@@ -74,12 +74,12 @@ this.date = new Date();
          }
 
        })
-       
-       
+
+
      }
      //Else add the feed as annotation
      else{
-       
+
        // console.log("notrecentlyread",this.feeditem)
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -91,26 +91,26 @@ this.date = new Date();
          "generated": this.date.getTime(),
          "target": this.feeditem,
          "motivation":"bookmarking"
-       }   
+       }
        this.readlaterannos.push({value:model});
 
        this.readlaterstore.dispatch('ADD_ITEMS',model)
        this.selectedIndex = index;
      }
-       
-     
+
+
   }
   //On click mark as read
   markasread(index:number){
     //if the read(tick) is highlighted then remove the readlater annotation
      if(this.selectedIcon == index){
-       
+
        //console.log("recentlyread")
        this.recentlyreadannos.map(anno=>{
           if(anno.value.target.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
-           console.log(anno.value); 
+           console.log(anno.value);
 
             this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
              this.selectedIcon = -1;
@@ -118,12 +118,12 @@ this.date = new Date();
           }
 
        });
-       
+
      }
      //Else add the feed as annotation
      else{
-       
-       
+
+
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
@@ -134,15 +134,26 @@ this.date = new Date();
          "generated": this.date.getTime(),
          "target": this.feeditem,
          "motivation":"tagging"
-       }   
+       }
        this.recentlyreadannos.push({value:model});
        this.readlaterstore.dispatch('ADD_ITEMS',model);
        this.selectedIcon = index;
      }
-    
+
   }
  //Click hide to remove the feed and push to trashbox
   hide(){
+  if(this.router.url === '/trashbox'){
+    this.alertremove=true
+  }
+  else if(this.router.url.includes('/feeds')){
+    this.feedService.delete(this.feeditem).then(response=>{
+      if(response['ok']=true){
+        this.variab.globalfeeds.splice(this.index,1);
+      }
+    });
+  }
+  else{
     this.util.hide(this.feeditem.value,this.index).then(res=>{
       if(res['ok']==true){
         this.variab.globalfeeds.splice(this.index,1);
@@ -159,6 +170,7 @@ this.date = new Date();
         this.selectedAll=false;*/
       }
     });
+  }
     /*console.log("hid",this.feeditem);
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -170,8 +182,8 @@ this.date = new Date();
       "generated": this.date.getTime(),
       "target": this.feeditem,
       "hidden":true
-    }   
-    
+    }
+
     //check if the url is trashbox and alert cant remove from trashbox
     if(this.router.url === '/trashbox'){
       this.alertremove=true
@@ -179,7 +191,7 @@ this.date = new Date();
     //Add a object hide feed with properties hidefeed and hiddenby and update
   else{
     this.feeditem.value.hidefeed={'hidefeed':true,'hiddenby':this.user};
-     console.log(this.feeditem.value);  
+     console.log(this.feeditem.value);
     this.feedService.updatefeed(this.feeditem.value).then(res=>{
       console.log(res);
       if(res['ok'] == true){
@@ -198,14 +210,14 @@ this.date = new Date();
       }
     })
    //
-   
-   
+
+
    }*/
 
   }
   public closeAlert() {
       this.alertremove=false;
-      
+
   }
 
 }

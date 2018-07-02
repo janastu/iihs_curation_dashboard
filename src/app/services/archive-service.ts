@@ -15,7 +15,7 @@ export class ArchiveService {
 	password:any;
 	feedNewsrack:any=[];
 	auth:any;
-	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) { 
+	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) {
 		    this.auth={
 				      username:this.settings.couchdbusername,
 				      password:this.settings.couchdbpassword
@@ -39,14 +39,14 @@ export class ArchiveService {
 
 	}
 
-	
 
-	
+
+
 	//Function adds the published feeds to pouchdbdb
 	 addtopouch(feed){
 	 	return new Promise(resolve => {
 	   		this.remotearchives.post(feed, function callback(err, result) {
-		
+
 			  if (!err) {
 	            console.log('Successfully posted a todo!',result);
 	            resolve(result);
@@ -55,14 +55,14 @@ export class ArchiveService {
 	        });
 	    });
 
-	    
+
 	  }
-	  //Function to get the published feeds 
+	  //Function to get the published feeds
 	  getPublishedFeeds(date,board){
 	  	//var queryDate = new Date(date);
 	  	//console.log(date)
 	  	return new Promise(resolve=>{
-	  	this.remotearchives.query('archives/archives', {	
+	  	this.remotearchives.query('archives/archives', {
 	  		  key:[date,board]
 	  	  }).then(function (result) {
 	  	    //console.log("res",result.rows);
@@ -98,11 +98,11 @@ export class ArchiveService {
 	  	  this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
-	  	  		
+
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
 	  	  			return feeds.value.feeds;
 	  	  		})
-	  	  		//console.log(_.flatten(feedsofeverypublish));	
+	  	  		//console.log(_.flatten(feedsofeverypublish));
 	  	 	if(result.rows.length!=0){
 	  	  		resolve(_.flatten(feedsofeverypublish));
 	  	  	}
@@ -121,7 +121,7 @@ export class ArchiveService {
 	  	  this.remotearchives.query('date/querydate', {
 	  		  reduce:true,
 	  		  group_level:1,
-	  	
+
 	  	  }).then(function (result) {
 	  	 	console.log(result);
 	  	  	resolve(result.rows);
@@ -136,7 +136,7 @@ export class ArchiveService {
 	  		console.log("val");
 	  	  this.remotearchives.query('archives/published_date', {
 	  		  key:date,
-	  		  
+
 	  	  }).then(function (result) {
 	  	 	//console.log(result);
 	  	  	resolve(result.rows);
@@ -146,6 +146,19 @@ export class ArchiveService {
 	  	});
 
 	  }
+		getPublishedBoards(){
+			return new Promise(resolve=>{
+	  		console.log("val");
+	  	  this.remotearchives.query('archives/published_date', {
+
+	  	  }).then(function (result) {
+	  	 	//console.log(result);
+	  	  	resolve(result.rows);
+	  	  }).catch(function (err) {
+	  	  console.log(err);
+	  	  });
+	  	});
+		}
 	  //Api call to get publishing url of feed
 	  getPublishingUrlofFeed(feedid){
 	  	return new Promise(resolve=>{
@@ -193,7 +206,7 @@ export class ArchiveService {
 	  			resolve(result);
 	  		});
 	  	});
-	  		
+
 	  }*/
 
 }

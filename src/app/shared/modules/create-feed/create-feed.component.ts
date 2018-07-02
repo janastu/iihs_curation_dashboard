@@ -2,7 +2,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import { NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
-import { CategoryService } from '../../../services/category-service';
+import { GroupService } from '../../../services/group-service';
 import { FeedService } from '../../../services/feed-service';
 import { Userservice } from '../../../services/userservice';
 import { Global } from '../../../shared/global';
@@ -29,7 +29,7 @@ user:any;     //variable to store the username
 queryString:any;//variable to store the input given to find a feed name
 @Input('data') data:any;
 @Input('url') url:any;
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public categoryservice:CategoryService,public variab:Global,public feedService:FeedService,public userservice:Userservice,public ngAlert:NgbAlertConfig) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public feedService:FeedService,public userservice:Userservice,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
 }
 
 ngOnChanges(){
@@ -138,10 +138,23 @@ ngOnChanges(){
        }
        //Add the feed model to the database
        if(feednameExists == 0){
-         console.log("add");
+        // console.log("add");
          this.feedService.addFeed(doc).then(res=>{
                if(res['ok'] == true){
                  this.variab.categoryfeeds.push({doc:doc}); 
+                 /*this.groupService.getgroups().then(res=>{
+                    var groups:any=[];
+                    groups = res;
+                   groups.map(groupSubscription=>{
+                     if(groupSubscription.value.groupname === localStorage.getItem('group')){
+                       groupSubscription.value.subscriptions.push(doc)
+                         this.groupService.update(groupSubscription.value);
+                     }
+                   
+                   })
+                   // console.log(groups);
+                  
+                 })*/
                  this.alertsucess=true;
                  this.ngAlert.type = 'success';
                  setTimeout(() => this.alertexists = false, 2000);

@@ -15,7 +15,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     animations: [routerTransition()],
     providers: [NgbAlertConfig]
 })
- 
+
 export class LoginComponent implements OnInit {
 @ViewChild('user') user: ElementRef;
 @ViewChild('password') pwd: ElementRef;
@@ -28,10 +28,10 @@ export class LoginComponent implements OnInit {
     errormessage:any;
     showDialog:boolean;
     groups:any=[];
-    
+
 
     constructor(public router: Router,public route:ActivatedRoute,public formBuilder:FormBuilder,private userService:Userservice,public ngAlert:NgbAlertConfig,public variab:Global,public groupService:GroupService) {
-              
+
 
             }
 
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
 
     }
 
-  
+
     onLoggedin() {
         //console.log(this.username)
         let credentials = {
@@ -84,8 +84,8 @@ export class LoginComponent implements OnInit {
             'password':this.loginForm.controls['password'].value
         };
         //console.log("log",credentials);
-        
-        
+
+
 
         this.userService.login(credentials).then(response=>{
             console.log(response);
@@ -105,9 +105,9 @@ export class LoginComponent implements OnInit {
                    if(groupname.length == 0){
                      //console.log("router1",this.router.url);
                      this.router.navigate(['/dashboard'])
-                    // 
+                    //
                      //this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
-                   }   
+                   }
                    else if(groupname.length == 1){
                      //console.log("router2",this.router.url);
                      var gname = userDoc['memberof'][0];
@@ -124,14 +124,14 @@ export class LoginComponent implements OnInit {
                        this.groups=userDoc['memberof'];
                        this.showDialog=true;
                      }
-                     
+
                      //console.log(this.showDialog);
                    }
                   }
                   else{
                       userDoc['memberof']=[];
                       userDoc['memberof'].push('default');
-                     // console.log(userDoc);
+
                       this.userService.updateAuser(userDoc);
                       let doc = {
                           name:this.loginForm.controls['username'].value,
@@ -143,9 +143,9 @@ export class LoginComponent implements OnInit {
                           var groups:any=[];
                           groups=res;
                           groups.map(group=>{
-                              
+                            //console.log("initial",group);
                               if(group.key === 'default'){
-                                   
+
                                  group.value.members.push(doc);
                                  this.groupService.update(group.value).then(res=>{
                                      //console.log(res);
@@ -158,7 +158,7 @@ export class LoginComponent implements OnInit {
                               }
                           })
                       })
-                      
+
                   }
                });
                //
@@ -179,7 +179,7 @@ export class LoginComponent implements OnInit {
             }
         })
 
-        
+
     }
     public closeAlert() {
         this.alertsuccess=false;
