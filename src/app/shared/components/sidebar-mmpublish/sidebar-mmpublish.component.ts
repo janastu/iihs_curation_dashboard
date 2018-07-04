@@ -154,7 +154,8 @@ export class SidebarMmpublishComponent implements OnInit{
       this.archiveService.getPublishedDates().then(res=>{
 
           this.pubdatesuntransformed=res;
-            console.log("bef",this.pubdatesuntransformed);
+            //console.log("bef",this.publishedboards);
+          if(this.publishedboards.length>0){
             var datesOnGroup = this.publishedboards.map(date=>{
               return this.pubdatesuntransformed.filter(boarddate=>{
 
@@ -167,7 +168,9 @@ export class SidebarMmpublishComponent implements OnInit{
             //console.log(this.pubdatesuntransformed);
             var flattenDates = _.flatten(datesOnGroup);
             this.pubdatesuntransformed =flattenDates.filter((set => f => !set.has(f.key) && set.add(f.key))(new Set));
-            console.log("tres",this.pubdatesuntransformed);
+            //console.log("tres",this.pubdatesuntransformed);
+          }
+          //console.log("tres2",this.pubdatesuntransformed);
           this.publishedmonths = this.itemsGroupedByMonth(this.pubdatesuntransformed);
           //console.log(this.publishedmonths);
 

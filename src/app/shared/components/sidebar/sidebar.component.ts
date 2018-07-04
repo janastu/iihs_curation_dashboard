@@ -209,12 +209,12 @@ export class SidebarComponent implements OnInit{
 
   }
   openarchives(){
-    window.open('#/mm/archives');
+    window.open('#/mm/archives?memberof='+this.groupname);
   }
   opentodaysarchives(){
     var pub_date = new Date(); //get today's date
     var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
-    window.open('#/mm/*/'+transform+'/archives');
+    window.open('#/mm/*/'+transform+'/archives?memberof='+this.groupname);
   }
 
 
