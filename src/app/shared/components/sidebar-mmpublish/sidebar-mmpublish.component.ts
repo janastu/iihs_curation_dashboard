@@ -172,7 +172,7 @@ export class SidebarMmpublishComponent implements OnInit{
           }
           //console.log("tres2",this.pubdatesuntransformed);
           this.publishedmonths = this.itemsGroupedByMonth(this.pubdatesuntransformed);
-          //console.log(this.publishedmonths);
+          console.log(this.publishedmonths);
 
 
 
@@ -191,13 +191,16 @@ export class SidebarMmpublishComponent implements OnInit{
         for (var i = 0; i < items.length; i++) {
       //console.log(items[i].key);
           var item_date = new Date(items[i].key);
+          //console.log(item_date);
           groups[item_date.getMonth()].push({'date':this.datepipe.transform(items[i].key, 'yyyy-MM-dd')});
         }
         for (var i = 0; i < groups.length; i++) {
+          //console.log(item_date);
           if (groups[i].length) {
             itemGroupedByMonths.push({
               month: monthNames[i],
-              items: groups[i]
+              items: groups[i],
+              //year:item_date.getFullYear()
             });
 
           }
@@ -208,8 +211,8 @@ export class SidebarMmpublishComponent implements OnInit{
 
     //Function called from html to filter the feeds on date
     routetodateboard(date,board){
-      console.log(board,date)
-      this.router.navigate(['/mm',board,date,'archives']);
+      //console.log(board,date)
+      this.router.navigate(['/mm',board,date,'archives'],{queryParams:{memberof:this.groupname}});
 
     }
     //On choosing a group
@@ -219,7 +222,7 @@ export class SidebarMmpublishComponent implements OnInit{
      this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
     }
     opentodaysarchives(n){
-      this.router.navigate(['mm','*',n,'archives'])
+      this.router.navigate(['mm','*',n,'archives'],{queryParams:{memberof:this.groupname}})
     }
 
 }
