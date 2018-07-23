@@ -188,6 +188,7 @@ auth:any;//varable to store the auth object
   getFeedDesignDoc(ddoc){
     return new Promise(resolve=>{
       this.remotefeeds.get('_design/feeds').then(function(doc) {
+		console.log("feeds",doc,ddoc);
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{

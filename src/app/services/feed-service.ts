@@ -171,7 +171,7 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-		//console.log(encodeURIComponent(category))
+		console.log(encodeURIComponent(category),category);
 		//var replicationstatus:boolean=false;
 		return new Promise(resolve => {
 			  //this.remotefeeds.query('feeds/latestoldestcategory', {
