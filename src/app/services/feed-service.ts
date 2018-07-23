@@ -157,7 +157,7 @@ export class FeedService {
 	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
 	  		   //	console.log(category);
 	  		   	this.remotefeeds.query('feeds/metacategories', {
-	  		   		stale: 'update_after',
+
 	  		   	    startkey: [category],
 	  		   	    endkey: [category, {}]
 	  		   	  }).then(function (result) {
@@ -173,18 +173,22 @@ export class FeedService {
 	getlatestfeeds(category){
 		//console.log(encodeURIComponent(category))
 		//var replicationstatus:boolean=false;
+		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
 		return new Promise(resolve => {
 			  //this.remotefeeds.query('feeds/latestoldestcategory', {
-			  	this.remotefeeds.query('feeds/latestoldestcategory', {
+			  	/*this.remotefeeds.query('feeds/latestoldestcategory', {
 			    startkey: [category],
 			    endkey: [category, {}]
 			  }).then(function (result) {
-			  		//console.log("resfeeds",result);
+			  		console.log("resfeeds",result);
 			 		resolve(result.rows);
 			   }).catch(function (err) {
 			  		console.log(err);
+			});*/
+			this.http.get(check).map(res=>res.json()).subscribe(result=> {
+				console.log("resfeeds",result);
+				resolve(result.rows);
 			});
-
 
 
 
