@@ -1,7 +1,7 @@
 ### STAGE 1: Build ###
 
 # We label our stage as 'builder'
-FROM node:8.9.3-alpine as builder
+FROM node:8.11.3-slim as builder
 
 COPY package.json package-lock.json ./
 
