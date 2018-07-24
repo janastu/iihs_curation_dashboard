@@ -31,6 +31,7 @@ datepublished:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeeds:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
 url:any;
+groupname:any;
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,public location:Location,public dbconfig:DbConfig) { }
   //On loading Component
   ngOnInit() {
@@ -38,7 +39,7 @@ url:any;
       //console.log(this.checkForm);
     this.user =localStorage.getItem('name');
 
-
+    this.groupname = localStorage.getItem('group');
     //this.usersview = localStorage.getItem('view');
 
     this.view = localStorage.getItem('view') || null;
@@ -70,23 +71,40 @@ url:any;
               if(params.boardname == '*'){
                 this.archiveService.getPublishedboardsOnDates(isodate.toISOString()).then(res=>{
                   var boards:any=[];
+                  var boardsGroup:any=[];
                   boards = res;
-                  boards.map(board=>{
-                    this.feeds.length=0;
-                    //console.log("feesd",params.boardname,isodate.toISOString());
-                    this.archiveService.getPublishedFeeds(isodate.toISOString(),board.value).then(res=>{
-                      //this.statefeeds.push(res['value'].feeds);
-                      this.util.sortdescending(_.flatten(res['value'].feeds)).then(res=>{
-                        this.feeds.push({board: board.value, data:res});
-                        this.feeds.sort(function(a,b) {return (a.board > b.board) ? 1 : ((b.board > a.board) ? -1 : 0);} );
-                        //this.feeds = res;
-                        if(this.feeds){
-                          this.spinnerState=false;
-                        }
-                      });
+                  this.util.boardsOnGroup(this.groupname).then(res=>{
+                    boardsGroup=res;
+                    var groupBoards = boards.map(pubboard=>{
+                        return boardsGroup.filter(groupboard=>{
+
+                          if(groupboard.key == pubboard.value){
+                            return pubboard;
+                          }
+                        })
 
                     })
-                  })
+                    var boardNameGroup:any=[];
+                    boardNameGroup = _.flatten(groupBoards);
+                    //console.log(boardNameGroup);
+                    boardNameGroup.map(board=>{
+                      this.feeds.length=0;
+                      //console.log("feesd",params.boardname,isodate.toISOString());
+                      this.archiveService.getPublishedFeeds(isodate.toISOString(),board.key).then(res=>{
+                        //this.statefeeds.push(res['value'].feeds);
+                        this.util.sortdescending(_.flatten(res['value'].feeds)).then(res=>{
+                          this.feeds.push({board: board.key, data:res});
+                          this.feeds.sort(function(a,b) {return (a.board > b.board) ? 1 : ((b.board > a.board) ? -1 : 0);} );
+                          //this.feeds = res;
+                          if(this.feeds){
+                            this.spinnerState=false;
+                          }
+                        });
+
+                      })
+                    })
+                  });
+
                 })
               }
 
