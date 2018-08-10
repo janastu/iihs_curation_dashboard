@@ -39,7 +39,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
         this.view = localStorage.getItem('view') || null;
 
 
-        this.dataservice.removeUnwanted();
+        //this.dataservice.removeUnwanted();
      //Access the query parameter and filter the feeds according to category
           this.route.queryParams
                 .subscribe(params => {
