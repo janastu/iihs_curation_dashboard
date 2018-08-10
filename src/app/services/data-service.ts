@@ -63,7 +63,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/boardannotation', {
-           stale: 'update_after'
+           //stale: 'update_after'
          }).then(function (result) {
          // console.log("res",result);
          resolve(result.rows);
@@ -80,7 +80,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/readlater', {
-           stale: 'update_after'
+          // stale: 'update_after'
          }).then(function (result) {
          //console.log("res",result);
          resolve(result.rows);
@@ -97,7 +97,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/recentlyread', {
-           stale: 'update_after'
+           //stale: 'update_after'
          }).then(function (result) {
          // console.log("res",result);
          resolve(result.rows);
@@ -124,7 +124,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     if(res['ok']==true){*/
       this.remoteannos.query('annotatedfeeds/boardfeeds', {
            key:board,
-           stale: 'update_after'
+           //stale: 'update_after'
          }).then(function (result) {
         //
 
@@ -155,7 +155,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
       this.remoteannos.query('annotatedfeeds/readlaterfeeds', {
           key:usr,
-          stale: 'update_after'
+        //  stale: 'update_after'
         }).then(function (result) {
        //console.log("res readlater",result);
         resolve(result.rows);
@@ -184,7 +184,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     if(res['ok']==true){*/
       this.remoteannos.query('annotatedfeeds/recentlyreadfeeds', {
           key:usr,
-          stale: 'update_after'
+        //  stale: 'update_after'
         }).then(function (result) {
        // console.log("res",result);
         resolve(result.rows);
@@ -233,7 +233,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
         this.remoteannos.query('annotatedfeeds/boardfeedsoftoday', {
             startkey:starttime,
             endkey:endtime,
-            stale: 'update_after'
+            //stale: 'update_after'
 
           }).then(function (result) {
          //console.log("res",result);
