@@ -26,7 +26,7 @@ auth:any;//varable to store the auth object
   //Database setup for feeds before the application loads
   dbsetupfeeds(){
   	//Create pouchdb instance for feeds
-  	this.variab.localfeeds = new PouchDB('feeds',{auto_compaction: true}); //create a pouchdb
+  	//this.variab.localfeeds = new PouchDB('feeds',{auto_compaction: true}); //create a pouchdb
     //this.test = new PouchDB('feeds');
   	//Create reomte couchdb instance for feeds
   	this.remotefeeds = new PouchDB(this.settings.protocol+this.settings.dbfeed,{
@@ -248,8 +248,8 @@ auth:any;//varable to store the auth object
   dbsetupannos(){
 
   	//Create pouchdb instance for annotations
-  	 this.variab.localannotations = new PouchDB('iihs_annotation',{auto_compaction: true}); //create a pouchdb
-  	   this.variab.localannotations.viewCleanup();
+  	 //this.variab.localannotations = new PouchDB('iihs_annotation',{auto_compaction: true}); //create a pouchdb
+  	 //  this.variab.localannotations.viewCleanup();
      //Create reomte couchdb instance for annotations
   	 this.remoteannos = new PouchDB(this.settings.protocol+this.settings.dbannotations,{
   	           auth:this.auth,
@@ -480,7 +480,7 @@ auth:any;//varable to store the auth object
   //Database setup for groups before app loads
   dbsetupgroups(){
   	//Create pouchdb instance for groups
-  	this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb
+  	//this.variab.localgroups = new PouchDB('groups',{auto_compaction: true}); //create a pouchdb
   	//Create reomt  e couchdb instance for groups
   	this.remotegroups = new PouchDB(this.settings.protocol+this.settings.dbgroups,{
       auth:this.auth
@@ -574,7 +574,7 @@ auth:any;//varable to store the auth object
   //Database setup for boards before app loads
   dbsetupboards(){
   	//Create pouchdb instance for boards
-  	this.variab.localboards = new PouchDB('boards',{auto_compaction: true});
+  	//this.variab.localboards = new PouchDB('boards',{auto_compaction: true});
   	//Create reomte couchdb instance for boards
   	this.remoteboards = new PouchDB(this.settings.protocol+this.settings.dbboards,{
   	  	    auth:this.auth,
@@ -663,7 +663,7 @@ auth:any;//varable to store the auth object
 
   dbsetuparchives(){
     //Create pouchdb instance for boards
-    this.variab.localarchives = new PouchDB('archives',{auto_compaction: true});
+  //  this.variab.localarchives = new PouchDB('archives',{auto_compaction: true});
     //Create reomte couchdb instance for boards
       this.remotearchives = new PouchDB(this.settings.protocol+this.settings.dbarchives,{
             auth:this.auth
