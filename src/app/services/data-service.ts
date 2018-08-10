@@ -223,6 +223,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     });
 
   }
+
   //Api Service to get today's board feeds
   gettodayBoardFeeds(){
     var starttime  = new Date();
@@ -258,6 +259,44 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     }).catch(function (err) {
       console.log(err);
     });
+
+  }
+  delete(feed){
+		console.log(feed);
+		return new Promise(resolve=>{
+			this.remoteannos.remove(feed.value._id, feed.value._rev, function(err) {
+   			if (err) {
+      		return console.log(err);
+   		} else {
+				resolve({ok:true})
+      	console.log("Document deleted successfully");
+   		}
+		});
+	})
+}
+  //Function to remove docs from db based on views
+  removeUnwanted(){
+  	var scope = this;
+  	this.remoteannos.query('annotations/deleteonview', {
+
+  			  }).then(function (result) {
+  			  		console.log("resfeeds",result.rows);
+  						var storeinter:any=[];
+  						storeinter = result.rows;
+  						storeinter.map(removefeed=>{
+  							scope.delete(removefeed);
+  							/*this.remotefeeds.remove(removefeed.value._id, removefeed.value._rev, function(err) {
+  				   			if (err) {
+  				      		return console.log(err);
+  				   		} else {
+  								resolve({ok:true})
+  				      	console.log("Document deleted successfully");
+  				   		}
+  						});*/
+  						})
+  			   }).catch(function (err) {
+  			  		console.log(err);
+  			});
 
   }
   //Function to add the board feeds to a local json
