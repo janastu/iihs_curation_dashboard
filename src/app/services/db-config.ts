@@ -295,14 +295,14 @@ auth:any;//varable to store the auth object
   	            emit(doc.label,doc);
   	          }
   	        }.toString()
-  	      },
+  	      }/*,
           deleteonview:{
             map: function (doc) {
     	    	  if (doc.feednme) {
     	    	    emit(doc.feednme,doc);
     	    	  }
     	    	}.toString()
-          }
+          }*/
 
   	    }
 

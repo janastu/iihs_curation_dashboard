@@ -261,7 +261,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     });
 
   }
-  delete(feed){
+/*  delete(feed){
 		console.log(feed);
 		return new Promise(resolve=>{
 			this.remoteannos.remove(feed.value._id, feed.value._rev, function(err) {
@@ -292,13 +292,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   								resolve({ok:true})
   				      	console.log("Document deleted successfully");
   				   		}
-  						});*/
+  						});
   						})
   			   }).catch(function (err) {
   			  		console.log(err);
   			});
 
-  }
+  }*/
   //Function to add the board feeds to a local json
  /* addFeedstoJson(data) {
 
