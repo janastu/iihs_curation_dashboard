@@ -32,6 +32,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   //On loading Component
   ngOnInit() {
+
     this.user =localStorage.getItem('name');
 
         //this.usersview = localStorage.getItem('view');
@@ -101,11 +102,21 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                      this.variab.globalfeeds.reverse();
                   //Call the checkForDeleted method to check for hidden/removed feeds
                   //and remove those feeds from the display array
-                        this.feeds=this.variab.globalfeeds;
+
                        // console.log("every",this.feeds);
-                        if(this.variab.globalfeeds){
-                          this.spinnerState=false;
-                        }
+
+                          //Get board annotations
+                                    this.dataservice.getannotations().then(res=>{
+                                     this.variab.annotations=res;
+                                      this.feeds=this.variab.globalfeeds;
+                                      if(this.feeds){
+                                        this.spinnerState=false;
+                                      }
+                                     //console.log("vra",this.variab.annotations);
+                                    })
+
+
+                        //}
 
                       /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                         this.feeds=res;

@@ -21,10 +21,10 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
   constructor(public dataservice:DataService,public variab:Global,public util:Utilities) {
    }
-   
+
    //On loading Component
   ngOnInit() {
-   
+
     //Fetch the data from service and store in global variable
   	var doc:any=[];
 
@@ -35,24 +35,26 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
       this.p=0;
       //Set result to global variable as it can be accessed outdside the component
         this.variab.readlaterfeeds=result;
-          //this.feeds=this.variab.readlaterfeeds; 
+          //this.feeds=this.variab.readlaterfeeds;
           this.util.checkForDeletedFeeds(this.variab.readlaterfeeds).then(res=>{
             this.util.sortdescending(res).then(sorted=>{
               //console.log(res);
-              this.feeds = sorted;
-              if(this.feeds){
-                this.spinnerState=false;
-              }
-              this.alertNofeeds=false;//set alertnofeeds value to false
-              if(this.feeds.length==0){
-                this.alertNofeeds=true;
-              }
-
+              this.dataservice.getannotations().then(res=>{
+               this.variab.annotations=res;
+                this.feeds = sorted;
+                  if(this.feeds){
+                    this.spinnerState=false;
+                  }
+                  this.alertNofeeds=false;//set alertnofeeds value to false
+                  if(this.feeds.length==0){
+                    this.alertNofeeds=true;
+                  }
+               });
             })
-       
+
           });
     });
-    
+
   }
 
   //Function to handle view event from page-header component
@@ -64,7 +66,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   public handleDate(childDates:any){
     this.util.filterDate(childDates,this.variab.readlaterfeeds).then(res=>{
       this.feeds = res;
-      
+
     });
 
   }
@@ -91,21 +93,21 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     if(childSortLabel === 'Latest'){
       this.util.sortdescending(this.variab.boardfeeds).then(res=>{
         this.feeds = res;
-       
+
       })
     }
     if(childSortLabel === 'Oldest'){
       this.util.sortascending(this.variab.readlaterfeeds).then(res=>{
         this.feeds = res;
       })
-  
+
     }
    // this.feedFromAnnotation();
   }
   onpage(){
     window.scroll(0,0);
   }
-   
+
 
 
 }

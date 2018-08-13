@@ -31,6 +31,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService) { }
   //On loading Component
   ngOnInit() {
+
     //Get the user name from local storage and store in a local variable
     this.user =localStorage.getItem('name');
     this.view = localStorage.getItem('view');
@@ -55,20 +56,25 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
                   this.util.sortdescending(res).then(sorted=>{
+                    //Get board annotations
+                              this.dataService.getannotations().then(res=>{
+                               this.variab.annotations=res;
+                               //console.log("vra",this.variab.annotations);
+                               //Get the deleted and feeds store and display using feeds variable
+                               this.feeds = sorted;
+                               if(this.feeds){
+                                 this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
 
-                     //Get the deleted and feeds store and display using feeds variable
-                     this.feeds = res;
+                               }
+                               //console.log(this.feeds.length);
+                               this.alertNofeeds=false;//set alertnofeed  s value to false
+                               if(this.feeds.length==0){
+                                 this.alertNofeeds=true;
+                               }
+                              })
 
 
 
-                    if(this.feeds){
-                      this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
-                    }
-                    //console.log(this.feeds.length);
-                    this.alertNofeeds=false;//set alertnofeed  s value to false
-                    if(this.feeds.length==0){
-                      this.alertNofeeds=true;
-                    }
 
                  this.util.checkForPublished(res,this.boardname).then(res=>{
                   this.publishedfeeds=res;

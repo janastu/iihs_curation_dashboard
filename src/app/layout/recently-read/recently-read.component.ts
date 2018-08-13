@@ -21,7 +21,7 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
   constructor(public variab:Global,public dataservice:DataService,public util:Utilities) {
    }
-   
+
    //On loading Component
   ngOnInit() {
     var doc:any=[];
@@ -33,10 +33,12 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                       this.p=0;
                        //Set result to global variable as it can be accessed outdside the component
                        this.variab.recentlyread=result;
-                       
+
                   this.util.checkForDeletedFeeds(this.variab.recentlyread).then(res=>{
                     this.util.sortdescending(res).then(sorted=>{
-                      this.feeds = res;
+                      this.dataservice.getannotations().then(res=>{
+                       this.variab.annotations=res;
+                      this.feeds = sorted;
                         if(this.feeds){
                           this.spinnerState=false;
                         }
@@ -45,11 +47,11 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                           this.alertNofeeds=true;
                         }
                     })
-                    
                   });
-     
+                });
+
     });
-     
+
 
   }
 
@@ -75,15 +77,15 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
   handleSort(childSortLabel:any){
-   
+
     if(childSortLabel === 'Latest'){
-    
+
      this.util.sortdescending(this.variab.boardfeeds).then(res=>{
        this.feeds = res;
        console.log(this.feeds)
      })
-     
-    
+
+
     }
     if(childSortLabel === 'Oldest'){
       this.util.sortascending(this.variab.boardfeeds).then(res=>{
@@ -94,7 +96,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   onpage(){
     window.scroll(0,0);
   }
-   
+
 
 
 }
