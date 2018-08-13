@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Userservice } from '../services/userservice';
+import { DataService } from '../services/data-service';
+import { Global } from '../shared';
 @Component({
     selector: 'app-layout',
     templateUrl: './layout.component.html',
@@ -8,12 +10,12 @@ import { Userservice } from '../services/userservice';
 })
 export class LayoutComponent implements OnInit {
 user:any;
-    constructor(public router: Router,public userService:Userservice) { }
+    constructor(public router: Router,public userService:Userservice,public dataservice:DataService,public variab:Global) { }
 
     ngOnInit() {
-    	    
+
         this.user = localStorage.getItem('name')
-        
+
         if (this.router.url === '/') {
            // console.log("in");
             this.userService.getAuser(this.user).then(userDoc=>{
@@ -21,7 +23,7 @@ user:any;
              if(groupname){
 
                this.router.navigate(['/dashboard'],{queryParams:{memberof:groupname}});
-             } 
+             }
              else{
                this.router.navigate(['/dashboard']);
              }
@@ -31,6 +33,7 @@ user:any;
         if(this.router.url === '/mm'){
             console.log("publishing url")
         }
+        
     }
 
 }
