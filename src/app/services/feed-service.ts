@@ -67,7 +67,7 @@ export class FeedService {
 	  	if(response.json().length!=0){
 		this.feedNewsrack = response.json();
 
-		resolve(this.feedNewsrack[0].meta);
+		resolve(this.feedNewsrack.metadata);
 		}
 		else{
 			resolve(response.json());
@@ -288,8 +288,23 @@ export class FeedService {
 	   }
 	//Function adds the newsrack feeds to pouchdbdb
 	 addtopouch(feed,feedname){
+	 //console.log(feed);
 	 	return new Promise(resolve => {
+  if(feed.items){
+		feed.items.map(res=>{
+			res.feednme = feedname;
 
+
+			this.remotefeeds.post(res, function callback(err, result) {
+
+			if (!err) {
+						//console.log('Successfully posted a todo!',result);
+						resolve(result);
+					}
+
+					});
+		 });
+	}
 	    feed.map(res=>{
 	      res.feednme = feedname;
 

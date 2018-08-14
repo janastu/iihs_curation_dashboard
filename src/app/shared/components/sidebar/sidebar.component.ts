@@ -96,11 +96,11 @@ export class SidebarComponent implements OnInit{
       });*/
 
         //Get board annotations
-                   this.dataservice.getannotations().then(res=>{
+                   //this.dataservice.getannotations().then(res=>{
                      //Set result to global variable as it can be accessed outdside the component
-                    this.variab.annotations=res;
+                    //this.variab.annotations=res;
 
-                    });
+                    //});
              //Get readlater annotations
 
                    this.dataservice.getreadlater(this.user).then(result=>{

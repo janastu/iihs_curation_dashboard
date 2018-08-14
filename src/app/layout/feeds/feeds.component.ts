@@ -104,7 +104,13 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                   //and remove those feeds from the display array
 
                        // console.log("every",this.feeds);
-
+                       if(this.variab.annotations.length>0){
+                       this.feeds=this.variab.globalfeeds;
+                        if(this.feeds){
+                          this.spinnerState=false;
+                        }
+                      }
+                      else{
                           //Get board annotations
                                     this.dataservice.getannotations().then(res=>{
                                      this.variab.annotations=res;
@@ -112,10 +118,10 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                                       if(this.feeds){
                                         this.spinnerState=false;
                                       }
-                                     //console.log("vra",this.variab.annotations);
+                                    // console.log("vra",this.feeds);
                                     })
 
-
+                          }
                         //}
 
                       /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
@@ -233,8 +239,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.userService.pullnewFeeds().then(res=>{
-     });
+    /*this.userService.pullnewFeeds().then(res=>{
+    });*/
     this.spinnerState=true;
     this.feeds.length = 0;
     this.getfeedsOnFeedname(childrefresh).then(val=>{
