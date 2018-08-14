@@ -173,7 +173,7 @@ export class FeedService {
 	getlatestfeeds(category){
 		console.log(encodeURIComponent(category),category);
 		//var replicationstatus:boolean=false;
-		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
+		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+encodeURIComponent(category)+'"]&endkey=["'+encodeURIComponent(category)+'",{}]'
 		return new Promise(resolve => {
 			  //this.remotefeeds.query('feeds/latestoldestcategory', {
 			  	/*this.remotefeeds.query('feeds/latestoldestcategory', {
