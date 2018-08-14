@@ -6,6 +6,7 @@ import { FeedService } from '../../services/feed-service';// Import Feed Service
 import { Userservice } from '../../services/userservice';//Import UserService to get user subscribed feed names
 import { Router } from "@angular/router";//Import router to navigate between components
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+
 import * as _ from 'lodash';
 //import get from 'lodash-es/get'
 @Component({
@@ -58,7 +59,7 @@ export class DashboardComponent implements OnInit {
         this.userService.getUserSubscriptions().then(res=>{
           //Store the user subscribed feed names in the Global variable
           this.variab.categoryfeeds=res;
-          this.variab.categoryfeeds.map(category=>{
+          /*this.variab.categoryfeeds.map(category=>{
           //  console.log(category);
             category.doc.metadata.map(meta=>{
               if(meta.categories[0]){
@@ -84,7 +85,7 @@ export class DashboardComponent implements OnInit {
 
             })
 
-          })
+          })*/
 
         });
 

@@ -153,13 +153,15 @@ export class FeedService {
 	  }
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
+		var date = new Date();
+		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 	  	return new Promise(resolve => {
 	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
 	  		   //	console.log(category);
 	  		   	this.remotefeeds.query('feeds/metacategories', {
 
-	  		   	    startkey: [category],
-	  		   	    endkey: [category, {}]
+	  		   	    startkey: [category,last.toISOString()],
+	  		   	    endkey: [category,date.toISOString()]
 	  		   	  }).then(function (result) {
 	  		   	  //console.log("resmeta",result.rows);
 	  		   	 resolve(result.rows);
@@ -171,9 +173,11 @@ export class FeedService {
 
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
-		console.log(encodeURIComponent(category),category);
+		var date = new Date();
+		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
+		//console.log(encodeURIComponent(category))
 		//var replicationstatus:boolean=false;
-		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+encodeURIComponent(category)+'"]&endkey=["'+encodeURIComponent(category)+'",{}]'
+		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
 		return new Promise(resolve => {
 			  //this.remotefeeds.query('feeds/latestoldestcategory', {
 			  	/*this.remotefeeds.query('feeds/latestoldestcategory', {
