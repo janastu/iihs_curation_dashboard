@@ -233,8 +233,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   }
   //Function to handle refreshed feeds when clicked from page-header component
   handleRefresh(childrefresh:any){
-    this.userService.pullnewFeeds().then(res=>{
-     });
+    /*this.userService.pullnewFeeds().then(res=>{
+    });*/
     this.spinnerState=true;
     this.feeds.length = 0;
     this.getfeedsOnFeedname(childrefresh).then(val=>{
