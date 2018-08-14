@@ -102,28 +102,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                      this.variab.globalfeeds.reverse();
                   //Call the checkForDeleted method to check for hidden/removed feeds
                   //and remove those feeds from the display array
+                    this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
 
-                       // console.log("every",this.feeds);
-                       if(this.variab.annotations.length>0){
-                       //this.feeds=this.variab.globalfeeds;
-                        this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
-                        if(this.feeds){
-                          this.spinnerState=false;
-                        }
-                      }
-                      else{
-                          //Get board annotations
-                                    this.dataservice.getannotations().then(res=>{
-                                     this.variab.annotations=res;
-                                      //this.feeds=this.variab.globalfeeds;
-                                       this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
-                                      if(this.feeds){
-                                        this.spinnerState=false;
-                                      }
-                                    // console.log("vra",this.feeds);
-                                    })
-
-                          }
                         //}
 
                       /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
