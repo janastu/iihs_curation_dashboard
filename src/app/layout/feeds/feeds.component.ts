@@ -66,8 +66,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                     //Reverse the filter to sort according to latest feeds
                      this.variab.globalfeeds=val;
                      this.variab.globalfeeds.reverse();
-                     this.feeds = this.variab.globalfeeds;
-
+                     //this.feeds = this.variab.globalfeeds;
+                     this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
 
                      if(this.feeds){
 
@@ -105,7 +105,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
                        // console.log("every",this.feeds);
                        if(this.variab.annotations.length>0){
-                       this.feeds=this.variab.globalfeeds;
+                       //this.feeds=this.variab.globalfeeds;
+                        this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
                         if(this.feeds){
                           this.spinnerState=false;
                         }
@@ -114,7 +115,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                           //Get board annotations
                                     this.dataservice.getannotations().then(res=>{
                                      this.variab.annotations=res;
-                                      this.feeds=this.variab.globalfeeds;
+                                      //this.feeds=this.variab.globalfeeds;
+                                       this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
                                       if(this.feeds){
                                         this.spinnerState=false;
                                       }
