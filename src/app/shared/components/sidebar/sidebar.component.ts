@@ -6,6 +6,7 @@ import { BoardService } from '../../../services/board-service';
 import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
+import { FeedService } from '../../../services/feed-service';
 import { Utilities } from '../../Utilities/utilities';//Import utilities to perform sorting and filtering
 import * as _ from 'lodash';
 import { DatePipe,Location } from '@angular/common';
@@ -66,7 +67,7 @@ export class SidebarComponent implements OnInit{
 
     constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,
       public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,
-      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities){
+      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities,public service:FeedService){
 
 
     }
@@ -91,43 +92,73 @@ export class SidebarComponent implements OnInit{
       }
 
       })
-     /* this.userservice.getAuser(this.user).then(user=>{
-               this.variab.groupname = user['memberof'];
-      });*/
+      //Get user subscribed feed names
+       this.userservice.getUserSubscriptions().then(res=>{
+         //Store the user subscribed feed names in the Global variable
+         this.variab.categoryfeeds=res;
+         this.variab.categoryfeeds.map(category=>{
+         //  console.log(category);
+           category.doc.metadata.map(meta=>{
+             if(meta.categories[0]){
+               //Pull new feeds of user subscriptions
+               this.userservice.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
 
-        //Get board annotations
-                   //this.dataservice.getannotations().then(res=>{
-                     //Set result to global variable as it can be accessed outdside the component
-                    //this.variab.annotations=res;
+                 this.service.getmetacategories(meta.categories[0]).then((feedsFromDb:any=[])=>{
+                   console.log(feedsFromDb.length);
+                 //  var res = _.differenceBy(feedsToUpdate,feedsFromDb,'title');
 
-                    //});
-             //Get readlater annotations
-
-                /*   this.dataservice.getreadlater(this.user).then(result=>{
-                     //Set result to global variable as it can be accessed outdside the component
-                       this.variab.readlaterfeeds=result;
-
-                   });
-              //Get recently read annotaions
-                   this.dataservice.getrecentlyread(this.user).then(result=>{
-                       //Set result to global variable as it can be accessed outdside the component
-                       this.variab.recentlyread=result;
-                   });
-
+                   var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
+                     updateFeeds.map(feed=>{
+                       this.service.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
+                         console.log("resultsave",res)
+                       })
+                   })
 
 
-        //Get the feed names to display in the sidebar and other components
-        this.userservice.getUserSubscriptions().then(res=>{
-           //Set result to global variable as it can be accessed outdside the component
-          this.variab.categoryfeeds=res;
-        //  console.log(this.variab.categoryupdated)
+                 });
 
-      });*/
+               });
+             }
+
+           })
+
+         })
+
+       });
+
+  }
+  getDiffereceofFeeds(feedsarray,feedItems){
+
+
+
+  //  if(feedsarray.length>0){
+     /*  var databasefeeds = feedsarray.map(value=>{
+
+           return value.value;
+
+         });*/
+          console.log(feedsarray.length,feedItems.length)
+          var c = feedItems.filter(function(item) {
+              //console.log(item);
+            return !feedsarray.some(function(other) {
+              //console.log(other)
+              return item.title === other.value.title;
+            });
+          });
+          console.log(c.length);
+   //var res = _.difference(feedItems,databasefeeds);
+     //console.log("result",res.length)
+
+       return c;
+
+
+  // }
+}
 
 
 
 
-    }
+
     getBoardsOngroups(){
       this.util.boardsOnGroup(this.groupname).then(res=>{
         this.variab.boardupdated=res;
