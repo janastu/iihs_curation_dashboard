@@ -6,7 +6,7 @@ import PouchDB from 'pouchdb';
 import {Settings} from './settings'
 declare function emit(key: any,value:any): void;
 @Injectable()
-export class Userservice {  
+export class Userservice {
 user:any;
 
 constructor(private http: Http,private settings:Settings) {
@@ -14,8 +14,8 @@ constructor(private http: Http,private settings:Settings) {
   //this.db = new PouchDB('userdb');
 
 
-  
-       
+
+
 
 //Configurations for user registration and login
    var config:any = {
@@ -45,7 +45,7 @@ constructor(private http: Http,private settings:Settings) {
     superlogin.configure(config);
 
     this.user = localStorage.getItem("name");
-  
+
 
 
   }
@@ -73,7 +73,7 @@ public resetPassword(token,pwd){
 //Superlogin Api service to send reset link on forget password
 public onforget(email)
 {
-  
+
 return new Promise(resolve => {
     superlogin.forgotPassword(email).then(function (response) {
     //console.log("asd", response);
@@ -89,16 +89,16 @@ public adduser(user){
 	//console.log("usr",user);
   return new Promise(resolve => {
     superlogin.register(user).then(function (response) {
-      
+
     resolve(response);
     },(err)=>{
       console.log(err);
       resolve(err);
     });
   });
-  
-   
-   
+
+
+
 }
 //Superlogin Api service to send registration confirmation email
 public sendConfirmEmail(email,groupname,type,regOrlogin)
@@ -111,17 +111,17 @@ public sendConfirmEmail(email,groupname,type,regOrlogin)
    this.http.get(emailurl).subscribe((response) => {
      //console.log("sd",response.ok);
      status = response.ok;
-      
-     resolve(status);  
+
+     resolve(status);
         });
     });
-     
-    
- 
+
+
+
 }
 //Superlogin Api service to validate the email
 public validateEmail(email){
-  return new Promise(resolve => { 
+  return new Promise(resolve => {
     superlogin.validateEmail(email).then(res=>{
       //console.log(res);
       resolve(res);
@@ -134,7 +134,7 @@ public validateEmail(email){
 //Superlogin Api service to login
 public login(credentials){
 
-return new Promise(resolve => { 
+return new Promise(resolve => {
   superlogin.login(credentials).then((response)=>{
     //console.log(response);
     resolve(response);
@@ -157,7 +157,7 @@ getUserSubscriptions(){
  // console.log("url",url);
 
 // let url = 'http://localhost:5984/supertest$vinutha/_all_docs?include_docs=true'
-  
+
   let headers = new Headers();
   headers.append( 'Content-Type', 'application/json')
   headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
@@ -171,7 +171,7 @@ getUserSubscriptions(){
           resolve(response.rows);
         }, (err) => {
           console.log("er",err);
-        }); 
+        });
       }
       else{
         console.log("usernot loggedif");
@@ -186,12 +186,12 @@ getemail(){
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
-          
+
           //console.log("users",response);
           resolve(response.rows);
         }, (err) => {
           console.log(err);
-        }); 
+        });
 
   });
 }
@@ -201,12 +201,12 @@ getusers(){
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
-          
+
           //console.log("users",response);
           resolve(response.rows);
         }, (err) => {
           console.log(err);
-        }); 
+        });
 
   });
 
@@ -218,12 +218,12 @@ getAuser(user){
    //console.log(url);
   return new Promise(resolve => {
         this.http.get(url).map(res=>res.json()).subscribe((response)=> {
-          
+
           //console.log("users",response);
           resolve(response);
         }, (err) => {
           console.log(err);
-        }); 
+        });
 
   });
 
@@ -238,30 +238,31 @@ updateAuser(user){
    headers.append( 'Content-Type', 'application/json')
    headers.append('Authorization', 'Basic '+btoa(this.settings.couchdbusername+':'+this.settings.couchdbpassword)); // ... Set content type to JSON
   let options = new RequestOptions({ headers: headers});
-    
+
         this.http.put(url,user,options).map(res=>res.json()).subscribe((response)=> {
-          
+
           console.log("user",response);
          // resolve(response.rows);
         }, (err) => {
           console.log(err);
-        }); 
+        });
 
 }
 //Api service to call newsrack and pull the recent feeds of the user's subcscriptions
-pullnewFeeds(){
+pullnewFeeds(catName){
+//console.log(catName);
   let url = localStorage.getItem('url');
   return new Promise(resolve=>{
     if(url){
-      var feedparserurl = this.settings.feedparserUrl+'/?user='+url;
+      var feedparserurl = this.settings.feedparserUrl+'/updatedfeeds?user='+catName;
       //console.log(newsrack);
-      this.http.get(feedparserurl).subscribe((response)=> {
-         //  console.log("response",response);
+      this.http.get(feedparserurl).map(res=>res.json()).subscribe((response)=> {
+           console.log("response",response);
          resolve(response);
       },(err)=>{
-        //console.log(err);
+        console.log(err);
       resolve(err);
-      
+
       });
     }
     else{
@@ -269,8 +270,8 @@ pullnewFeeds(){
     }
 
   });
-    
-  
+
+
 }
 
 
