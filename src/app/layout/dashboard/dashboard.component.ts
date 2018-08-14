@@ -7,6 +7,7 @@ import { Userservice } from '../../services/userservice';//Import UserService to
 import { Router } from "@angular/router";//Import router to navigate between components
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
+//import get from 'lodash-es/get'
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -65,14 +66,15 @@ export class DashboardComponent implements OnInit {
                 this.userService.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
 
                   this.service.getmetacategories(meta.categories[0]).then((feedsFromDb:any=[])=>{
+                    console.log(feedsFromDb.length);
                   //  var res = _.differenceBy(feedsToUpdate,feedsFromDb,'title');
 
                     var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
-                      //updateFeeds.map(feed=>{
+                      updateFeeds.map(feed=>{
                         this.service.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
                           console.log("resultsave",res)
                         })
-                      //})
+                    })
 
 
                   });
@@ -91,20 +93,31 @@ export class DashboardComponent implements OnInit {
 
     }
     getDiffereceofFeeds(feedsarray,feedItems){
-      if(feedsarray.length>0){
-	       var databasefeeds = feedsarray.map(value=>{
+
+
+
+    //  if(feedsarray.length>0){
+	     /*  var databasefeeds = feedsarray.map(value=>{
 
 		         return value.value;
 
-	          });
-  //console.log(feedItems,databasefeeds);
-	   var res = _.difference(feedItems,databasefeeds);
-		   console.log("result",res.length)
+           });*/
+            console.log(feedsarray.length,feedItems.length)
+            var c = feedItems.filter(function(item) {
+                //console.log(item);
+              return !feedsarray.some(function(other) {
+                //console.log(other)
+                return item.title === other.value.title;
+              });
+            });
+            console.log(c.length);
+	   //var res = _.difference(feedItems,databasefeeds);
+		   //console.log("result",res.length)
 
-		     return res;
+		     return c;
 
 
-	   }
+	  // }
   }
     //Click on a feed name to navigate to feeds page and get the feeds based on the feed name clicked
     oncategory(category){
