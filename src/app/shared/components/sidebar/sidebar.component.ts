@@ -103,7 +103,7 @@ export class SidebarComponent implements OnInit{
                     //});
              //Get readlater annotations
 
-                   this.dataservice.getreadlater(this.user).then(result=>{
+                /*   this.dataservice.getreadlater(this.user).then(result=>{
                      //Set result to global variable as it can be accessed outdside the component
                        this.variab.readlaterfeeds=result;
 
@@ -122,7 +122,7 @@ export class SidebarComponent implements OnInit{
           this.variab.categoryfeeds=res;
         //  console.log(this.variab.categoryupdated)
 
-        });
+      });*/
 
 
 
