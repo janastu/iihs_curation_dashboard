@@ -57,7 +57,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                   this.pageheading = params.subcategory;
                   //console.log("subca",params.feedname);
                   //console.log("ca",params.subcategory);
-                  this.getfeedsOnSubcategory(params.subcategory,params.feedname).then(val=>{
+                  this.getfeedsOnSubcategory(params.subcategory).then(val=>{
 
 
                     //console.log("Debuginfeedfedsafter",this.localfeeds);
@@ -91,30 +91,78 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                 //To get feeds,filtered according to feedname
                 else{
 
-                  this.spinnerState=true;
+                   this.spinnerState=true;
                   //this.feeds.length=0;
-                 // console.log(this.spinnerState,this.feeds);
+
                   this.pageheading = params.feedname;
-                  this.getfeedsOnFeedname(params.feedname).then(val=>{
-                    this.variab.globalfeeds = val;
+                     this.userService.getUserSubscriptions().then(res=>{
+                       this.variab.categoryfeeds=res;
+                  console.log(this.spinnerState,this.variab.categoryfeeds);
+                  this.variab.categoryfeeds.map(category=>{
+                    if(category.doc.feedname == params.feedname){
+                      category.doc.metadata.map(meta=>{
+                        //console.log(meta.categories[0]);
+                        this.getfeedsOnSubcategory(meta.categories[0]).then((feedsFromDb:any=[])=>{
+                          //console.log(feedsFromDb);
+                          this.userService.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
+                          console.log(feedsToUpdate);
+                            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
+                              if(updateFeeds.length>0){
+                              updateFeeds.map(feed=>{
 
-                    //Reverse the filter to sort according to latest feeds
-                     this.variab.globalfeeds.reverse();
-                  //Call the checkForDeleted method to check for hidden/removed feeds
-                  //and remove those feeds from the display array
-                    this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
+                                  //console.log("resultsave",res);
+                                    if(res['ok']==true){
+                                    this.getfeedsOnFeedname(params.feedname).then(val=>{
+                                      this.variab.globalfeeds = val;
 
-                if(this.feeds){
+                                      //Reverse the filter to sort according to latest feeds
+                                       this.variab.globalfeeds.reverse();
+                                    //Call the checkForDeleted method to check for hidden/removed feeds
+                                    //and remove those feeds from the display array
+                                        this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                        if(this.feeds){
 
-                       this.spinnerState=false;
-                     }                     
-   //}
+                                          this.spinnerState=false;
+                                        }
 
-                      /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
-                        this.feeds=res;
-                      }); */
+                                    });
+                                  }
+
+                                })
+
+
+
+                              })
+                            }
+                            this.getfeedsOnFeedname(params.feedname).then(val=>{
+                              this.variab.globalfeeds = val;
+
+                              //Reverse the filter to sort according to latest feeds
+                               this.variab.globalfeeds.reverse();
+                            //Call the checkForDeleted method to check for hidden/removed feeds
+                            //and remove those feeds from the display array
+                                this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                if(this.feeds){
+
+                                  this.spinnerState=false;
+                                }
+
+                            });
+
+                          });
+                        })
+                      });
+                    }
+
 
                   });
+
+                });                
+  
+
+                
+
 
                 }
 
@@ -158,7 +206,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
   }
   //Get feeds filtered on subcategory
-  getfeedsOnSubcategory(subcategory,feedname){
+  getfeedsOnSubcategory(subcategory){
 
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
@@ -231,7 +279,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
     this.feeds.length = 0;
     this.getfeedsOnFeedname(childrefresh).then(val=>{
       if(val['length']==0){
-            this.getfeedsOnSubcategory(childrefresh,'null').then(val=>{
+            this.getfeedsOnSubcategory(childrefresh).then(val=>{
                   this.variab.globalfeeds = val;
 
                   //Reverse the filter to sort according to latest feeds
@@ -276,6 +324,34 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
   //  console.log(this.feeds);
     window.scroll(0,0);
   }
+  //Get difference of feedS
+  getDiffereceofFeeds(feedsarray,feedItems){
+
+
+
+  //  if(feedsarray.length>0){
+     /*  var databasefeeds = feedsarray.map(value=>{
+
+           return value.value;
+
+         });*/
+          console.log(feedsarray.length,feedItems.length)
+          var c = feedItems.filter(function(item) {
+              //console.log(item);
+            return !feedsarray.some(function(other) {
+              //console.log(other)
+              return item.title === other.value.title;
+            });
+          });
+          console.log(c.length);
+   //var res = _.difference(feedItems,databasefeeds);
+     //console.log("result",res.length)
+
+       return c;
+
+
+  // }
+}
 
 
 }
