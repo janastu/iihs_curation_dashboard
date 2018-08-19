@@ -96,7 +96,7 @@ export class SidebarComponent implements OnInit{
        this.userservice.getUserSubscriptions().then(res=>{
          //Store the user subscribed feed names in the Global variable
          this.variab.categoryfeeds=res;
-         this.variab.categoryfeeds.map(category=>{
+        /* this.variab.categoryfeeds.map(category=>{
          //  console.log(category);
            category.doc.metadata.map(meta=>{
              if(meta.categories[0]){
@@ -122,7 +122,7 @@ export class SidebarComponent implements OnInit{
 
            })
 
-         })
+         })*/
 
        });
 
