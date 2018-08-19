@@ -153,11 +153,18 @@ export class FeedService {
 	  }
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
-		
+		var date = new Date();
+		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
+		console.log(last);
 	  	return new Promise(resolve => {
-	  		   //var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+category+'"]&endkey=["'+category+'",{}]'
-	  		   //	console.log(category);
-	  		   	this.remotefeeds.query('feeds/metacategories', {
+	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
+					 this.http.get(check).map(res=>res.json()).subscribe(result=> {
+						 console.log("resfeeds",result);
+						 resolve(result.rows);
+					 });
+
+					 //	console.log(category);
+	  		   /*	this.remotefeeds.query('feeds/metacategories', {
 
 	  		   	    startkey: [category],
 	  		   	    endkey: [category, {}]
@@ -166,7 +173,7 @@ export class FeedService {
 	  		   	 resolve(result.rows);
 	  		   	}).catch(function (err) {
 	  		   	  console.log(err);
-	  		   	});
+	  		   	});*/
 	  });
 	  }
 
