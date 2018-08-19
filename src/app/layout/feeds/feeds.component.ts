@@ -104,7 +104,11 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                   //and remove those feeds from the display array
                     this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
 
-                        //}
+                if(this.feeds){
+
+                       this.spinnerState=false;
+                     }                     
+   //}
 
                       /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
                         this.feeds=res;
