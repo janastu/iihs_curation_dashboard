@@ -38,24 +38,24 @@ ngOnChanges(){
     this.feedForm = this.formBuilder.group({
       feedname: this.feedname
     });
-   
+
 
     //Check for link is added to a feedname and user subscriptions
     var linkExists = this.variab.categoryfeeds.map(link=>{
-      
+            //console.log(link);
       var checkForLink = link.doc.metadata.map(everylink=>{
           //console.log("folloew",everylink)
         if(everylink.link === this.url){
           this.followstatus=true;
-          
+
           return true;
         }
       })
       return _.compact(checkForLink);
     })
     //Map link for feeds to return boolean array
-    //Returns example:[true,false,true] 
-    //Index of output == Index of label which means label[0] and label[1] 
+    //Returns example:[true,false,true]
+    //Index of output == Index of label which means label[0] and label[1]
     //is active for above output
     this.labelForFeeds = linkExists.map(link=>{
       if(link[0]){
@@ -72,7 +72,7 @@ ngOnChanges(){
     });
     //Check for link is added to a feedname and user subscriptions
     var linkExists = this.variab.categoryfeeds.map(link=>{
-      
+
       var checkForLink = link.doc.metadata.map(everylink=>{
           //console.log("folloew",everylink.link,this.url)
         if(everylink.link === this.url){
@@ -84,8 +84,8 @@ ngOnChanges(){
       return _.compact(checkForLink);
     })
     //Map link for feeds to return boolean array
-    //Returns example:[true,false,true] 
-    //Index of output == Index of label which means label[0] and label[1] 
+    //Returns example:[true,false,true]
+    //Index of output == Index of label which means label[0] and label[1]
     //is active for above output
     this.labelForFeeds = linkExists.map(link=>{
       if(link[0]){
@@ -95,7 +95,7 @@ ngOnChanges(){
         return false;
       }
     })
-     
+
 
 
   }
@@ -117,15 +117,15 @@ ngOnChanges(){
        this.ngAlert.type = 'warning';
        setTimeout(() => this.alertempty = false, 2000);
      }
-     
+
      else{
        var toCheckrepeatFeednames:any =[];
        var feednameExists :any = 0;
-        
+
        this.feedsnames.map(feedname=>{
           if(this.feedname.value === feedname.doc.feedname){
             console.log("boardname exists");
-            feednameExists = 1; 
+            feednameExists = 1;
           }
         })
        //Check if feedname already exists in the user subscriptions
@@ -140,8 +140,8 @@ ngOnChanges(){
        if(feednameExists == 0){
         // console.log("add");
          this.feedService.addFeed(doc).then(res=>{
-               if(res['ok'] == true){
-                 this.variab.categoryfeeds.push({doc:doc}); 
+               if(res[0]['ok'] == true){
+                 this.variab.categoryfeeds.push({doc:doc});
                  /*this.groupService.getgroups().then(res=>{
                     var groups:any=[];
                     groups = res;
@@ -150,10 +150,10 @@ ngOnChanges(){
                        groupSubscription.value.subscriptions.push(doc)
                          this.groupService.update(groupSubscription.value);
                      }
-                   
+
                    })
                    // console.log(groups);
-                  
+
                  })*/
                  this.alertsucess=true;
                  this.ngAlert.type = 'success';
@@ -166,33 +166,33 @@ ngOnChanges(){
                }
          })
        }
-     
-       
-       
 
-     
+
+
+
+
    }
-   
-   
+
+
  }
- //Save the feed metadata and link  to a already feed name 
+ //Save the feed metadata and link  to a already feed name
  addtofeed(feed,i){
 
  	var update:any;//update status variable
 
 //Check if the feedname already exists in the database
    var checkForFeedname = this.variab.categoryfeeds.map(name=>{
-     
+
         if(name.doc.feedname === feed){
           update = 1;
          }
          else{
            update = 0;
-       
+
          }
-        
-     //If the feedname exists then update the already existing doc with the new feed link 
-   
+
+     //If the feedname exists then update the already existing doc with the new feed link
+
      if(update == 1){
          name.doc.metadata.push(this.data);
          this.feedService.update(name.id,name.doc)
@@ -214,8 +214,8 @@ ngOnChanges(){
   public closeAlert() {
       this.alertexists=false;
       this.alertempty= false;
-      
+
   }
 
-  
+
 }
