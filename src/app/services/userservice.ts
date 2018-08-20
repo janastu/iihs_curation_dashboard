@@ -250,12 +250,13 @@ updateAuser(user){
 }
 //Api service to call newsrack and pull the recent feeds of the user's subcscriptions
 pullnewFeeds(catName){
-//console.log(catName);
+var date = new Date();
+var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
   let url = localStorage.getItem('url');
   return new Promise(resolve=>{
     if(url){
-      var feedparserurl = this.settings.feedparserUrl+'/updatedfeeds?user='+catName;
-      //console.log(newsrack);
+      var feedparserurl = this.settings.feedparserUrl+'/updatedfeeds?user='+catName+'&date='+last.toISOString();
+      console.log(feedparserurl);
       this.http.get(feedparserurl).map(res=>res.json()).subscribe((response)=> {
            console.log("response",response);
          resolve(response);

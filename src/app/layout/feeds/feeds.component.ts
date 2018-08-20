@@ -106,23 +106,36 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                           //console.log(feedsFromDb);
                           this.userService.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
                           console.log(feedsToUpdate);
-                            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
+                            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
                               if(updateFeeds.length>0){
 
-                              updateFeeds.map(feed=>{
+                              //updateFeeds.map(feed=>{
 
                                 this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
-                                  //console.log("resultsave",res);
-                                    if(res['ok']==true){
+                                  console.log("resultsave",res);
+                                    if(res[0]['ok']==true){
+                                      this.getfeedsOnFeedname(params.feedname).then(val=>{
+                                        this.variab.globalfeeds = val;
 
-                                  }
+                                        //Reverse the filter to sort according to latest feeds
+                                         this.variab.globalfeeds.reverse();
+                                      //Call the checkForDeleted method to check for hidden/removed feeds
+                                      //and remove those feeds from the display array
+                                          this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                          if(this.feeds){
+
+                                            this.spinnerState=false;
+                                          }
+
+                                      });
+                                    }
 
                                 })
 
 
 
-                              })
-                              this.getfeedsOnFeedname(params.feedname).then(val=>{
+                            //  })
+                              /*this.getfeedsOnFeedname(params.feedname).then(val=>{
                                 this.variab.globalfeeds = val;
 
                                 //Reverse the filter to sort according to latest feeds
@@ -135,7 +148,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                                     this.spinnerState=false;
                                   }
 
-                              });
+                              });*/
                             }
                             this.getfeedsOnFeedname(params.feedname).then(val=>{
                               this.variab.globalfeeds = val;
