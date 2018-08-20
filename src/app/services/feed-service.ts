@@ -298,37 +298,30 @@ export class FeedService {
 	   }
 	//Function adds the newsrack feeds to pouchdbdb
 	 addtopouch(feed,feedname){
+	 console.log(feed);
+
 	 //console.log(feed);
 	 	return new Promise(resolve => {
   if(feed.items){
-		feed.items.map(res=>{
+		var bulkdocs = feed.items.map(res=>{
 			res.feednme = feedname;
-
-
-			this.remotefeeds.post(res, function callback(err, result) {
-
-			if (!err) {
-						//console.log('Successfully posted a todo!',result);
-						resolve(result);
-					}
-
-					});
+				return res;
 		 });
 	}
-	    feed.map(res=>{
+	    bulkdocs = feed.map(res=>{
 	      res.feednme = feedname;
-
-
-	      this.remotefeeds.post(res, function callback(err, result) {
-
-			  if (!err) {
-	            //console.log('Successfully posted a todo!',result);
-	            resolve(result);
-	          }
-
-	        	});
+					return res;
 	  	 });
-	    });
+			 this.remotefeeds.bulkDocs(bulkdocs, function callback(err, result) {
+
+			 if (!err) {
+						 console.log('Successfully posted a todo!',result);
+						 resolve(result);
+					 }
+
+			});
+			 //resolve('result');
+		 });
 
 
 	  }
