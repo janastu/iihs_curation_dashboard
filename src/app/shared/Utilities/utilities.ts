@@ -20,24 +20,47 @@ public variab:Global,public boardservice:BoardService) {
 // and display the rest of the feeds
 checkForDeletedFeeds(feeds){
 
-  let hiddenfeeds:any=[];//local variable to store hidden feeds
+  //let hiddenfeeds:any=[];//local variable to store hidden feeds
   return new Promise(resolve=>{
     //Check if feeds is empty or not
     if(feeds.length==0){
       resolve(feeds);
     }
-    //Get the hidden feeds
-    this.dataservice.getdeletedfeeds(this.user).then(res=>{
-       hiddenfeeds=res;//Store the feeds in the local variable
-       //If no hidden feeds return the feeds
-      if(hiddenfeeds.length == 0){
+    if(this.variab.hiddenfeeds.length == 0){
+      //Get the hidden feeds
+      this.dataservice.getdeletedfeeds(this.user).then(res=>{
+         this.variab.hiddenfeeds=res;//Store the feeds in the local variable
+         //To do: Manipulate feed data structure hidden true
+         //Data structure to represent hidden by user
+         //such that design document can filter below condition
+         //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
+         this.variab.hiddenfeeds.map(feed=>{
+            feeds.filter(globalfeed=>{
+             //console.log(feed.value._id,globalfeed.value._id)
+             if(globalfeed.value._id === feed.value._id){
+               var i = _.indexOf(feeds,globalfeed);
+               feeds.splice(i,1);
+               resolve(feeds);
+             }
+             else{
+               resolve(feeds);
+             }
+
+           })
+
+         })
+      });
+    }
+    else{
+
+      if(this.variab.hiddenfeeds.length == 0){
        resolve(feeds);
       }
     //To do: Manipulate feed data structure hidden true
     //Data structure to represent hidden by user
     //such that design document can filter below condition
     //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
-    hiddenfeeds.map(feed=>{
+    this.variab.hiddenfeeds.map(feed=>{
        feeds.filter(globalfeed=>{
         //console.log(feed.value._id,globalfeed.value._id)
         if(globalfeed.value._id === feed.value._id){
@@ -51,8 +74,9 @@ checkForDeletedFeeds(feeds){
 
       })
 
-    })
-   })
+      })
+
+    }
   });
 }
 //function to check if the feeds in the board are already published
