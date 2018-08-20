@@ -150,6 +150,7 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
                               });*/
                             }
+			 else{
                             this.getfeedsOnFeedname(params.feedname).then(val=>{
                               this.variab.globalfeeds = val;
 
@@ -164,7 +165,8 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                                 }
 
                             });
-
+                          }      
+  
                           });
                         })
                       });
