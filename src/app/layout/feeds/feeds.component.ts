@@ -27,7 +27,8 @@ view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
 alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
-
+alertupdated:boolean=false//alert variable to store the status of feeds updated
+alertupdating:boolean=false//alert variable to store the status of feeds updating
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,public userService:Userservice,private route: ActivatedRoute,public util:Utilities) { }
 
   //On loading Component
@@ -97,45 +98,14 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                   this.pageheading = params.feedname;
                      this.userService.getUserSubscriptions().then(res=>{
                        this.variab.categoryfeeds=res;
-                  console.log(this.spinnerState,this.variab.categoryfeeds);
+                //  console.log(this.spinnerState,this.variab.categoryfeeds);
                   this.variab.categoryfeeds.map(category=>{
                     if(category.doc.feedname == params.feedname){
-                      category.doc.metadata.map(meta=>{
-                        //console.log(meta.categories[0]);
-                        this.getfeedsOnSubcategory(meta.categories[0]).then((feedsFromDb:any=[])=>{
-                          //console.log(feedsFromDb);
-                          this.userService.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
-                          console.log(feedsToUpdate);
-                            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
-                              if(updateFeeds.length>0){
-
-                              //updateFeeds.map(feed=>{
-
-                                this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
-                                  console.log("resultsave",res);
-                                    if(res[0]['ok']==true){
-                                      this.getfeedsOnFeedname(params.feedname).then(val=>{
-                                        this.variab.globalfeeds = val;
-
-                                        //Reverse the filter to sort according to latest feeds
-                                         this.variab.globalfeeds.reverse();
-                                      //Call the checkForDeleted method to check for hidden/removed feeds
-                                      //and remove those feeds from the display array
-                                          this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
-                                          if(this.feeds){
-
-                                            this.spinnerState=false;
-                                          }
-
-                                      });
-                                    }
-
-                                })
 
 
-
-                            //  })
-                              /*this.getfeedsOnFeedname(params.feedname).then(val=>{
+                            this.getAndUpdatedatabase(category).then((statusUpdate:any)=>{
+                              //console.log(statusUpdate);
+                              this.getfeedsOnFeedname(params.feedname).then(val=>{
                                 this.variab.globalfeeds = val;
 
                                 //Reverse the filter to sort according to latest feeds
@@ -148,8 +118,10 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                                     this.spinnerState=false;
                                   }
 
-                              });*/
-                            }
+                              });
+                            });
+
+                            /*else{
                             this.getfeedsOnFeedname(params.feedname).then(val=>{
                               this.variab.globalfeeds = val;
 
@@ -164,10 +136,10 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
                                 }
 
                             });
-
-                          });
-                        })
-                      });
+                          }*/
+                          //});
+                        //})
+                      //});
                     }
 
 
@@ -363,6 +335,56 @@ alertNofeedsinrange:boolean=false;//alert variable to store boolean values if th
 
 
   // }
+}
+getAndUpdatedatabase(category){
+  var feedsFromDb:any=[];
+  //console.log(meta.categories[0]);
+return new Promise(resolve=>{
+  category.doc.metadata.map(meta=>{
+    if(meta.categories[0]==undefined){
+        this.getfeedsOnFeedname(category.doc.feedname).then(val=>{
+          feedsFromDb = val;
+          this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+
+            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
+              if(updateFeeds.length>0){
+                  this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
+            //  console.log("resultsave",res);
+                  if(res[0]['ok']==true){
+                    resolve(true);
+                  }
+              })
+            }
+            else{
+              resolve(false);
+            }
+          });
+        })
+    }
+    else{
+      this.getfeedsOnSubcategory(meta.categories[0]).then(value=>{
+        feedsFromDb = value;
+        this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+
+          var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
+            if(updateFeeds.length>0){
+                this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
+          //  console.log("resultsave",res);
+                if(res[0]['ok']==true){
+                  resolve(true);
+                }
+            })
+          }
+          else{
+            resolve(false);
+          }
+        });
+
+      });
+    }
+
+  });
+})
 }
 
 
