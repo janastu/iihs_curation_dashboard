@@ -92,13 +92,13 @@ export class FeedService {
 		        if(response.ok === true){
 
 		        	this.addtopouch(this.feedNewsrack,metadata.feedname).then(res=>{
-		        		if(res['ok'] == true){
-
+		        		if(res[0]['ok'] == true){
+										resolve(res);
 		        			//PouchDB.replicate('feeds',this.settings.protocol+this.settings.dbfeed);
 		        			this.remotefeeds.replicate.to(this.settings.protocol+this.settings.dbfeed).on('complete', function (res) {
 		        			  // yay, we're done!
 		        			  //console.log(res);
-		        			  resolve(res);
+		        			  //resolve(res);
 		        			}).on('error', function (err) {
 		        			  // boo, something went wrong!
 		        			});
@@ -308,18 +308,21 @@ export class FeedService {
 				return res;
 		 });
 	}
+	else{
 	    bulkdocs = feed.map(res=>{
 	      res.feednme = feedname;
 					return res;
 	  	 });
-			 this.remotefeeds.bulkDocs(bulkdocs, function callback(err, result) {
 
-			 if (!err) {
-						 console.log('Successfully posted a todo!',result);
-						 resolve(result);
-					 }
+		}
+		this.remotefeeds.bulkDocs(bulkdocs, function callback(err, result) {
 
-			});
+		if (!err) {
+					console.log('Successfully posted a todo!',result);
+					resolve(result);
+				}
+
+	 });
 			 //resolve('result');
 		 });
 
