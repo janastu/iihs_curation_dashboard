@@ -32,6 +32,7 @@ recentlyreadannos:any=[];//variable to store recently read annotations
 this.date = new Date();
 
     this.user = localStorage.getItem('name');
+    if(!this.router.url.includes('/feeds')){
        //Get the read later annos
        this.dataservice.getreadlaterannotations().then(res=>{
          this.readlaterannos = res;
@@ -53,7 +54,7 @@ this.date = new Date();
            }
          });
        })
-
+     }
 
   }
   //On clicked on readlater
@@ -68,9 +69,14 @@ this.date = new Date();
            anno.value.hidereadlateranno = true;
           // console.log(anno.value);
 
-           this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-           this.selectedIndex = -1;
-           this.variab.readlaterfeeds.splice(this.index,1)
+           //this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+            this.dataservice.updatedatabase(anno.value).then(res=>{
+              if(res['ok'] == true){
+                this.selectedIndex = -1;
+                this.variab.readlaterfeeds.splice(this.index,1)
+              }
+            })
+
          }
 
        })
@@ -94,8 +100,13 @@ this.date = new Date();
        }
        this.readlaterannos.push({value:model});
 
-       this.readlaterstore.dispatch('ADD_ITEMS',model)
-       this.selectedIndex = index;
+       //this.readlaterstore.dispatch('ADD_ITEMS',model)
+        this.dataservice.addtodatabase(model).then(res=>{
+            if(res['ok']==true){
+                this.selectedIndex = index;
+            }
+        })
+
      }
 
 
@@ -110,11 +121,15 @@ this.date = new Date();
           if(anno.value.target.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
-           console.log(anno.value);
+           //console.log(anno.value);
 
-            this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-             this.selectedIcon = -1;
-             this.variab.recentlyread.splice(this.index,1)
+            this.dataservice.updatedatabase(anno.value).then(res=>{
+              if(res['ok'] == true){
+                this.selectedIcon = -1;
+                this.variab.recentlyread.splice(this.index,1)
+              }
+            });
+
           }
 
        });
@@ -136,8 +151,12 @@ this.date = new Date();
          "motivation":"tagging"
        }
        this.recentlyreadannos.push({value:model});
-       this.readlaterstore.dispatch('ADD_ITEMS',model);
-       this.selectedIcon = index;
+       this.dataservice.addtodatabase(model).then(res=>{
+         if(res['ok'] == true){
+           this.selectedIcon = index;
+         }
+       });
+
      }
 
   }
@@ -146,13 +165,15 @@ this.date = new Date();
   if(this.router.url === '/trashbox'){
     this.alertremove=true
   }
-  else if(this.router.url.includes('/feeds')){
+  /*else if(this.router.url.includes('/feeds')){
     this.feedService.delete(this.feeditem).then(response=>{
+
       if(response['ok']=true){
+        console.log(response);
         this.variab.globalfeeds.splice(this.index,1);
       }
     });
-  }
+  }*/
   else{
     this.util.hide(this.feeditem.value,this.index).then(res=>{
       if(res['ok']==true){
