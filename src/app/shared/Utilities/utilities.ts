@@ -19,7 +19,7 @@ public variab:Global,public boardservice:BoardService) {
 //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
 // and display the rest of the feeds
 checkForDeletedFeeds(feeds){
-  console.log(feeds, "deleted_feeds");
+  //console.log(feeds, "deleted_feeds");
   //let hiddenfeeds:any=[];//local variable to store hidden feeds
   return new Promise(resolve=>{
     //Check if feeds is empty or not
@@ -41,15 +41,18 @@ checkForDeletedFeeds(feeds){
          //such that design document can filter below condition
          //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
          else{
+          // console.log(this.variab.hiddenfeeds,"hiddenfeeds");
            this.variab.hiddenfeeds.map(feed=>{
-             console.log(feed,"hiddenfeeds");
+             
             feeds.filter(globalfeed=>{
-             //console.log(feed.value._id,globalfeed.value._id)
+             //console.log(feed.value.value._id,globalfeed.value._id,"feedvalue")
              if(globalfeed.value._id === feed.value._id){
                var i = _.indexOf(feeds,globalfeed);
+               console.log(feeds,"beforestep1");
                feeds.splice(i,1);
+               console.log(feeds,"after splice");
                resolve(feeds);
-               console.log(feeds,"elseif");
+               
              }
              else{
                resolve(feeds);

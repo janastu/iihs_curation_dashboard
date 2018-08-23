@@ -100,7 +100,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                                  this.variab.globalfeeds.reverse();
                               //Call the checkForDeleted method to check for hidden/removed feeds
                               //and remove those feeds from the display array
-                                  this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                  this.feeds = this.variab.globalfeeds//.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
                                   if(this.feeds){
 
                                     this.spinnerState=false;

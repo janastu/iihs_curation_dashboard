@@ -111,7 +111,7 @@ queryString:any;//variable to store the input to find a board name
          })
 
     //  });
-       //console.log(this.labelForBoards);
+       console.log(this.labelForBoards);
 
   }
 

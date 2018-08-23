@@ -177,6 +177,7 @@ this.date = new Date();
   else{
     this.util.hide(this.feeditem.value,this.index).then(res=>{
       if(res['ok']==true){
+        console.log(this.index);
         this.variab.globalfeeds.splice(this.index,1);
         this.variab.boardfeeds.splice(this.index,1);
         this.variab.readlaterfeeds.splice(this.index,1);
