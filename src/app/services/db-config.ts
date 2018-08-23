@@ -52,7 +52,7 @@ auth:any;//varable to store the auth object
   	    metacategories: {
   	      map: function (doc) {
             //console.log("doc in con",doc);
-  	        if (doc.meta && !doc.hidefeed) {
+  	        if (doc.meta) {
               if(doc.meta.categories[0]!= null){
   	          emit([doc.meta.categories[0],doc.pubDate],doc);
               }

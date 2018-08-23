@@ -11,7 +11,6 @@ import { FeedService } from '../../services/feed-service';//Import feed service 
 import { Userservice } from '../../services/userservice';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
-
   selector: 'app-feeds',
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.scss'],
@@ -45,7 +44,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
      //Access the query parameter and filter the feeds according to category
           this.route.queryParams
                 .subscribe(params => {
-                  this.p=0;
+
+                 this.p=0;
 
                  this.spinnerState=true;//Set spinner
                  this.feeds.length=0;//Clear the feeds array
@@ -61,9 +61,6 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                   this.getfeedsOnSubcategory(params.subcategory).then(val=>{
 
 
-                    //console.log("Debuginfeedfedsafter",this.localfeeds);
-                    //this.feeds=this.localfeeds
-                     //console.log("Debuginfeedfeds",this.feeds);
                     //Reverse the filter to sort according to latest feeds
                      this.variab.globalfeeds=val;
                      this.variab.globalfeeds.reverse();
@@ -75,16 +72,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                        this.spinnerState=false;
                      }
 
-                     /*
-                     if(this.localfeeds.length=0){
-                       this.alertNofeeds=true;
-                     }
-                     */
-                  //Call the checkForDeleted method to check for hidden/removed feeds
-                  //and remove those feeds from the display array
-                   /*this.util.checkForDeletedFeeds(this.variab.globalfeeds).then(res=>{
-                     this.feeds = res;
-                   });  */
+
 
                   });
 
@@ -121,25 +109,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                               });
                             });
 
-                            /*else{
-                            this.getfeedsOnFeedname(params.feedname).then(val=>{
-                              this.variab.globalfeeds = val;
-
-                              //Reverse the filter to sort according to latest feeds
-                               this.variab.globalfeeds.reverse();
-                            //Call the checkForDeleted method to check for hidden/removed feeds
-                            //and remove those feeds from the display array
-                                this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
-                                if(this.feeds){
-
-                                  this.spinnerState=false;
-                                }
-
-                            });
-                          }*/
-                          //});
-                        //})
-                      //});
+                            
                     }
 
 
