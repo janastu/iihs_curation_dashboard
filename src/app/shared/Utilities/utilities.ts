@@ -26,10 +26,10 @@ checkForDeletedFeeds(feeds){
     if(feeds.length==0){
       resolve(feeds);
     }
-    if(this.variab.hiddenfeeds.length == 0){
+  //  if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
       this.dataservice.getdeletedfeeds().then(res=>{
-         this.variab.hiddenfeeds=res;//Store the feeds in the local variable
+         this.variab.hiddenfeeds=res;//Store the feeds in the global variable
          //To do: Manipulate feed data structure hidden true
          //Data structure to represent hidden by user
          //such that design document can filter below condition
@@ -50,8 +50,8 @@ checkForDeletedFeeds(feeds){
 
          })
       });
-    }
-    else{
+  //  }
+  /*  else{
 
       if(this.variab.hiddenfeeds.length == 0){
        resolve(feeds);
@@ -76,7 +76,7 @@ checkForDeletedFeeds(feeds){
 
       })
 
-    }
+    }*/
   });
 }
 //function to check if the feeds in the board are already published

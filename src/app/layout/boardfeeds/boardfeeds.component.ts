@@ -55,8 +55,9 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
               //console.log(this.variab.boardfeeds);
                //Function call to check for the deleted feeds
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
+                //console.log(res);
                   this.util.sortdescending(res).then(sorted=>{
-                      if(this.variab.annotations.length>0){
+                    /*  if(this.variab.annotations.length>0){
                         //Get the deleted and feeds store and display using feeds variable
                         this.feeds = sorted;
                         if(this.feeds){
@@ -69,7 +70,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                           this.alertNofeeds=true;
                         }
                       }
-                      else{
+                      else{*/
                           //Get board annotations
                               this.dataService.getannotations().then(res=>{
                                this.variab.annotations=res;
@@ -87,7 +88,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                                }
                               })
 
-                          }
+                        //  }
 
 
                  this.util.checkForPublished(sorted,this.boardname).then(res=>{
