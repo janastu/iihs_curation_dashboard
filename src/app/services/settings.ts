@@ -22,7 +22,7 @@ export class Settings{
 	//host:any='login.test.openrun.net';
 
 	dbfeed:any=environment.dbhost+'/feeds_test'; //feeds database
-	dbannotations: any = environment.dbhost +'/annotation_backup'; //annotations database
+	dbannotations: any = environment.dbhost +'/iihs_annotation'; //annotations database
 	dbboards: any = environment.dbhost +'/boards';	//boards database
 	dbgroups: any = environment.dbhost +'/groups';	//groups database
 	dbarchives: any = environment.dbhost +'/archives'; //archives database

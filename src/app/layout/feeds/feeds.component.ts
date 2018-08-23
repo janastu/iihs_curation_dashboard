@@ -80,7 +80,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                 //To get feeds,filtered according to feedname
                 else{
 
-                  this.spinnerState=true;
+                   this.spinnerState=true;
                   //this.feeds.length=0;
 
                   this.pageheading = params.feedname;
@@ -105,11 +105,10 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
                                     this.spinnerState=false;
                                   }
-
                               });
                             });
 
-                            
+
                     }
 
 
@@ -121,6 +120,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                 }
 
          });
+
+
 
       }
 
