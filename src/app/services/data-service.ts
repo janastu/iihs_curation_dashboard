@@ -211,7 +211,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     console.log(res);
     if(res['ok']==true){ */
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
-          key:[usr]
+    
         }).then(function (result) {
        console.log("res",result);
         resolve(result.rows);
