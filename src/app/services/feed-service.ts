@@ -61,9 +61,9 @@ export class FeedService {
 
 	return new Promise(resolve => {
 	    var newsrack = this.settings.feedparserUrl+'/first?id='+url;
-	    //console.log(newsrack);
+	     console.log(newsrack);
 	    this.http.get(newsrack).subscribe((response)=> {
-	  	console.log(response.json())
+	  	 console.log(response.json())
 	  	if(response.json().length!=0){
 		this.feedNewsrack = response.json();
 

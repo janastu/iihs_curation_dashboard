@@ -51,11 +51,17 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
              this.spinnerState=true; //Set the spinner state variable to true
               this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
+              console.log(this.variab.boardfeeds, "board feeds");
               //this.handlePublished();
               //console.log(this.variab.boardfeeds);
-               //Function call to check for the deleted feeds
+               //Function call to check for the deleted feeds: 
+               //TODO: bug
+
+               console.log(this, this.variab.boardfeeds);
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
+                 console.log(res, "respond");
                   this.util.sortdescending(res).then(sorted=>{
+                    console.log(sorted, "sorted feeds");
                       if(this.variab.annotations.length>0){
                         //Get the deleted and feeds store and display using feeds variable
                         this.feeds = sorted;
@@ -68,12 +74,14 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                         if(this.feeds.length==0){
                           this.alertNofeeds=true;
                         }
+                        console.log("if block");
                       }
                       else{
+                        console.log("Else block");
                           //Get board annotations
                               this.dataService.getannotations().then(res=>{
                                this.variab.annotations=res;
-                               //console.log("vra",this.variab.annotations);
+                               console.log("vra",this.variab.annotations);
                                //Get the deleted and feeds store and display using feeds variable
                                this.feeds = sorted;
                                if(this.feeds){

@@ -19,7 +19,7 @@ public variab:Global,public boardservice:BoardService) {
 //Function to check of any deleted feeds and pop the deleted feeds from the global buffer
 // and display the rest of the feeds
 checkForDeletedFeeds(feeds){
-
+  console.log(feeds, "deleted_feeds");
   //let hiddenfeeds:any=[];//local variable to store hidden feeds
   return new Promise(resolve=>{
     //Check if feeds is empty or not
@@ -30,25 +30,34 @@ checkForDeletedFeeds(feeds){
       //Get the hidden feeds
       this.dataservice.getdeletedfeeds(this.user).then(res=>{
          this.variab.hiddenfeeds=res;//Store the feeds in the local variable
+         console.log(this.variab.hiddenfeeds,"checkdeleted");
+         if(this.variab.hiddenfeeds.length == 0){
+           resolve(feeds);
+          }
          //To do: Manipulate feed data structure hidden true
          //Data structure to represent hidden by user
          //such that design document can filter below condition
          //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
-         this.variab.hiddenfeeds.map(feed=>{
+         else{
+           this.variab.hiddenfeeds.map(feed=>{
+             console.log(feed,"hiddenfeeds");
             feeds.filter(globalfeed=>{
              //console.log(feed.value._id,globalfeed.value._id)
              if(globalfeed.value._id === feed.value._id){
                var i = _.indexOf(feeds,globalfeed);
                feeds.splice(i,1);
                resolve(feeds);
+               console.log(feeds,"elseif");
              }
              else{
                resolve(feeds);
+               console.log(feeds,"else");
              }
 
            })
 
          })
+        }   
       });
     }
     else{
@@ -62,6 +71,7 @@ checkForDeletedFeeds(feeds){
     //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
     this.variab.hiddenfeeds.map(feed=>{
        feeds.filter(globalfeed=>{
+         console.log(globalfeed, "global_feeds");
         //console.log(feed.value._id,globalfeed.value._id)
         if(globalfeed.value._id === feed.value._id){
           var i = _.indexOf(feeds,globalfeed);
@@ -81,13 +91,15 @@ checkForDeletedFeeds(feeds){
 }
 //function to check if the feeds in the board are already published
 checkForPublished(boardfeeds,boardname){
+  console.log(boardfeeds, "boardd_feeds");
   return new Promise(resolve=>{
    var alreadypublished:any=[];
   this.archiveService.getAlreadyPublishedfeeds(boardname).then(res=>{
+    console.log(this.archiveService, "archiveService");
           alreadypublished=res;
-          //console.log(res);
+          console.log(res);
       var datefeed = boardfeeds.map( (board, index) => {
-          // console.log(alreadypublished,feeds);
+           console.log(alreadypublished,"published_feeds");
          return  _.filter(alreadypublished,function(o) {
            //console.log(o)
            if(o.value._id===board.value._id){
@@ -111,7 +123,7 @@ checkForPublished(boardfeeds,boardname){
       //Index of output == Index of label which means label[0] and label[1]
       //is active for above output
       var publishedfeeds  =  datefeed.map(anno=>{
-
+        console.log(anno, "anno");
           if(anno[0]){
               return true;
            }
@@ -179,6 +191,7 @@ filterDate(date,feeds){
 }
 //Function to sort the feeds on descending order from latest
 sortdescending(feeds){
+  console.log(feeds, "sortdescending");
   return new Promise(resolve=>{
     this.resultFeeds = feeds.sort(function(a, b) {
      // console.log("datea",a,b)
@@ -190,6 +203,7 @@ sortdescending(feeds){
 }
 //Function to sort the feeds on ascending order from oldest
 sortascending(feeds){
+  console.log(feeds, "sortascending");
   return new Promise(resolve=>{
     this.resultFeeds = feeds.sort(function(a, b) {
       return new Date(a.value.date).getTime() - new Date(b.value.date).getTime()
@@ -219,6 +233,7 @@ sortascending(feeds){
    //Add a object hide feed with properties hidefeed and hiddenby and update
  else{*/
   return new Promise(resolve=>{
+    console.log(resolve, "promise_resolve");
   feeditem.hidefeed={'hidefeed':true,'hiddenby':this.user};
     //console.log(feeditem);
 
@@ -243,22 +258,23 @@ sortascending(feeds){
   boardsOnGroup(groupname){
   return new Promise(resolve=>{
   this.boardservice.getboards().then(res=>{
-
+console.log(res, "board_service");
     this.variab.boardupdated = res;
    // console.log("boards",this.variab.boardupdated)
    /* boardsOnGroup.push(res);
     this.variab.boardupdated = _.flatten(boardsOnGroup)*/
 
     this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
-
+        console.log(board.value);
      if(board.value.group){
-      //  console.log(board.value.group,groupname);
+       
        return board.value.group === groupname;
      }
 
     })
-  //  console.log(this.variab.boardupdated);
+  // console.log("update",this.variab.boardupdated);
     resolve(this.variab.boardupdated);
+   console.log(this.variab.boardupdated, "boardupdated"); 
     //console.log("boars",this.variab.boardupdated)
   });
   })
