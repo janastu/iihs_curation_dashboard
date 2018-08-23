@@ -129,9 +129,8 @@ queryString:any;//variable to store the input to find a board name
   }
   //Function called from Create board block to save the feed to the board
   savetoboard(title,i){
-     console.log(title);
-      this.labelForBoards[i] = true;
-      this.selectedstar=1;
+    // console.log(title);
+
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",
@@ -144,8 +143,13 @@ queryString:any;//variable to store the input to find a board name
         "motivation":"tagging",
         "label":[title._id]
       }
-      this.createboardstore.dispatch('ADD_ITEMS',update);
-
+      //this.createboardstore.dispatch('ADD_ITEMS',update);
+        this.dataservice.addtodatabase(update).then(res=>{
+          if(res['ok']==true){
+            this.labelForBoards[i] = true;
+            this.selectedstar=1;
+          }
+        })
 
 
   }
@@ -230,18 +234,26 @@ queryString:any;//variable to store the input to find a board name
 
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
-    this.labelForBoards[i]=false;
-    this.selectedstar = 0;
+
     this.variab.annotations.map(anno=>{
-      if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
+    //  console.log(anno.value.label[0],title.label);
+      if(anno.value.target.id === this.feeditem.value._id){
 
            anno.value.modified = this.date.getTime();
            anno.value.hideboardanno = true;
-           this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
+
+            this.dataservice.updatedatabase(anno.value).then(res=>{
+              if(res['ok']==true){
+                this.labelForBoards[i]=false;
+                this.selectedstar = 0;
+                if(this.router.url.includes('/boardfeeds')){
+                  this.variab.boardfeeds.splice(this.index,1);
+                }
+              }
+            })
+           //this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
            //console.log("in boards",this.router.url);
-           if(this.router.url.includes('/boardfeeds')){
-             this.variab.boardfeeds.splice(this.index,1);
-           }
+
       }
     })
 

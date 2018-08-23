@@ -59,10 +59,12 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
 
                console.log(this, this.variab.boardfeeds);
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
+
                  console.log(res, "respond");
                   this.util.sortdescending(res).then(sorted=>{
                     console.log(sorted, "sorted feeds");
                       if(this.variab.annotations.length>0){
+
                         //Get the deleted and feeds store and display using feeds variable
                         this.feeds = sorted;
                         if(this.feeds){
@@ -76,8 +78,12 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                         }
                         console.log("if block");
                       }
+
                       else{
                         console.log("Else block");
+
+                      
+
                           //Get board annotations
                               this.dataService.getannotations().then(res=>{
                                this.variab.annotations=res;

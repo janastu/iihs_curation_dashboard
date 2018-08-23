@@ -33,13 +33,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        if (!err) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
-             self.getannotations();
-             self.getreadlaterannotations();
-             self.getrecentlyreadannotations();
+             //self.getannotations();
+             //self.getreadlaterannotations();
+             //self.getrecentlyreadannotations();
              //console.log(this.user);
-             self.getreadlater(self.user);
-             self.getrecentlyread(self.user);
-             self.getdeletedfeeds(self.user);
+             //self.getreadlater(self.user);
+             //self.getrecentlyread(self.user);
+          //   self.getdeletedfeeds(self.user);
               if (payload.label) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
@@ -65,7 +65,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      this.remoteannos.query('annotations/boardannotation', {
            //stale: 'update_after'
          }).then(function (result) {
-         // console.log("res",result);
+         console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -199,7 +199,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   }
 
   //Api service to get deleted feeds
-  getdeletedfeeds(usr){
+  getdeletedfeeds(){
 
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
@@ -250,16 +250,18 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   //Update database for deleted and modidifed
   updatedatabase(doc){
     var self = this;
+    return new Promise(resolve=>{
     this.remoteannos.put(doc).then(function (response) {
       // handle response
-     // console.log(response)
+     console.log(response)
      if(response['ok']==true){
-       self.getdeletedfeeds(self.user);
+      resolve(response);
+       //self.getdeletedfeeds(self.user);
      }
     }).catch(function (err) {
       console.log(err);
     });
-
+  });
   }
 /*  delete(feed){
 		console.log(feed);
