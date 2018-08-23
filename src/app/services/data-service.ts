@@ -33,13 +33,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        if (!err) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
-             self.getannotations();
-             self.getreadlaterannotations();
-             self.getrecentlyreadannotations();
+             //self.getannotations();
+             //self.getreadlaterannotations();
+             //self.getrecentlyreadannotations();
              //console.log(this.user);
-             self.getreadlater(self.user);
-             self.getrecentlyread(self.user);
-             self.getdeletedfeeds(self.user);
+             //self.getreadlater(self.user);
+             //self.getrecentlyread(self.user);
+          //   self.getdeletedfeeds(self.user);
               if (payload.label) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
@@ -199,7 +199,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   }
 
   //Api service to get deleted feeds
-  getdeletedfeeds(usr){
+  getdeletedfeeds(){
 
 
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
@@ -211,7 +211,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     console.log(res);
     if(res['ok']==true){ */
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
-          key:[usr]
+
         }).then(function (result) {
        console.log("res",result);
         resolve(result.rows);
@@ -256,7 +256,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      console.log(response)
      if(response['ok']==true){
       resolve(response);
-       self.getdeletedfeeds(self.user);
+       //self.getdeletedfeeds(self.user);
      }
     }).catch(function (err) {
       console.log(err);

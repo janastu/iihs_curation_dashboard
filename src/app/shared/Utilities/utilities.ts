@@ -28,7 +28,7 @@ checkForDeletedFeeds(feeds){
     }
     if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
-      this.dataservice.getdeletedfeeds(this.user).then(res=>{
+      this.dataservice.getdeletedfeeds().then(res=>{
          this.variab.hiddenfeeds=res;//Store the feeds in the local variable
          //To do: Manipulate feed data structure hidden true
          //Data structure to represent hidden by user

@@ -7,7 +7,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
 
 
 @Component({
-  
+
   selector: 'app-trash-box',
   templateUrl: './trash-box.component.html',
   styleUrls: ['./trash-box.component.scss'],
@@ -27,13 +27,13 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   constructor(public variab:Global,public dataservice:DataService,public util:Utilities) { }
   //On loading Component
   ngOnInit() {
-    
+
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
     this.p=0;
       this.spinnerState=true;
      //Fetch the data from service and store in global variable
-     this.dataservice.getdeletedfeeds(this.user).then(res=>{
+     this.dataservice.getdeletedfeeds().then(res=>{
        this.variab.hiddenfeeds = res;
         var sanitizedHidden = this.variab.hiddenfeeds.map(function(feed){
                                   if(feed.value && !feed.value.value ) return feed
@@ -41,8 +41,10 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                                 });
        //console.log("hideen",this.variab.hiddenfeeds,testhide);
        this.util.sortdescending(sanitizedHidden).then(sorted=>{
+       this.dataservice.getannotations().then(res=>{
+        this.variab.annotations=res;
          this.feeds = sorted
-         console.log("display",this.feeds)
+        // console.log("display",this.feeds)
          if(this.feeds){
            this.spinnerState=false;
          }
@@ -51,11 +53,11 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
            this.alertNofeeds=true;
          }
        })
-        
+     });
      })
-     
+
   }
-  
+
 
   //Function to handle view event from page-header component
   public handleView(childView:any){
@@ -65,15 +67,15 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
 
  //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
  handleSort(childSortLabel:any){
-  
+
    if(childSortLabel === 'Latest'){
-   
+
     this.util.sortdescending(this.variab.hiddenfeeds).then(res=>{
       this.feeds = res;
       console.log(this.feeds)
     })
-    
-   
+
+
    }
    if(childSortLabel === 'Oldest'){
      this.util.sortascending(this.variab.hiddenfeeds).then(res=>{
@@ -99,11 +101,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   onpage(){
     window.scroll(0,0);
   }
-   
-   
+
+
 
 }
-
-
-
-
