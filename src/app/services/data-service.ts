@@ -65,7 +65,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      this.remoteannos.query('annotations/boardannotation', {
            //stale: 'update_after'
          }).then(function (result) {
-         // console.log("res",result);
+         console.log("res",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -211,7 +211,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
     console.log(res);
     if(res['ok']==true){ */
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
-
+          key:[usr]
         }).then(function (result) {
        console.log("res",result);
         resolve(result.rows);
@@ -250,16 +250,18 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   //Update database for deleted and modidifed
   updatedatabase(doc){
     var self = this;
+    return new Promise(resolve=>{
     this.remoteannos.put(doc).then(function (response) {
       // handle response
-     // console.log(response)
+     console.log(response)
      if(response['ok']==true){
+      resolve(response);
        self.getdeletedfeeds(self.user);
      }
     }).catch(function (err) {
       console.log(err);
     });
-
+  });
   }
 /*  delete(feed){
 		console.log(feed);
