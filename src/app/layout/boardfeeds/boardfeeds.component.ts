@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataService } from '../../services/data-service';//Import dataservice to fetch board feeds
 import { ArchiveService } from '../../services/archive-service';//Import dataservice to fetch board feeds
+import { ComponentsService } from '../../services/components-service';//Import dataservice to fetch board feeds
 import { Global } from '../../shared';//Import Global to use global variables in the board feed's local scope
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 import * as _ from 'lodash'
@@ -28,7 +29,7 @@ checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
 selectedAll:any;
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
 checkedtodelete:boolean=false; //state variable to store the status variable of delete button
-  constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService) { }
+  constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
 
@@ -77,6 +78,12 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                                //console.log("vra",this.variab.annotations);
                                //Get the deleted and feeds store and display using feeds variable
                                this.feeds = sorted;
+                               this.componentsService.getMessage().subscribe(res=>{
+                                 //console.log("fees",res);
+                                   if(res.type == 'hide'){
+                                     this.feeds.splice(res.data,1);
+                                   }
+                               })
                                if(this.feeds){
                                  this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
 

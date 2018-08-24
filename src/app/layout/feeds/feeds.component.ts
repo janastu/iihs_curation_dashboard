@@ -9,6 +9,7 @@ import * as _ from 'lodash'
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../services/feed-service';//Import feed service to get feeds
 import { Userservice } from '../../services/userservice';//Import feed service to get feeds
+import { ComponentsService } from '../../services/components-service';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
   selector: 'app-feeds',
@@ -28,7 +29,7 @@ user:any;     //variable to store the username
 alertNofeedsinrange:boolean=false;//alert variable to store boolean values if the given input dates has not feeds
 alertupdated:boolean=false//alert variable to store the status of feeds updated
 alertupdating:boolean=false//alert variable to store the status of feeds updating
-  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,public userService:Userservice,private route: ActivatedRoute,public util:Utilities) { }
+  constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,public feedService:FeedService,public userService:Userservice,private route: ActivatedRoute,public util:Utilities,public componentsService:ComponentsService) { }
 
   //On loading Component
   ngOnInit() {
@@ -101,6 +102,13 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                               //Call the checkForDeleted method to check for hidden/removed feeds
                               //and remove those feeds from the display array
                                   this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                  this.componentsService.getMessage().subscribe(res=>{
+                                    //console.log("fees",res);
+                                      if(res.type == 'hide'){
+                                        this.feeds.splice(res.data,1);
+                                      }
+                                  })
+
                                   if(this.feeds){
 
                                     this.spinnerState=false;
