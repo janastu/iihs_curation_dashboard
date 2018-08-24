@@ -3,6 +3,7 @@ import { ReadlaterStore } from '../../store/readlater-store';
 import { Global } from '../../../shared';
 import { DataService } from '../../../services/data-service';//Import dataservice to get annotations
 import { FeedService } from '../../../services/feed-service';//Import feed service to update feed when removed
+import { ComponentsService } from '../../../services/components-service';//Import feed service to update feed when removed
 import { Router } from '@angular/router';
 import { Utilities } from '../../../shared';//Import utilities to perform sorting and filtering
 @Component({
@@ -24,7 +25,7 @@ date:Date;//variable to store the current date
 alertremove:boolean=false;//alert variable to store the status to show the alert to remove from trashbox
 readlaterannos:any=[];//variable to store read later annotations
 recentlyreadannos:any=[];//variable to store recently read annotations
-  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService,public util:Utilities) {
+  constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService,public util:Utilities,public componentsService:ComponentsService) {
    }
 
   ngOnInit() {
@@ -162,6 +163,7 @@ this.date = new Date();
   }
  //Click hide to remove the feed and push to trashbox
   hide(){
+
   if(this.router.url === '/trashbox'){
     this.alertremove=true
   }
@@ -174,13 +176,15 @@ this.date = new Date();
       }
     });
   }*/
+
   else{
     this.util.hide(this.feeditem.value,this.index).then(res=>{
       if(res['ok']==true){
-        this.variab.globalfeeds.splice(this.index,1);
-        this.variab.boardfeeds.splice(this.index,1);
-        this.variab.readlaterfeeds.splice(this.index,1);
-        this.variab.recentlyread.splice(this.index,1);
+        this.componentsService.alert('hide',this.index);
+        //this.variab.globalfeeds.splice(this.index,1);
+        //this.variab.boardfeeds.splice(this.index,1);
+        //this.variab.readlaterfeeds.splice(this.index,1);
+        //this.variab.recentlyread.splice(this.index,1);
         this.showDialog = false;
         //this.variab.globalfeeds= this.variab.globalfeeds.filter(item=> item.value._id!== feed.value._id);
         //this.feeds=this.global.boardfeeds;
