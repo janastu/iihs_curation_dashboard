@@ -32,6 +32,7 @@ queryString:any;
 alertexists:boolean=false;
 alertempty:boolean=false;
 alertremove:boolean=false;
+groupname:any;//variable to store the groupname
   constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService,public ngAlert:NgbAlertConfig,public router:Router) { 
      this.selectedIndex = -1;
  
@@ -39,6 +40,7 @@ alertremove:boolean=false;
 
   ngOnInit() {
     this.date = new Date();
+    this.groupname = localStorage.getItem('group');
     this.ngconfig.autoClose='outside';
      this.user = localStorage.getItem('name');
     var annos:any=[];
@@ -143,62 +145,80 @@ alertremove:boolean=false;
 
   //Function called from Create new board block to create new board by giving a board name 
   createboard(){
-    
+    console.log("ifadd",this.groupname);
+ if(this.groupname){
+    var model={
 
-        var model={
-         
-           "@context": "http://www.w3.org/ns/anno.jsonld",
-           "type": "Annotation",
-           "creator": this.user,
-           "created": this.date.getTime(),
-           "modified": this.date.getTime(),
-           "generator": "mm_2017_v1",
-           "generated": this.date.getTime(),
-           "motivation":"identifying",
-           "label":this.boardname.value
+       "@context": "http://www.w3.org/ns/anno.jsonld",
+       "type": "Annotation",
+       "creator": this.user,
+       "created": this.date.getTime(),
+       "modified": this.date.getTime(),
+       "generator": "mm_2017_v1",
+       "generated": this.date.getTime(),
+       "motivation":"identifying",
+       "label":this.boardname.value,
+       "group":this.groupname
 
-         };
-        
-        if(this.boardname.value === ''){
-          console.log("boardname cant be empty");
-          this.alertempty = true;
+     };
+
+
+  }
+   console.log("add",model);
+
+    //Check if boardname exists
+    if(this.boardname.value === ''){
+      console.log("boardname cant be empty");
+      console.log("add",model);
+      this.alertempty = true;
       this.ngAlert.type = 'warning';
-        }
-        else{
-        this.boardservice.getboards().then(res=>{
-          console.log(res);
-          var toCheckrepeatBoards:any =[];
-          var boardExists :any = 0;
-           toCheckrepeatBoards =res;
-          toCheckrepeatBoards.map(boardname=>{
-             if(this.boardname.value === boardname.value.label){
-               console.log("boardname exists");
-               boardExists = 1; 
-             }
-           })
-          if(boardExists == 1){
-            console.log("exit");
-            this.alertexists = true;
-            this.ngAlert.type = 'warning'
-          }
-          if(boardExists == 0){
-            console.log("add");
-            this.boardservice.addboard(model).then(res=>{
-                  if(res['ok'] == true){
-                    this.boardservice.getboards().then(val=>{
-                      this.variab.boardupdated = val;
-                    })  
-                    this.visible=false; 
-                    this.alertempty = false;
-                    this.alertexists = false;
-                  }
-            })
-          }
+      setTimeout(() => this.alertempty = false, 2000);
+    }
+    //check if board already exists by getting the boards
+    else{
+
+      var boardExists :any = 0;
+      this.variab.boardupdated.map(boardname=>{
+         if(this.boardname.value === boardname.value.label){
+           //console.log("boardname exists");
+           boardExists = 1;
+
+         }
+       })
+      if(boardExists == 1){
+        this.alertexists = true;
+        this.ngAlert.type = 'warning'
+        setTimeout(() => this.alertexists = false, 2000);
+      }
+      //Add the board to the database
+      if(boardExists == 0){
+        console.log("add",model);
+        this.boardservice.addboard(model).then(res=>{
+
+              if(res['ok'] == true){
+                this.boardservice.getboards().then(response=>{
+                  console.log("ew",res);
+                  this.variab.boardupdated = response;
+                  this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
+                   if(board.value.group){
+
+                     return board.value.group === this.groupname;
+                   }
+
+                  })
+                })
+              
+                this.visible=false;
+                this.alertempty = false;
+                this.alertexists = false;
+
+
+              }
         })
 
+      }
 
-        
-      } 
+  }
 
      
   }

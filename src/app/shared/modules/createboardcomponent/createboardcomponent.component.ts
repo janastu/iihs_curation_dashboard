@@ -81,7 +81,7 @@ queryString:any;//variable to store the input to find a board name
         //console.log("annotations",annotatedarray);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
-        //console.log("anoo",this.variab.boardupdated)
+        console.log("anoo",this.variab.boardupdated)
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
 
             return  _.filter(annotatedarray,function(o) {
@@ -111,7 +111,7 @@ queryString:any;//variable to store the input to find a board name
          })
 
     //  });
-       //console.log(this.labelForBoards);
+       console.log(this.labelForBoards);
 
   }
 
@@ -201,13 +201,13 @@ queryString:any;//variable to store the input to find a board name
       }
       //Add the board to the database
       if(boardExists == 0){
-        //console.log("add");
+        console.log("add",model);
         this.boardservice.addboard(model).then(res=>{
 
               if(res['ok'] == true){
-                this.boardservice.getboards().then(res=>{
+                this.boardservice.getboards().then(response=>{
                   console.log("ew",res);
-                  this.variab.boardupdated = res;
+                  this.variab.boardupdated = response;
                   this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
                    if(board.value.group){
 
@@ -216,7 +216,7 @@ queryString:any;//variable to store the input to find a board name
 
                   })
                 })
-
+              
                 this.visible=false;
                 this.alertempty = false;
                 this.alertexists = false;

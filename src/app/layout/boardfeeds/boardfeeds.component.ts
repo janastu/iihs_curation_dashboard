@@ -44,21 +44,30 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
     //Get the boardname from query parameters
     this.route.queryParams
          .subscribe(params => {
-
+           console.log(params,"prams");
              this.p=0;
              this.feeds.length=0;//Clear the feeds array
 
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
-              this.dataService.getboardfeeds(params.id).then(res=>{
+
+             //Fetching board feeds and is removed for code refactoring 
+             /* this.dataService.getboardfeeds(params.id).then(res=>{
               this.variab.boardfeeds = res;
+              console.log(this.variab.boardfeeds, "board feeds");
               //this.handlePublished();
               //console.log(this.variab.boardfeeds);
-               //Function call to check for the deleted feeds
+               //Function call to check for the deleted feeds: 
+               //TODO: bug
+
+               console.log(this, this.variab.boardfeeds);
                this.util.checkForDeletedFeeds(this.variab.boardfeeds).then(res=>{
-                //console.log(res);
+
+                 console.log(res, "respond");
                   this.util.sortdescending(res).then(sorted=>{
-                    /*  if(this.variab.annotations.length>0){
+                    console.log(sorted, "sorted feeds");
+                      if(this.variab.annotations.length>0){
+
                         //Get the deleted and feeds store and display using feeds variable
                         this.feeds = sorted;
                         if(this.feeds){
@@ -70,12 +79,18 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                         if(this.feeds.length==0){
                           this.alertNofeeds=true;
                         }
+                        console.log("if block");
                       }
-                      else{*/
+
+                      else{
+                        console.log("Else block");
+
+                      
+
                           //Get board annotations
                               this.dataService.getannotations().then(res=>{
                                this.variab.annotations=res;
-                               //console.log("vra",this.variab.annotations);
+                               console.log("vra",this.variab.annotations);
                                //Get the deleted and feeds store and display using feeds variable
                                this.feeds = sorted;
                                this.componentsService.getMessage().subscribe(res=>{
@@ -95,7 +110,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                                }
                               })
 
-                        //  }
+                          }
 
 
                  this.util.checkForPublished(sorted,this.boardname).then(res=>{
@@ -105,9 +120,43 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                  })
 
                });
+           });*/
+          /* this.util.checkForPublished(sorted,this.boardname).then(res=>{
+            this.publishedfeeds=res;
+           });*/
+
+           this.dataService.getannotations().then((reswithtype:any=[])=>{
+             console.log(reswithtype,"reswithtype");
+             this.variab.annotations = reswithtype;
+             var feedsByBoard=reswithtype.map(feed=>{
+               if (feed.value.label==params.id) {
+                 console.log(feed,"resfeed");
+                 return feed.value.target;
+               }
+             })
+             this.variab.boardfeeds = _.compact(feedsByBoard);
+             this.util.checkForDeletedFeeds(this.variab.boardfeeds ).then(res=>{
+
+                 console.log(res, "respond");
+                  this.util.sortdescending(res).then(sorted=>{
+                    console.log(sorted, "sorted feeds");
+                   this.feeds = sorted;
+                   if(this.feeds){
+                     this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+
+                   }
+
+                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
+                     this.publishedfeeds=res;
+                     });
+             //console.log(_.compact(inter),"inter");
+           })
+                })
            });
 
     });
+
+
 
 
   }
@@ -184,7 +233,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   //function on select all
   onSelectAll() {
       //console.log(this.selectedAll)
-      for (var i = 0; i < this.variab.boardfeeds.length; i++) {
+      for (var i = 0; i < this.feeds.length; i++) {
         this.feeds[i].Checked = this.selectedAll;
         this.checkedtodelete = this.selectedAll;
       }
