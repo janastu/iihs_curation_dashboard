@@ -7,6 +7,7 @@ import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
 import { FeedService } from '../../../services/feed-service';
+import { ComponentsService } from '../../../services/components-service';
 import { Utilities } from '../../Utilities/utilities';//Import utilities to perform sorting and filtering
 import * as _ from 'lodash';
 import { DatePipe,Location } from '@angular/common';
@@ -67,7 +68,7 @@ export class SidebarComponent implements OnInit{
 
     constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,
       public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,
-      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities,public service:FeedService){
+      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities,public service:FeedService,public componentsService:ComponentsService){
 
 
     }
@@ -96,35 +97,13 @@ export class SidebarComponent implements OnInit{
        this.userservice.getUserSubscriptions().then(res=>{
          //Store the user subscribed feed names in the Global variable
          this.variab.categoryfeeds=res;
-        /* this.variab.categoryfeeds.map(category=>{
-         //  console.log(category);
-           category.doc.metadata.map(meta=>{
-             if(meta.categories[0]){
-               //Pull new feeds of user subscriptions
-               this.userservice.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
 
-                 this.service.getmetacategories(meta.categories[0]).then((feedsFromDb:any=[])=>{
-                   console.log(feedsFromDb.length);
-                 //  var res = _.differenceBy(feedsToUpdate,feedsFromDb,'title');
-
-                   var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
-                     updateFeeds.map(feed=>{
-                       this.service.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
-                         console.log("resultsave",res)
-                       })
-                   })
-
-
-                 });
-
-               });
-             }
-
-           })
-
-         })*/
 
        });
+       this.dataservice.getannotations().then((reswithtype:any=[])=>{
+         this.componentsService.addAnnotations('add',reswithtype);
+       });
+
 
   }
   getDiffereceofFeeds(feedsarray,feedItems){

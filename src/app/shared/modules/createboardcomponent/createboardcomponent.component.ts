@@ -8,6 +8,7 @@ import { BoardService } from '../../../services/board-service';
 import { CreateBoardStore } from '../../store/create-board-store';
 import { DataService } from '../../../services/data-service';
 import { GroupService } from '../../../services/group-service';
+import { ComponentsService } from '../../../services/components-service';
 import * as _ from 'lodash';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -30,7 +31,9 @@ alertexists:boolean=false;//alert variable to store the status if board already 
 alertempty:boolean=false;//alert variable to store the status if board name is empty
 groupname:any;//variable to store the groupname
 queryString:any;//variable to store the input to find a board name
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public router:Router,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,
+  public createboardstore:CreateBoardStore,public dataservice:DataService,public router:Router,
+  public groupService:GroupService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService) {
 
 
 
@@ -59,12 +62,14 @@ queryString:any;//variable to store the input to find a board name
 
                   //  console.log(this.variab.annotaions);
 
-
+//console.log("anoservice",this.componentsService.subject);
        //console.log("board",this.feeditem.value.title);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
+       var annotationsWithType = this.componentsService.getBoards()//.subscribe((annotationsWithType:any)=>{
+      //  console.log("anoservice",annotationsWithType);
 
-         var annotatedarray = this.variab.annotations.filter(anno=>{
+         var annotatedarray = annotationsWithType.data.filter(anno=>{
           //console.log("target",anno.value.target.id);
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
@@ -78,10 +83,10 @@ queryString:any;//variable to store the input to find a board name
 
 
         });
-        //console.log("annotations",annotatedarray);
+      //  console.log("annotations",annotatedarray);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
-        console.log("anoo",this.variab.boardupdated)
+        //console.log("anoo",this.variab.boardupdated)
          var annosForBoards = this.variab.boardupdated.map( (board, index) => {
 
             return  _.filter(annotatedarray,function(o) {
@@ -111,7 +116,7 @@ queryString:any;//variable to store the input to find a board name
          })
 
     //  });
-       console.log(this.labelForBoards);
+//       console.log(this.labelForBoards);
 
   }
 
@@ -216,7 +221,7 @@ queryString:any;//variable to store the input to find a board name
 
                   })
                 })
-              
+
                 this.visible=false;
                 this.alertempty = false;
                 this.alertexists = false;
