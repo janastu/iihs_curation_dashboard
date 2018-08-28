@@ -106,9 +106,9 @@ export class SidebarComponent implements OnInit{
          this.categories = val;
        })
        //Get boardannotation and set to a service
-       /*this.dataservice.getannotations().then((reswithtype:any=[])=>{
+       this.dataservice.getannotations().then((reswithtype:any=[])=>{
          this.componentsService.addAnnotations('add',reswithtype);
-       });*/
+       });
        //Get Readlater annotations and add to service
        this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
         this.componentsService.addReadLater('add',resWithType);

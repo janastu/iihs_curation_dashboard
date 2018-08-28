@@ -42,9 +42,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
         //this.usersview = localStorage.getItem('view');
 
         this.view = localStorage.getItem('view') || null;
-        this.dataservice.getannotations().then((reswithtype:any=[])=>{
-          this.componentsService.addAnnotations('add',reswithtype);
-        });
+        
 
         //this.dataservice.removeUnwanted();
      //Access the query parameter and filter the feeds according to category
