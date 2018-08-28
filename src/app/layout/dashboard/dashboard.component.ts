@@ -56,13 +56,18 @@ export class DashboardComponent implements OnInit {
         let url = jsonusersession.userDBs.supertest;
         //Set the user db's url to another local Storage variable
          localStorage.setItem('url',url);
+         this.userService.getUserSubscriptions().then((reswithtype:any=[])=>{
+           //Store the user subscribed feed names in the Global variable
+           //this.variab.categoryfeeds=res;
+           this.componentsService.addCategories('add',reswithtype);
 
+         });
        //Get user subscribed feed names
         this.componentsService.getCategories().subscribe(res=>{
           //Store the user subscribed feed names in the Global variable
           this.categories=res;
 
-
+          console.log(this.categories);
 
         });
 
