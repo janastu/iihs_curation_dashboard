@@ -1,6 +1,6 @@
    <div class="row">
     <div class="col-sm-6 page-header"><h2 >{{heading  | capitalize:true}}
-    <button *ngIf="router.url.includes('/boardfeeds')" class="btn btn-sm btn-success" (click)="showDialog = !showDialog">Delete Board</button> 
+    <button *ngIf="router.url.includes('/boardfeeds')" class="btn btn-sm btn-success" (click)="showDialog = !showDialog">Delete Board</button>
     </h2></div>
 
 </div>
@@ -15,7 +15,7 @@
       </div>
       <div class="form-group form-to"><label class="page-header-form">To</label>
         <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate" max="{{currDate|date:'yyyy-MM-dd'}}">
-        
+
       </div>
       <button type="button" class="btn btn-sm btn-success filter-button" (click)="datefilter()" >Filter</button>
       <button type="button" class="btn btn-sm btn-success filter-button" (click)="reset()" >Clear</button>
@@ -43,8 +43,8 @@
 
           <i *ngIf="iconcard" class="fa fa-fw fa-th icon-header" ></i>
         </button>
-                      
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width">  
+
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width">
           <fieldset class="form-group field">
             <div class="radio">
               <label><input type="radio" #articleview name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChangeView(articleview)" [checked]="this.checkView === articleview.value"> Article View
@@ -71,22 +71,24 @@
           <button class="btn nav-item-filters"  title="Boards to Share" id="dropdownBasic1" ngbDropdownToggle>
             <i class="fa fa-fw fa-users icon-header"></i>
           </button>
-                        
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width-share">  
-            <fieldset class="form-group field" *ngFor="let item of variab.boardupdated">
+
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="form-group dropdown-width-share">
+            <div *ngIf="boardsOndelete">
+            <fieldset class="form-group field" *ngFor="let item of boardsOndelete.data">
               <div class="radio">
                 <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="Article" (click)="onChooseBoard(item.value)"> {{item.key}}
                 </label>
               </div>
             </fieldset>
           </div>
+          </div>
         </div>
       <!--<app-modal #modal></app-modal>
         <button (click)="modal.openshareteam(desc)" class="btn nav-item-filters" title="Share with teammates"> <i class="fa fa-fw fa-users icon-header"></i></button>-->
-      </div> 
+      </div>
       <!--test-->
-    
-            
+
+
             <!--<div class="border-more" >
               <label class="checkbox-inline"><input type="checkbox" checked="">Unread</label>
             </div>-->
@@ -95,7 +97,7 @@
         <!--Refresh button-->
         <button *ngIf="router.url.includes('/feeds')" (click)="refresh()" class="btn nav-item-filters headerview" title="Refresh"> <i class="fa fa-fw fa-refresh icon-header" ></i>
         <!--img src="assets/images/loading.gif"--></button>
-      <!--More Options-->         
+      <!--More Options-->
       <div ngbDropdown class="d-inline-block headerview">
         <button class="btn nav-item-filters" title="More options" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-fw fa-ellipsis-h icon-header" ></i></button>
 
@@ -122,7 +124,7 @@
       </div>
     </div>
   </div>
-    
+
 </div>
  <app-dialog class="alert-dialogbox" [visible]="showDialog">
             <h3>Do you confirm to delete the board</h3>
@@ -134,4 +136,3 @@
             <ngb-alert *ngIf="alertremove" (close)="closeAlert()">Cannot remove from trashbox</ngb-alert>
 			-->
   </app-dialog>
-
