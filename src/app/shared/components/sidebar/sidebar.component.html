@@ -47,7 +47,7 @@
               <div class="nav-item-filters" id="dropdownBasic1" ngbDropdownToggle>{{groupname}}</div>
 
               <div ngbDropdownMenu dropdown-menu-left aria-labelledby="dropdownBasic1" class="form-group dropdown-width placement-small-screen">
-                <fieldset class="form-group field" *ngFor="let item of groups"> 
+                <fieldset class="form-group field" *ngFor="let item of groups">
                   <div class="radio">
                     <label><input type="radio" name="optionsRadios" id="optionsRadios1"   (click)="onChoosegroup(item)" [checked]="this.groupname === item"> {{item}}
                     </label>
@@ -56,8 +56,8 @@
               </div>
             </div>-->
             <div class="groupname-align"> {{groupname}}</div>
-                
-           
+
+
         </a>
        <div *ngIf="showGroups" class="show-group">
                     <fieldset class="field" *ngFor="let item of variab.groups">
@@ -73,30 +73,30 @@
             </a>
             <li class="nested" [class.expand]="showMenu === 'feeds'">
                 <ul class="submenu">
-                
-               
+
+
                  <li *ngFor="let item of variab.categoryupdated">
                         <a  (click)="routeto(item.doc.feedname)" class="onmenu">
                         <span><i class="fa fa-chevron-right"></i>&nbsp;{{ item.doc.feedname | translate }}</span></a>
-                        
+
                  </li>
-                
+
                  </ul>
             </li>
         </div>-->
-    <div class="nested-menu">    
+    <div class="nested-menu">
         <a class="list-group-item" (click)="addFeedClass('feeds')">
             <span>  <i class="fa fa-bars"></i>&nbsp;{{ 'Feeds' | translate }}</span>
         </a>
         <div class="nested" [class.expand]="showMenu === 'feeds'">
           <ul class="submenu">
-            <li  *ngFor="let n of variab.categoryfeeds"  [ngClass]="{active: isactive(n.doc.feedname)}">
-            
+            <li  *ngFor="let n of categories.data"  [ngClass]="{active: isactive(n.doc.feedname)}">
+
             <div class="feed-list-item">
             <i class="fa fa-chevron-right onmenu" (click)="select(n.doc.feedname)"></i>
             <span (click)="routeto(n.doc.feedname)" class="onmenu">&nbsp;&nbsp;{{n.doc.feedname}}</span>
             </div>
-          
+
                     <ul class="onsubmenu">
                       <li *ngFor="let child of n.doc.metadata">
                         <div *ngIf="child.categories.length ==0">
@@ -106,23 +106,23 @@
                           <div *ngFor="let meta of child.categories">
                               <a  (click)="routetometa(n.doc.feedname,meta)" class="onmenu">
                               <span>&nbsp;{{ meta }}</span></a>
-                              
+
                           </div>
                       </li>
                     </ul>
             </li>
             </ul>
         </div>
-    </div>    
-         
-        
+    </div>
+
+
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <span> <i class="fa fa-star-o"></i>&nbsp;{{ 'Boards' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
-                    <li *ngFor="let item of variab.boardupdated">
+                    <li *ngFor="let item of boards.data">
                       <a (click)="routetoboard(item.value)" class="onmenu">
                         <span><i class="fa fa-star-o"></i>&nbsp;{{ item.value.label | translate }}</span></a>
                     </li>
@@ -144,9 +144,9 @@
         <a (click)=openarchives() class="list-group-item pointer">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Archives' | translate }}
         </a>
-        
-        </ul> 
-        
+
+        </ul>
+
         <!--ADD CONTENT-->
         <div ngbDropdown class="side-content">
         <button class="btn btn-outline-primary" id="dropdownConfig"  [routerLink]="['/sources']" [routerLinkActive]="['router-link-active']" ><i _ngcontent-c11="" class="fa fa-fw fa-plus icon-plus-align"></i><span class="add-content-align">ADD CONTENT</span></button>
@@ -155,5 +155,5 @@
         <button class="dropdown-item"><i class="fa fa-google" aria-hidden="true"></i>Keyword alerts</button>
         <button class="dropdown-item"><i class="fa fa-dot-circle-o" aria-hidden="true"></i>Import OPML</button>
         </div>-->
-        </div> 
+        </div>
         </nav>

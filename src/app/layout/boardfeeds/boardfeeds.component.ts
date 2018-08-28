@@ -125,6 +125,8 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
           /* this.util.checkForPublished(sorted,this.boardname).then(res=>{
             this.publishedfeeds=res;
            });*/
+           var reswithtype = this.componentsService.getannotations();
+           console.log(reswithtype);
 
            this.dataService.getannotations().then((reswithtype:any=[])=>{
              this.componentsService.addAnnotations('add',reswithtype);

@@ -9,10 +9,10 @@
         <input class="form-control mr-sm-2" type="text" id="search" placeholder="Find a board" [(ngModel)]="queryString" name="query" autocomplete="off">
       </form>
       <div class="scroll">
-        
-      
-      <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;index as i">
-      
+
+
+      <div class="field" *ngFor="let item of boards | FilterPipe: queryString;index as i">
+
         <div class="board-item">
           <!--Star icon on board name which will toggle if the feed is annotated to a paricular board-->
           <i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] === false||labelForBoards[i] === undefined, 'fa-star': labelForBoards[i] === true}" aria-hidden="true" title="Save to board"></i>
@@ -23,7 +23,7 @@
           <button *ngIf="labelForBoards[i]  === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
 
          </div>
-      
+
       </div>
     </div>
       <!-- button to toogle create new board block-->
@@ -41,7 +41,7 @@
          <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Enter Board Name">
        </form>
 
-       
+
        <div>
          <button (click)="createboard()" class="btn btn-sm btn-success">Create a Board</button>
          <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>

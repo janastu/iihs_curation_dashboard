@@ -100,7 +100,7 @@ public adduser(user){
 
 
 }
-//Superlogin Api service to send registration confirmation email
+//Superlogin Api service to send group invitation mail
 public sendConfirmEmail(email,groupname,type,regOrlogin)
 {
   var status;

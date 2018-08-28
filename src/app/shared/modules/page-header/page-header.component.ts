@@ -3,6 +3,8 @@ import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { FeedService } from '../../../services/feed-service';
 import { BoardService } from '../../../services/board-service';
+import { Utilities } from '../../../shared';
+import { ComponentsService } from '../../../services/components-service';
 import { Global } from '../../global';
 import { Router } from '@angular/router';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -36,20 +38,27 @@ currDate = new Date();
 user:any;//variable to store the username of loggied in user
 showDialog:boolean;//variable to store the status to show the dialog component when hide is called
 alertNavigating:boolean=false;
- constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,public router:Router,public boardService:BoardService,public ngAlert:NgbAlertConfig) { }
+groupname:any;
+boardsOndelete:any;
+ constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,
+   public router:Router,public boardService:BoardService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService,public util:Utilities) { }
 
   ngOnInit() {
     this.checkView = localStorage.getItem('view');
      this.user = localStorage.getItem('name');
+     this.groupname = localStorage.getItem('group');
     this.loginForm = this.formBuilder.group({
 
       fromdate: this.fromdate,
       todate: this.todate
     });
+     this.componentsService.getBoards().subscribe((valWithType:any)=>{
+        this.boardsOndelete = valWithType;
+     });
   }
   //function to get date input values annd emit to feed component
   datefilter(){
- 
+
     var changefrom,changeto;
     changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
     changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
@@ -57,16 +66,16 @@ alertNavigating:boolean=false;
     var todate = Date.parse(changeto);
 
     var feeds =  this.variab.globalfeeds.filter((res)=>{
-        
+
        if(fromdate<=Date.parse(res.value.date) && todate>=Date.parse(res.value.date)){
-        
+
           return res;
-        }     
+        }
 
     });*/
     //console.log("date value",changefrom,Date.parse(changefrom));
     this.Dates.emit({changefrom,changeto});
-    
+
   }
   //function to get input to clear the filter annd emit to feed component
   reset(){
@@ -84,7 +93,7 @@ alertNavigating:boolean=false;
       this.iconmagazine = false;
       this.iconcard = false;
       this.icontitle=false;
-      
+
     }
     else if ( deviceValue.value === 'Magazine'){
       this.iconmagazine=true;
@@ -104,7 +113,7 @@ alertNavigating:boolean=false;
       this.icontitle = false;
       this.iconarticle=false;
     }
-     
+
   }
  //function to get radio input values for Category annd emit to feed component
   onCate(cat){
@@ -114,17 +123,17 @@ alertNavigating:boolean=false;
 
  //function to reload the page
  refresh(): void{
-  
+
     this.Refresh.emit(this.heading);
 
    //this.service.getrecentfeeds()
    //$route.reload();
    //window.location.reload();
-  
+
  }
  //function to share with teammates
  shareteam(event){
-   
+
    console.log("share with team");
  }
  onSortlabel(val){
@@ -133,10 +142,14 @@ alertNavigating:boolean=false;
  //Function on choosing a board
  onChooseBoard(board){
    this.router.navigate(['/publish',board.label],{queryParams:{id:board._id}})
-   
+
  }
  onDeleteBoard(){
-   this.variab.boardupdated.map(boardname=>{
+  /* this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+   this.componentsService.addBoards('add',resWithType);*/
+
+    // console.log(this.boardsOndelete);
+   this.boardsOndelete.data.map(boardname=>{
      if(boardname.key === this.heading){
        boardname.value.hidden = {'hidefeed':true,'hiddenby':this.user};
        this.boardService.updateboard(boardname.value).then(res=>{
@@ -149,6 +162,8 @@ alertNavigating:boolean=false;
        })
       }
    })
+   //})
+ //});
  }
 
 }

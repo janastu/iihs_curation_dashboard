@@ -1,15 +1,15 @@
-        
+
         <div class="ago" *ngIf="!router.url.includes('/mm')">
             <app-createboardcomponent [feeditem]='feeditem' [index]='index' class="createboard"></app-createboardcomponent>
-        
+
         <a class="nav-item" (click)="readlater(1)">
-            <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
+            <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1,
             'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
             </a>
         <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
         <!--<a class="nav-item" href="#"><i class="fa fa-fw fa-star-o" title="Save to board"></i></a>-->
-        
+
 
         <!--a class="nav-item" href="#"><i class="fa fa-fw fa-twitter" title="Twitter"></i></a>
         <a class="nav-item" href="#"><i class="fa fa-fw fa-facebook" title="Facebook"></i></a-->

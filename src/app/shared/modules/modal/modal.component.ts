@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent {
-  modalRef: NgbModalRef;
+/*  modalRef: NgbModalRef;
     @Input() item: any;
     @Input() index: any;
     closeResult: string;
@@ -23,7 +23,7 @@ export class ModalComponent {
     @ViewChild('ic') ElementRef:any;
     icon:boolean=false;
     val:boolean=false;
-  
+
     selectedIndex: any;
     selectedIcon: number;
     user:any;
@@ -34,9 +34,9 @@ export class ModalComponent {
 
     constructor(private modalService: NgbModal,public elementRef:ElementRef,public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public datePipe:DatePipe,private fb: FormBuilder) {
       this.date = new Date();
-      
-      
-     
+
+
+
      }
 
     open(content) {
@@ -47,12 +47,12 @@ export class ModalComponent {
         });
         //console.log(this.item);
        // this.feed.push({value:this.item})
-        
+
 
         this.user = localStorage.getItem('name');
-        
-          
-          this.variab.readlaterfeeds.filter(anno=>{
+
+
+        /*  this.variab.readlaterfeeds.filter(anno=>{
             if(anno.value._id === this.item.value._id){
               this.selectedIndex=1;
             }
@@ -63,7 +63,7 @@ export class ModalComponent {
               this.selectedIcon=1;
             }
           });
-        
+
     }
 
     openshareteam(content) {
@@ -73,7 +73,7 @@ export class ModalComponent {
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
-        
+
     }
 
     opensharefeeds(content) {
@@ -82,10 +82,10 @@ export class ModalComponent {
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
-        
+
     }
 
-    
+
 
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
@@ -97,12 +97,12 @@ export class ModalComponent {
         }
     }
     change(){
-       this.icon=true;       
+       this.icon=true;
     }
     checkimg(feeds){
       //console.log(feeds);
           return (/<img[\s\S]*>/i.test(feeds));
-       
+
       }
       extracturl(str){
         //var regex = /<img.*?src='(.*?)'/;
@@ -125,12 +125,12 @@ export class ModalComponent {
          }
          else{
            return null;
-         }*/
-       
+         }
+
       }
       checkhtml(feeds){
         return (/<p|a|span|div[\s\S]*>/i.test(feeds));
-        
+
       }
       stripHtml(html){
           // Create a new div element
@@ -140,18 +140,18 @@ export class ModalComponent {
           // Retrieve the text property of the element (cross-browser support)
           return temporalDivElement.textContent || temporalDivElement.innerText || "";
       }
-      
-    
+
+
   readlater(index: number){
     //console.log("called");
      if(this.selectedIndex == index){
        this.selectedIndex = -1;
-       
+
        this.variab.readlaterfeeds.map(anno=>{
          if(anno.value._id === this.item.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
-           console.log(anno.value); 
+           console.log(anno.value);
 
        this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
          }
@@ -162,7 +162,7 @@ export class ModalComponent {
      }
      else{
        this.selectedIndex = index;
-       
+
        let model = {
          "@context": "http://www.w3.org/ns/anno.jsonld",
          "type": "Annotation",
@@ -173,14 +173,14 @@ export class ModalComponent {
          "generated": this.date.getTime(),
          "target": this.item,
          "motivation":"bookmarking"
-       }   
+       }
         //console.log(this.feed)
        this.variab.readlaterfeeds.push({value:model});
         console.log("postmodal",this.variab.readlaterfeeds)
        this.readlaterstore.dispatch('ADD_ITEMS',model)
      }
-       
-     
+
+
   }
   markasread(index:number){
     if(this.selectedIcon == index){
@@ -190,7 +190,7 @@ export class ModalComponent {
          if(anno.value._id === this.item.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
-           console.log(anno.value); 
+           console.log(anno.value);
 
        this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
          }
@@ -211,13 +211,13 @@ export class ModalComponent {
          "generated": this.date.getTime(),
          "target": this.item,
          "motivation":"tagging"
-       }   
+       }
        this.variab.recentlyread.push({value:model});
        this.readlaterstore.dispatch('ADD_ITEMS',model)
      }
-    
+
   }
-  
+
   hide(){
     let model = {
       "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -229,8 +229,8 @@ export class ModalComponent {
       "generated": this.date.getTime(),
       "target": this.item,
       "hidden":true
-    }   
-    
+    }
+
     console.log(this.router.url);
     if(this.router.url === '/trashbox'){
       console.log('donot remove from trash');
@@ -240,7 +240,7 @@ export class ModalComponent {
   else{
     //this.variab.recentlyread.push({value:model});
    this.readlaterstore.dispatch('ADD_ITEMS',model)
-   
+
    this.variab.globalfeeds.splice(this.index,1);
    this.variab.boardfeeds.splice(this.index,1);
    this.variab.readlaterfeeds.splice(this.index,1);
@@ -251,6 +251,6 @@ export class ModalComponent {
   }
   public closeAlert() {
       this.alertremove=false;
-      
-  }
+
+  }*/
 }

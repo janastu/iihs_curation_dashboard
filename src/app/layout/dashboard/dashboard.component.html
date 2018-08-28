@@ -1,7 +1,7 @@
 <div [@routerTransition]>
 <!--Page Heading-->
     <h2 class="text-muted">Dashboard</h2>
-    
+
     <div class="row">
         <div class="col col-xl-6 col-lg-6 col-md-6">
           <ngb-alert *ngIf="alertupdating" (close)="closeAlert()" class="alert-width">Updating feeds</ngb-alert>
@@ -11,10 +11,10 @@
                    Categories
                 </div>
           <div class="row card-block">
-            
-          <!--Iterate the category variable to display the feed names--> 	
-          <div *ngFor="let item of variab.categoryfeeds" class="col-sm-4">	
-          
+
+          <!--Iterate the category variable to display the feed names-->
+          <div *ngFor="let item of categories.data" class="col-sm-4">	
+
             <div class="card mb-3 source-card">
               <!--Click on the feed name to navigate to the feeds-->
                 <div class="card-header card-default card-category" (click)="oncategory(item.doc.feedname)">
@@ -25,8 +25,8 @@
                 </div>-->
             </div>
           </div>
-        
-        </div>  
+
+        </div>
      </div>
      <!--Block to Display recent feeds-->
      <div class="col col-xl-6 col-lg-6 col-md-6">
@@ -37,7 +37,7 @@
                 <!--Block to disply spinner if recentfeeds not loaded-->
                    <div id="loading" *ngIf="spinnerState">
                       <img src="assets/images/loading_spinner.gif">
-                    </div>    
+                    </div>
                     <!--Display recent feeds-->
                     <div class="list-group recent-feeds" *ngFor="let item of feeds| slice:0:10;">
                     <!--Click on the recent feed to take to the Story link-->
@@ -48,9 +48,9 @@
                 </table>
           </div>
 
-        </div>  
-      </div>  
+        </div>
+      </div>
 
-  
+
    </div>
 </div>

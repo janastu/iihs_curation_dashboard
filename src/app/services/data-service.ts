@@ -33,13 +33,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        if (!err) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
-             //self.getannotations();
+             self.getannotations();
              //self.getreadlaterannotations();
              //self.getrecentlyreadannotations();
              //console.log(this.user);
              //self.getreadlater(self.user);
              //self.getrecentlyread(self.user);
-          //   self.getdeletedfeeds(self.user);
+             //self.getdeletedfeeds(self.user);
               if (payload.label) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
@@ -99,7 +99,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      this.remoteannos.query('annotations/recentlyread', {
            //stale: 'update_after'
          }).then(function (result) {
-         // console.log("res",result);
+        // console.log("recentlyreadfeeds",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);

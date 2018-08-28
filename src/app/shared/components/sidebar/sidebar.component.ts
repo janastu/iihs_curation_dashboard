@@ -27,6 +27,8 @@ export class SidebarComponent implements OnInit{
     selected:any;
     selectedlevel:any;
     groups:any=[];
+    boards:any=[];
+    categories:any=[];
     showGroups:any;
     archivesurl:any;
     eventCalled() {
@@ -94,15 +96,28 @@ export class SidebarComponent implements OnInit{
 
       })
       //Get user subscribed feed names
-       this.userservice.getUserSubscriptions().then(res=>{
+       this.userservice.getUserSubscriptions().then((reswithtype:any=[])=>{
          //Store the user subscribed feed names in the Global variable
-         this.variab.categoryfeeds=res;
-
+         //this.variab.categoryfeeds=res;
+         this.componentsService.addCategories('add',reswithtype);
 
        });
-       this.dataservice.getannotations().then((reswithtype:any=[])=>{
+       this.componentsService.getCategories().subscribe(val=>{
+         this.categories = val;
+       })
+       //Get boardannotation and set to a service
+       /*this.dataservice.getannotations().then((reswithtype:any=[])=>{
          this.componentsService.addAnnotations('add',reswithtype);
-       });
+       });*/
+       //Get Readlater annotations and add to service
+       this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+        this.componentsService.addReadLater('add',resWithType);
+      });
+      //Get recently read annotation and set a service
+      this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+        this.componentsService.addRecentlyRead('add',resWithType);
+      });
+
 
 
   }
@@ -139,9 +154,18 @@ export class SidebarComponent implements OnInit{
 
 
     getBoardsOngroups(){
-      this.util.boardsOnGroup(this.groupname).then(res=>{
-        this.variab.boardupdated=res;
+      this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+
+        this.componentsService.addBoards('add',resWithType);
+
+
+        //this.variab.boardupdated=res;
       })
+
+      this.componentsService.getBoards().subscribe(val=>{
+            this.boards = val;
+          //console.log("valside",test);
+      });
       /*this.boardservice.getboards().then(res=>{
         //console.log(res);
         this.variab.boardupdated = res;

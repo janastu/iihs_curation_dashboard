@@ -43,9 +43,20 @@ checkForDeletedFeeds(feeds){
          else{
           // console.log(this.variab.hiddenfeeds,"hiddenfeeds");
            this.variab.hiddenfeeds.map(feed=>{
-
+           //console.log(feeds);
             feeds.filter(globalfeed=>{
-             //console.log(feed.value.value._id,globalfeed.value._id,"feedvalue")
+              if(globalfeed.title){
+                  if(globalfeed.title == feed.value.title){
+                    var i = _.indexOf(feeds,globalfeed);
+                    //console.log(feeds,"beforestep1");
+                    feeds.splice(i,1);
+                  //  console.log(feeds,"after splice");
+                    resolve(feeds);
+                  }
+                //
+              }
+            else{
+            // console.log(globalfeed.value._id,"feedvalue")
              if(globalfeed.value._id === feed.value._id){
                var i = _.indexOf(feeds,globalfeed);
                //console.log(feeds,"beforestep1");
@@ -58,7 +69,7 @@ checkForDeletedFeeds(feeds){
                resolve(feeds);
                //console.log(feeds,"else");
              }
-
+            }
            })
 
          })
@@ -262,14 +273,14 @@ sortascending(feeds){
   //Function to get boards on groupS
   boardsOnGroup(groupname){
   return new Promise(resolve=>{
-  this.boardservice.getboards().then(res=>{
+  this.boardservice.getboards().then((resWithType:any=[])=>{
     //console.log(res, "board_service");
-    this.variab.boardupdated = res;
+  //  this.variab.boardupdated = res;
    // console.log("boards",this.variab.boardupdated)
    /* boardsOnGroup.push(res);
     this.variab.boardupdated = _.flatten(boardsOnGroup)*/
 
-    this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
+  var boards = resWithType.filter(board=>{
         //console.log(board.value);
      if(board.value.group){
 
@@ -278,8 +289,8 @@ sortascending(feeds){
 
     })
   // console.log("update",this.variab.boardupdated);
-    resolve(this.variab.boardupdated);
-   console.log(this.variab.boardupdated, "boardupdated");
+    resolve(boards);
+   //console.log(boards, "boardupdated");
     //console.log("boars",this.variab.boardupdated)
   });
   })

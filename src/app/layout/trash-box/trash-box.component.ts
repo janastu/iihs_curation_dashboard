@@ -41,8 +41,8 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
                                 });
        //console.log("hideen",this.variab.hiddenfeeds,testhide);
        this.util.sortdescending(sanitizedHidden).then(sorted=>{
-       this.dataservice.getannotations().then(res=>{
-        this.variab.annotations=res;
+       //this.dataservice.getannotations().then(res=>{
+        //this.variab.annotations=res;
          this.feeds = sorted
         // console.log("display",this.feeds)
          if(this.feeds){
@@ -52,7 +52,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
          if(this.feeds.length==0){
            this.alertNofeeds=true;
          }
-       })
+       //})
      });
      })
 

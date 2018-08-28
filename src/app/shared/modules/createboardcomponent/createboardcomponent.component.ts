@@ -9,6 +9,7 @@ import { CreateBoardStore } from '../../store/create-board-store';
 import { DataService } from '../../../services/data-service';
 import { GroupService } from '../../../services/group-service';
 import { ComponentsService } from '../../../services/components-service';
+import { Utilities } from '../../../shared';
 import * as _ from 'lodash';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -19,23 +20,24 @@ import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 export class CreateboardcomponentComponent implements OnInit {
   @Input('feeditem') feeditem:any;
   @Input('index') index:any;
+
 selectedstar: number;//Status variable to store the status of star icon
 visible:boolean;//variale to store the status to show th create board block
 boardForm:FormGroup;//variable to store the form input
 boardname = this.formBuilder.control('', [Validators.required]);//variable to store the input value of the form
 user:any;//variable to store the user name of logged in user
 labelForBoards:any=[];//variable to store the index of the boards
+boardannotations:any=[];
 outside:any;
 date:Date;
 alertexists:boolean=false;//alert variable to store the status if board already exists
 alertempty:boolean=false;//alert variable to store the status if board name is empty
 groupname:any;//variable to store the groupname
 queryString:any;//variable to store the input to find a board name
+boards:any=[];
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,
   public createboardstore:CreateBoardStore,public dataservice:DataService,public router:Router,
-  public groupService:GroupService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService) {
-
-
+  public groupService:GroupService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService,public util:Utilities) {
 
 }
 
@@ -52,24 +54,28 @@ queryString:any;//variable to store the input to find a board name
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
+    //Get board annotations
+  this.boardannotations = this.componentsService.getannotations();
+
+    //console.log(this.boards);
+          //Get BoardS
+         this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+         //this.componentsService.addBoards('add',resWithType);
+
+          //this.componentsService.getBoards().subscribe(val=>{
+               this.boards = resWithType;
 
 
+           //})
 
-        //Get board annotations
-                   ///this.dataservice.getannotations().then(res=>{
-                     //Set result to global variable as it can be accessed outdside the component
-                    //this.variab.annotations=res;
 
-                  //  console.log(this.variab.annotaions);
-
-//console.log("anoservice",this.componentsService.subject);
-       //console.log("board",this.feeditem.value.title);
+        //console.log(this.boardannotations);
        //Filter Feed with Annotations
        //Returns Array of annotaion for each feed.value.id
-       var annotationsWithType = this.componentsService.getBoards()//.subscribe((annotationsWithType:any)=>{
+      //.subscribe((annotationsWithType:any)=>{
       //  console.log("anoservice",annotationsWithType);
 
-         var annotatedarray = annotationsWithType.data.filter(anno=>{
+         var annotatedarray = this.boardannotations.data.filter(anno=>{
           //console.log("target",anno.value.target.id);
           if(anno.value.target.id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
@@ -86,8 +92,8 @@ queryString:any;//variable to store the input to find a board name
       //  console.log("annotations",annotatedarray);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
-        //console.log("anoo",this.variab.boardupdated)
-         var annosForBoards = this.variab.boardupdated.map( (board, index) => {
+        //console.log("anoo",this.boards)
+         var annosForBoards = this.boards.map( (board, index) => {
 
             return  _.filter(annotatedarray,function(o) {
              //console.log(o.key,board.value._id);
@@ -114,9 +120,9 @@ queryString:any;//variable to store the input to find a board name
 
              }
          })
-
     //  });
-//       console.log(this.labelForBoards);
+   });
+
 
   }
 
@@ -192,13 +198,17 @@ queryString:any;//variable to store the input to find a board name
     else{
 
       var boardExists :any = 0;
-      this.variab.boardupdated.map(boardname=>{
+      this.componentsService.getBoards().subscribe(val=>{
+        //this.boards = val;
+      val.data.map(boardname=>{
          if(this.boardname.value === boardname.value.label){
            //console.log("boardname exists");
            boardExists = 1;
 
          }
        })
+
+     });
       if(boardExists == 1){
         this.alertexists = true;
         this.ngAlert.type = 'warning'
@@ -210,17 +220,31 @@ queryString:any;//variable to store the input to find a board name
         this.boardservice.addboard(model).then(res=>{
 
               if(res['ok'] == true){
-                this.boardservice.getboards().then(response=>{
-                  console.log("ew",res);
-                  this.variab.boardupdated = response;
-                  this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
+                this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+
+                  this.boards = resWithType;
+                    //console.log(this.boards);
+                  this.componentsService.addBoards('add',resWithType);
+                  //this.variab.boardupdated=res;
+
+                      this.componentsService.getBoards().subscribe(val=>{
+                          //this.boards = val;
+                      });
+
+                })
+
+                /*this.boardservice.getboards().then(response=>{
+                  console.log("ew",response);
+                  this.boards = response;
+
+                  this.boards = this.boards.filter(board=>{
                    if(board.value.group){
 
                      return board.value.group === this.groupname;
                    }
 
                   })
-                })
+                })*/
 
                 this.visible=false;
                 this.alertempty = false;
@@ -240,7 +264,7 @@ queryString:any;//variable to store the input to find a board name
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
 
-    this.variab.annotations.map(anno=>{
+    this.boardannotations.map(anno=>{
     //  console.log(anno.value.label[0],title.label);
       if(anno.value.target.id === this.feeditem.value._id){
 
@@ -252,7 +276,8 @@ queryString:any;//variable to store the input to find a board name
                 this.labelForBoards[i]=false;
                 this.selectedstar = 0;
                 if(this.router.url.includes('/boardfeeds')){
-                  this.variab.boardfeeds.splice(this.index,1);
+                  this.componentsService.alert('hideboard',this.index);
+                  //this.variab.boardfeeds.splice(this.index,1);
                 }
               }
             })

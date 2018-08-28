@@ -23,6 +23,8 @@ spinnerState:boolean=false;//state variable to store the status of the spinner t
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
+globalfeeds:any=[];          //variable to store feeds to display
+passBoards:any=[];
 view:any;      //variable to store the view state
 date:any;      //variable to store the state of dates to filters
 user:any;     //variable to store the username
@@ -34,12 +36,15 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   //On loading Component
   ngOnInit() {
 
+
     this.user =localStorage.getItem('name');
 
         //this.usersview = localStorage.getItem('view');
 
         this.view = localStorage.getItem('view') || null;
-
+        this.dataservice.getannotations().then((reswithtype:any=[])=>{
+          this.componentsService.addAnnotations('add',reswithtype);
+        });
 
         //this.dataservice.removeUnwanted();
      //Access the query parameter and filter the feeds according to category
@@ -59,14 +64,14 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                   this.pageheading = params.subcategory;
                   //console.log("subca",params.feedname);
                   //console.log("ca",params.subcategory);
-                  this.getfeedsOnSubcategory(params.subcategory).then(val=>{
+                  this.getfeedsOnSubcategory(params.subcategory).then((metaFeedsWithType:any=[])=>{
 
 
                     //Reverse the filter to sort according to latest feeds
-                     this.variab.globalfeeds=val;
-                     this.variab.globalfeeds.reverse();
-                     //this.feeds = this.variab.globalfeeds;
-                     this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                     //this.globalfeeds=val;
+                     metaFeedsWithType.reverse();
+                     //this.feeds = this.globalfeeds;
+                     this.feeds = metaFeedsWithType.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
 
                      if(this.feeds){
 
@@ -85,24 +90,25 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
                   //this.feeds.length=0;
 
                   this.pageheading = params.feedname;
-                     this.userService.getUserSubscriptions().then(res=>{
-                       this.variab.categoryfeeds=res;
+                     this.userService.getUserSubscriptions().then((resWithType:any=[])=>{
+                       //this.variab.categoryfeeds=res;
                 //  console.log(this.spinnerState,this.variab.categoryfeeds);
-                  this.variab.categoryfeeds.map(category=>{
+                  resWithType.map(category=>{
                     if(category.doc.feedname == params.feedname){
 
 
                             this.getAndUpdatedatabase(category).then((statusUpdate:any)=>{
                               //console.log(statusUpdate);
-                              this.getfeedsOnFeedname(params.feedname).then(val=>{
-                                this.variab.globalfeeds = val;
+                              this.getfeedsOnFeedname(params.feedname).then((feedsWithType:any=[])=>{
+                              //  this.globalfeeds = val;
 
                                 //Reverse the filter to sort according to latest feeds
-                                 this.variab.globalfeeds.reverse();
+                                 feedsWithType.reverse();
                               //Call the checkForDeleted method to check for hidden/removed feeds
                               //and remove those feeds from the display array
-                                  this.feeds = this.variab.globalfeeds.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
-                                  this.componentsService.getMessage().subscribe(res=>{
+                                  this.globalfeeds = feedsWithType.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                                    this.feeds = this.globalfeeds;
+                                    this.componentsService.getMessage().subscribe(res=>{
                                     //console.log("fees",res);
                                       if(res.type == 'hide'){
                                         this.feeds.splice(res.data,1);
@@ -199,7 +205,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
+    this.util.filterDate(childDates,this.globalfeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
         this.alertNofeedsinrange = true;
@@ -214,7 +220,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
-      this.feeds = this.variab.globalfeeds;
+      this.feeds = this.globalfeeds;
     }
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
@@ -222,14 +228,14 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
       //If input is latest sort the feeds in the descending order
-      this.util.sortdescending(this.variab.globalfeeds).then(res=>{
+      this.util.sortdescending(this.globalfeeds).then(res=>{
         this.feeds = res;
       })
 
     }
     if(childSortLabel === 'Oldest'){
       //If input is oldest sort the feeds in the descending order
-      this.util.sortascending(this.variab.globalfeeds).then(res=>{
+      this.util.sortascending(this.globalfeeds).then(res=>{
         this.feeds = res;
       })
     }
@@ -243,15 +249,15 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
     this.getfeedsOnFeedname(childrefresh).then(val=>{
       if(val['length']==0){
             this.getfeedsOnSubcategory(childrefresh).then(val=>{
-                  this.variab.globalfeeds = val;
+                  this.globalfeeds = val;
 
                   //Reverse the filter to sort according to latest feeds
-                   this.variab.globalfeeds.reverse();
+                   this.globalfeeds.reverse();
                 //Call the checkForDeleted method to check for hidden/removed feeds
                 //and remove those feeds from the display array
-                      this.feeds=this.variab.globalfeeds;
+                      this.feeds=this.globalfeeds;
                      // console.log("every",this.feeds);
-                      if(this.variab.globalfeeds){
+                      if(this.globalfeeds){
                         this.spinnerState=false;
                       }
             });
@@ -259,15 +265,15 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
       }
       else{
-          this.variab.globalfeeds = val;
+          this.globalfeeds = val;
 
           //Reverse the filter to sort according to latest feeds
-           this.variab.globalfeeds.reverse();
+           this.globalfeeds.reverse();
         //Call the checkForDeleted method to check for hidden/removed feeds
         //and remove those feeds from the display array
-              this.feeds=this.variab.globalfeeds;
+              this.feeds=this.globalfeeds;
              // console.log("every",this.feeds);
-              if(this.variab.globalfeeds){
+              if(this.globalfeeds){
                 this.spinnerState=false;
               }
       }
@@ -321,24 +327,32 @@ getAndUpdatedatabase(category){
 return new Promise(resolve=>{
   category.doc.metadata.map(meta=>{
     if(meta.categories[0]==undefined){
-        this.getfeedsOnFeedname(category.doc.feedname).then(val=>{
-          feedsFromDb = val;
-          this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+        this.getfeedsOnFeedname(category.doc.feedname).then((valWithType:any=[])=>{
+        //  this.util.checkForDeletedFeeds(valWithType).then((removeDeleted:any=[])=>{
 
-            var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
-              if(updateFeeds.length>0){
-                  this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
-            //  console.log("resultsave",res);
-                  if(res[0]['ok']==true){
-                    resolve(true);
-                  }
-              })
-            }
-            else{
-              resolve(false);
-            }
+        //console.log(removeDeleted)
+          this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+            //console.log(feedsToUpdate);
+            this.util.checkForDeletedFeeds(feedsToUpdate).then((resWithType:any=[])=>{
+              //console.log(res);
+              var  updateFeeds =  this.getDiffereceofFeeds(valWithType,resWithType);
+                if(updateFeeds.length>0){
+                    this.feedService.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
+              //  console.log("resultsave",res);
+                    if(res[0]['ok']==true){
+                      resolve(true);
+                    }
+                })
+              }
+              else{
+                resolve(false);
+              }
+            })
+
+
           });
-        })
+        //});
+      })
     }
     else{
       this.getfeedsOnSubcategory(meta.categories[0]).then(value=>{
