@@ -11,7 +11,7 @@
       <div class="scroll">
 
 
-      <div class="field" *ngFor="let item of boards | FilterPipe: queryString;index as i">
+      <div class="field" *ngFor="let item of boards.data | FilterPipe: queryString;index as i">
 
         <div class="board-item">
           <!--Star icon on board name which will toggle if the feed is annotated to a paricular board-->

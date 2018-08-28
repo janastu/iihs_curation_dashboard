@@ -54,20 +54,20 @@ boards:any=[];
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-    //Get board annotations
-  this.boardannotations = this.componentsService.getannotations();
 
-    //console.log(this.boards);
+
+    //console.log(this.boardannotations);
           //Get BoardS
          this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
-         //this.componentsService.addBoards('add',resWithType);
+           this.componentsService.addBoards('add',resWithType);
+           })
+          this.componentsService.getBoards().subscribe(val=>{
+               this.boards = val;
+              // console.log(this.boards,this.index);
 
-          //this.componentsService.getBoards().subscribe(val=>{
-               this.boards = resWithType;
-
-
-           //})
-
+           //
+           //Get board annotations
+           this.boardannotations = this.componentsService.getannotations();
 
         //console.log(this.boardannotations);
        //Filter Feed with Annotations
@@ -93,7 +93,7 @@ boards:any=[];
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.boards)
-         var annosForBoards = this.boards.map( (board, index) => {
+         var annosForBoards = this.boards.data.map( (board, index) => {
 
             return  _.filter(annotatedarray,function(o) {
              //console.log(o.key,board.value._id);
@@ -120,8 +120,9 @@ boards:any=[];
 
              }
          })
-    //  });
-   });
+        // console.log("annoforboards",this.labelForBoards);
+      });
+  // });
 
 
   }
@@ -198,9 +199,10 @@ boards:any=[];
     else{
 
       var boardExists :any = 0;
-      this.componentsService.getBoards().subscribe(val=>{
-        //this.boards = val;
-      val.data.map(boardname=>{
+      this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+
+        this.boards = resWithType;
+        this.boards.map(boardname=>{
          if(this.boardname.value === boardname.value.label){
            //console.log("boardname exists");
            boardExists = 1;
@@ -222,13 +224,13 @@ boards:any=[];
               if(res['ok'] == true){
                 this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
 
-                  this.boards = resWithType;
-                    //console.log(this.boards);
+                  //this.boards = resWithType;
+                    //console.log(this.boards,this.index);
                   this.componentsService.addBoards('add',resWithType);
                   //this.variab.boardupdated=res;
 
                       this.componentsService.getBoards().subscribe(val=>{
-                          //this.boards = val;
+                          this.boards = val;
                       });
 
                 })
