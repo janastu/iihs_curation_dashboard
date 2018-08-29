@@ -51,7 +51,9 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
 
            //Call service function to get board feeds by passing board name as parameter
              this.spinnerState=true; //Set the spinner state variable to true
-
+              if(this.spinnerState == true){
+                this.alertNofeeds = false;
+              }
              //Fetching board feeds and is removed for code refactoring
              /* this.dataService.getboardfeeds(params.id).then(res=>{
               this.boardfeeds = res;
@@ -160,6 +162,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                      this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
 
                    }
+
                     this.alertNofeeds=false;//set alertnofeed  s value to false
                    if(this.feeds.length==0){
                      this.alertNofeeds=true;
