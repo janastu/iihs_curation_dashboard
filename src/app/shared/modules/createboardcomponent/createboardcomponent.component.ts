@@ -266,7 +266,7 @@ boards:any=[];
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
 
-    this.boardannotations.map(anno=>{
+    this.boardannotations.data.map(anno=>{
     //  console.log(anno.value.label[0],title.label);
       if(anno.value.target.id === this.feeditem.value._id){
 
