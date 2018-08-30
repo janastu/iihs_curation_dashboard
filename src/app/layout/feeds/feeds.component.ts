@@ -42,7 +42,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
         //this.usersview = localStorage.getItem('view');
 
         this.view = localStorage.getItem('view') || null;
-        
+
 
         //this.dataservice.removeUnwanted();
      //Access the query parameter and filter the feeds according to category
@@ -177,7 +177,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
-          this.feedService.getmetacategories(subcategory).then(res=>{
+          this.feedService.getmetacategories(subcategory);
+          this.feedService.feed$.subscribe(res=>{
          // console.log("sis",res);
 
              if(res['length'] == 0){
@@ -188,7 +189,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
 
              else{
-               resolve(res);
+               resolve(res.rows);
              }
 
 

@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
-
+import { Observable, ReplaySubject } from 'rxjs';
 @Injectable()
 export class FeedService {
 	localdb:any;
@@ -16,6 +16,8 @@ export class FeedService {
 	feedNewsrack:any=[];
 	remotefeeds:any;
 	auth:any;//varable to store the auth object
+	private feedSubject = new ReplaySubject<Response>(1);
+  feed$: Observable<Response> = this.feedSubject.asObservable();
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) {
 		 this.auth={
   			      username:this.settings.couchdbusername,
@@ -158,10 +160,7 @@ export class FeedService {
 		console.log(last);
 	  	return new Promise(resolve => {
 	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
-					 this.http.get(check).map(res=>res.json()).subscribe(result=> {
-						 console.log("resfeeds",result);
-						 resolve(result.rows);
-					 });
+					 this.http.get(check).map(res=>res.json()).subscribe(res => this.feedSubject.next(res));
 
 					 //	console.log(category);
 	  		   /*	this.remotefeeds.query('feeds/metacategories', {
