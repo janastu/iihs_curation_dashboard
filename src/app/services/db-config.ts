@@ -141,7 +141,7 @@ auth:any;//varable to store the auth object
     this.getFeedDesignDoc(ddoc).then(res=>{
       console.log("response",res);
       this.remotefeeds.put(res).catch(function (err) {
-           // console.log(err);
+            console.log(err);
             if (err.name !== 'conflict') {
               throw err;
             }
@@ -192,7 +192,7 @@ auth:any;//varable to store the auth object
            ddoc._rev = doc._rev;
            resolve(ddoc);
        }).catch(err=>{
-         //console.log(err.status);
+         console.log("check error status",err.status);
          if(err.status == 404){
                  console.log("dd",ddoc);
                 this.remotefeeds.put(ddoc).catch(function (err) {

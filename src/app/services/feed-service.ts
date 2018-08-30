@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
-
+import { Observable, ReplaySubject } from 'rxjs';
 @Injectable()
 export class FeedService {
 	localdb:any;
@@ -16,6 +16,8 @@ export class FeedService {
 	feedNewsrack:any=[];
 	remotefeeds:any;
 	auth:any;//varable to store the auth object
+	private feedSubject = new ReplaySubject<Response>(1);
+  feed$: Observable<Response> = this.feedSubject.asObservable();
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) {
 		 this.auth={
   			      username:this.settings.couchdbusername,
@@ -158,10 +160,7 @@ export class FeedService {
 		console.log(last);
 	  	return new Promise(resolve => {
 	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
-					 this.http.get(check).map(res=>res.json()).subscribe(result=> {
-						 console.log("resfeeds",result);
-						 resolve(result.rows);
-					 });
+					 this.http.get(check).map(res=>res.json()).subscribe(res => this.feedSubject.next(res));
 
 					 //	console.log(category);
 	  		   /*	this.remotefeeds.query('feeds/metacategories', {
@@ -181,6 +180,7 @@ export class FeedService {
 	getlatestfeeds(category){
 		var date = new Date();
 		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
+		console.log(last, "check last00");
 		//console.log(encodeURIComponent(category))
 		//var replicationstatus:boolean=false;
 		var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
@@ -210,6 +210,33 @@ export class FeedService {
 
 	});
 }
+
+//get feeds ondate
+getFeedsOnDate(category,fromDate,toDate){
+	console.log(fromDate,toDate, "from n to dates");
+	//var from = fromDate.setHours(6,0,0);
+	//var to = toDate.setHours(23,59,59);
+	//console.log(from, to, "checking the sethours");
+	var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/latestoldestcategory?startkey=["'+encodeURIComponent(category)+'","'+fromDate.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+toDate.toISOString()+'"]'
+		return new Promise(resolve => {
+			  //this.remotefeeds.query('feeds/latestoldestcategory', {
+			  	/*this.remotefeeds.query('feeds/latestoldestcategory', {
+			    startkey: [category],
+			    endkey: [category, {}]
+			  }).then(function (result) {
+			  		console.log("resfeeds",result);
+			 		resolve(result.rows);
+			   }).catch(function (err) {
+			  		console.log(err);
+			});*/
+			this.http.get(check).map(res=>res.json()).subscribe(result=> {
+				console.log("resfeeds",result);
+				resolve(result.rows);
+			});
+		});
+
+}
+
 	//Replicate db feeds
 	replicatefeedsdb(category){
 		console.log(category);

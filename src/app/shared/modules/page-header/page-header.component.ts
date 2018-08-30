@@ -54,6 +54,7 @@ boardsOndelete:any;
     });
      this.componentsService.getBoards().subscribe((valWithType:any)=>{
         this.boardsOndelete = valWithType;
+        //console.log(this.boardsOndelete);
      });
   }
   //function to get date input values annd emit to feed component
@@ -62,6 +63,7 @@ boardsOndelete:any;
     var changefrom,changeto;
     changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
     changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
+  //  console.log(changefrom);
     /*var fromdate = Date.parse(changefrom);
     var todate = Date.parse(changeto);
 

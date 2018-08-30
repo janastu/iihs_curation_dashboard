@@ -155,7 +155,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                    this.feeds = sorted;
                    this.componentsService.getMessage().subscribe(res=>{
                      //console.log("fees",res);
-                       if(res.type == 'hide'){
+                       if(res.type == 'hide' || res.type == 'hideboard'){
                          this.feeds.splice(res.data,1);
                        }
                    })
