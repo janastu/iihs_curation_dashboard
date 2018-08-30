@@ -179,7 +179,7 @@ filterDate(date,feeds){
   //Parse the from and to dates to timestamp to filter
   var fromdate = Date.parse(date.changefrom);
   var todate = Date.parse(date.changeto);
-
+  console.log(fromdate);
   return new Promise(resolve=>{
       //Filter the globalfeeds ondate and store in the local variable feeds
   this.resultFeeds =  feeds.filter((res)=>{
