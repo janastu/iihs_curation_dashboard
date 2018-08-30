@@ -28,11 +28,13 @@ checkForDeletedFeeds(feeds){
     }
   //  if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
-
-      this.dataservice.getdeletedfeeds().then(res=>{
-         this.variab.hiddenfeeds=res;//Store the feeds in the local variable
-        // console.log(this.variab.hiddenfeeds,"checkdeleted");
-         if(this.variab.hiddenfeeds.length == 0){
+    this.dataservice.getdeletedfeeds();
+    this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
+        console.log(hiddenFeedsWithType);
+      //this.dataservice.getdeletedfeeds().then(res=>{
+         //this.variab.hiddenfeeds=res;//Store the feeds in the local variable
+         //console.log(this.variab.hiddenfeeds,"checkdeleted");
+         if(hiddenFeedsWithType.rows.length == 0){
            resolve(feeds);
           }
 
@@ -42,7 +44,7 @@ checkForDeletedFeeds(feeds){
          //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
          else{
           // console.log(this.variab.hiddenfeeds,"hiddenfeeds");
-           this.variab.hiddenfeeds.map(feed=>{
+           hiddenFeedsWithType.rows.map(feed=>{
            //console.log(feeds);
             feeds.filter(globalfeed=>{
               if(globalfeed.title){
