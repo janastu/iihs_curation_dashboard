@@ -18,6 +18,7 @@ export class TrashBoxComponent implements OnInit {
 
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 feeds:any=[];          //variable to store feeds to display
+globalfeeds:any=[];
 view:any;              //variable to store the view state
 date:any;              //variable to store the state of dates to filters
 user:any;
@@ -33,13 +34,15 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     this.p=0;
       this.spinnerState=true;
      //Fetch the data from service and store in global variable
-    /* this.dataservice.getdeletedfeeds().then(res=>{
-       this.variab.hiddenfeeds = res;
-        var sanitizedHidden = this.variab.hiddenfeeds.map(function(feed){
+       this.dataservice.getdeletedfeeds();
+     this.dataservice.data$.subscribe(res=>{
+    //  console.log(res);
+       this.globalfeeds = res['rows'];
+        var sanitizedHidden = this.globalfeeds.map(function(feed){
                                   if(feed.value && !feed.value.value ) return feed
                                   return feed.value
                                 });
-       //console.log("hideen",this.variab.hiddenfeeds,testhide);
+       //console.log("hideen",this.globalfeeds,testhide);
        this.util.sortdescending(sanitizedHidden).then(sorted=>{
        //this.dataservice.getannotations().then(res=>{
         //this.variab.annotations=res;
@@ -54,7 +57,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
          }
        //})
      });
-   })*/
+   })
 
   }
 
@@ -70,7 +73,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
 
    if(childSortLabel === 'Latest'){
 
-    this.util.sortdescending(this.variab.hiddenfeeds).then(res=>{
+    this.util.sortdescending(this.globalfeeds).then(res=>{
       this.feeds = res;
       console.log(this.feeds)
     })
@@ -78,7 +81,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
 
    }
    if(childSortLabel === 'Oldest'){
-     this.util.sortascending(this.variab.hiddenfeeds).then(res=>{
+     this.util.sortascending(this.globalfeeds).then(res=>{
        this.feeds = res;
      })
    }
@@ -86,7 +89,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
  //Function to handle Date event from page-header component
  public handleDate(childDates:any){
 
-   this.util.filterDate(childDates,this.variab.hiddenfeeds).then(res=>{
+   this.util.filterDate(childDates,this.globalfeeds).then(res=>{
      this.feeds = res;
      console.log(this.feeds);
    })
@@ -95,7 +98,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
  //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
-      this.feeds = this.variab.hiddenfeeds;
+      this.feeds = this.globalfeeds;
     }
   }
   onpage(){

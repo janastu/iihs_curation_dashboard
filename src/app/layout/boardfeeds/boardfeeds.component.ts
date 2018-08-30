@@ -127,18 +127,19 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
           /* this.util.checkForPublished(sorted,this.boardname).then(res=>{
             this.publishedfeeds=res;
            });*/
-           var reswithtype = this.componentsService.getannotations();
-           console.log(reswithtype);
+          // var reswithtype = this.componentsService.getannotations();
+           //console.log(reswithtype);
 
-           this.dataService.getannotations().then((reswithtype:any=[])=>{
-             this.componentsService.addAnnotations('add',reswithtype);
+           //this.dataService.getannotations();
+           this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
+             this.componentsService.addAnnotations('add',reswithtype.rows);
              //console.log(reswithtype,"reswithtype");
              //this.variab.annotations = reswithtype;
 
             //if(reswithtype.type == 'annotaion'){
               //console.log("anno",reswithtype.data);
             //}
-             var feedsByBoard=reswithtype.map(feed=>{
+             var feedsByBoard=reswithtype['rows'].map(feed=>{
                if (feed.value.label==params.id) {
                  //console.log(feed,"resfeed");
                  return feed.value.target;
