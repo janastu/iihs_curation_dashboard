@@ -204,8 +204,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(childDates,this.globalfeeds).then(res=>{
-      //console.log(res);
+    this.util.filterDate(this.pageheading,childDates).then(res=>{
+      console.log(res,"res");
       if(res['length'] == 0){
         this.alertNofeedsinrange = true;
         setTimeout(() => this.alertNofeedsinrange = false, 2000);

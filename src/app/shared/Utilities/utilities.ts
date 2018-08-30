@@ -174,15 +174,22 @@ getPublishedfeeds(boardfeeds,boardname){
 
 }
 //Function to filter the feeds on date
-filterDate(date,feeds){
+filterDate(category,date){
   var date = date;
   //Parse the from and to dates to timestamp to filter
-  var fromdate = Date.parse(date.changefrom);
-  var todate = Date.parse(date.changeto);
-  console.log(fromdate);
+  //var fromdate = Date.parse(date.changefrom);
+  //var todate = Date.parse(date.changeto);
+  var fromdate = new Date(date.changefrom);
+ var todate = new Date(date.changeto);
+  console.log(date.changefrom,todate,"fromdate n todate");
   return new Promise(resolve=>{
+
+      this.feedService.getFeedsOnDate(category,fromdate,todate).then(res=>{
+        console.log(res);
+        resolve(res);
+      });
       //Filter the globalfeeds ondate and store in the local variable feeds
-  this.resultFeeds =  feeds.filter((res)=>{
+  /*this.resultFeeds =  feeds.filter((res)=>{
 
 
     //Check if from date less than to date
@@ -203,8 +210,9 @@ filterDate(date,feeds){
     else{
 
     }
-  });
-  resolve(this.resultFeeds);
+  });*/
+
+  //resolve(this.resultFeeds);
   })
 }
 //Function to sort the feeds on descending order from latest
