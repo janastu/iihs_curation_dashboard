@@ -9,6 +9,7 @@ import { Global } from '../../shared/global';//Import Global to use global varia
 import * as _ from 'lodash'
 import { DatePipe,Location } from '@angular/common';
 import { ArchiveService } from '../../services/archive-service';//Import feed service to get feeds
+import { ComponentsService } from '../../services/components-service';//Import feed service to get feeds
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 
 @Component({
@@ -25,6 +26,7 @@ publishingurl:any;//variable to store the publishing url
 p:any; //variable to store the current page nuber
 pageheading:any;  //variable to store and display as page heading
 feeds:any=[];          //variable to store feeds to display
+boardfeeds:any=[];          //variable to store feeds to display
 feedstobechecked:any=[]; //variable to store the feeds of today to be checked
 checkForm:FormGroup;//variable to store the input of the checkbox form
 boardname:any;//variable to store the input variable name
@@ -43,7 +45,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
   constructor(private datepipe:DatePipe,public variab:Global,public dataservice:DataService,
     public archiveService:ArchiveService,private route: ActivatedRoute,public util:Utilities,
     public router:Router,public formBuilder:FormBuilder,public  urlSerializer:UrlSerializer,
-    public location:Location) {
+    public location:Location,public componentsService:ComponentsService) {
 
   }
   //On loading Component
@@ -59,7 +61,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
     //this.usersview = localStorage.getItem('view');
 
     this.view = localStorage.getItem('view') || null;
-
+    this.spinnerState=true;
     this.route.params
           .subscribe(params => {
             this.boardname=params.id;
@@ -70,15 +72,39 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
             .subscribe(params => {
              //console.log("paraparams);
            //get the board feeds
+           var annotationsWithType = this.componentsService.getannotations();
 
-           this.dataservice.getboardfeeds(params.id).then(res=>{
-             //console.log(res);
+           var feedsByBoard=annotationsWithType.data.map(feed=>{
+             if (feed.value.label==params.id) {
+               //console.log(feed,"resfeed");
+               return feed.value.target;
+             }
+           })
+           this.boardfeeds = _.compact(feedsByBoard);
+
             //Function call to check for the deleted feeds
-            this.util.checkForDeletedFeeds(res).then(resdel=>{
+            this.util.checkForDeletedFeeds(this.boardfeeds).then(resdel=>{
               //Get the deleted feeds store and pass the feeds to sort
                 this.util.sortdescending(resdel).then(ressort=>{
                   //Get sorted data and store in the feeds variable to display
-                  this.feeds = res;
+                  this.feeds = ressort;
+                  //get the board feeds of today's
+                 this.dataservice.gettodayBoardFeeds().then((resWithType:any=[])=>{
+                    //var todayAnnotatedFeeds:any=[];
+                    //todayAnnotatedFeeds = res;
+                      for (var i = 0; i < this.feeds.length; ++i) {
+                        // code...
+                        for (var j = 0; j < resWithType.length; ++j) {
+                          // code...
+                          //console.log(this.feeds[i].value,todayAnnotatedFeeds[i]);
+                          if(this.feeds[i].value._id == resWithType[j].value._id){
+                            this.feeds[i].Checked = true;
+                          }
+                        }
+                      }
+
+
+                  })
                     if(this.feeds){
                       this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
                     }
@@ -86,60 +112,14 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
 
 
 
-             this.util.checkForPublished(res,this.boardname).then(res=>{
+             this.util.checkForPublished(this.boardfeeds,this.boardname).then(res=>{
                //this.feeds=res;
                this.publishedfeeds=res;
              });
             });
+            //console.log("publs",this.feeds);
 
-           //get the board feeds of today's
-          this.dataservice.gettodayBoardFeeds().then(res=>{
-             var todayAnnotatedFeeds:any=[];
-             todayAnnotatedFeeds = res;
-               for (var i = 0; i < this.feeds.length; ++i) {
-                 // code...
-                 for (var j = 0; j < todayAnnotatedFeeds.length; ++j) {
-                   // code...
-                   //console.log(this.feeds[i].value,todayAnnotatedFeeds[i]);
-                   if(this.feeds[i].value._id == todayAnnotatedFeeds[j].value._id){
-                     this.feeds[i].Checked = true;
-                   }
-                 }
-               }
-
-               /*   var datefeed = this.feeds.map( (board, index) => {
-
-                     return  _.filter(todayAnnotatedFeeds,function(o) {
-
-                       if(o.value._id===board.value._id){
-                       return o  ;
-                     }
-                     });
-
-                  });
-
-                  //Map Annos for Boards to return boolean array
-                  //Returns example:[true,false,true]
-                  //Index of output == Index of label which means label[0] and label[1]
-                  //is active for above output
-                 this.feedstobechecked  =  datefeed.map(anno=>{
-
-                      if(anno[0]){
-                          return true;
-                       }
-                        else{
-                          return false;
-
-                      }
-                  })*/
-
-
-
-
-                 //console.log("yeno",this.feedstobechecked);
-
-           })
-        });
+        //});
      });
 
   }
@@ -245,7 +225,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(childDates,this.variab.globalfeeds).then(res=>{
+    this.util.filterDate(childDates,this.boardfeeds).then(res=>{
       //console.log(res);
       if(res['length'] == 0){
         this.alertNofeedspublished = true;
@@ -260,7 +240,7 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
-      this.feeds = this.variab.globalfeeds;
+      this.feeds = this.boardfeeds;
     }
   }
   //Function to handle sort label like 'Latest','Oldest' feeds when clicked from page-header component
@@ -268,14 +248,14 @@ checkedtopublish:boolean=false; //state variable to store the status variable of
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
       //If input is latest sort the feeds in the descending order
-      this.util.sortdescending(this.variab.globalfeeds).then(res=>{
+      this.util.sortdescending(this.boardfeeds).then(res=>{
         this.feeds = res;
       })
 
     }
     if(childSortLabel === 'Oldest'){
       //If input is oldest sort the feeds in the descending order
-      this.util.sortascending(this.variab.globalfeeds).then(res=>{
+      this.util.sortascending(this.boardfeeds).then(res=>{
         this.feeds = res;
       })
     }

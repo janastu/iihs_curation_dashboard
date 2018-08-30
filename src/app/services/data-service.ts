@@ -3,6 +3,7 @@ import { Http,RequestOptions,Headers  } from '@angular/http';
 import PouchDB from 'pouchdb';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
+import { Observable, ReplaySubject } from 'rxjs';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -13,6 +14,13 @@ export class DataService {
   user:any;
   password:any;
   auth:any;
+
+
+  private dataSubject = new ReplaySubject<Response>(1);
+  data$: Observable<Response> = this.dataSubject.asObservable();
+
+  private annotationSubject = new ReplaySubject<Response>(1);
+  annotation$: Observable<Response> = this.annotationSubject.asObservable();
 constructor(private http: Http,private settings:Settings,public variab:Global) {
     this.user = localStorage.getItem('name');
         this.auth={
@@ -33,13 +41,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        if (!err) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
-             //self.getannotations();
+             self.getannotations();
              //self.getreadlaterannotations();
              //self.getrecentlyreadannotations();
              //console.log(this.user);
              //self.getreadlater(self.user);
              //self.getrecentlyread(self.user);
-          //   self.getdeletedfeeds(self.user);
+             //self.getdeletedfeeds(self.user);
               if (payload.label) {
                 // code...
                 self.getboardfeeds(payload.label[0]);
@@ -59,8 +67,8 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   //Api service to get board annotations
   getannotations(){
 
-
-   return new Promise(resolve => {
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotations/_view/boardannotation').map(res=>res.json()).subscribe(res => this.annotationSubject.next(res));
+   /*return new Promise(resolve => {
 
      this.remoteannos.query('annotations/boardannotation', {
            //stale: 'update_after'
@@ -70,7 +78,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        }).catch(function (err) {
          console.log(err);
        });
-   });
+   });*/
 
   }
   //Api service to get read later annotations
@@ -99,7 +107,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      this.remoteannos.query('annotations/recentlyread', {
            //stale: 'update_after'
          }).then(function (result) {
-         // console.log("res",result);
+        // console.log("recentlyreadfeeds",result);
          resolve(result.rows);
        }).catch(function (err) {
          console.log(err);
@@ -200,16 +208,17 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get deleted feeds
   getdeletedfeeds(){
-
-
+//  return new Promise(resolve=>{
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
+//})
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
-    return new Promise(resolve => {
+    /*return new Promise(resolve => {
     /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/deletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){ */
+    if(res['ok']==true){
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
 
         }).then(function (result) {
@@ -220,7 +229,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
       });
      //}
     //});
-    });
+  });*/
 
   }
 

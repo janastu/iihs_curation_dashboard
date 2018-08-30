@@ -5,6 +5,8 @@ import { CreateBoardStore } from '../../store/create-board-store';
 import { ReadlaterStore } from '../../store/readlater-store';
 import { DataService } from '../../../services/data-service';
 import { GroupService } from '../../../services/group-service';
+import { ComponentsService } from '../../../services/components-service';
+import { Utilities } from '../../../shared';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
@@ -33,9 +35,15 @@ alertexists:boolean=false;
 alertempty:boolean=false;
 alertremove:boolean=false;
 groupname:any;//variable to store the groupname
-  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public groupService:GroupService,public ngAlert:NgbAlertConfig,public router:Router) { 
+boardannotations:any=[];
+readlaterannos:any=[];
+recentlyreadannos:any=[];
+boards:any=[];
+  constructor(public ngconfig:NgbDropdownConfig,public variab:Global,public formBuilder: FormBuilder,public boardservice:BoardService,
+  public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public util:Utilities,
+  public groupService:GroupService,public ngAlert:NgbAlertConfig,public router:Router,public componentsService:ComponentsService) {
      this.selectedIndex = -1;
- 
+
 }
 
   ngOnInit() {
@@ -43,38 +51,44 @@ groupname:any;//variable to store the groupname
     this.groupname = localStorage.getItem('group');
     this.ngconfig.autoClose='outside';
      this.user = localStorage.getItem('name');
-    var annos:any=[];
-   
+    //var annos:any=[];
+
 
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-   
-       this.dataservice.getannotations().then(res=>{
+      //Get Boards4
+      //Get BoardS
+     this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+     this.componentsService.addBoards('add',resWithType);
 
-           annos=res;
+      this.componentsService.getBoards().subscribe(val=>{
+           this.boards = val;
+      // this.dataservice.getannotations().then(res=>{
+      this.boardannotations = this.componentsService.getBoards();
+           //annos=res;
           //console.log("board",annos,this.feeditem.value.title);
           //Filter Feed with Annotations
           //Returns Array of annotaion for each feed.value.id
-            var annotatedarray = annos.filter(anno=>{
+            var annotatedarray = this.boardannotations.data.filter(anno=>{
              if(anno.value.target.id === this.feeditem.value._id){
                //State Variable to toggle the hover toolbar component star
                 this.selectedstar = 1;
 
                     return anno;
-                  
-                   
+
+
              }
-             
-      
+
+
            });
            //Map Annotations by its label value
            //Returns array of annotations for each label
-            var annosForBoards = this.variab.boardupdated.map( (board, index) => {
+            var annosForBoards = this.boards.datamap( (board, index) => {
                //console.log("anoo",board,annotatedarray)
-               return  _.filter(annotatedarray,function(o) { 
+               return  _.filter(annotatedarray,function(o) {
                  if(o.key===board.value._id){
-                 return o  ; 
+                 return o  ;
                }
                });
 
@@ -82,35 +96,42 @@ groupname:any;//variable to store the groupname
 
             //console.log("annoforboards",annosForBoards);
             //Map Annos for Boards to return boolean array
-            //Returns example:[true,false,true] 
-            //Index of output == Index of label which means label[0] and label[1] 
+            //Returns example:[true,false,true]
+            //Index of output == Index of label which means label[0] and label[1]
             //is active for above output
            this.labelForBoards  =  annosForBoards.map(anno=>{
                 if(anno[0]){
-                  
+
                     return true;
                  }
                   else{
                     return false;
-                  
+
                 }
             })
     //console.log("true",this.labelForBoards)
 
        });
-   
-   
-    
-   //Get annotations for readlater feeds and toogle the bookmark icon   
-      this.variab.readlaterfeeds.filter(anno=>{
-        if(anno.value._id === this.feeditem.value._id){
-          this.selectedIndex=1;
-        }
-      });
-       
-      //Get annotations for recently read feeds and toogle the check icon   
-      this.variab.recentlyread.filter(anno=>{
-        if(anno.value._id === this.feeditem.value._id){
+     });
+
+
+   //Get annotations for readlater feeds and toogle the bookmark icon
+   this.readlaterannos = this.componentsService.getReadLater();
+
+   //Highlight the bookmark icon if annotated
+   this.readlaterannos.data.filter(anno=>{
+    //console.log(anno)
+     if(anno.value.target.value._id === this.feeditem.value._id){
+       this.selectedIndex=1;
+     }
+   });
+
+      //Get annotations for recently read feeds and toogle the check icon
+      this.recentlyreadannos =  this.componentsService.getRecentlyRead();
+      //console.log("recentlyreadhighlight",res);
+      //Highlight the bookmark icon if annotated
+      this.recentlyreadannos.data.filter(anno=>{
+        if(anno.value.target.value._id === this.feeditem.value._id){
           this.selectedIcon=1;
         }
       });
@@ -118,13 +139,10 @@ groupname:any;//variable to store the groupname
 
   cancelboard(){
     this.visible=false;
-    
+
   }
   //Function called from Create board block to save the feed to the board
-  savetoboard(title,i){ 
-   
-      this.labelForBoards[i] = true;
-      this.selectedstar=1;
+  savetoboard(title,i){
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",
@@ -137,13 +155,19 @@ groupname:any;//variable to store the groupname
         "motivation":"tagging",
         "label":[title._id]
       }
-      this.createboardstore.dispatch('ADD_ITEMS',update);
-    
-    
-    
+      this.dataservice.addtodatabase(update).then(res=>{
+        if(res['ok']==true){
+          this.labelForBoards[i] = true;
+          this.selectedstar=1;
+        }
+      })
+      //this.createboardstore.dispatch('ADD_ITEMS',update);
+
+
+
   }
 
-  //Function called from Create new board block to create new board by giving a board name 
+  //Function called from Create new board block to create new board by giving a board name
   createboard(){
     console.log("ifadd",this.groupname);
  if(this.groupname){
@@ -164,7 +188,7 @@ groupname:any;//variable to store the groupname
 
 
   }
-   console.log("add",model);
+//   console.log("add",model);
 
     //Check if boardname exists
     if(this.boardname.value === ''){
@@ -178,7 +202,7 @@ groupname:any;//variable to store the groupname
     else{
 
       var boardExists :any = 0;
-      this.variab.boardupdated.map(boardname=>{
+      this.boards.data.map(boardname=>{
          if(this.boardname.value === boardname.value.label){
            //console.log("boardname exists");
            boardExists = 1;
@@ -196,18 +220,17 @@ groupname:any;//variable to store the groupname
         this.boardservice.addboard(model).then(res=>{
 
               if(res['ok'] == true){
-                this.boardservice.getboards().then(response=>{
-                  console.log("ew",res);
-                  this.variab.boardupdated = response;
-                  this.variab.boardupdated = this.variab.boardupdated.filter(board=>{
-                   if(board.value.group){
+                this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+                //  this.boards = resWithType;
+                  this.componentsService.addBoards('add',resWithType);
+                  //this.variab.boardupdated=res;
 
-                     return board.value.group === this.groupname;
-                   }
+                      this.componentsService.getBoards().subscribe(val=>{
+                          this.boards = val;
+                      });
 
-                  })
                 })
-              
+
                 this.visible=false;
                 this.alertempty = false;
                 this.alertexists = false;
@@ -220,120 +243,157 @@ groupname:any;//variable to store the groupname
 
   }
 
-     
+
   }
 
   removefromboard(title,i){
-    this.labelForBoards[i]=false;
-    this.selectedstar = 0;
-    this.variab.annotations.map(anno=>{
-      if(anno.value.target.id === this.feeditem.value._id && anno.key === title.label){
-           
+    this.boardannotations.map(anno=>{
+    //  console.log(anno.value.label[0],title.label);
+      if(anno.value.target.id === this.feeditem.value._id){
+
            anno.value.modified = this.date.getTime();
-           anno.value.hideboardanno = true; 
-           this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
-            
+           anno.value.hideboardanno = true;
+
+            this.dataservice.updatedatabase(anno.value).then(res=>{
+              if(res['ok']==true){
+                this.labelForBoards[i]=false;
+                this.selectedstar = 0;
+                if(this.router.url.includes('/boardfeeds')){
+                  this.componentsService.alert('hideboard',this.index);
+                  //this.variab.boardfeeds.splice(this.index,1);
+                }
+              }
+            })
+           //this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
+           //console.log("in boards",this.router.url);
+
       }
     })
-    
+
   }
   readlater(index: number){
-     if(this.selectedIndex == index){
-       this.selectedIndex = -1;
-       this.variab.readlaterfeeds.map(anno=>{
-         if(anno.value._id === this.feeditem.value._id){
-           anno.value.modified = this.date.getTime();
-           anno.value.hidereadlateranno = true;
-           console.log(anno.value); 
+    if(this.selectedIndex == index){
 
-       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-         }
 
+      this.readlaterannos.data.map(anno=>{
+        if(anno.value.target.value._id === this.feeditem.value._id){
+          anno.value.modified = this.date.getTime();
+          anno.value.hidereadlateranno = true;
+         // console.log(anno.value);
+
+          //this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+           this.dataservice.updatedatabase(anno.value).then(res=>{
+             if(res['ok'] == true){
+               this.selectedIndex = -1;
+               this.componentsService.alert('hidelater',this.index);
+               //this.variab.readlaterfeeds.splice(this.index,1)
+             }
+           })
+
+        }
+
+      })
+
+
+    }
+    //Else add the feed as annotation
+    else{
+
+      // console.log("notrecentlyread",this.feeditem)
+      let model = {
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "type": "Annotation",
+        "creator": this.user,
+        "created": this.date.getTime(),
+        "modified": this.date.getTime(),
+        "generator": "mm_2017_v1",
+        "generated": this.date.getTime(),
+        "target": this.feeditem,
+        "motivation":"bookmarking"
+      }
+      this.readlaterannos.push({value:model});
+
+      //this.readlaterstore.dispatch('ADD_ITEMS',model)
+       this.dataservice.addtodatabase(model).then(res=>{
+           if(res['ok']==true){
+             this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+              this.componentsService.addReadLater('add',resWithType);
+            })
+               this.selectedIndex = index;
+           }
        })
-       this.variab.readlaterfeeds.splice(this.index,1)
-     }
-     else{
-       this.selectedIndex = index;
-       console.log(this.feeditem);  
-       let model = {
-         "@context": "http://www.w3.org/ns/anno.jsonld",
-         "type": "Annotation",
-         "creator": this.user,
-         "created": this.date.getTime(),
-         "modified": this.date.getTime(),
-         "generator": "mm_2017_v1",
-         "generated": this.date.getTime(),
-         "target": this.feeditem,
-         "motivation":"bookmarking"
-       }   
-       this.variab.readlaterfeeds.push({value:model});
-       this.readlaterstore.dispatch('ADD_ITEMS',model)
-     }
-     
+
+    }
+
   }
   markasread(index:number){
     if(this.selectedIcon == index){
-       this.selectedIcon = -1;
-       this.variab.recentlyread.map(anno=>{
-         if(anno.value._id === this.feeditem.value._id){
-           anno.value.modified = this.date.getTime();
-           anno.value.hiderecenltyreadanno = true;
-           console.log(anno.value); 
 
-       this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
+      //console.log("recentlyread")
+      this.recentlyreadannos.data.map(anno=>{
+         if(anno.value.target.value._id === this.feeditem.value._id){
+          anno.value.modified = this.date.getTime();
+          anno.value.hiderecenltyreadanno = true;
+          //console.log(anno.value);
+
+           this.dataservice.updatedatabase(anno.value).then(res=>{
+             if(res['ok'] == true){
+               this.selectedIcon = -1;
+               this.componentsService.alert('hideread',this.index);
+               //this.variab.recentlyread.splice(this.index,1)
+             }
+           });
+
          }
 
-       })
-       this.variab.recentlyread.splice(this.index,1)
-     }
-     else{
-       this.selectedIcon = index;
-       let model = {
-         "@context": "http://www.w3.org/ns/anno.jsonld",
-         "type": "Annotation",
-         "creator": this.user,
-         "created": this.date.getTime(),
-         "modified": this.date.getTime(),
-         "generator": "mm_2017_v1",
-         "generated": this.date.getTime(),
-         "target": this.feeditem,
-         "motivation":"tagging"
-       }   
-       this.variab.recentlyread.push({value:model});
-       this.readlaterstore.dispatch('ADD_ITEMS',model)
-     }
-    
+      });
+
+    }
+    //Else add the feed as annotation
+    else{
+
+
+      let model = {
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "type": "Annotation",
+        "creator": this.user,
+        "created": this.date.getTime(),
+        "modified": this.date.getTime(),
+        "generator": "mm_2017_v1",
+        "generated": this.date.getTime(),
+        "target": this.feeditem,
+        "motivation":"tagging"
+      }
+
+      this.dataservice.addtodatabase(model).then(res=>{
+        if(res['ok'] == true){
+          this.recentlyreadannos.data.push({value:model});
+          this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+           this.componentsService.addRecentlyRead('add',resWithType);
+         })
+          this.selectedIcon = index;
+        }
+      });
+
+    }
+
   }
 
   hide(){
-    let model = {
-      "@context": "http://www.w3.org/ns/anno.jsonld",
-      "type": "Annotation",
-      "creator": this.user,
-      "created": this.date.getTime(),
-      "modified": this.date.getTime(),
-      "generator": "mm_2017_v1",
-      "generated": this.date.getTime(),
-      "target": this.feeditem,
-      "hidden":true
-    }   
-    
-    console.log(this.router.url);
     if(this.router.url === '/trashbox'){
-      console.log('donot remove from trash');
       this.alertremove=true
     }
 
-  else{
-    //this.variab.recentlyread.push({value:model});
-   this.readlaterstore.dispatch('ADD_ITEMS',model)
-   
-   this.variab.globalfeeds.splice(this.index,1);
-   this.variab.boardfeeds.splice(this.index,1);
-   this.variab.readlaterfeeds.splice(this.index,1);
-   this.variab.recentlyread.splice(this.index,1);
-   this.showDialog = false;
-   }
+
+    else{
+      this.util.hide(this.feeditem.value,this.index).then(res=>{
+        if(res['ok']==true){
+          this.componentsService.alert('hide',this.index);
+
+
+        }
+      });
+    }
 
   }
   public closeAlert() {
@@ -341,5 +401,5 @@ groupname:any;//variable to store the groupname
       this.alertempty= false;
       this.alertremove=false;
   }
- 
+
 }

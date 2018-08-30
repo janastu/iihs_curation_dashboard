@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { DataService } from '../../services/data-service';//Import dataservice to fetch readlater feeds
+import { ComponentsService } from '../../services/components-service';//Import dataservice to fetch readlater feeds
 import { Global } from '../../shared';//Import Global to use global variables in the board feed's local scope
 import { Utilities } from '../../shared';//Import utilities to perform sorting and filtering
 @Component({
@@ -14,12 +15,13 @@ feeds:any=[];                //variable to store feeds to display
 metadata:any=[];             //variable to store metadata of feeds
 view:any;                    //variable to store the view state
 globalfeeds:any=[];          //variable to store feeds globally
+annotations:any=[];          //variable to store annotations and get the feeds
 date:any;                    //variable to store the state of dates to filters
 user:any;
 p:any;//variable to store the current page
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
-  constructor(public dataservice:DataService,public variab:Global,public util:Utilities) {
+  constructor(public dataservice:DataService,public variab:Global,public util:Utilities,public componentsService:ComponentsService) {
    }
 
    //On loading Component
@@ -31,25 +33,31 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     this.user = localStorage.getItem('name');
     this.view = localStorage.getItem('view');
       this.spinnerState=true;
-    this.dataservice.getreadlater(this.user).then(result=>{
       this.p=0;
+
+    this.dataservice.getreadlater(this.user).then((resultWithType:any=[])=>{
+
+
       //Set result to global variable as it can be accessed outdside the component
-        this.variab.readlaterfeeds=result;
-          //this.feeds=this.variab.readlaterfeeds;
-          this.util.checkForDeletedFeeds(this.variab.readlaterfeeds).then(res=>{
+          this.globalfeeds=resultWithType;
+          //this.feeds=this.globalfeeds;
+          this.util.checkForDeletedFeeds(resultWithType).then(res=>{
             this.util.sortdescending(res).then(sorted=>{
+              this.feeds = sorted;
+              this.componentsService.getMessage().subscribe(res=>{
+              //console.log("fees",res);
+                if(res.type == 'hidelater'){
+                  this.feeds.splice(res.data,1);
+                }
+              })
+                if(this.feeds){
+                  this.spinnerState=false;
+                }
+                this.alertNofeeds=false;//set alertnofeeds value to false
+                if(this.feeds.length==0){
+                  this.alertNofeeds=true;
+                }
               //console.log(res);
-              this.dataservice.getannotations().then(res=>{
-               this.variab.annotations=res;
-                this.feeds = sorted;
-                  if(this.feeds){
-                    this.spinnerState=false;
-                  }
-                  this.alertNofeeds=false;//set alertnofeeds value to false
-                  if(this.feeds.length==0){
-                    this.alertNofeeds=true;
-                  }
-               });
             })
 
           });
@@ -64,7 +72,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(childDates,this.variab.readlaterfeeds).then(res=>{
+    this.util.filterDate(childDates,this.globalfeeds).then(res=>{
       this.feeds = res;
 
     });
@@ -73,7 +81,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
-      this.feeds = this.variab.readlaterfeeds;
+      this.feeds = this.globalfeeds;
     }
   }
   //Function to handle Category event from page-header component
@@ -91,13 +99,13 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
   handleSort(childSortLabel:any){
     var checkForCategory:any=[];
     if(childSortLabel === 'Latest'){
-      this.util.sortdescending(this.variab.boardfeeds).then(res=>{
+      this.util.sortdescending(this.globalfeeds).then(res=>{
         this.feeds = res;
 
       })
     }
     if(childSortLabel === 'Oldest'){
-      this.util.sortascending(this.variab.readlaterfeeds).then(res=>{
+      this.util.sortascending(this.globalfeeds).then(res=>{
         this.feeds = res;
       })
 

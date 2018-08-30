@@ -7,6 +7,7 @@ import { Userservice } from '../../../services/userservice';
 import { GroupService } from '../../../services/group-service';
 import { DataService } from '../../../services/data-service';
 import { FeedService } from '../../../services/feed-service';
+import { ComponentsService } from '../../../services/components-service';
 import { Utilities } from '../../Utilities/utilities';//Import utilities to perform sorting and filtering
 import * as _ from 'lodash';
 import { DatePipe,Location } from '@angular/common';
@@ -26,6 +27,8 @@ export class SidebarComponent implements OnInit{
     selected:any;
     selectedlevel:any;
     groups:any=[];
+    boards:any=[];
+    categories:any=[];
     showGroups:any;
     archivesurl:any;
     eventCalled() {
@@ -67,7 +70,7 @@ export class SidebarComponent implements OnInit{
 
     constructor(public router:Router,public datepipe:DatePipe,public variab:Global,config: NgbDropdownConfig,
       public boardservice:BoardService,public userservice:Userservice,public dataservice:DataService,
-      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities,public service:FeedService){
+      public groupService:GroupService,public route:ActivatedRoute,public util:Utilities,public service:FeedService,public componentsService:ComponentsService){
 
 
     }
@@ -93,38 +96,30 @@ export class SidebarComponent implements OnInit{
 
       })
       //Get user subscribed feed names
-       this.userservice.getUserSubscriptions().then(res=>{
+       this.userservice.getUserSubscriptions().then((reswithtype:any=[])=>{
          //Store the user subscribed feed names in the Global variable
-         this.variab.categoryfeeds=res;
-        /* this.variab.categoryfeeds.map(category=>{
-         //  console.log(category);
-           category.doc.metadata.map(meta=>{
-             if(meta.categories[0]){
-               //Pull new feeds of user subscriptions
-               this.userservice.pullnewFeeds(meta.categories[0]).then((feedsToUpdate:any=[])=>{
-
-                 this.service.getmetacategories(meta.categories[0]).then((feedsFromDb:any=[])=>{
-                   console.log(feedsFromDb.length);
-                 //  var res = _.differenceBy(feedsToUpdate,feedsFromDb,'title');
-
-                   var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate.items);
-                     updateFeeds.map(feed=>{
-                       this.service.addtopouch(updateFeeds,category.doc.feedname).then(res=>{
-                         console.log("resultsave",res)
-                       })
-                   })
-
-
-                 });
-
-               });
-             }
-
-           })
-
-         })*/
+         //this.variab.categoryfeeds=res;
+         this.componentsService.addCategories('add',reswithtype);
 
        });
+       this.componentsService.getCategories().subscribe(val=>{
+         this.categories = val;
+       })
+       //Get boardannotation and set to a service
+       this.dataservice.getannotations()
+       this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+         this.componentsService.addAnnotations('add',reswithtype.rows);
+       });
+       //Get Readlater annotations and add to service
+       this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+        this.componentsService.addReadLater('add',resWithType);
+      });
+      //Get recently read annotation and set a service
+      this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+        this.componentsService.addRecentlyRead('add',resWithType);
+      });
+
+
 
   }
   getDiffereceofFeeds(feedsarray,feedItems){
@@ -160,9 +155,18 @@ export class SidebarComponent implements OnInit{
 
 
     getBoardsOngroups(){
-      this.util.boardsOnGroup(this.groupname).then(res=>{
-        this.variab.boardupdated=res;
+      this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+
+        this.componentsService.addBoards('add',resWithType);
+
+
+        //this.variab.boardupdated=res;
       })
+
+      this.componentsService.getBoards().subscribe(val=>{
+            this.boards = val;
+          //console.log("valside",test);
+      });
       /*this.boardservice.getboards().then(res=>{
         //console.log(res);
         this.variab.boardupdated = res;

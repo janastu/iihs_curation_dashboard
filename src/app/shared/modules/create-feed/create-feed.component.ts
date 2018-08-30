@@ -5,6 +5,7 @@ import { FormBuilder,Validators, FormGroup} from '@angular/forms';
 import { GroupService } from '../../../services/group-service';
 import { FeedService } from '../../../services/feed-service';
 import { Userservice } from '../../../services/userservice';
+import { ComponentsService } from '../../../services/components-service';
 import { Global } from '../../../shared/global';
 import * as _ from 'lodash';
 import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -29,7 +30,8 @@ user:any;     //variable to store the username
 queryString:any;//variable to store the input given to find a feed name
 @Input('data') data:any;
 @Input('url') url:any;
-  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public feedService:FeedService,public userservice:Userservice,public groupService:GroupService,public ngAlert:NgbAlertConfig) {
+  constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public feedService:FeedService,
+    public userservice:Userservice,public groupService:GroupService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService) {
 }
 
 ngOnChanges(){
@@ -38,10 +40,10 @@ ngOnChanges(){
     this.feedForm = this.formBuilder.group({
       feedname: this.feedname
     });
-
+      this.ngOnInit();
 
     //Check for link is added to a feedname and user subscriptions
-    var linkExists = this.variab.categoryfeeds.map(link=>{
+    /*var linkExists = this.variab.categoryfeeds.map(link=>{
             //console.log(link);
       var checkForLink = link.doc.metadata.map(everylink=>{
           //console.log("folloew",everylink)
@@ -64,14 +66,14 @@ ngOnChanges(){
       else{
         return false;
       }
-    })
+    })*/
 }
   ngOnInit() {
-    this.userservice.getUserSubscriptions().then(res=>{
-      this.feedsnames = res;
-    });
+    this.componentsService.getCategories().subscribe(val=>{
+      this.feedsnames = val;
+    //})
     //Check for link is added to a feedname and user subscriptions
-    var linkExists = this.variab.categoryfeeds.map(link=>{
+    var linkExists = this.feedsnames.data.map(link=>{
 
       var checkForLink = link.doc.metadata.map(everylink=>{
           //console.log("folloew",everylink.link,this.url)
@@ -95,7 +97,7 @@ ngOnChanges(){
         return false;
       }
     })
-
+  });
 
 
   }
@@ -121,13 +123,15 @@ ngOnChanges(){
      else{
        var toCheckrepeatFeednames:any =[];
        var feednameExists :any = 0;
-
-       this.feedsnames.map(feedname=>{
+       this.componentsService.getCategories().subscribe(val=>{
+         this.feedsnames = val;
+       this.feedsnames.data.map(feedname=>{
           if(this.feedname.value === feedname.doc.feedname){
             console.log("boardname exists");
             feednameExists = 1;
           }
         })
+      });
        //Check if feedname already exists in the user subscriptions
        if(feednameExists == 1){
          //console.log("exit");
@@ -141,7 +145,13 @@ ngOnChanges(){
         // console.log("add");
          this.feedService.addFeed(doc).then(res=>{
                if(res[0]['ok'] == true){
-                 this.variab.categoryfeeds.push({doc:doc});
+                 //this.variab.categoryfeeds.push({doc:doc});
+                 this.userservice.getUserSubscriptions().then((reswithtype:any=[])=>{
+                   this.componentsService.addCategories('add',reswithtype);
+                 });
+                 this.componentsService.getCategories().subscribe(val=>{
+                   this.feedsnames = val;
+                 })
                  /*this.groupService.getgroups().then(res=>{
                     var groups:any=[];
                     groups = res;
@@ -178,7 +188,7 @@ ngOnChanges(){
  //Save the feed metadata and link  to a already feed name
  addtofeed(feed,i){
 
- 	var update:any;//update status variable
+ /*	var update:any;//update status variable
 
 //Check if the feedname already exists in the database
    var checkForFeedname = this.variab.categoryfeeds.map(name=>{
@@ -201,7 +211,7 @@ ngOnChanges(){
 
    })
 
- this.followstatus = true;
+ this.followstatus = true;*/
  }
  cancelfeed(){
    this.visible = false;
