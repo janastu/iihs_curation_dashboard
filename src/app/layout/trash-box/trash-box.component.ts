@@ -33,7 +33,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
     this.p=0;
       this.spinnerState=true;
      //Fetch the data from service and store in global variable
-     this.dataservice.getdeletedfeeds().then(res=>{
+    /* this.dataservice.getdeletedfeeds().then(res=>{
        this.variab.hiddenfeeds = res;
         var sanitizedHidden = this.variab.hiddenfeeds.map(function(feed){
                                   if(feed.value && !feed.value.value ) return feed
@@ -54,7 +54,7 @@ alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist
          }
        //})
      });
-     })
+   })*/
 
   }
 

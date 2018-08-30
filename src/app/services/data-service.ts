@@ -3,6 +3,7 @@ import { Http,RequestOptions,Headers  } from '@angular/http';
 import PouchDB from 'pouchdb';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
+import { Observable, ReplaySubject } from 'rxjs';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -13,6 +14,10 @@ export class DataService {
   user:any;
   password:any;
   auth:any;
+
+
+  private dataSubject = new ReplaySubject<Response>(1);
+  data$: Observable<Response> = this.dataSubject.asObservable();
 constructor(private http: Http,private settings:Settings,public variab:Global) {
     this.user = localStorage.getItem('name');
         this.auth={
@@ -200,16 +205,17 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get deleted feeds
   getdeletedfeeds(){
-
-
+//  return new Promise(resolve=>{
+  this.http.get('http://localhost:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
+//})
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
-    return new Promise(resolve => {
+    /*return new Promise(resolve => {
     /*this.remote.replicate.to(this.localdb, {
        filter: '_view',
        view: 'annotatedfeeds/deletedfeeds'
      }).then(res=>{
     console.log(res);
-    if(res['ok']==true){ */
+    if(res['ok']==true){
       this.remoteannos.query('annotatedfeeds/deletedfeeds', {
 
         }).then(function (result) {
@@ -220,7 +226,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
       });
      //}
     //});
-    });
+  });*/
 
   }
 
