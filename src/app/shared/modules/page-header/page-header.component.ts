@@ -62,7 +62,7 @@ boardsOndelete:any;
     var changefrom,changeto;
     changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
     changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
-    console.log(changefrom,changeto,"checking changefrom n changeto");
+    //console.log(changefrom,changeto,"checking changefrom n changeto");
     /*var fromdate = Date.parse(changefrom);
     var todate = Date.parse(changeto);
 
