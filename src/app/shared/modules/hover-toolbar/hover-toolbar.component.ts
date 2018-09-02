@@ -34,7 +34,7 @@ recentlyreadannos:any=[];//variable to store recently read annotations
 this.date = new Date();
 //console.log("readlaterhighlightfeeds");
     this.user = localStorage.getItem('name');
-   if(!this.router.url.includes('/mm')){
+    if(!this.router.url.includes('/mm')){
        //Get the read later annos
        //.then((res=>{
          this.readlaterannos = this.componentsService.getReadLater();
@@ -58,7 +58,11 @@ this.date = new Date();
            }
          });
        //})
+<<<<<<< HEAD
+     }
+=======
     }
+>>>>>>> 516a465bdb0c1068d50f6dd19701a605acfc3dbd
 
   }
   //On clicked on readlater

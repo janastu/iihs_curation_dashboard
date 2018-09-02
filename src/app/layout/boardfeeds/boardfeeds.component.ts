@@ -132,6 +132,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
 
            //this.dataService.getannotations();
            this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
+            console.log(reswithtype);
              this.componentsService.addAnnotations('add',reswithtype.rows);
              //console.log(reswithtype,"reswithtype");
              //this.variab.annotations = reswithtype;
