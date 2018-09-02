@@ -28,7 +28,8 @@ checkForDeletedFeeds(feeds){
     }
   //  if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
-  this.dataservice.getdeletedfeeds();
+
+    
     this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
       ///  console.log(hiddenFeedsWithType);
       //this.dataservice.getdeletedfeeds().then(res=>{
@@ -177,11 +178,13 @@ getPublishedfeeds(boardfeeds,boardname){
 filterDate(category,date){
   var date = date;
   //Parse the from and to dates to timestamp to filter
+
   //var fromdate = Date.parse(date.changefrom);
   //var todate = Date.parse(date.changeto);
   var fromdate = new Date(date.changefrom);
  var todate = new Date(date.changeto);
   console.log(date.changefrom,todate,"fromdate n todate");
+
   return new Promise(resolve=>{
 
       this.feedService.getFeedsOnDate(category,fromdate,todate).then(res=>{
