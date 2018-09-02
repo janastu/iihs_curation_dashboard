@@ -189,7 +189,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
 
              else{
-               resolve(res.rows);
+               resolve(res['rows']);
              }
 
 
