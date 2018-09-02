@@ -41,7 +41,7 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
        if (!err) {
          //console.log('Successfully posted a todo!',result);
            if(result['ok'] == true){
-             self.getannotations();
+             //self.getannotations();
              //self.getreadlaterannotations();
              //self.getrecentlyreadannotations();
              //console.log(this.user);
@@ -49,8 +49,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
              //self.getrecentlyread(self.user);
              //self.getdeletedfeeds(self.user);
               if (payload.label) {
+                self.getannotations();
                 // code...
-                self.getboardfeeds(payload.label[0]);
+                //self.getboardfeeds(payload.label[0]);
               }
 
            }
