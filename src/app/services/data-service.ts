@@ -16,7 +16,7 @@ export class DataService {
   auth:any;
 
 
-  private dataSubject = new ReplaySubject<Response>(1);
+  public dataSubject = new ReplaySubject<Response>(1);
   data$: Observable<Response> = this.dataSubject.asObservable();
 
   private annotationSubject = new ReplaySubject<Response>(1);

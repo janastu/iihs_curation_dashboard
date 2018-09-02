@@ -131,7 +131,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
            //console.log(reswithtype);
 
            //this.dataService.getannotations();
-           this.dataService.getdeletedfeeds();
+          //` this.dataService.getdeletedfeeds();
            this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
             console.log(reswithtype);
              this.componentsService.addAnnotations('add',reswithtype.rows);
@@ -148,17 +148,19 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                }
              })
              this.boardfeeds = _.compact(feedsByBoard);
-             this.util.checkForDeletedFeeds(this.boardfeeds).then(res=>{
-
+             this.util.checkForDeletedFeeds(this.boardfeeds).then(deleted=>{
+               //this.dataService.dataSubject.next(res);
                  //console.log(res, "respond");
-                  this.util.sortdescending(res).then(sorted=>{
+                  this.util.sortdescending(deleted).then(sorted=>{
                   //  console.log(sorted, "sorted feeds");
 
                    this.feeds = sorted;
+
                    this.componentsService.getMessage().subscribe(res=>{
-                     //console.log("fees",res);
+                     //console.log("fees",deleted);
                        if(res.type == 'hide' || res.type == 'hideboard'){
                          this.feeds.splice(res.data,1);
+                         this.dataService.dataSubject.next(this.feeds);
                        }
                    })
                    if(this.feeds){

@@ -119,7 +119,7 @@ export class SidebarComponent implements OnInit{
         this.componentsService.addRecentlyRead('add',resWithType);
       });
 	//Get deleted feeds
-	//this.dataservice.getdeletedfeeds();
+	this.dataservice.getdeletedfeeds();
 
 
   }
