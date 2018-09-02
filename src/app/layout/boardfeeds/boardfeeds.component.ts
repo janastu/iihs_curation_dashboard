@@ -131,6 +131,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
            //console.log(reswithtype);
 
            //this.dataService.getannotations();
+           this.dataService.getdeletedfeeds();
            this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
             console.log(reswithtype);
              this.componentsService.addAnnotations('add',reswithtype.rows);

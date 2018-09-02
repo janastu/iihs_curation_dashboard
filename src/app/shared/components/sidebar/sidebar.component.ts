@@ -118,7 +118,7 @@ export class SidebarComponent implements OnInit{
       this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
         this.componentsService.addRecentlyRead('add',resWithType);
       });
-
+    //  this.dataservice.getdeletedfeeds();
 
 
   }
