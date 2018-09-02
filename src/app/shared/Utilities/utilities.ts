@@ -30,7 +30,7 @@ checkForDeletedFeeds(feeds){
       //Get the hidden feeds
       //console.log(this.dataservice.data$,"deleted");
     this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
-        //console.log(hiddenFeedsWithType,"deletechanfe");
+        console.log(hiddenFeedsWithType,"deletechanfe");
       //this.dataservice.getdeletedfeeds().then(res=>{
          //this.variab.hiddenfeeds=res;//Store the feeds in the local variable
          //console.log(this.variab.hiddenfeeds,"checkdeleted");

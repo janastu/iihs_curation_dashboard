@@ -16,7 +16,7 @@ export class DataService {
   auth:any;
 
 
-  private dataSubject = new ReplaySubject<Response>(1);
+  public dataSubject = new ReplaySubject<Response>(1);
   data$: Observable<Response> = this.dataSubject.asObservable();
 
   private annotationSubject = new ReplaySubject<Response>(1);
@@ -47,6 +47,9 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
              //console.log(this.user);
              //self.getreadlater(self.user);
              //self.getrecentlyread(self.user);
+             if(payload.hidden){
+             self.getdeletedfeeds();
+           }
              //self.getdeletedfeeds(self.user);
               if (payload.label) {
                 self.getannotations();
