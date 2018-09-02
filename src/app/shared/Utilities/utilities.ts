@@ -28,13 +28,13 @@ checkForDeletedFeeds(feeds){
     }
   //  if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
-    
+      //console.log(this.dataservice.data$,"deleted");
     this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
-      ///  console.log(hiddenFeedsWithType);
+        //console.log(hiddenFeedsWithType,"deletechanfe");
       //this.dataservice.getdeletedfeeds().then(res=>{
          //this.variab.hiddenfeeds=res;//Store the feeds in the local variable
          //console.log(this.variab.hiddenfeeds,"checkdeleted");
-         if(hiddenFeedsWithType.rows.length == 0){
+         if(hiddenFeedsWithType.rows.length == 0 || hiddenFeedsWithType.length == 0){
            resolve(feeds);
           }
 
@@ -52,17 +52,21 @@ checkForDeletedFeeds(feeds){
                     var i = _.indexOf(feeds,globalfeed);
                     //console.log(feeds,"beforestep1");
                     feeds.splice(i,1);
+
                   //  console.log(feeds,"after splice");
                     resolve(feeds);
                   }
                 //
               }
             else{
+              //feeds= feeds.filter(item=> item.value._id == feed.value._id);
+              //resolve(feeds);
             // console.log(globalfeed.value._id,"feedvalue")
              if(globalfeed.value._id === feed.value._id){
                var i = _.indexOf(feeds,globalfeed);
                //console.log(feeds,"beforestep1");
                feeds.splice(i,1);
+
                //console.log(feeds,"after splice");
                resolve(feeds);
 
