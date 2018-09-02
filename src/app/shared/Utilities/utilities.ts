@@ -28,7 +28,7 @@ checkForDeletedFeeds(feeds){
     }
   //  if(this.variab.hiddenfeeds.length == 0){
       //Get the hidden feeds
-    this.dataservice.getdeletedfeeds();
+   this.dataservice.getdeletedfeeds();
     this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
       ///  console.log(hiddenFeedsWithType);
       //this.dataservice.getdeletedfeeds().then(res=>{
