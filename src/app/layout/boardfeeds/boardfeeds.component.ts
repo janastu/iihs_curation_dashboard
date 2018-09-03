@@ -131,9 +131,10 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
            //console.log(reswithtype);
 
            //this.dataService.getannotations();
-          //` this.dataService.getdeletedfeeds();
+           //this.dataService.getdeletedfeeds();
+
            this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
-            console.log(reswithtype);
+            //console.log(reswithtype);
              this.componentsService.addAnnotations('add',reswithtype.rows);
              //console.log(reswithtype,"reswithtype");
              //this.variab.annotations = reswithtype;
@@ -160,7 +161,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                      //console.log("fees",deleted);
                        if(res.type == 'hide' || res.type == 'hideboard'){
                          this.feeds.splice(res.data,1);
-                         this.dataService.dataSubject.next(this.feeds);
+                         //this.dataService.dataSubject.next(this.feeds);
                        }
                    })
                    if(this.feeds){
