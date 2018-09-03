@@ -263,8 +263,8 @@ auth:any;//varable to store the auth object
   	      boardannotation: {
   	        map: function (doc) {
   	          if (doc.label && doc.motivation ==='tagging' && !doc.hideboardanno) {
-
-  	                    emit(doc.label[0],doc);
+                  var date = new Date(doc.created);
+  	                    emit(date.toISOString(),doc);
   	                  }
   	        }.toString()
   	      },
@@ -335,8 +335,9 @@ auth:any;//varable to store the auth object
   	      deletedfeeds: {
   	        map: function (doc) {
   	          if (doc.hidden === true) {
-  	                emit([doc.creator],doc.target);
-  	                 }
+                  var date = new Date(doc.created);
+  	                emit(date.toISOString(),doc.target);
+  	              }
   	        }.toString()
   	      },
           boardfeedsoftoday:{

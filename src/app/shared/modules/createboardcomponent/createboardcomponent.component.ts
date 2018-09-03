@@ -97,7 +97,7 @@ boards:any=[];
 
             return  _.filter(annotatedarray,function(o) {
              //console.log(o.key,board.value._id);
-              if(o.key===board.value._id){
+              if(o.value.label[0]===board.value._id){
                 //console.log(o);
               return o  ;
             }
