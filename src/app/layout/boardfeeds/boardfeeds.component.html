@@ -12,6 +12,8 @@
 
                             <div class="container">
     <button *ngIf="checkedtodelete" class="btn btn-md btn-success" (click)="deleteChecked()">Delete</button>
+    <button  *ngIf="checkedtodelete" type="submit" class="btn btn-md btn-success" (click)="publish()">Publish</button>
+     <ngb-alert *ngIf="alertPublished" (close)="closeAlert()">Feeds Published in this Category</ngb-alert>
     <img class="create-feed-spinner" *ngIf="spinnerstatedelete" src="assets/images/loading_spinner.gif">
       <div *ngIf="view === null" class="col-sm-6 offset-sm-2 all-checkbox-magazine">
         <input #checkbox type="checkbox" [(ngModel)]="selectedAll" class="publish_checkbox"

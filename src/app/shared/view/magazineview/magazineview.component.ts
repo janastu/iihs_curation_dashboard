@@ -29,7 +29,7 @@ mouseOvered:boolean=false;
    }
 
   ngOnInit() {
-    //console.log(this.publishedfeeds);  
+    console.log(this.item);  
 	}  
   onFilterChange(eve: any) {
     this.checked.emit(this.item);   

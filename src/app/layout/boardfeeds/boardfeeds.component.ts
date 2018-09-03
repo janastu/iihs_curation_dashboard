@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe,Location } from '@angular/common';
 import { routerTransition } from '../../router.animations';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router,UrlSerializer } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataService } from '../../services/data-service';//Import dataservice to fetch board feeds
 import { ArchiveService } from '../../services/archive-service';//Import dataservice to fetch board feeds
@@ -29,8 +30,11 @@ spinnerstatedelete:boolean=false;
 checkedfeeds:any=[]; //Variable to sotre the feeds that are checked
 selectedAll:any;
 alertNofeeds:boolean=false;//variable to store the boolean state for feeds exist or not
-checkedtodelete:boolean=false; //state variable to store the status variable of delete button
-  constructor(public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService,public componentsService:ComponentsService) { }
+checkedtodelete:boolean=false;
+publishingurl:any;
+alertPublished:boolean=false;
+ //state variable to store the status variable of delete button
+  constructor(private datepipe:DatePipe,public  urlSerializer:UrlSerializer,public dataService:DataService,public variab:Global,private route: ActivatedRoute,public util: Utilities,public archiveService: ArchiveService,public router:Router,public location:Location,public componentsService:ComponentsService) { }
   //On loading Component
   ngOnInit() {
 
@@ -172,7 +176,11 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
                    if(this.feeds.length==0){
                      this.alertNofeeds=true;
                    }
-
+                   console.log(this.feeds,"publishedfeeds")
+                   for (var i = 0; i < this.feeds.length; i++) {
+                     this.feeds[i].Checked = false;
+                    // this.checkedtodelete = this.selectedAll;
+                   }
                    this.util.checkForPublished(sorted,this.boardname).then(res=>{
                      this.publishedfeeds=res;
                      });
@@ -233,7 +241,12 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   }
   //Function to handle checked Input values from the child view component
   handleCheckedInput(event){
-    this.checkedtodelete = event.Checked;
+    if (event.Checked) {
+      // code...
+      this.checkedtodelete = true;
+    }
+    
+    //console.log(this.checkedtodelete,"checkedtodelete");
   }
   //Function to delete checked feeds
   deleteChecked(){
@@ -270,5 +283,83 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
     window.scroll(0,0);
   }
 
+
+
+  //Function called when clicked on publish
+    publish(){
+      //console.log(this.feeds,"boardfeeds")
+      //console.log(this.checkedfeeds);
+      var publishedfeeds = this.feeds.filter(feed=>{
+        return feed.Checked;
+      })
+
+     console.log(publishedfeeds);
+
+     var pub_date = new Date(); //get today's date
+      var transform = this.datepipe.transform(pub_date, 'yyyy-MM-dd');//transform the date to the yyyy-mm-dd format
+      let parsed = Date.parse(transform);//Parse the date to timestamp
+      let isodate = new Date(parsed);//get the date by passing the transformed date
+      //console.log(isodate);
+
+     //Generating publishong url
+      var urltree = this.router.createUrlTree(['mm',this.boardname,transform]);
+      //this.datepipe.transform(pub_date, 'yyyy-MM-dd')]
+      var url = this.urlSerializer.serialize(urltree);
+      this.publishingurl = window.location.origin + this.location.prepareExternalUrl(url);
+
+      //Data model for storing the published feeds
+      let doc={
+        'pub_date':isodate.toISOString(),
+        'boardname':this.boardname,
+        'feeds':publishedfeeds,
+        'publishing_url':this.publishingurl,
+        'modified_pub_date':pub_date,
+        'pub_date_time':pub_date
+      }
+
+      this.archiveService.getPublishedFeeds(isodate.toISOString(),this.boardname).then(res=>{
+        if(res['length'] == 0){
+
+              this.archiveService.addFeed(doc).then(response=>{
+                if(response['ok']==true){
+                  //console.log("inadd",publishedfeeds);
+                 // localStorage.setItem('publishedfeeds',JSON.stringify(publishedfeeds));
+                     // window.open('#/')
+                      this.alertPublished = true;
+                      setTimeout(() => this.alertPublished = false, 2000);
+                      this.ngOnInit();
+                      
+                     //this.router.navigate(['/mm',this.boardname,transform]);
+                     window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
+                }
+              });
+        }
+        else{
+          //console.log(publishedfeeds);
+          publishedfeeds.map(pubfeed=>{
+
+            res['value']['feeds'].push(pubfeed);
+          })
+            res['value']['modified_pub_date']=pub_date;
+            //console.log(res);
+            //this.archiveService.postjsonfile(res,this.boardname,transform);
+          this.archiveService.updatedatabase(res['value']).then(response=>{
+            if(response['ok']==true){
+                //console.log("inupdate",res['value']['feeds']);
+               //localStorage.setItem('publishedfeeds',JSON.stringify(res['value']['feeds']))
+                  this.alertPublished = true;
+                  setTimeout(() => this.alertPublished = false, 2000);
+                  this.ngOnInit();
+                 //this.router.navigate(['/mm',this.boardname,transform]);
+               window.open('#/mm/'+this.boardname+'/'+transform,'_blank');
+            }
+          });
+
+        }
+      })
+
+
+
+    }
 
 }
