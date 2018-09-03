@@ -94,7 +94,7 @@ export class SidebarMmpublishComponent implements OnInit{
 
                  })
                })
-               console.log(this.publishedmonths);
+               console.log("monts",this.publishedmonths);
       })
 
     })
@@ -191,12 +191,18 @@ export class SidebarMmpublishComponent implements OnInit{
         for (var i = 0; i < items.length; i++) {
       //console.log(items[i].key);
           var item_date = new Date(items[i].key);
-          //console.log(item_date);
+
           groups[item_date.getMonth()].push({'date':this.datepipe.transform(items[i].key, 'yyyy-MM-dd')});
+          //console.log(groups);
         }
         for (var i = 0; i < groups.length; i++) {
-          //console.log(item_date);
+
           if (groups[i].length) {
+            console.log("beforesort",groups[i])
+            groups[i] = groups[i].sort(function(a, b) {
+              return new Date(a.date).getTime() - new Date(b.date).getTime()
+            });
+            console.log(groups[i]);
             itemGroupedByMonths.push({
               month: monthNames[i],
               items: groups[i],
