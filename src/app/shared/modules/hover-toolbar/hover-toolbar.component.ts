@@ -58,11 +58,9 @@ this.date = new Date();
            }
          });
        //})
-<<<<<<< HEAD
+
      }
-=======
-    }
->>>>>>> 516a465bdb0c1068d50f6dd19701a605acfc3dbd
+
 
   }
   //On clicked on readlater

@@ -233,6 +233,7 @@ checkedtodelete:boolean=false; //state variable to store the status variable of 
   }
   //Function to handle checked Input values from the child view component
   handleCheckedInput(event){
+  //console.log(event.Checked);
     this.checkedtodelete = event.Checked;
   }
   //Function to delete checked feeds

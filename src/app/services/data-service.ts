@@ -269,6 +269,11 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      console.log(response)
      if(response['ok']==true){
       resolve(response);
+      if (doc.label) {
+        self.getannotations();
+        // code...
+        //self.getboardfeeds(payload.label[0]);
+      }
        //self.getdeletedfeeds(self.user);
      }
     }).catch(function (err) {

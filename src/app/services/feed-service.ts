@@ -7,6 +7,7 @@ import { Settings } from './settings';
 import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
 import { Observable, ReplaySubject } from 'rxjs';
+import { wtfStartTimeRange,wtfEndTimeRange } from '@angular/core';
 @Injectable()
 export class FeedService {
 	localdb:any;
@@ -164,6 +165,9 @@ export class FeedService {
 		 				console.log("resfeeds",result);
 		 				resolve(result.rows);
 		 			});
+					var s = wtfStartTimeRange('HTTP:GET','https://code-examples.net/en/docs/angular/api/core/wtfscopefn'); //var future = new Future.delay(5).then((_) { wtfEndTimeRange(s); }); }
+					console.log("wtf",s);
+
 					 //	console.log(category);
 	  		   /*	this.remotefeeds.query('feeds/metacategories', {
 

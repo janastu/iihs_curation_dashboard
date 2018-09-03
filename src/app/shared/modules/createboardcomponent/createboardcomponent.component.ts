@@ -65,7 +65,9 @@ boards:any=[];
                this.boards = val;
               // console.log(this.boards,this.index);
 
-           //
+              this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+               //console.log(reswithtype);
+                this.componentsService.addAnnotations('add',reswithtype.rows);
            //Get board annotations
            this.boardannotations = this.componentsService.getannotations();
 
@@ -122,7 +124,7 @@ boards:any=[];
          })
         // console.log("annoforboards",this.labelForBoards);
       });
-  // });
+   });
 
 
   }
@@ -265,8 +267,12 @@ boards:any=[];
 
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
-
-    this.boardannotations.data.map(anno=>{
+  this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+   //console.log(reswithtype);
+    this.componentsService.addAnnotations('add',reswithtype.rows);
+  //console.log(this.boardannotations.data);
+   var boardannotations = this.componentsService.getannotations();
+    boardannotations.data.map(anno=>{
     //  console.log(anno.value.label[0],title.label);
       if(anno.value.target.id === this.feeditem.value._id){
 
@@ -288,6 +294,7 @@ boards:any=[];
 
       }
     })
+  });
 
   }
   public closeAlert() {
