@@ -70,8 +70,10 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get board annotations
   getannotations(){
+  var date = new Date();
+  var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 
-  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotations/_view/boardannotation').map(res=>res.json()).subscribe(res => this.annotationSubject.next(res));
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotations/_view/boardannotation?startkey='+'"'+last.toISOString()+'"&endkey="'+date.toISOString()+'"').map(res=>res.json()).subscribe(res => this.annotationSubject.next(res));
    /*return new Promise(resolve => {
 
      this.remoteannos.query('annotations/boardannotation', {
@@ -212,8 +214,10 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get deleted feeds
   getdeletedfeeds(){
+  var date = new Date();
+  var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 //  return new Promise(resolve=>{
-  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?startkey='+'"'+last.toISOString()+'"&endkey="'+date.toISOString()+'"').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
 //})
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     /*return new Promise(resolve => {
