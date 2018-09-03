@@ -90,6 +90,7 @@ export class SidebarComponent implements OnInit{
         }
         else{
         this.groupname = params.memberof;
+        localStorage.setItem('group',this.groupname)
         this.getBoardsOngroups();
         this.getGroups();
       }
@@ -108,6 +109,7 @@ export class SidebarComponent implements OnInit{
        //Get boardannotation and set to a service
        this.dataservice.getannotations()
        this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+         //console.log(reswithtype);
          this.componentsService.addAnnotations('add',reswithtype.rows);
        });
        //Get Readlater annotations and add to service
@@ -118,7 +120,7 @@ export class SidebarComponent implements OnInit{
       this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
         this.componentsService.addRecentlyRead('add',resWithType);
       });
-    //  this.dataservice.getdeletedfeeds();
+      this.dataservice.getdeletedfeeds();
 
 
   }
