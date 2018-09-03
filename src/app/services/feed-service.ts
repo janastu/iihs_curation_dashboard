@@ -7,7 +7,6 @@ import { Settings } from './settings';
 import {Global} from '../shared/global';
 declare function emit(key: any,value:any): void;
 import { Observable, ReplaySubject } from 'rxjs';
-import { wtfStartTimeRange,wtfEndTimeRange } from '@angular/core';
 @Injectable()
 export class FeedService {
 	localdb:any;
@@ -157,7 +156,7 @@ export class FeedService {
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
 		var date = new Date();
-		var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
+		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 		console.log(last);
 	  	return new Promise(resolve => {
 	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
@@ -165,9 +164,6 @@ export class FeedService {
 		 				console.log("resfeeds",result);
 		 				resolve(result.rows);
 		 			});
-					var s = wtfStartTimeRange('HTTP:GET','https://code-examples.net/en/docs/angular/api/core/wtfscopefn'); //var future = new Future.delay(5).then((_) { wtfEndTimeRange(s); }); }
-					console.log("wtf",s);
-
 					 //	console.log(category);
 	  		   /*	this.remotefeeds.query('feeds/metacategories', {
 
