@@ -41,7 +41,7 @@
                     Published
                      <!-- <img src="/assets/images/published.png">-->
                    </div>
-                   <div *ngIf=!publishedfeeds[index]>
+                   <div>
                      <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked" [checked]="item.Checked"/>
 
                    </div>
