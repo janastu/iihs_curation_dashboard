@@ -160,8 +160,10 @@ export class FeedService {
 		console.log(last);
 	  	return new Promise(resolve => {
 	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'
-					 this.http.get(check).map(res=>res.json()).subscribe(res => this.feedSubject.next(res));
-
+					 this.http.get(check).map(res=>res.json()).subscribe(result=> {
+		 				console.log("resfeeds",result);
+		 				resolve(result.rows);
+		 			});
 					 //	console.log(category);
 	  		   /*	this.remotefeeds.query('feeds/metacategories', {
 

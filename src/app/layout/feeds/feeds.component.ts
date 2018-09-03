@@ -177,8 +177,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
-          this.feedService.getmetacategories(subcategory);
-          this.feedService.feed$.subscribe(res=>{
+          this.feedService.getmetacategories(subcategory).then(res=>{
+          //this.feedService.feed$.subscribe(res=>{
          // console.log("sis",res);
 
              if(res['length'] == 0){
@@ -189,7 +189,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
 
              else{
-               resolve(res['rows']);
+               resolve(res);
              }
 
 
