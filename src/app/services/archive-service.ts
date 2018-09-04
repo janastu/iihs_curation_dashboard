@@ -98,9 +98,9 @@ export class ArchiveService {
 	  	  this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
-
+						//console.log(result);
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
-	  	  			return feeds.value.feeds;
+	  	  			return feeds.value;
 	  	  		})
 	  	  		//console.log(_.flatten(feedsofeverypublish));
 	  	 	if(result.rows.length!=0){

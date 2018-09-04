@@ -27,7 +27,7 @@
                 <img src="assets/images/loading.gif">
               </div-->
 
-              <div class="feeds-entries">
+              <div class="feeds-entries"  [ngClass]="{'non-published-feed': publishedfeeds[index] === false, 'published-feed': publishedfeeds[index] === true}">
 
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='index' (sendIconState)="handleIcon($event)"></app-hover-toolbar>
@@ -41,7 +41,7 @@
                     Published
                      <!-- <img src="/assets/images/published.png">-->
                    </div>
-                   <div *ngIf=!publishedfeeds[index]>
+                   <div>
                      <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox" (change)="onFilterChange($event)" [(ngModel)]="item.Checked" (change)="item.Checked" [checked]="item.Checked"/>
 
                    </div>
@@ -95,6 +95,9 @@
                 </div>
                </div>
             </div>
+
+
+
           </div>
 
         </div>

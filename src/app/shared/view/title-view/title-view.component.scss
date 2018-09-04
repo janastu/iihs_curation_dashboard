@@ -74,6 +74,12 @@
 .publish_checkbox{
     margin-top: 8px;
 }
+.published-feed{
+    display: none;
+}
+.non-published-feed{
+    display: block;
+}
 .checkbox-notpublished{
      margin-left: 78px;
 }
@@ -100,9 +106,9 @@
 }
 
 .ago a{
-	color: #a3a3a2; 
+	color: #a3a3a2;
 	font-size: 15px;
-  	text-align: center; 
+  	text-align: center;
   	border: transparent;
   	z-index: 1;
 }
@@ -116,25 +122,25 @@ To change breakpoint for nav collapse
 
 
 @media (max-width: 480px) {
- 
+
 }
 
 @media (max-width: 767px) {
-  
+
 }
 
 @media (max-width: 995px) {
-  
+
 }
 
 
 /*========================================================
-  
+
 Bootstrap 3 Media Queries
 
 /*==========  Mobile First Method  ==========*/
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
 .title-hover-control {
     opacity: 0;
@@ -142,12 +148,12 @@ Bootstrap 3 Media Queries
 }
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media only screen and (min-width : 480px) {
 .title-hover-control {
     opacity: 0;
     margin-left: -94px !important;
-}  
+}
 }
 
 /* Small Devices, Tablets */
@@ -155,14 +161,14 @@ Bootstrap 3 Media Queries
 .title-hover-control {
     opacity: 0;
     margin-left: -79px !important;
-}   
+}
 }
 
 @media only screen and (min-width : 768px) {
 .title-hover-control {
     opacity: 0;
     margin-left: -41px !important;
-}   
+}
 }
 
 /* Medium Devices, Desktops */
@@ -170,7 +176,7 @@ Bootstrap 3 Media Queries
 .title-hover-control {
     opacity: 0;
     margin-left: -46px !important;
-}   
+}
 }
 
 /* Large Devices, Wide Screens */

@@ -70,8 +70,10 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get board annotations
   getannotations(){
+  var date = new Date();
+  var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 
-  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotations/_view/boardannotation').map(res=>res.json()).subscribe(res => this.annotationSubject.next(res));
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotations/_view/boardannotation?startkey='+'"'+last.toISOString()+'"&endkey="'+date.toISOString()+'"').map(res=>res.json()).subscribe(res => this.annotationSubject.next(res));
    /*return new Promise(resolve => {
 
      this.remoteannos.query('annotations/boardannotation', {
@@ -86,13 +88,14 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get read later annotations
-  getreadlaterannotations(){
-
+  getreadlaterannotations(usr){
+  //console.log(usr);
 
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/readlater', {
           // stale: 'update_after'
+          key:usr
          }).then(function (result) {
          //console.log("res",result);
          resolve(result.rows);
@@ -103,12 +106,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get rece  ntly read annotations
-  getrecentlyreadannotations(){
+  getrecentlyreadannotations(usr){
 
 
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/recentlyread', {
+       key:usr
            //stale: 'update_after'
          }).then(function (result) {
         // console.log("recentlyreadfeeds",result);
@@ -212,8 +216,10 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   //Api service to get deleted feeds
   getdeletedfeeds(){
+  var date = new Date();
+  var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
 //  return new Promise(resolve=>{
-  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
+  this.http.get(this.settings.protocol+this.settings.dbannotations+'/_design/annotatedfeeds/_view/deletedfeeds?startkey='+'"'+last.toISOString()+'"&endkey="'+date.toISOString()+'"').map(res=>res.json()).subscribe(res => this.dataSubject.next(res));
 //})
     //var url = 'http://192.168.1.30:5984/iihs_annotation/_design/annotatedfeeds/_view/deletedfeeds?key[1]='+'"'+category+'"';
     /*return new Promise(resolve => {
@@ -236,6 +242,17 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   });*/
 
   }
+  //API to get doc
+  getAdocument(id){
+  return new Promise(resolve=>{
+    this.remoteannos.get(id, function(err, doc) {
+      if (err) { return console.log(err); }
+// handle doc
+      resolve(doc);
+        console.log(doc);
+      });
+    })
+}
 
   //Api Service to get today's board feeds
   gettodayBoardFeeds(){
@@ -269,6 +286,11 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
      console.log(response)
      if(response['ok']==true){
       resolve(response);
+      if (doc.label) {
+        self.getannotations();
+        // code...
+        //self.getboardfeeds(payload.label[0]);
+      }
        //self.getdeletedfeeds(self.user);
      }
     }).catch(function (err) {

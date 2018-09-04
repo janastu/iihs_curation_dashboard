@@ -26,6 +26,16 @@ alertremove:boolean=false;//alert variable to store the status to show the alert
 readlaterannos:any=[];//variable to store read later annotations
 recentlyreadannos:any=[];//variable to store recently read annotations
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService,public util:Utilities,public componentsService:ComponentsService) {
+  this.user = localStorage.getItem('name');
+  //Get Readlater annotations and add to service
+  this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
+  // console.log(resWithType);
+   this.componentsService.addReadLater('add',resWithType);
+ });
+ //Get recently read annotation and set a service
+ this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
+   this.componentsService.addRecentlyRead('add',resWithType);
+ });
    }
 
   ngOnInit() {
@@ -33,32 +43,36 @@ recentlyreadannos:any=[];//variable to store recently read annotations
 
 this.date = new Date();
 //console.log("readlaterhighlightfeeds");
-    this.user = localStorage.getItem('name');
+
     if(!this.router.url.includes('/mm')){
        //Get the read later annos
        //.then((res=>{
-         this.readlaterannos = this.componentsService.getReadLater();
+         this.componentsService.getReadLater().subscribe((res:any=[])=>{
+            //console.log(res);
+          //Highlight the bookmark icon if annotated
+          res.data.filter(anno=>{
+           //console.log(anno)
+            if(anno.value.value._id === this.feeditem.value._id){
+              this.selectedIndex=1;
+            }
+          });
+        });
 
-         //Highlight the bookmark icon if annotated
-         this.readlaterannos.data.filter(anno=>{
-          //console.log(anno)
-           if(anno.value.target.value._id === this.feeditem.value._id){
-             this.selectedIndex=1;
-           }
-         });
+
     //   });
        //Get the recently read annos
-       //this.dataservice.getrecentlyreadannotations().then(res=>{
-         this.recentlyreadannos =  this.componentsService.getRecentlyRead();
+       this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
+
          //console.log("recentlyreadhighlight",res);
          //Highlight the bookmark icon if annotated
-         this.recentlyreadannos.data.filter(anno=>{
-           if(anno.value.target.value._id === this.feeditem.value._id){
+         res.data.filter(anno=>{
+           if(anno.value.value._id === this.feeditem.value._id){
              this.selectedIcon=1;
            }
          });
-       //})
-    }
+       })
+
+     }
 
 
   }
@@ -66,10 +80,10 @@ this.date = new Date();
   readlater(index: number){
     //if the bookmark is highlighted then remove the readlater annotation
      if(this.selectedIndex == index){
+     this.componentsService.getReadLater().subscribe((res:any=[])=>{
 
-
-       this.readlaterannos.data.map(anno=>{
-         if(anno.value.target.value._id === this.feeditem.value._id){
+       res.data.map(anno=>{
+         if(anno.value.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hidereadlateranno = true;
           // console.log(anno.value);
@@ -86,7 +100,7 @@ this.date = new Date();
          }
 
        })
-
+     })
 
      }
      //Else add the feed as annotation
@@ -109,7 +123,7 @@ this.date = new Date();
        //this.readlaterstore.dispatch('ADD_ITEMS',model)
         this.dataservice.addtodatabase(model).then(res=>{
             if(res['ok']==true){
-              this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+              this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
                this.componentsService.addReadLater('add',resWithType);
              })
                 this.selectedIndex = index;
@@ -124,10 +138,10 @@ this.date = new Date();
   markasread(index:number){
     //if the read(tick) is highlighted then remove the readlater annotation
      if(this.selectedIcon == index){
-
+     this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
        //console.log("recentlyread")
-       this.recentlyreadannos.data.map(anno=>{
-          if(anno.value.target.value._id === this.feeditem.value._id){
+       res.data.map(anno=>{
+          if(anno.value.value._id === this.feeditem.value._id){
            anno.value.modified = this.date.getTime();
            anno.value.hiderecenltyreadanno = true;
            //console.log(anno.value);
@@ -143,7 +157,7 @@ this.date = new Date();
           }
 
        });
-
+     });
      }
      //Else add the feed as annotation
      else{
@@ -163,8 +177,8 @@ this.date = new Date();
 
        this.dataservice.addtodatabase(model).then(res=>{
          if(res['ok'] == true){
-           this.recentlyreadannos.data.push({value:model});
-           this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+           //this.recentlyreadannos.data.push({value:model});
+           this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
             this.componentsService.addRecentlyRead('add',resWithType);
           })
            this.selectedIcon = index;

@@ -43,98 +43,126 @@ boards:any=[];
   public createboardstore:CreateBoardStore,public dataservice:DataService,public readlaterstore:ReadlaterStore,public util:Utilities,
   public groupService:GroupService,public ngAlert:NgbAlertConfig,public router:Router,public componentsService:ComponentsService) {
      this.selectedIndex = -1;
+     this.user = localStorage.getItem('name');
+     //Get Readlater annotations and add to service
+     this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
+     // console.log(resWithType);
+      this.componentsService.addReadLater('add',resWithType);
+    });
+    //Get recently read annotation and set a service
+    this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
+      this.componentsService.addRecentlyRead('add',resWithType);
+    });
 
 }
 
   ngOnInit() {
     this.date = new Date();
-    this.groupname = localStorage.getItem('group');
-    this.ngconfig.autoClose='outside';
-     this.user = localStorage.getItem('name');
-    //var annos:any=[];
 
 
+
+
+
+   this.user =localStorage.getItem('name');
+
+   this.groupname = localStorage.getItem('group');
     this.boardForm = this.formBuilder.group({
       boardname: this.boardname
     });
-      //Get Boards4
-      //Get BoardS
-     this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
-     this.componentsService.addBoards('add',resWithType);
 
-      this.componentsService.getBoards().subscribe(val=>{
-           this.boards = val;
-      // this.dataservice.getannotations().then(res=>{
-      this.boardannotations = this.componentsService.getBoards();
-           //annos=res;
-          //console.log("board",annos,this.feeditem.value.title);
-          //Filter Feed with Annotations
-          //Returns Array of annotaion for each feed.value.id
-            var annotatedarray = this.boardannotations.data.filter(anno=>{
-             if(anno.value.target.id === this.feeditem.value._id){
-               //State Variable to toggle the hover toolbar component star
-                this.selectedstar = 1;
 
-                    return anno;
+    //console.log(this.boardannotations);
+          //Get BoardS
+         this.util.boardsOnGroup(this.groupname).then((resWithType:any=[])=>{
+           this.componentsService.addBoards('add',resWithType);
+           })
+          this.componentsService.getBoards().subscribe(val=>{
+               this.boards = val;
+              // console.log(this.boards,this.index);
 
+              this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+               //console.log(reswithtype);
+                this.componentsService.addAnnotations('add',reswithtype.rows);
+           //Get board annotations
+           this.boardannotations = this.componentsService.getannotations();
+
+        //console.log(this.boardannotations);
+       //Filter Feed with Annotations
+       //Returns Array of annotaion for each feed.value.id
+      //.subscribe((annotationsWithType:any)=>{
+      //  console.log("anoservice",annotationsWithType);
+
+         var annotatedarray = this.boardannotations.data.filter(anno=>{
+          //console.log("target",anno.value.target.id);
+          if(anno.value.target.value._id === this.feeditem.value._id){
+            //State Variable to toggle the hover toolbar component star
+
+            // this.selectedstar = 1;
+
+                 return anno;
+
+
+          }
+
+
+        });
+      //  console.log("annotations",annotatedarray);
+        //Map Annotations by its label valuea
+        //Returns array of annotations for each label
+        //console.log("anoo",this.boards)
+         var annosForBoards = this.boards.data.map( (board, index) => {
+
+            return  _.filter(annotatedarray,function(o) {
+             //console.log(o.key,board.value._id);
+              if(o.value.label===board.value._id){
+                //console.log(o);
+              return o  ;
+            }
+            });
+
+         });
+
+         //console.log("annoforboards",annosForBoards);
+         //Map Annos for Boards to return boolean array
+         //Returns example:[true,false,true]
+         //Index of output == Index of label which means label[0] and label[1]
+         //is active for above output
+        this.labelForBoards  =  annosForBoards.map(anno=>{
+             if(anno[0]){
+               this.selectedstar = 1;
+                 return true;
+              }
+               else{
+                 return false;
 
              }
-
-
-           });
-           //Map Annotations by its label value
-           //Returns array of annotations for each label
-            var annosForBoards = this.boards.datamap( (board, index) => {
-               //console.log("anoo",board,annotatedarray)
-               return  _.filter(annotatedarray,function(o) {
-                 if(o.key===board.value._id){
-                 return o  ;
-               }
-               });
-
-            })
-
-            //console.log("annoforboards",annosForBoards);
-            //Map Annos for Boards to return boolean array
-            //Returns example:[true,false,true]
-            //Index of output == Index of label which means label[0] and label[1]
-            //is active for above output
-           this.labelForBoards  =  annosForBoards.map(anno=>{
-                if(anno[0]){
-
-                    return true;
-                 }
-                  else{
-                    return false;
-
-                }
-            })
-    //console.log("true",this.labelForBoards)
-
-       });
-     });
+         })
+        // console.log("annoforboards",this.labelForBoards);
+      });
+   });
 
 
    //Get annotations for readlater feeds and toogle the bookmark icon
-   this.readlaterannos = this.componentsService.getReadLater();
+    this.componentsService.getReadLater().subscribe((res:any=[])=>{
 
    //Highlight the bookmark icon if annotated
-   this.readlaterannos.data.filter(anno=>{
+   res.data.filter(anno=>{
     //console.log(anno)
-     if(anno.value.target.value._id === this.feeditem.value._id){
+     if(anno.value.value._id === this.feeditem.value._id){
        this.selectedIndex=1;
      }
    });
-
+});
       //Get annotations for recently read feeds and toogle the check icon
-      this.recentlyreadannos =  this.componentsService.getRecentlyRead();
+      this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
       //console.log("recentlyreadhighlight",res);
       //Highlight the bookmark icon if annotated
-      this.recentlyreadannos.data.filter(anno=>{
-        if(anno.value.target.value._id === this.feeditem.value._id){
+      res.data.filter(anno=>{
+        if(anno.value.value._id === this.feeditem.value._id){
           this.selectedIcon=1;
         }
       });
+    });
   }
 
   cancelboard(){
@@ -247,9 +275,14 @@ boards:any=[];
   }
 
   removefromboard(title,i){
-    this.boardannotations.map(anno=>{
+    this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
+     //console.log(reswithtype);
+      this.componentsService.addAnnotations('add',reswithtype.rows);
+    //console.log(this.boardannotations.data);
+     var boardannotations = this.componentsService.getannotations();
+    boardannotations.data.map(anno=>{
     //  console.log(anno.value.label[0],title.label);
-      if(anno.value.target.id === this.feeditem.value._id){
+      if(anno.value.target.value._id === this.feeditem.value._id){
 
            anno.value.modified = this.date.getTime();
            anno.value.hideboardanno = true;
@@ -269,14 +302,15 @@ boards:any=[];
 
       }
     })
+  });
 
   }
   readlater(index: number){
     if(this.selectedIndex == index){
 
-
-      this.readlaterannos.data.map(anno=>{
-        if(anno.value.target.value._id === this.feeditem.value._id){
+ this.componentsService.getReadLater().subscribe((res:any=[])=>{
+      res.data.map(anno=>{
+        if(anno.value.value._id === this.feeditem.value._id){
           anno.value.modified = this.date.getTime();
           anno.value.hidereadlateranno = true;
          // console.log(anno.value);
@@ -294,7 +328,7 @@ boards:any=[];
 
       })
 
-
+});
     }
     //Else add the feed as annotation
     else{
@@ -311,12 +345,12 @@ boards:any=[];
         "target": this.feeditem,
         "motivation":"bookmarking"
       }
-      this.readlaterannos.push({value:model});
+      //this.readlaterannos.push({value:model});
 
       //this.readlaterstore.dispatch('ADD_ITEMS',model)
        this.dataservice.addtodatabase(model).then(res=>{
            if(res['ok']==true){
-             this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+             this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
               this.componentsService.addReadLater('add',resWithType);
             })
                this.selectedIndex = index;
@@ -328,10 +362,10 @@ boards:any=[];
   }
   markasread(index:number){
     if(this.selectedIcon == index){
-
+this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
       //console.log("recentlyread")
-      this.recentlyreadannos.data.map(anno=>{
-         if(anno.value.target.value._id === this.feeditem.value._id){
+      res.data.map(anno=>{
+         if(anno.value.value._id === this.feeditem.value._id){
           anno.value.modified = this.date.getTime();
           anno.value.hiderecenltyreadanno = true;
           //console.log(anno.value);
@@ -347,7 +381,7 @@ boards:any=[];
          }
 
       });
-
+});
     }
     //Else add the feed as annotation
     else{
@@ -368,7 +402,7 @@ boards:any=[];
       this.dataservice.addtodatabase(model).then(res=>{
         if(res['ok'] == true){
           this.recentlyreadannos.data.push({value:model});
-          this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+          this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
            this.componentsService.addRecentlyRead('add',resWithType);
          })
           this.selectedIcon = index;

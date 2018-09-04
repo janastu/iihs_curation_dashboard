@@ -27,18 +27,21 @@ mouseOvered:boolean=false;
   constructor(public html:HtmlParser,public router:Router) {
 
    }
-
   ngOnInit() {
-    //console.log(this.publishedfeeds);  
-	}  
+    //this.publishedfeeds[t]
+
+
+    //console.log(this.publishedfeeds[0]);
+	}
   onFilterChange(eve: any) {
-    this.checked.emit(this.item);   
+    console.log(this.item)
+    this.checked.emit(this.item);
   }
   //handle event select all
   onSelectAll(eve:any){
-     this.checked.emit(eve); 
+     this.checked.emit(eve);
   }
-  
+
   handleAlert(sendAlert:any){
     if(sendAlert){
       this.alert=true;
@@ -48,7 +51,7 @@ mouseOvered:boolean=false;
       this.alert=false;
   }
   handleIcon(sendIcon:any){
-    
+
     //this.feedmark = sendIcon;
     console.log("icon",this.feedmark)
   }
@@ -58,9 +61,9 @@ mouseOvered:boolean=false;
     this.archiveService.getPublishingUrlofFeed(feed.id).then(res=>{
 
       this.publishingurl = res[0].value;
-      
+
     })
   }*/
- 
-  
+
+
 }

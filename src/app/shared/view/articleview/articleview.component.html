@@ -8,7 +8,7 @@
 
           <div class="row">
 
-              <div class="feeds-entries">
+              <div class="feeds-entries"  [ngClass]="{'non-published-feed': publishedfeeds[index] === false, 'published-feed': publishedfeeds[index] === true}">
 
                 <div class="row">
                 <div *ngIf="router.url.includes('/boardfeeds')">

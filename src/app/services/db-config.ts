@@ -4,6 +4,7 @@ import { Settings } from './settings';
 import { Global } from '../shared/global'
 import PouchDB from 'pouchdb';
 declare function emit(key: any,value:any): void;
+import * as _ from 'lodash'
 @Injectable()
 
 export class DbConfig {
@@ -258,27 +259,51 @@ auth:any;//varable to store the auth object
   	     });
   	 //create design docs
   	  var ddoc = {
-  	    _id: '_design/annotations',
-  	    views: {
-  	      boardannotation: {
-  	        map: function (doc) {
-  	          if (doc.label && doc.motivation ==='tagging' && !doc.hideboardanno) {
 
-  	                    emit(doc.label[0],doc);
-  	                  }
+        _id: '_design/annotations',
+  	    views: {
+
+  	      boardannotation: {
+            //var deleteddocs=[];
+
+  	        map: function (doc) {
+
+              //var _ = require('views/lib/lodash');
+              /*if (doc.hidden) {
+                 deleteddocs.push(doc.target._id)
+              }*/
+
+  	          if (doc.label){
+                 if (doc.motivation ==='tagging' && !doc.hideboardanno){
+                  // alldocs.push(doc.target.id)
+                  var date = new Date(doc.created);
+                  emit(date.toISOString(),{'target':doc.target,'label':doc.label[0]});
+                 }
+              }
+              //var nondeleteddocs = alldocs.filter(e=> deleteddocs.indexOf(e)>=0);
+
+              /*if (doc.hideboardanno) {
+                 deleteddocs.push(doc.target.id)
+              }*/
+              //_.difference(alldocs,deleteddocs);
+
+              /*&&  && !(doc.hideboardanno || doc.hidden)) {
+                  var date = new Date(doc.created);
+  	                    emit(date.toISOString(),doc);*/
+
   	        }.toString()
   	      },
   	      readlater: {
   	        map: function (doc) {
   	          if (doc.motivation === 'bookmarking' && doc.creator && !doc.hidereadlateranno) {
-  	                  emit(doc.creator,doc);
+  	                  emit(doc.creator,doc.target);
   	                       }
   	        }.toString()
   	      },
   	      recentlyread: {
   	        map: function (doc) {
   	          if (doc.motivation === 'tagging' && !doc.label && !doc.hiderecenltyreadanno) {
-  	                   emit(doc.creator,doc);
+  	                   emit(doc.creator,doc.target);
   	                     }
   	        }.toString()
   	      },
@@ -335,8 +360,9 @@ auth:any;//varable to store the auth object
   	      deletedfeeds: {
   	        map: function (doc) {
   	          if (doc.hidden === true) {
-  	                emit([doc.creator],doc.target);
-  	                 }
+                  var date = new Date(doc.created);
+  	                emit(date.toISOString(),doc.target);
+  	              }
   	        }.toString()
   	      },
           boardfeedsoftoday:{
@@ -691,7 +717,7 @@ auth:any;//varable to store the auth object
             publishedfeeds:{
               map: function (doc) {
                 if(doc.boardname){
-                 emit(doc.boardname, doc);
+                 emit(doc.boardname, doc.feeds);
                 }
               }.toString()
             },

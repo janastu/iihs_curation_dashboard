@@ -32,7 +32,8 @@ checkForDeletedFeeds(feeds){
       //console.log(this.dataservice.data$,"deleted");
 
     this.dataservice.data$.subscribe((hiddenFeedsWithType:any=[])=>{
-        console.log(hiddenFeedsWithType,"deletechanfe");
+
+        //console.log(hiddenFeedsWithType,feeds,"deletechanfe");
       //this.dataservice.getdeletedfeeds().then(res=>{
          //this.variab.hiddenfeeds=res;//Store the feeds in the local variable
          //console.log(this.variab.hiddenfeeds,"checkdeleted");
@@ -45,10 +46,14 @@ checkForDeletedFeeds(feeds){
          //such that design document can filter below condition
          //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
          else{
-          // console.log(this.variab.hiddenfeeds,"hiddenfeeds");
+
+        //resolve(feeds.filter(e=> hiddenFeedsWithType.rows.indexOf(e)<0));
+        //re
            hiddenFeedsWithType.rows.map(feed=>{
-           //console.log(feeds);
-            feeds.filter(globalfeed=>{
+           //
+           feeds.filter(globalfeed=>{
+            //feeds= feeds.filter(item=> item.value._id == feed.value._id);
+          //  console.log(feeds);
               if(globalfeed.title){
                   if(globalfeed.title == feed.value.title){
                     var i = _.indexOf(feeds,globalfeed);
@@ -63,17 +68,17 @@ checkForDeletedFeeds(feeds){
             else{
               //feeds= feeds.filter(item=> item.value._id == feed.value._id);
               //resolve(feeds);
-            // console.log(globalfeed.value._id,"feedvalue")
+            //console.log(globalfeed.value._id,"feedvalue")
              if(globalfeed.value._id === feed.value._id){
                var i = _.indexOf(feeds,globalfeed);
-               //console.log(feeds,"beforestep1");
+              // console.log(globalfeed.value._id,"beforestep1");
                feeds.splice(i,1);
 
                //console.log(feeds,"after splice");
                resolve(feeds);
 
              }
-             else{
+            else{
                resolve(feeds);
                //console.log(feeds,"else");
              }
@@ -83,34 +88,7 @@ checkForDeletedFeeds(feeds){
          })
         }
       });
-  //  }
-  /*  else{
 
-      if(this.variab.hiddenfeeds.length == 0){
-       resolve(feeds);
-      }
-    //To do: Manipulate feed data structure hidden true
-    //Data structure to represent hidden by user
-    //such that design document can filter below condition
-    //Check for the hidden feeds in the annotated feeds and remove the hidden feeds
-    this.variab.hiddenfeeds.map(feed=>{
-       feeds.filter(globalfeed=>{
-         console.log(globalfeed, "global_feeds");
-        //console.log(feed.value._id,globalfeed.value._id)
-        if(globalfeed.value._id === feed.value._id){
-          var i = _.indexOf(feeds,globalfeed);
-          feeds.splice(i,1);
-          resolve(feeds);
-        }
-        else{
-          resolve(feeds);
-        }
-
-      })
-
-      })
-
-    }*/
   });
 }
 //function to check if the feeds in the board are already published

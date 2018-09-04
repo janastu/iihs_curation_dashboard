@@ -9,27 +9,27 @@
           <input class="form-control mr-sm-2" type="text" placeholder="Find a board" [(ngModel)]="queryString" name="query">
         </form>
         <div class="scroll">
-          
-        
-        <div class="field" *ngFor="let item of variab.boardupdated | FilterPipe: queryString;index as i">
+
+
+        <div class="field" *ngFor="let item of boards.data | FilterPipe: queryString;index as i">
 
          <div class="board-item"><i class="fa" [ngClass]="{'fa-star-o': labelForBoards[i] == false || labelForBoards[i]== undefined, 'fa-star': labelForBoards[i] == true}" aria-hidden="true" title="Save to board"></i>
           <!--<i *ngIf="item.value.status === true"class="fa fa-fw fa-star" title="Save to board"></i>-->
-        
+
           {{item.value.label}}
-         
-           
+
+
               <button *ngIf="labelForBoards[i] === false" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
               <button *ngIf="labelForBoards[i]== undefined" (click)="savetoboard(item.value,i)" class="col-sm-6 offset-sm-4 save-board btn btn-sm btn-success" ><i class="fa fa-fw fa-plus"></i>save</button>
               <button *ngIf="labelForBoards[i] === true" (click)="removefromboard(item.value,i)" class="col-sm-6 offset-sm-4 remove-board btn btn-success" ><i class="fa fa-fw fa-close"></i>Remove</button>
            </div>
-         
+
         </div>
         </div>
         <div class="border-board " >
           <a (click)="visible =!visible" class="color-button"><i class="fa fa-fw fa-plus "></i>Create a Board</a>
         </div>
-       
+
         <div *ngIf="visible" class="form-group savetoboard" ng-hide="checked">
         <ngb-alert *ngIf="alertexists" (close)="closeAlert()">Board already Exists</ngb-alert>
          <ngb-alert *ngIf="alertempty" (close)="closeAlert()">Board Cannot be Empty</ngb-alert>
@@ -37,7 +37,7 @@
             <input class="form-control mr-sm-2" type="text" formControlName="boardname" placeholder="Create a board">
           </form>
 
-          
+
           <div>
             <button (click)="createboard()" class="btn btn-sm btn-success">Create a Board</button>
             <button (click)="cancelboard()" class="btn btn-sm btn-success">Cancel</button>
@@ -46,17 +46,17 @@
         </div>
 
       </div>
-  
+
   	<a class="nav-item" (click)="readlater(1)">
-        <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1, 
+        <i class="fa" [ngClass]="{'fa-bookmark-o': selectedIndex != 1,
         'fa-bookmark': selectedIndex == 1}" aria-hidden="true" title="Read Later"></i>
         </a>
     <a class="nav-item" (click)="markasread(1)"><i class="fa" [ngClass]="{'fa-check-square-o': selectedIcon != 1, 'fa-check-square': selectedIcon == 1}" aria-hidden="true" title="Mark as Read"></i></a>
 
     <a class="nav-item" (click)="showDialog = !showDialog"><i class="fa fa-fw fa-trash" title="Remove"></i></a>
-  
+
 </div>
-               
+
 <app-dialog class="alert-dialogbox" [visible]="showDialog">
     <h1>Do you confirm to delete the feed</h1>
     <div class="dialog-buttons">
@@ -65,4 +65,3 @@
     </div>
     <ngb-alert *ngIf="alertremove" (close)="closeAlert()">Cannot remove from trashbox</ngb-alert>
 </app-dialog>
-

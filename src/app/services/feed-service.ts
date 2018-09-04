@@ -181,7 +181,7 @@ export class FeedService {
 	 //Function to get the latest feeds by making a get request to the design view end point
 	getlatestfeeds(category){
 		var date = new Date();
-		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
+		var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
 		console.log(last, "check last00");
 		//console.log(encodeURIComponent(category))
 		//var replicationstatus:boolean=false;
