@@ -36,7 +36,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   //On loading Component
   ngOnInit() {
 
-
+window.scroll(0,0);
     this.user =localStorage.getItem('name');
 
         //this.usersview = localStorage.getItem('view');
@@ -204,14 +204,27 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
-    this.util.filterDate(this.pageheading,childDates).then(res=>{
-      console.log(res,"res");
-      if(res['length'] == 0){
+  this.spinnerState=true;//Set spinner
+  //this.feeds.length=0;
+    this.util.filterDate(this.pageheading,childDates).then((feedsWithType:any=[])=>{
+
+      //console.log(res,"res");
+      if(feedsWithType.length == 0){
         this.alertNofeedsinrange = true;
         setTimeout(() => this.alertNofeedsinrange = false, 2000);
       }
       else{
-        this.feeds = res;
+        //Reverse the filter to sort according to latest feeds
+         feedsWithType.reverse();
+      //Call the checkForDeleted method to check for hidden/removed feeds
+      //and remove those feeds from the display array
+          this.feeds = feedsWithType.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+
+        if(this.feeds){
+
+          this.spinnerState=false;
+        }
+
       }
     })
 
@@ -219,6 +232,7 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
   //Function to handle clear Date event from page-header component
   handleClearDate(eve){
     if(eve == 'reset'){
+      console.log(this.globalfeeds);
       this.feeds = this.globalfeeds;
     }
   }
