@@ -101,7 +101,12 @@
 .published-label{
     margin-top: 8px;
 }
-
+.published-feed{
+    display: none;
+}
+.non-published-feed{
+    display: block;
+}
 /*===============================================================================================
 MEDIA QUERIES
 

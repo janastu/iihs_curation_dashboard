@@ -29,7 +29,7 @@ mouseOvered:boolean=false;
    }
   ngOnInit() {
     //this.publishedfeeds[t]
-    
+
 
     //console.log(this.publishedfeeds[0]);
 	}

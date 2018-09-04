@@ -88,13 +88,14 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get read later annotations
-  getreadlaterannotations(){
-
+  getreadlaterannotations(usr){
+  //console.log(usr);
 
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/readlater', {
           // stale: 'update_after'
+          key:usr
          }).then(function (result) {
          //console.log("res",result);
          resolve(result.rows);
@@ -105,12 +106,13 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
 
   }
   //Api service to get rece  ntly read annotations
-  getrecentlyreadannotations(){
+  getrecentlyreadannotations(usr){
 
 
    return new Promise(resolve => {
 
      this.remoteannos.query('annotations/recentlyread', {
+       key:usr
            //stale: 'update_after'
          }).then(function (result) {
         // console.log("recentlyreadfeeds",result);
@@ -240,6 +242,17 @@ constructor(private http: Http,private settings:Settings,public variab:Global) {
   });*/
 
   }
+  //API to get doc
+  getAdocument(id){
+  return new Promise(resolve=>{
+    this.remoteannos.get(id, function(err, doc) {
+      if (err) { return console.log(err); }
+// handle doc
+      resolve(doc);
+        console.log(doc);
+      });
+    })
+}
 
   //Api Service to get today's board feeds
   gettodayBoardFeeds(){

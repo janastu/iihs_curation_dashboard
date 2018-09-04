@@ -113,13 +113,14 @@ export class SidebarComponent implements OnInit{
          this.componentsService.addAnnotations('add',reswithtype.rows);
        });
        //Get Readlater annotations and add to service
-       this.dataservice.getreadlaterannotations().then((resWithType:any=[])=>{
+      /* this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
+        console.log(resWithType);
         this.componentsService.addReadLater('add',resWithType);
       });
       //Get recently read annotation and set a service
-      this.dataservice.getrecentlyreadannotations().then((resWithType:any=[])=>{
+      this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
         this.componentsService.addRecentlyRead('add',resWithType);
-      });
+      });*/
       this.dataservice.getdeletedfeeds();
 
 
@@ -233,7 +234,7 @@ export class SidebarComponent implements OnInit{
              this.componentsService.alertboards(board,res);
 
      });*/
-      console.log(board);
+    //  console.log(board);
         //this.router.navigate(['/boardfeeds', this.variab.groupname],{queryParams:{boardname:board}});
         this.router.navigate(['/boardfeeds', board.label],{queryParams:{id:board._id,memberof:this.groupname}})
 

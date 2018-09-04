@@ -9,17 +9,29 @@
 <div class="row">
 <!--Date filter form-->
   <div class="col-sm-6 form-item">
-    <form [formGroup]="loginForm" class="form-inline form-group">
+    <div class="form-inline form-group">
+  <div class="form-group form-from"><label class="page-header-form">From</label>
+    <input id="todate" class="form-control mr-sm-2" type="date"  [ngModel]="defaultfrom | date:'yyyy-MM-dd'" (ngModelChange)="defaultfrom = $event" max="{{currDate|date:'yyyy-MM-dd'}}">
+  </div>
+  <div class="form-group form-to"><label class="page-header-form">To</label>
+    <input id="frdate" class="form-control mr-sm-2" type="date"  [ngModel]="defaultto | date:'yyyy-MM-dd'" (ngModelChange)="defaultto = $event" max="{{currDate|date:'yyyy-MM-dd'}}">
+  </div>
+    <button type="button" class="btn btn-sm btn-success filter-button" (click)="datefilter()" >Filter</button>
+    <button type="button" class="btn btn-sm btn-success filter-button" (click)="reset()" >Clear</button>
+  </div>
+    <!--<form [formGroup]="loginForm" class="form-inline form-group">
       <div class="form-group form-from"><label class="page-header-form">From</label>
-        <input class="form-control mr-sm-2" type="date" placeholder="From" formControlName="fromdate" max="{{currDate|date:'yyyy-MM-dd'}}">
+        <input class="form-control mr-sm-2" type="date" value="defaultfrom" placeholder="From" formControlName="fromdate" max="{{currDate|date:'yyyy-MM-dd'}}">
       </div>
       <div class="form-group form-to"><label class="page-header-form">To</label>
-        <input class="form-control mr-sm-2" type="date" placeholder="To" formControlName="todate" max="{{currDate|date:'yyyy-MM-dd'}}">
+        <input class="form-control mr-sm-2" id="date" type="date" value="22-07-2018" placeholder="To" formControlName="todate" max="{{currDate|date:'yyyy-MM-dd'}}">
 
       </div>
+
       <button type="button" class="btn btn-sm btn-success filter-button" (click)="datefilter()" >Filter</button>
       <button type="button" class="btn btn-sm btn-success filter-button" (click)="reset()" >Clear</button>
-    </form>
+    </form>-->
+
   </div>
 <!--Header Menu-->
   <!--<div class="form-group">

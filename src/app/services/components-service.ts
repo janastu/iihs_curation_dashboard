@@ -1,7 +1,7 @@
 import { Injectable,ViewChild } from '@angular/core';
 import { Http }       from '@angular/http';
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs';
+import { Observable,ReplaySubject } from 'rxjs';
 declare var require: any;
 
 @Injectable()
@@ -9,8 +9,8 @@ declare var require: any;
 export class ComponentsService {
   public subject = new Subject<any>();
   annotations:any;
-  readlater:any;
-  recentlyread:any;
+  readLater = new Subject<any>();
+  recentlyread = new Subject<any>();
   boards = new Subject<any>();
   categories = new Subject<any>();
 constructor(private http: Http) {
@@ -38,21 +38,21 @@ constructor(private http: Http) {
     }
     addReadLater(alertType: string, objData: any) {
       //console.log(alertType,objData);
-      this.readlater = { type: alertType , data: objData};
+      this.readLater.next({ type: alertType , data: objData});
     }
 
-    getReadLater() {
+    getReadLater():Observable<any> {
     //console.log("calleds",this.annotations);
-      return this.readlater;
-      }
+      return this.readLater.asObservable();
+    }
     addRecentlyRead(alertType: string, objData: any) {
       //  console.log(alertType,objData);
-        this.recentlyread = { type: alertType , data: objData};
+        this.recentlyread.next({ type: alertType , data: objData});
     }
 
-    getRecentlyRead() {
+    getRecentlyRead():Observable<any> {
       //console.log("calleds",this.annotations);
-        return this.recentlyread;
+        return this.recentlyread.asObservable();
       }
       addBoards(alertType: string, objData: any) {
           //console.log(alertType,objData);

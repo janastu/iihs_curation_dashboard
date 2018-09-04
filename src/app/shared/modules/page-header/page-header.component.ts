@@ -27,9 +27,9 @@ iconmagazine:boolean=false;
 iconcard:boolean=false;
 icontitle:boolean=false;
 iconreadlater:boolean=false;
-loginForm:FormGroup;
-fromdate = this.formBuilder.control('', [Validators.required]);
-todate = this.formBuilder.control('', [Validators.required]);
+//loginForm:FormGroup;
+//fromdate = this.formBuilder.control('', [Validators.required]);
+//todate = this.formBuilder.control('', [Validators.required]);
 selectedVal:any;
 desc:any;
 checkView:any;
@@ -40,18 +40,22 @@ showDialog:boolean;//variable to store the status to show the dialog component w
 alertNavigating:boolean=false;
 groupname:any;
 boardsOndelete:any;
+defaultfrom:any;
+defaultto:any;
  constructor(public formBuilder: FormBuilder,public datepipe: DatePipe,public variab:Global,public feedService:FeedService,
    public router:Router,public boardService:BoardService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService,public util:Utilities) { }
 
   ngOnInit() {
+    this.defaultto = new Date();
+    this.defaultfrom = new Date(this.defaultto.getTime() - (3 * 24 * 60 * 60 * 1000));
     this.checkView = localStorage.getItem('view');
      this.user = localStorage.getItem('name');
      this.groupname = localStorage.getItem('group');
-    this.loginForm = this.formBuilder.group({
+    /*this.loginForm = this.formBuilder.group({
 
       fromdate: this.fromdate,
       todate: this.todate
-    });
+    });*/
      this.componentsService.getBoards().subscribe((valWithType:any)=>{
         this.boardsOndelete = valWithType;
         //console.log(this.boardsOndelete);
@@ -61,9 +65,9 @@ boardsOndelete:any;
   datefilter(){
 
     var changefrom,changeto;
-    changefrom = this.datepipe.transform(this.fromdate.value,'yyyy.MM.dd');
-    changeto = this.datepipe.transform(this.todate.value,'yyyy.MM.dd');
-  //  console.log(changefrom);
+    changefrom = this.datepipe.transform(this.defaultfrom,'yyyy.MM.dd');
+    changeto = this.datepipe.transform(this.defaultto,'yyyy.MM.dd');
+    //console.log(this.defaultto);
     /*var fromdate = Date.parse(changefrom);
     var todate = Date.parse(changeto);
 
@@ -81,7 +85,8 @@ boardsOndelete:any;
   }
   //function to get input to clear the filter annd emit to feed component
   reset(){
-    this.loginForm.reset();
+  this.defaultto = new Date();
+  this.defaultfrom = new Date(this.defaultto.getTime() - (3 * 24 * 60 * 60 * 1000));
     this.clear.emit('reset');
   }
 

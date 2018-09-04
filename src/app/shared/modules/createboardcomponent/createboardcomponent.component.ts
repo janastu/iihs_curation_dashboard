@@ -78,8 +78,8 @@ boards:any=[];
       //  console.log("anoservice",annotationsWithType);
 
          var annotatedarray = this.boardannotations.data.filter(anno=>{
-          //console.log("target",anno.value.target.id);
-          if(anno.value.target.id === this.feeditem.value._id){
+          //console.log("target",anno.value.target);
+          if(anno.value.target.value._id === this.feeditem.value._id){
             //State Variable to toggle the hover toolbar component star
 
             // this.selectedstar = 1;
@@ -91,15 +91,15 @@ boards:any=[];
 
 
         });
-      //  console.log("annotations",annotatedarray);
+      // console.log("annotations",annotatedarray);
         //Map Annotations by its label valuea
         //Returns array of annotations for each label
         //console.log("anoo",this.boards)
          var annosForBoards = this.boards.data.map( (board, index) => {
-
+        //  console.log("labe",board.value._id);
             return  _.filter(annotatedarray,function(o) {
-             //console.log(o.key,board.value._id);
-              if(o.value.label[0]===board.value._id){
+
+              if(o.value.label===board.value._id){
                 //console.log(o);
               return o  ;
             }
@@ -274,21 +274,25 @@ boards:any=[];
    var boardannotations = this.componentsService.getannotations();
     boardannotations.data.map(anno=>{
     //  console.log(anno.value.label[0],title.label);
-      if(anno.value.target.id === this.feeditem.value._id){
+      if(anno.value.target.value._id === this.feeditem.value._id){
+          this.dataservice.getAdocument(anno.id).then((annodoc:any)=>{
 
-           anno.value.modified = this.date.getTime();
-           anno.value.hideboardanno = true;
+            annodoc.modified = this.date.getTime();
+            annodoc.hideboardanno = true;
+              // console.log(annodoc);
+             this.dataservice.updatedatabase(annodoc).then(res=>{
+               if(res['ok']==true){
+                 this.labelForBoards[i]=false;
+                 this.selectedstar = 0;
+                 if(this.router.url.includes('/boardfeeds')){
+                   this.componentsService.alert('hideboard',this.index);
+                   //this.variab.boardfeeds.splice(this.index,1);
+                 }
+               }
+             })
 
-            this.dataservice.updatedatabase(anno.value).then(res=>{
-              if(res['ok']==true){
-                this.labelForBoards[i]=false;
-                this.selectedstar = 0;
-                if(this.router.url.includes('/boardfeeds')){
-                  this.componentsService.alert('hideboard',this.index);
-                  //this.variab.boardfeeds.splice(this.index,1);
-                }
-              }
-            })
+          })
+
            //this.createboardstore.dispatch('MODIFY_DELETED',anno.value);
            //console.log("in boards",this.router.url);
 

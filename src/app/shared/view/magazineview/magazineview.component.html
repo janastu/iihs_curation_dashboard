@@ -27,7 +27,7 @@
                 <img src="assets/images/loading.gif">
               </div-->
 
-              <div class="feeds-entries">
+              <div class="feeds-entries"  [ngClass]="{'non-published-feed': publishedfeeds[index] === false, 'published-feed': publishedfeeds[index] === true}">
 
               <div class="magazine-hover-control">
               <app-hover-toolbar [item]='item' [index]='index' (sendIconState)="handleIcon($event)"></app-hover-toolbar>
@@ -95,6 +95,9 @@
                 </div>
                </div>
             </div>
+
+
+
           </div>
 
         </div>
