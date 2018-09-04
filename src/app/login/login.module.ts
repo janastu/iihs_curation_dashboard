@@ -7,8 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogComponentModule } from '../shared/modules/dialog-component/dialog-component.module';
 @NgModule({
     imports: [
-        CommonModule,
-        LoginRoutingModule,
+      CommonModule,
+      LoginRoutingModule,
     	FormsModule,
     	ReactiveFormsModule,
     	DialogComponentModule,

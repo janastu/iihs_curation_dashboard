@@ -7,7 +7,7 @@
 <div class="card-magazine">
       <div  class="row card-block list-entries lists">
         <div  class="col-sm-4" *ngFor='let item of feeds | paginate: { itemsPerPage: 10, currentPage: p}'>
-          <div class="card mb-3 source-card visual">
+          <div class="card mb-3 source-card visual" >
           <!--Mouse over for each element-->
             <div class="card-hover-control">
               <app-hover-toolbar [item]='item' [index]='index'></app-hover-toolbar></div>
