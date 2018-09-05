@@ -136,7 +136,6 @@ alertPublished:boolean=false;
 
            //this.dataService.getannotations();
            //this.dataService.getdeletedfeeds();
-
            this.dataService.annotation$.subscribe((reswithtype:any=[])=>{
             //console.log("deleted docs",reswithtype);
              this.componentsService.addAnnotations('add',reswithtype.rows);
@@ -158,8 +157,12 @@ alertPublished:boolean=false;
                  //console.log(res, "respond");
                   this.util.sortdescending(deleted).then(sorted=>{
                   //  console.log(sorted, "sorted feeds");
+                  this.util.checkForPublished(sorted,this.boardname).then(res=>{
+                    this.publishedfeeds=res;
+                    this.feeds = sorted;
+                    ///console.log(this.publishedfeeds,"inter");
+                //  });
 
-                   this.feeds = sorted;
 
                    this.componentsService.getMessage().subscribe(res=>{
                      //console.log("fees",deleted);
@@ -182,10 +185,8 @@ alertPublished:boolean=false;
                      this.feeds[i].Checked = false;
                     // this.checkedtodelete = this.selectedAll;
                    }
-                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
-                     this.publishedfeeds=res;
-                     });
-             //console.log(_.compact(inter),"inter");
+              });
+
            })
                 })
               //}
@@ -342,7 +343,7 @@ alertPublished:boolean=false;
             res['value']['feeds'].push(pubfeed);
           })
             res['value']['modified_pub_date']=pub_date;
-            //console.log(res);
+            console.log(res['value']);
             //this.archiveService.postjsonfile(res,this.boardname,transform);
           this.archiveService.updatedatabase(res['value']).then(response=>{
             if(response['ok']==true){
