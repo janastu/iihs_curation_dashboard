@@ -156,7 +156,7 @@ export class FeedService {
 	  //Function to get the feeds based on category by making a get request to the respective design view end point
 	  getmetacategories(category){
 		var date = new Date();
-		var last = new Date(date.getTime() - (10 * 24 * 60 * 60 * 1000));
+		var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
 		console.log(last);
 	  	return new Promise(resolve => {
 	  		   var check = this.settings.protocol+'/'+this.settings.dbfeed+'/_design/feeds/_view/metacategories?startkey=["'+encodeURIComponent(category)+'","'+last.toISOString()+'"]&endkey=["'+encodeURIComponent(category)+'","'+date.toISOString()+'"]'

@@ -35,6 +35,7 @@ alertempty:boolean=false;//alert variable to store the status if board name is e
 groupname:any;//variable to store the groupname
 queryString:any;//variable to store the input to find a board name
 boards:any=[];
+spinnerstate:boolean=false;
   constructor(public ngconfig:NgbDropdownConfig,public formBuilder: FormBuilder,public variab:Global,public boardservice:BoardService,
   public createboardstore:CreateBoardStore,public dataservice:DataService,public router:Router,
   public groupService:GroupService,public ngAlert:NgbAlertConfig,public componentsService:ComponentsService,public util:Utilities) {
@@ -144,7 +145,7 @@ boards:any=[];
   //Function called from Create board block to save the feed to the board
   savetoboard(title,i){
     // console.log(title);
-
+this.spinnerstate=true;
       let update = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
         "type": "Annotation",
@@ -162,6 +163,7 @@ boards:any=[];
           if(res['ok']==true){
             this.labelForBoards[i] = true;
             this.selectedstar=1;
+            this.spinnerstate=false;
           }
         })
 
@@ -267,6 +269,7 @@ boards:any=[];
 
   //Function called from Create board block to remove the feed from the board
   removefromboard(title,i){
+  this.spinnerstate=true;
   this.dataservice.annotation$.subscribe((reswithtype:any=[])=>{
    //console.log(reswithtype);
     this.componentsService.addAnnotations('add',reswithtype.rows);
@@ -284,6 +287,7 @@ boards:any=[];
                if(res['ok']==true){
                  this.labelForBoards[i]=false;
                  this.selectedstar = 0;
+                 this.spinnerstate=false;
                  if(this.router.url.includes('/boardfeeds')){
                    this.componentsService.alert('hideboard',this.index);
                    //this.variab.boardfeeds.splice(this.index,1);
