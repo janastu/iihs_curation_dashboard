@@ -27,15 +27,7 @@ readlaterannos:any=[];//variable to store read later annotations
 recentlyreadannos:any=[];//variable to store recently read annotations
   constructor(public readlaterstore:ReadlaterStore,public variab:Global,public dataservice:DataService,public router:Router,public feedService:FeedService,public util:Utilities,public componentsService:ComponentsService) {
   this.user = localStorage.getItem('name');
-  //Get Readlater annotations and add to service
-  this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
-  // console.log(resWithType);
-   this.componentsService.addReadLater('add',resWithType);
- });
- //Get recently read annotation and set a service
- this.dataservice.getrecentlyreadannotations(this.user).then((resWithType:any=[])=>{
-   this.componentsService.addRecentlyRead('add',resWithType);
- });
+
    }
 
   ngOnInit() {
@@ -47,30 +39,30 @@ this.date = new Date();
     if(!this.router.url.includes('/mm')){
        //Get the read later annos
        //.then((res=>{
-         this.componentsService.getReadLater().subscribe((res:any=[])=>{
+         this.readlaterannos = this.componentsService.getReadLater()//.subscribe((res:any=[])=>{
             //console.log(res);
           //Highlight the bookmark icon if annotated
-          res.data.filter(anno=>{
+          this.readlaterannos.data.filter(anno=>{
            //console.log(anno)
             if(anno.value.value._id === this.feeditem.value._id){
               this.selectedIndex=1;
             }
           });
-        });
+        //});
 
 
     //   });
        //Get the recently read annos
-       this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
+       this.recentlyreadannos = this.componentsService.getRecentlyRead()//.subscribe((res:any=[])=>{
 
          //console.log("recentlyreadhighlight",res);
          //Highlight the bookmark icon if annotated
-         res.data.filter(anno=>{
+         this.recentlyreadannos.data.filter(anno=>{
            if(anno.value.value._id === this.feeditem.value._id){
              this.selectedIcon=1;
            }
          });
-       })
+       //})
 
      }
 
@@ -80,27 +72,33 @@ this.date = new Date();
   readlater(index: number){
     //if the bookmark is highlighted then remove the readlater annotation
      if(this.selectedIndex == index){
-     this.componentsService.getReadLater().subscribe((res:any=[])=>{
+     /*this.dataservice.getreadlaterannotations(this.user).then((resWithType:any=[])=>{
+      //console.log(resWithType);
+      this.componentsService.addReadLater('add',resWithType);*/
+    var readlaterRemove =  this.componentsService.getReadLater();//.subscribe((res:any=[])=>{
 
-       res.data.map(anno=>{
+       readlaterRemove.data.map(anno=>{
          if(anno.value.value._id === this.feeditem.value._id){
-           anno.value.modified = this.date.getTime();
-           anno.value.hidereadlateranno = true;
-          // console.log(anno.value);
-
+           console.log(index);
+          // anno.value.modified = this.date.getTime();
+           //anno.value.hidereadlateranno = true;
+            this.dataservice.getAdocument(anno.id).then((annodoc:any)=>{
+              annodoc.modified = this.date.getTime();
+              annodoc.hidereadlateranno = true;
            //this.readlaterstore.dispatch('MODIFY_DELETED',anno.value);
-            this.dataservice.updatedatabase(anno.value).then(res=>{
+            this.dataservice.updatedatabase(annodoc).then(res=>{
               if(res['ok'] == true){
                 this.selectedIndex = -1;
                 this.componentsService.alert('hidelater',this.index);
                 //this.variab.readlaterfeeds.splice(this.index,1)
               }
             })
-
+          });
          }
 
        })
-     })
+     //})
+  // });
 
      }
      //Else add the feed as annotation
@@ -138,26 +136,28 @@ this.date = new Date();
   markasread(index:number){
     //if the read(tick) is highlighted then remove the readlater annotation
      if(this.selectedIcon == index){
-     this.componentsService.getRecentlyRead().subscribe((res:any=[])=>{
+     var recentlyreadRemove = this.componentsService.getRecentlyRead()//.subscribe((res:any=[])=>{
        //console.log("recentlyread")
-       res.data.map(anno=>{
-          if(anno.value.value._id === this.feeditem.value._id){
-           anno.value.modified = this.date.getTime();
-           anno.value.hiderecenltyreadanno = true;
+       recentlyreadRemove.data.map(anno=>{
+          if(anno.value.value.  _id === this.feeditem.value._id){
+          
            //console.log(anno.value);
+           this.dataservice.getAdocument(anno.id).then((annodoc:any)=>{
+             annodoc.modified = this.date.getTime();
+             annodoc.hiderecenltyreadanno = true;
 
-            this.dataservice.updatedatabase(anno.value).then(res=>{
+            this.dataservice.updatedatabase(annodoc).then(res=>{
               if(res['ok'] == true){
                 this.selectedIcon = -1;
                 this.componentsService.alert('hideread',this.index);
                 //this.variab.recentlyread.splice(this.index,1)
               }
             });
-
+          });
           }
 
        });
-     });
+     //});
      }
      //Else add the feed as annotation
      else{

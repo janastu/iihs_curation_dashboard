@@ -9,8 +9,8 @@ declare var require: any;
 export class ComponentsService {
   public subject = new Subject<any>();
   annotations:any;
-  readLater = new Subject<any>();
-  recentlyread = new Subject<any>();
+  readLater:any;
+  recentlyread:any;
   boards = new Subject<any>();
   categories = new Subject<any>();
 constructor(private http: Http) {
@@ -32,27 +32,27 @@ constructor(private http: Http) {
     this.annotations = { type: alertType , data: objData};
   }
 
-  getannotations() {
+    getannotations() {
   //console.log("calleds",this.annotations);
     return this.annotations;
     }
     addReadLater(alertType: string, objData: any) {
       //console.log(alertType,objData);
-      this.readLater.next({ type: alertType , data: objData});
+      this.readLater= { type: alertType , data: objData};
     }
 
-    getReadLater():Observable<any> {
+    getReadLater() {
     //console.log("calleds",this.annotations);
-      return this.readLater.asObservable();
+      return this.readLater;
     }
     addRecentlyRead(alertType: string, objData: any) {
       //  console.log(alertType,objData);
-        this.recentlyread.next({ type: alertType , data: objData});
+        this.recentlyread = { type: alertType , data: objData};
     }
 
-    getRecentlyRead():Observable<any> {
+    getRecentlyRead(){
       //console.log("calleds",this.annotations);
-        return this.recentlyread.asObservable();
+        return this.recentlyread;
       }
       addBoards(alertType: string, objData: any) {
           //console.log(alertType,objData);
