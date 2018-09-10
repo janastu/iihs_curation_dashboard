@@ -5,6 +5,7 @@ import PouchDB from 'pouchdb';
 import * as _ from 'lodash';
 import { Settings } from './settings';
 import {Global} from '../shared/global';
+import { Observable, ReplaySubject } from 'rxjs';
 declare function emit(key: any,value:any): void;
 
 @Injectable()
@@ -15,6 +16,7 @@ export class ArchiveService {
 	password:any;
 	feedNewsrack:any=[];
 	auth:any;
+
 	constructor(private http: Http,public jsonconvert:JsonConvert,public settings:Settings,public variab:Global) {
 		    this.auth={
 				      username:this.settings.couchdbusername,
@@ -28,10 +30,12 @@ export class ArchiveService {
 
 	//Api service to add feed name to user's database and also add the feeds to the database
 	addFeed(metadata){
+	//var self=this;
 		return new Promise(resolve=>{
 		    this.addtopouch(metadata).then(res=>{
 		        if(res['ok'] == true){
 		        	resolve(res);
+							//self.getAlreadyPublishedfeeds(metadata.boardname)
 		        	PouchDB.replicate('archives',this.settings.protocol+this.settings.dbarchives);
 		        }
 		    });
@@ -93,12 +97,12 @@ export class ArchiveService {
 	  }
 	  //Function to get already published feeds on board name and highlight in the board feeds
 	  getAlreadyPublishedfeeds(board){
-	  	var allpublishedboard:any=[];
+	  	//var uriencoded = encodeURIComponent(board);
 	  	return new Promise(resolve=>{
 	  	  this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
-						//console.log(result);
+						console.log(result);
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
 	  	  			return feeds.value;
 	  	  		})
@@ -114,6 +118,7 @@ export class ArchiveService {
 	  	  });
 	  	});
 	  }
+
 	  //Api call to get the published dates
 	  getPublishedDates(){
 	  	return new Promise(resolve=>{
@@ -176,9 +181,11 @@ export class ArchiveService {
 	  }
 	  //Update database for deleted and modidifed
 	  updatedatabase(doc){
+		var self=this;
 	  	return new Promise(resolve=>{
 	     this.remotearchives.put(doc).then(function (response) {
 	       // handle response
+				// self.getAlreadyPublishedfeeds(doc.boardname);
 	       resolve(response);
 	      // console.log(response)
 	     }).catch(function (err) {

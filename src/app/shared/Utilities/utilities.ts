@@ -93,16 +93,14 @@ checkForDeletedFeeds(feeds){
 }
 //function to check if the feeds in the board are already published
 checkForPublished(boardfeeds,boardname){
-  //console.log(boardfeeds, "boardd_feeds");
+  console.log(boardfeeds,boardname, "boardd_feeds");
   return new Promise(resolve=>{
    var alreadypublished:any=[];
-  this.archiveService.getAlreadyPublishedfeeds(boardname).then(res=>{
-    //console.log(this.archiveService, "archiveService");
-          alreadypublished=res;
-          //console.log(res);
+  this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
+      console.log(resWithType);
       var datefeed = boardfeeds.map( (board, index) => {
            //console.log(alreadypublished,"published_feeds");
-         return  _.filter(alreadypublished,function(o) {
+         return  _.filter(resWithType,function(o) {
            //console.log(o)
            if(o.value._id===board.value._id){
              //console.log(o)
@@ -134,17 +132,18 @@ checkForPublished(boardfeeds,boardname){
 
           }
       });
+    //  console.log(publishedfeeds);
        resolve(publishedfeeds);
   })
   });
 }
 getPublishedfeeds(boardfeeds,boardname){
   return new Promise(resolve=>{
-   var alreadypublished:any=[];
-    this.archiveService.getAlreadyPublishedfeeds(boardname).then(res=>{
-          alreadypublished=res;
+   //var alreadypublished:any=[];
+    this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
+          //alreadypublished=res;
 
-      alreadypublished.map(pub=>{
+      resWithType.map(pub=>{
         boardfeeds= boardfeeds.filter(item=> item.value._id === pub.value._id);
         //console.log(boardfeeds);
         resolve(boardfeeds);

@@ -48,7 +48,7 @@ alertPublished:boolean=false;
      })
     //Get the boardname from query parameters
     this.route.queryParams
-         .subscribe(params => {
+         .subscribe(queryparams => {
            //console.log(params,"prams");
              this.p=0;
              this.feeds.length=0;//Clear the feeds array
@@ -145,8 +145,9 @@ alertPublished:boolean=false;
             //if(reswithtype.type == 'annotaion'){
               //console.log("anno",reswithtype.data);
             //}
+            console.log("anno",queryparams.id);
              var feedsByBoard=reswithtype['rows'].map(feed=>{
-               if (feed.value.label==params.id) {
+               if (feed.value.label==queryparams.id) {
                  //console.log(feed,"resfeed");
                  return feed.value.target;
                }
@@ -156,7 +157,7 @@ alertPublished:boolean=false;
                //this.dataService.dataSubject.next(res);
                  //console.log(res, "respond");
                   this.util.sortdescending(deleted).then(sorted=>{
-                  //  console.log(sorted, "sorted feeds");
+                  //console.log(this.board, "sorted feeds");
                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
                     this.publishedfeeds=res;
                     this.feeds = sorted;
