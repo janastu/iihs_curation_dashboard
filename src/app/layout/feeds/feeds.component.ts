@@ -18,6 +18,7 @@ import { Utilities } from '../../shared';//Import utilities to perform sorting a
   animations: [routerTransition()]
 })
 
+
 export class FeedsComponent implements OnInit {
 spinnerState:boolean=false;//state variable to store the status of the spinner to display
 p:any; //variable to store the current page nuber
@@ -42,7 +43,6 @@ window.scroll(0,0);
         //this.usersview = localStorage.getItem('view');
 
         this.view = localStorage.getItem('view') || null;
-
 
         //this.dataservice.removeUnwanted();
      //Access the query parameter and filter the feeds according to category
@@ -137,6 +137,8 @@ window.scroll(0,0);
 
       }
 
+
+
   //Get feeds filtered on feedname
   getfeedsOnFeedname(feedname){
    //console.log("feedsinfeedname",feedname);
@@ -206,27 +208,52 @@ window.scroll(0,0);
   public handleDate(childDates:any){
   this.spinnerState=true;//Set spinner
   //this.feeds.length=0;
-    this.util.filterDate(this.pageheading,childDates).then((feedsWithType:any=[])=>{
+  this.userService.getUserSubscriptions().then((resWithType:any=[])=>{
+    //this.variab.categoryfeeds=res;
+//  console.log(this.spinnerState,this.variab.categoryfeeds);
+resWithType.map(category=>{
+ if(category.doc.feedname == this.pageheading){
 
-      //console.log(res,"res");
-      if(feedsWithType.length == 0){
-        this.alertNofeedsinrange = true;
-        setTimeout(() => this.alertNofeedsinrange = false, 2000);
-      }
-      else{
-        //Reverse the filter to sort according to latest feeds
-         feedsWithType.reverse();
-      //Call the checkForDeleted method to check for hidden/removed feeds
-      //and remove those feeds from the display array
-          this.feeds = feedsWithType.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
 
-        if(this.feeds){
+         this.getAndUpdatedatabase(category).then((statusUpdate:any)=>{
+           //console.log(statusUpdate);
+           this.util.filterDate(this.pageheading,childDates).then((feedsWithType:any=[])=>{
 
-          this.spinnerState=false;
-        }
+           //  this.globalfeeds = val;
+           if(feedsWithType.length == 0){
+             this.alertNofeedsinrange = true;
+             setTimeout(() => this.alertNofeedsinrange = false, 2000);
+           }
+           else{
+             //Reverse the filter to sort according to latest feeds
+              feedsWithType.reverse();
+           //Call the checkForDeleted method to check for hidden/removed feeds
+           //and remove those feeds from the display array
+               this.globalfeeds = feedsWithType.filter((set => f => !set.has(f.value.title) && set.add(f.value.title))(new Set));
+                 this.feeds = this.globalfeeds;
+                 this.componentsService.getMessage().subscribe(res=>{
+                 //console.log("fees",res);
+                   if(res.type == 'hide'){
+                     this.feeds.splice(res.data,1);
+                   }
+               })
 
-      }
-    })
+               if(this.feeds){
+
+                 this.spinnerState=false;
+               }
+             }
+           });
+         });
+
+
+ }
+
+
+});
+
+});
+
 
   }
   //Function to handle clear Date event from page-header component
