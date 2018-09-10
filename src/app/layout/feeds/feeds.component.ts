@@ -36,7 +36,8 @@ alertupdating:boolean=false//alert variable to store the status of feeds updatin
 
   //On loading Component
   ngOnInit() {
-
+  var date = new Date();
+  var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
 window.scroll(0,0);
     this.user =localStorage.getItem('name');
 
@@ -62,7 +63,8 @@ window.scroll(0,0);
                   this.pageheading = params.subcategory;
                   //console.log("subca",params.feedname);
                   //console.log("ca",params.subcategory);
-                  this.getfeedsOnSubcategory(params.subcategory).then((metaFeedsWithType:any=[])=>{
+
+                  this.getfeedsOnSubcategory(params.subcategory,date,last).then((metaFeedsWithType:any=[])=>{
 
 
                     //Reverse the filter to sort according to latest feeds
@@ -95,7 +97,7 @@ window.scroll(0,0);
                     if(category.doc.feedname == params.feedname){
 
 
-                            this.getAndUpdatedatabase(category).then((statusUpdate:any)=>{
+                            this.getAndUpdatedatabase(category,date,last).then((statusUpdate:any)=>{
                               //console.log(statusUpdate);
                               this.getfeedsOnFeedname(params.feedname).then((feedsWithType:any=[])=>{
                               //  this.globalfeeds = val;
@@ -175,11 +177,11 @@ window.scroll(0,0);
 
   }
   //Get feeds filtered on subcategory
-  getfeedsOnSubcategory(subcategory){
+  getfeedsOnSubcategory(subcategory,date,last){
 
         return new Promise(resolve=>{
         //Call the feed service to get the feeds filtered according to subcategory
-          this.feedService.getmetacategories(subcategory).then(res=>{
+          this.feedService.getmetacategories(subcategory,date,last).then(res=>{
           //this.feedService.feed$.subscribe(res=>{
          // console.log("sis",res);
 
@@ -206,6 +208,8 @@ window.scroll(0,0);
   }
   //Function to handle Date event from page-header component
   public handleDate(childDates:any){
+ var fromdate = new Date(childDates.changefrom);
+ var todate = new Date(childDates.changeto);
   this.spinnerState=true;//Set spinner
   //this.feeds.length=0;
   this.userService.getUserSubscriptions().then((resWithType:any=[])=>{
@@ -213,9 +217,10 @@ window.scroll(0,0);
 //  console.log(this.spinnerState,this.variab.categoryfeeds);
 resWithType.map(category=>{
  if(category.doc.feedname == this.pageheading){
+   //console.log(childDates);
 
 
-         this.getAndUpdatedatabase(category).then((statusUpdate:any)=>{
+         this.getAndUpdatedatabase(category,todate,fromdate).then((statusUpdate:any)=>{
            //console.log(statusUpdate);
            this.util.filterDate(this.pageheading,childDates).then((feedsWithType:any=[])=>{
 
@@ -284,11 +289,13 @@ resWithType.map(category=>{
   handleRefresh(childrefresh:any){
     /*this.userService.pullnewFeeds().then(res=>{
     });*/
+    var date = new Date();
+    var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
     this.spinnerState=true;
     this.feeds.length = 0;
     this.getfeedsOnFeedname(childrefresh).then(val=>{
       if(val['length']==0){
-            this.getfeedsOnSubcategory(childrefresh).then(val=>{
+            this.getfeedsOnSubcategory(childrefresh,date,last).then(val=>{
                   this.globalfeeds = val;
 
                   //Reverse the filter to sort according to latest feeds
@@ -361,8 +368,10 @@ resWithType.map(category=>{
 
   // }
 }
-getAndUpdatedatabase(category){
+getAndUpdatedatabase(category,date,last){
   var feedsFromDb:any=[];
+  //var date = new Date();
+  //var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
   //console.log(meta.categories[0]);
 return new Promise(resolve=>{
   category.doc.metadata.map(meta=>{
@@ -395,7 +404,8 @@ return new Promise(resolve=>{
       })
     }
     else{
-      this.getfeedsOnSubcategory(meta.categories[0]).then(value=>{
+
+      this.getfeedsOnSubcategory(meta.categories[0],date,last).then(value=>{
         feedsFromDb = value;
         this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
 
