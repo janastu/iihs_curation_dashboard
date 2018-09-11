@@ -380,7 +380,7 @@ return new Promise(resolve=>{
         //  this.util.checkForDeletedFeeds(valWithType).then((removeDeleted:any=[])=>{
 
         //console.log(removeDeleted)
-          this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+          this.userService.pullnewFeeds(meta.categories[0] || meta.link,last).then((feedsToUpdate:any=[])=>{
             //console.log(feedsToUpdate);
             this.util.checkForDeletedFeeds(feedsToUpdate).then((resWithType:any=[])=>{
               //console.log(res);
@@ -407,7 +407,7 @@ return new Promise(resolve=>{
 
       this.getfeedsOnSubcategory(meta.categories[0],date,last).then(value=>{
         feedsFromDb = value;
-        this.userService.pullnewFeeds(meta.categories[0] || meta.link).then((feedsToUpdate:any=[])=>{
+        this.userService.pullnewFeeds(meta.categories[0] || meta.link,last).then((feedsToUpdate:any=[])=>{
 
           var  updateFeeds =  this.getDiffereceofFeeds(feedsFromDb,feedsToUpdate);
             if(updateFeeds.length>0){
