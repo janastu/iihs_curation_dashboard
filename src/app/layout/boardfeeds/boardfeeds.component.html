@@ -39,7 +39,7 @@
 
     <div *ngFor="let feed of feeds | paginate: { itemsPerPage: 10, currentPage: p};let i=index;">
 
-    <div *ngIf = "view === null && publishedfeeds.length>0">
+    <div *ngIf = "view === null">
       <app-magazineview [feeds]='feed' [index]='i' [publishedfeeds]='publishedfeeds'  (checkedInput)='handleCheckedInput($event)'></app-magazineview>
     </div>
 

@@ -157,10 +157,11 @@ alertPublished:boolean=false;
                //this.dataService.dataSubject.next(res);
                  //console.log(res, "respond");
                   this.util.sortdescending(deleted).then(sorted=>{
-                  //console.log(this.board, "sorted feeds");
+                  console.log(sorted, "sorted feeds");
                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
-                    this.publishedfeeds=res;
-                    this.feeds = sorted;
+
+
+                    this.feeds = res;
                     ///console.log(this.publishedfeeds,"inter");
                 //  });
 
@@ -186,6 +187,7 @@ alertPublished:boolean=false;
                      this.feeds[i].Checked = false;
                     // this.checkedtodelete = this.selectedAll;
                    }
+
               });
 
            })

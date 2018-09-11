@@ -93,15 +93,33 @@ checkForDeletedFeeds(feeds){
 }
 //function to check if the feeds in the board are already published
 checkForPublished(boardfeeds,boardname){
-  console.log(boardfeeds,boardname, "boardd_feeds");
+  //console.log(boardfeeds,boardname, "boardd_feeds");
   return new Promise(resolve=>{
    var alreadypublished:any=[];
+   //this.dataservice.getannotations()
   this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
       console.log(resWithType);
-      var datefeed = boardfeeds.map( (board, index) => {
+      resWithType.map(feed=>{
+      //
+      boardfeeds.filter(globalfeed=>{
+       //feeds= feeds.filter(item=> item.value._id == feed.value._id);
+     //  console.log(feeds);
+
+             if(globalfeed.value._id == feed.value._id){
+               var i = _.indexOf(boardfeeds,globalfeed);
+               //console.log(feeds,"beforestep1");
+               boardfeeds.splice(i,1);
+
+             //  console.log(feeds,"after splice");
+               resolve(boardfeeds);
+             }
+           //
+         })
+       });
+    /*  var datefeed = boardfeeds.map( (board, index) => {
            //console.log(alreadypublished,"published_feeds");
          return  _.filter(resWithType,function(o) {
-           //console.log(o)
+           //console.log(o.value._id,board.value._id)
            if(o.value._id===board.value._id){
              //console.log(o)
            return o  ;
@@ -109,15 +127,7 @@ checkForPublished(boardfeeds,boardname){
          });
 
       });
-      /*alreadypublished.map(pub=>{
-        boardfeeds= boardfeeds.filter(item=> item.value._id!== pub.value._id);
-      })
 
-      //console.log(boardfeeds);
-      resolve(boardfeeds);*/
-     //console.log(datefeed);
-      //this.feedstobepublished=_.flatten(datefeed);
-      //console.log("annoforboards",datefeed);
       //Map Annos for Boards to return boolean array
       //Returns example:[true,false,true]
       //Index of output == Index of label which means label[0] and label[1]
@@ -133,7 +143,7 @@ checkForPublished(boardfeeds,boardname){
           }
       });
     //  console.log(publishedfeeds);
-       resolve(publishedfeeds);
+       resolve(publishedfeeds);*/
   })
   });
 }

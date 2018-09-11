@@ -1,4 +1,4 @@
-<div [@routerTransition] class="row list-entries"  [ngClass]="{'non-published-feed': publishedfeeds[index] === false, 'published-feed': publishedfeeds[index] === true}">
+<div [@routerTransition] class="row list-entries" >
 
      <!-- <div class="row">
         <div class="col-sm-9 offset-sm-3">
@@ -6,9 +6,9 @@
         </div>
       </div>-->
                         <div *ngIf="router.url.includes('/publish')">
-                            <div *ngIf=publishedfeeds[index] class="col-md-2">
+                            <!--div *ngIf=publishedfeeds[index] class="col-md-2">
                                <label>Published</label>
-                            </div>
+                            </div-->
                             <div *ngIf=!publishedfeeds[index]>
                               <input #checkbox type="checkbox" value="{{item.value._id}}" class="publish_checkbox"  [ngClass]="{'checkbox-notpublished': publishedfeeds[index] === false , 'checkbox-published': publishedfeeds[index] === true}"
                               (change)="onFilterChange($event)" [(ngModel)]="item.Checked" [name]="item.value.title" [checked]="item.Checked"/>
