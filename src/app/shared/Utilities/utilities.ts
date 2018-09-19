@@ -100,8 +100,9 @@ checkForPublished(boardfeeds,boardname){
    console.log(boardfeeds,"boardfeeds")
   this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
       console.log(resWithType,"resWithType");
-      resWithType.map(feed=>{
       
+      resWithType.map(feed=>{
+
       boardfeeds.filter(globalfeed=>{
        //feeds= feeds.filter(item=> item.value._id == feed.value._id);
      // console.log(feeds);
@@ -110,7 +111,7 @@ checkForPublished(boardfeeds,boardname){
                var i = _.indexOf(boardfeeds,globalfeed);
                //console.log(feeds,"beforestep1");
                boardfeeds.splice(i,1);
-               
+
 
              // console.log(feeds,"after splice");
                resolve(boardfeeds);
@@ -158,7 +159,7 @@ getPublishedfeeds(boardfeeds,boardname){
 
       resWithType.map(pub=>{
         boardfeeds= boardfeeds.filter(item=> item.value._id === pub.value._id);
-        
+
         resolve(boardfeeds);
       })
 

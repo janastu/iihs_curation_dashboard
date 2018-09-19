@@ -156,14 +156,32 @@ alertPublished:boolean=false;
              this.util.checkForDeletedFeeds(this.boardfeeds).then(deleted=>{
                //this.dataService.dataSubject.next(res);
                  //console.log(res, "respond");
-                  this.util.sortdescending(deleted).then(sorted=>{
-                  console.log(sorted, "sorted feeds");
+                 console.log(deleted, "sorted feeds");
+                  this.util.sortdescending(deleted).then((sorted:any=[])=>{
+                      if(sorted.length !== 0){
+
+
+
                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
 
 
                     this.feeds = res;
                     ///console.log(this.publishedfeeds,"inter");
                 //  });
+                if(this.feeds){
+                  this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+
+                }
+
+                 this.alertNofeeds=false;//set alertnofeed  s value to false
+                if(this.feeds.length==0){
+                  this.alertNofeeds=true;
+                }
+                //console.log(this.feeds,"publishedfeeds")
+                for (var i = 0; i < this.feeds.length; i++) {
+                  this.feeds[i].Checked = false;
+                 // this.checkedtodelete = this.selectedAll;
+                }
 
 
                    this.componentsService.getMessage().subscribe(res=>{
@@ -173,22 +191,27 @@ alertPublished:boolean=false;
                          //this.dataService.dataSubject.next(this.feeds);
                        }
                    })
-                   if(this.feeds){
-                     this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
 
-                   }
-
-                    this.alertNofeeds=false;//set alertnofeed  s value to false
-                   if(this.feeds.length==0){
-                     this.alertNofeeds=true;
-                   }
-                   //console.log(this.feeds,"publishedfeeds")
-                   for (var i = 0; i < this.feeds.length; i++) {
-                     this.feeds[i].Checked = false;
-                    // this.checkedtodelete = this.selectedAll;
-                   }
 
               });
+            }
+            else{
+              this.feeds = sorted;
+              if(this.feeds){
+                this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
+
+              }
+
+               this.alertNofeeds=false;//set alertnofeed  s value to false
+              if(this.feeds.length==0){
+                this.alertNofeeds=true;
+              }
+              //console.log(this.feeds,"publishedfeeds")
+              for (var i = 0; i < this.feeds.length; i++) {
+                this.feeds[i].Checked = false;
+               // this.checkedtodelete = this.selectedAll;
+              }
+            }
 
            })
                 })

@@ -101,7 +101,7 @@ export class ArchiveService {
 	  	//var uriencoded = encodeURIComponent(board);
 
 	  	return new Promise(resolve=>{
-	  	  /*this.remotearchives.query('archives/publishedfeeds', {
+	  	  this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
 
@@ -118,11 +118,11 @@ export class ArchiveService {
 	  	  }).catch(function (err) {
 	  	 	resolve(err,);
 	  	 	console.log(err,"error")
-	  	  });*/
+	  	  });
 
 
 
-	  	  var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_views/publishedfeeds?key="'+board+'"';
+	  	 /* var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_views/publishedfeeds?key="'+board+'"';
 	  	  	  	  	console.log(board, "boardname")
 	  	  	  	  	this.http.get(url).map(res => res.json()).subscribe(data => {
 	  	  	  	  		console.log("da",data);
@@ -136,7 +136,7 @@ export class ArchiveService {
 	  	  	  	  	}, (err) => {
 	  	  	  	  	   console.log(err);
 	  	  	  	  	   //resolve(err);
-	  	  	  	  	});
+	  	  	  	  	});*/
 	  	});
 	  }
 
