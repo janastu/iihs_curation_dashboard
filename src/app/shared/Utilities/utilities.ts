@@ -93,24 +93,26 @@ checkForDeletedFeeds(feeds){
 }
 //function to check if the feeds in the board are already published
 checkForPublished(boardfeeds,boardname){
-  //console.log(boardfeeds,boardname, "boardd_feeds");
+  console.log(boardfeeds,boardname, "boardd_feeds");
   return new Promise(resolve=>{
    var alreadypublished:any=[];
    //this.dataservice.getannotations()
+   console.log(boardfeeds,"boardfeeds")
   this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
-      console.log(resWithType);
+      console.log(resWithType,"resWithType");
       resWithType.map(feed=>{
-      //
+      
       boardfeeds.filter(globalfeed=>{
        //feeds= feeds.filter(item=> item.value._id == feed.value._id);
-     //  console.log(feeds);
+     // console.log(feeds);
 
              if(globalfeed.value._id == feed.value._id){
                var i = _.indexOf(boardfeeds,globalfeed);
                //console.log(feeds,"beforestep1");
                boardfeeds.splice(i,1);
+               
 
-             //  console.log(feeds,"after splice");
+             // console.log(feeds,"after splice");
                resolve(boardfeeds);
              }
            //
@@ -149,13 +151,14 @@ checkForPublished(boardfeeds,boardname){
 }
 getPublishedfeeds(boardfeeds,boardname){
   return new Promise(resolve=>{
+    console.log(boardfeeds,"boardfeedspublish");
    //var alreadypublished:any=[];
     this.archiveService.getAlreadyPublishedfeeds(boardname).then((resWithType:any=[])=>{
           //alreadypublished=res;
 
       resWithType.map(pub=>{
         boardfeeds= boardfeeds.filter(item=> item.value._id === pub.value._id);
-        //console.log(boardfeeds);
+        
         resolve(boardfeeds);
       })
 
