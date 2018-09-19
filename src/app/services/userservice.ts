@@ -1,3 +1,4 @@
+
 import { Injectable,ViewChild } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
@@ -249,9 +250,10 @@ updateAuser(user){
 
 }
 //Api service to call newsrack and pull the recent feeds of the user's subcscriptions
-pullnewFeeds(catName){
+pullnewFeeds(catName,last){
+  console.log(last)
 var date = new Date();
-var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
+//var last = new Date(date.getTime() - (3 * 24 * 60 * 60 * 1000));
   let url = localStorage.getItem('url');
   return new Promise(resolve=>{
     if(url){

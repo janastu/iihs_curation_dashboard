@@ -98,15 +98,16 @@ export class ArchiveService {
 	  //Function to get already published feeds on board name and highlight in the board feeds
 	  getAlreadyPublishedfeeds(board){
 	  	//var uriencoded = encodeURIComponent(board);
+	  	  
 	  	return new Promise(resolve=>{
-	  	  this.remotearchives.query('archives/publishedfeeds', {
+	  	  /*this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
-						console.log(result);
+						console.log(result,"result");
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
 	  	  			return feeds.value;
 	  	  		})
-	  	  		//console.log(_.flatten(feedsofeverypublish));
+	  	  		//console.log(_.flatten(feedsofeverypublish),);
 	  	 	if(result.rows.length!=0){
 	  	  		resolve(_.flatten(feedsofeverypublish));
 	  	  	}
@@ -114,8 +115,27 @@ export class ArchiveService {
 	  	  		resolve(result.rows);
 	  	  	}
 	  	  }).catch(function (err) {
-	  	 	//resolve(err);
-	  	  });
+	  	 	resolve(err,);
+	  	 	console.log(err,"error")
+	  	  });*/
+
+	  	  
+
+	  	  var url = this.settings.protocol+this.settings.dbarchives+'/_design/archives/_views/publishedfeeds?key="'+board+'"';
+	  	  	  	  	console.log(board, "boardname")
+	  	  	  	  	this.http.get(url).map(res => res.json()).subscribe(data => {
+	  	  	  	  		console.log("da",data);
+	  	  	  	  		console.log(data, "bdata")
+	  	  	  	  		if(data.rows.length !=0){
+	  	  	  	  	 		resolve(data.rows[0]);
+	  	  	  	  	 	}
+	  	  	  	  	 	else{
+	  	  	  	  	 		resolve(data.rows);
+	  	  	  	  	 	}
+	  	  	  	  	}, (err) => {
+	  	  	  	  	   console.log(err);
+	  	  	  	  	   //resolve(err);
+	  	  	  	  	});
 	  	});
 	  }
 
