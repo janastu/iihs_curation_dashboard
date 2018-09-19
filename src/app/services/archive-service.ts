@@ -97,16 +97,17 @@ export class ArchiveService {
 	  }
 	  //Function to get already published feeds on board name and highlight in the board feeds
 	  getAlreadyPublishedfeeds(board){
+
 	  	//var uriencoded = encodeURIComponent(board);
 	  	return new Promise(resolve=>{
 	  	  this.remotearchives.query('archives/publishedfeeds', {
 	  		  key:board,
 	  	  }).then(function (result) {
-						console.log(result);
+
 	  	  		var feedsofeverypublish = result.rows.map(feeds=>{
 	  	  			return feeds.value;
 	  	  		})
-	  	  		//console.log(_.flatten(feedsofeverypublish));
+	  	  		console.log(_.flatten(feedsofeverypublish));
 	  	 	if(result.rows.length!=0){
 	  	  		resolve(_.flatten(feedsofeverypublish));
 	  	  	}
