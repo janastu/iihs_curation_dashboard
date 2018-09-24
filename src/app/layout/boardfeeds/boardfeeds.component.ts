@@ -153,15 +153,18 @@ alertPublished:boolean=false;
                }
              })
              this.boardfeeds = _.compact(feedsByBoard);
+             //Check the flow here and see if there is any bug
+             //First check for deleted feeds and get the feeds other than deleted
              this.util.checkForDeletedFeeds(this.boardfeeds).then(deleted=>{
                //this.dataService.dataSubject.next(res);
                  //console.log(res, "respond");
                  console.log(deleted, "sorted feeds");
+                 //Sort the deleted feeds
                   this.util.sortdescending(deleted).then((sorted:any=[])=>{
                     console.log(sorted,"inter");
                       //if(sorted.length > 0){
 
-
+                      //Check for published feeds and remove those and return the rest of the feeds
 
                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
                     console.log(res,"val");
