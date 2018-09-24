@@ -158,15 +158,16 @@ alertPublished:boolean=false;
                  //console.log(res, "respond");
                  console.log(deleted, "sorted feeds");
                   this.util.sortdescending(deleted).then((sorted:any=[])=>{
-                      if(sorted.length !== 0){
+                    console.log(sorted,"inter");
+                      //if(sorted.length > 0){
 
 
 
                   this.util.checkForPublished(sorted,this.boardname).then(res=>{
-
+                    console.log(res,"val");
 
                     this.feeds = res;
-                    ///console.log(this.publishedfeeds,"inter");
+
                 //  });
                 if(this.feeds){
                   this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
@@ -177,7 +178,7 @@ alertPublished:boolean=false;
                 if(this.feeds.length==0){
                   this.alertNofeeds=true;
                 }
-                //console.log(this.feeds,"publishedfeeds")
+
                 for (var i = 0; i < this.feeds.length; i++) {
                   this.feeds[i].Checked = false;
                  // this.checkedtodelete = this.selectedAll;
@@ -194,9 +195,11 @@ alertPublished:boolean=false;
 
 
               });
-            }
-            else{
+            //}
+            /*else{
+
               this.feeds = sorted;
+                //console.log(this.feeds,"publishedfeeds")
               if(this.feeds){
                 this.spinnerState=false;//Set the spinner state variable to false once feeds are fetched
 
@@ -211,7 +214,7 @@ alertPublished:boolean=false;
                 this.feeds[i].Checked = false;
                // this.checkedtodelete = this.selectedAll;
               }
-            }
+            }*/
 
            })
                 })
